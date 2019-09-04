@@ -1,0 +1,16 @@
+.header {
+  background-color: #072141;
+  height: 50px;
+  width:100%;
+  padding-left:30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index:2;
+}
+.header h1 {
+  color:#eee;
+  display:inline;
+  line-height: 50px;
+  font-size: 20px;
+}
