@@ -3,6 +3,7 @@ import { Table } from 'antd';
 
 import Oper from './components/Oper';
 import Add from './components/Add';
+import EmptyLine from 'pages/common/EmptyLine';
 
 const columns = [
   { title: 'Name', dataIndex: 'name', key: 'name' },
@@ -127,6 +128,7 @@ function UserList() {
         dataSource={data} size="small"
         expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
       />
+      <EmptyLine />
     </div>
   )
 }

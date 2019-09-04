@@ -9,15 +9,5 @@ function Login (props) {
     <button onClick={login}>login</button>
   )
 }
-// class Login extends React.Component {
-//   componentDidMount() {
 
-//   }
-
-//   render() {
-//     return (
-//       <div>login</div>
-//     )
-//   }
-// }
 export default withRouter(Login);
