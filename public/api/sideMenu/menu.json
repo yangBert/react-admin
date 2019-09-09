@@ -1,5 +1,6 @@
 {
-  "menus":[
+  "success": true,
+  "menus": [
     {
       "id": "sub1",
       "title": "管理员管理",

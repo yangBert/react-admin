@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Table } from 'antd';
+import { connect } from 'react-redux';
+import * as creators from './store/creators';
 
 import Oper from './components/Oper';
 import Add from './components/Add';
@@ -18,118 +20,37 @@ const columns = [
     render: () => <Oper />,
   },
 ];
-const data = [
-  {
-    key: 1,
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    phone: '15286006751',
-    idcard: '52262819890829503X',
-    description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
-  },
-  {
-    key: 2,
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    phone: '15286006751',
-    idcard: '52262819890829503X',
-    description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.',
-  },
-  {
-    key: 3,
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    phone: '15286006751',
-    idcard: '52262819890829503X',
-    description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-  },
-  {
-    key: 4,
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    phone: '15286006751',
-    idcard: '52262819890829503X',
-    description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-  },
-  {
-    key: 5,
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    phone: '15286006751',
-    idcard: '52262819890829503X',
-    description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-  },
-  {
-    key: 6,
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    phone: '15286006751',
-    idcard: '52262819890829503X',
-    description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-  },
-  {
-    key:7,
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    phone: '15286006751',
-    idcard: '52262819890829503X',
-    description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-  },
-  {
-    key: 8,
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    phone: '15286006751',
-    idcard: '52262819890829503X',
-    description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-  },
-  {
-    key: 9,
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    phone: '15286006751',
-    idcard: '52262819890829503X',
-    description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-  },
-  {
-    key: 10,
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    phone: '15286006751',
-    idcard: '52262819890829503X',
-    description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-  },
-  {
-    key: 11,
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    phone: '15286006751',
-    idcard: '52262819890829503X',
-    description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-  },
-];
-function UserList() {
-  return (
-    <div>
-      <Add></Add>
-      <Table
-        columns={columns}
-        dataSource={data} size="small"
-        expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
-      />
-      <EmptyLine />
-    </div>
-  )
+
+class UserList extends Component {
+  componentDidMount() {
+    this.props.queryUserList();
+  }
+
+  render() {
+    const list = this.props.list
+    return (
+      <div>
+        <Add></Add>
+        <Table
+          columns={columns}
+          dataSource={list}
+          size="small"
+          expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
+        />
+        <EmptyLine />
+      </div >
+    )
+  }
 }
-export default UserList;
+
+const mapState = state => ({
+  list: state.user.list
+})
+
+const mapDispatch = dispatch => ({
+  queryUserList: () => {
+    const action = creators.getUserList();
+    dispatch(action);
+  }
+})
+export default connect(mapState, mapDispatch)(UserList);

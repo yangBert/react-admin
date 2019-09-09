@@ -1,27 +1,28 @@
 import axios from 'axios';
 import * as types from './actionTypes';
 
-const initMenu = menus => ({
-  type: types.INIT_MENUS,
-  menus
+const initUserList = list => ({
+  type: types.QUERY_USER_LIST,
+  list
 })
 
-const getMenus = () => {
+const getUserList = () => {
   return dispatch => {
-    axios.get('/api/sideMenu/menu.json')
+    axios.get('/api/user/userList.json')
       .then(function (res) {
         // handle success
-        if (res.data.menus.length > 0) {
-          const action = initMenu(res.data);
+        console.log(res);
+        if (res.data.list.length > 0) {
+          const action = initUserList(res.data.list);
           dispatch(action);
         }
-        console.log(res);
+
       })
       .catch(function (error) {
         // handle error
         console.log(error);
       })
   }
-};
+}
 
-export { getMenus }
+export { getUserList }
