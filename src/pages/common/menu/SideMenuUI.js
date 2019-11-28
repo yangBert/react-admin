@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Menu, Icon } from 'antd';
+import styles from 'pages/common/menu/menu.module.css';
+import { connect } from 'react-redux';
 const { SubMenu } = Menu;
 
 class SideMenuUI extends React.Component {
@@ -25,7 +27,7 @@ class SideMenuUI extends React.Component {
   render() {
     const menus = this.props.menus;
     return (
-      <div style={{ width: 256 }}>
+      <div className={this.props.collapsed ? styles.menuMin : styles.menuMax}>
         {/* <Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
           <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
         </Button> */}
@@ -36,11 +38,13 @@ class SideMenuUI extends React.Component {
           theme="dark"
           openKeys={this.state.openKeys}
           onOpenChange={this.onOpenChange}
+          inlineCollapsed={this.props.collapsed}
         >
           {
             menus.map(p => {
               return (
                 <SubMenu
+                  className={styles.sliderItem}
                   key={p.id}
                   title={
                     <span>
@@ -64,4 +68,8 @@ class SideMenuUI extends React.Component {
   }
 }
 
-export default SideMenuUI;
+const mapState = state => ({
+  collapsed: state.header.collapsed
+})
+
+export default connect(mapState, null)(SideMenuUI);

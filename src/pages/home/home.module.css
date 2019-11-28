@@ -1,22 +1,36 @@
 .sideMenu {
-  background-color: #041c3a;
-  position: fixed;
-  top:50px;
+  background-color: #001529;
+  position:fixed;
+  top:0;
+  left:0;
   height: 100%;
   z-index: 2;
 }
 
-.pageContainer {
-  position:fixed;
-  padding-top:50px;
-  display: flex;
-  width: 100%;
-  height: 100%;
+.paddingMax {
+  height:100%;
+  padding-left:256px;
 }
 
-.pageContent {
+.paddingMin {
+  height:100%;
+  padding-left:80px;
+}
+
+.contentMax {
+  padding:20px 256px 20px 10px;
+  height:100%;
+  width:100%;
+  position:absolute;
   overflow-y: scroll;
-  flex: 1; 
-  margin-left: 256px;
-  padding: 20px 16px 0 16px;
+  background-color: rgb(241, 241, 241);
+}
+
+.contentMin {
+  padding:20px 80px 20px 10px;
+  height:100%;
+  width:100%;
+  position:absolute;
+  overflow-y: scroll;
+  background-color: rgb(241, 241, 241);
 }

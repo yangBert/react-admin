@@ -1,16 +1,25 @@
 .header {
-  background-color: #072141;
-  height: 50px;
+  background-color: #fff;
+  height: 60px;
   width:100%;
-  padding-left:30px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index:2;
+  padding-left:20px;
+  border:1px solid rgb(233, 233, 233);
+  
 }
 .header h1 {
-  color:#eee;
+  color:#000;
   display:inline;
   line-height: 50px;
   font-size: 20px;
+  font-weight: bold;
+}
+
+.collapsedBtn {
+  font-size: 22px;
+  margin-right:20px;
+  color: #369;
+}
+
+.userCenter {
+  float:right;
 }

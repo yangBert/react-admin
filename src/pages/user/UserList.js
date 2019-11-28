@@ -5,7 +5,6 @@ import * as creators from './store/creators';
 
 import Oper from './components/Oper';
 import Add from './components/Add';
-import EmptyLine from 'pages/common/EmptyLine';
 
 const columns = [
   { title: 'Name', dataIndex: 'name', key: 'name' },
@@ -29,7 +28,7 @@ class UserList extends Component {
   render() {
     const list = this.props.list
     return (
-      <div>
+      <div className="pageContentColor">
         <Add></Add>
         <Table
           columns={columns}
@@ -37,7 +36,6 @@ class UserList extends Component {
           size="small"
           expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
         />
-        <EmptyLine />
       </div >
     )
   }

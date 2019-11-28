@@ -1,0 +1,26 @@
+.menuMax {
+  width: 256px;
+}
+
+.menuMin {
+  width: 80px;
+  background:red;
+}
+
+.sliderItem {
+  /* border-bottom: 1px solid rgb(29, 77, 155); */
+  background: #001529;
+  margin:0;
+}
+
+.sliderUl {
+  background:#001529;
+  /* border-bottom: 1px solid rgb(11, 43, 95); */
+  margin:0;
+}
+
+.sliderItem span{
+  font-size: 14px;
+}
+
+

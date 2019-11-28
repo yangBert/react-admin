@@ -1,0 +1,11 @@
+.container {
+  float:right;
+  margin-top: 15px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.userImage {
+  width: 30px;
+  margin-right:5px;
+}
