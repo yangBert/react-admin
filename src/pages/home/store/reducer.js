@@ -1,13 +1,13 @@
 import * as types from './actionTypes'
+
 const defaultState = {
-  loginUser: "yang",
-  collapsed: false,
+  list: []
 };
 
 export default (state = defaultState, action) => {
   let newState = JSON.parse(JSON.stringify(state))
-  if (action.type === types.CHANGE_MENU_COLLAPSED) {
-    return { collapsed: !newState.collapsed }
+  if (action.type === types.QUERY_USER_LIST) {
+    return { ...newState, ...action }
   }
-  return newState;
+  return state
 }

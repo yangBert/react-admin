@@ -12,14 +12,23 @@
   line-height: 50px;
   font-size: 20px;
   font-weight: bold;
+  position:relative;
+  bottom:-5px;
+  margin-left:10px;
 }
 
 .collapsedBtn {
   font-size: 22px;
   margin-right:20px;
-  color: #369;
+  color: rgb(29, 107, 185);
+  position:relative;
+  bottom:-8px;
 }
 
 .userCenter {
   float:right;
+}
+
+.logo {
+  width: 50px;
 }

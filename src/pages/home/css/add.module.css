@@ -1,0 +1,15 @@
+.tableForm{
+  padding-bottom: 12px;
+}
+.operButton{
+  font-size:11px;
+}
+
+/**新增*/
+.formLine {
+  text-align:center;
+}
+
+.lineOne {
+  width: 70%;
+}

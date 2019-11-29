@@ -5,7 +5,7 @@ import store from './store';
 import {Spin} from 'antd';
 
 const Login = lazy(() => import('pages/login/Login'));
-const Home = lazy(() => import('pages/home/Home'));
+const Home = lazy(() => import('pages/index/IndexHome'));
 function App() {
     return (
       <Provider store={store}>
@@ -14,7 +14,7 @@ function App() {
             <Suspense fallback={<Spin />}>
               <Switch>
                 <Route exact path="/" component={Login} />
-                <Route path="/pages" component={Home} />
+                <Route path="/" component={Home} />
               </Switch>
             </Suspense>
           </Router>

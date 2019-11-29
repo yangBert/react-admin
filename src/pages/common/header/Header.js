@@ -4,18 +4,17 @@ import { Icon } from 'antd';
 import { connect } from 'react-redux';
 import * as types from './store/actionTypes';
 import UserCenter from './UserCenter';
+import logo from 'static/img/logo.png';
 
-class Header extends React.Component {
-
-  render() {
-    return (
-      <div className={styles.header}>
-        <Icon className={styles.collapsedBtn} onClick={this.props.changeMenuCollapsed} type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'} />
-        <h1 className={styles.title}>可信身份统一认证系统</h1>
-        <UserCenter />
-      </div>
-    )
-  }
+function Header(props) {
+  return (
+    <div className={styles.header}>
+      <Icon title={props.collapsed ? '显示菜单栏' : '隐藏菜单栏'} className={styles.collapsedBtn} onClick={props.changeMenuCollapsed} type={props.collapsed ? 'menu-unfold' : 'menu-fold'} />
+      <img className={styles.logo} src={logo} alt="logo"/>
+      <h1 className={styles.title}>云上贵州可信身份统一认证系统</h1>
+      <UserCenter />
+    </div>
+  )
 }
 
 const mapState = state => ({
@@ -24,7 +23,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   changeMenuCollapsed: () => {
-    const action = {type: types.CHANGE_MENU_COLLAPSED};
+    const action = { type: types.CHANGE_MENU_COLLAPSED };
     dispatch(action);
   }
 })

@@ -1,24 +1,25 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import routes from 'router';
-import styles from 'pages/home/home.module.css';
+import { withRouter } from 'react-router';
+import styles from 'pages/index/index.module.css';
 import SideMenu from 'pages/common/menu/SideMenu';
 import Header from 'pages/common/header/Header';
 import { Spin } from 'antd';
 import { connect } from 'react-redux';
+import PropsContext from './props';
 
-
-class Home extends React.Component {
-  render() {
-    return (
-      <div>
-        <Router>
+function IndexHome(props) {
+  return (
+    <div>
+      <Router>
+        <PropsContext.Provider value={props}>
           <div className={styles.sideMenu}>
             <SideMenu />
           </div>
-          <div className={this.props.collapsed ? styles.paddingMin : styles.paddingMax}>
-            <Header className={styles.header} />
-            <div className={this.props.collapsed ? styles.contentMin : styles.contentMax}>
+          <div className={props.collapsed ? styles.paddingMin : styles.paddingMax}>
+            <Header propsGlobal={props} className={styles.header} />
+            <div className={props.collapsed ? styles.contentMin : styles.contentMax}>
               <Suspense fallback={<Spin />}>
                 {routes.map((route, index) => (
                   <Route
@@ -30,15 +31,15 @@ class Home extends React.Component {
               </Suspense>
             </div>
           </div>
-        </Router >
-      </div>
-    );
-  }
-
+        </PropsContext.Provider>
+      </Router >
+    </div>
+  );
 }
 
 const mapState = state => ({
-  collapsed: state.header.collapsed
+  collapsed: state.header.collapsed,
+  loginState: state.login.loginState
 })
 
-export default connect(mapState, null)(Home);
+export default withRouter(connect(mapState, null)(IndexHome));

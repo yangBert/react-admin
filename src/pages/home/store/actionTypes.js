@@ -1,0 +1,3 @@
+const QUERY_USER_LIST = "QUERY_USER_LIST"
+
+export { QUERY_USER_LIST }

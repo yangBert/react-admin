@@ -9,12 +9,12 @@
         {
           "id": "1",
           "title": "管理员列表",
-          "path": "/pages/userList"
+          "path": "/user/userList"
         },
         {
           "id": "2",
           "title": "操作日志",
-          "path": "/pages/userDetail"
+          "path": "/user/userDetail"
         }
       ]
     },
@@ -26,12 +26,12 @@
         {
           "id": "3",
           "title": "应用列表",
-          "path": "/pages/appList"
+          "path": "/app/appList"
         },
         {
           "id": "4",
           "title": "应用详情",
-          "path": "/pages/appDetail"
+          "path": "/app/appDetail"
         }
       ]
     },
@@ -43,12 +43,12 @@
         {
           "id": "3",
           "title": "应用列表",
-          "path": "/pages/appList"
+          "path": "/app/appList"
         },
         {
           "id": "4",
           "title": "应用详情",
-          "path": "/pages/appDetail"
+          "path": "/app/appDetail"
         }
       ]
     },
@@ -60,12 +60,12 @@
         {
           "id": "3",
           "title": "应用列表",
-          "path": "/pages/appList"
+          "path": "/app/appList"
         },
         {
           "id": "4",
           "title": "应用详情",
-          "path": "/pages/appDetail"
+          "path": "/app/appDetail"
         }
       ]
     },
@@ -77,12 +77,12 @@
         {
           "id": "3",
           "title": "应用列表",
-          "path": "/pages/appList"
+          "path": "/app/appList"
         },
         {
           "id": "4",
           "title": "应用详情",
-          "path": "/pages/appDetail"
+          "path": "/app/appDetail"
         }
       ]
     },
@@ -94,12 +94,12 @@
         {
           "id": "3",
           "title": "应用列表",
-          "path": "/pages/appList"
+          "path": "/app/appList"
         },
         {
           "id": "4",
           "title": "应用详情",
-          "path": "/pages/appDetail"
+          "path": "/app/appDetail"
         }
       ]
     },
@@ -111,12 +111,12 @@
         {
           "id": "3",
           "title": "应用列表",
-          "path": "/pages/appList"
+          "path": "/app/appList"
         },
         {
           "id": "4",
           "title": "应用详情",
-          "path": "/pages/appDetail"
+          "path": "/app/appDetail"
         }
       ]
     },
@@ -128,12 +128,12 @@
         {
           "id": "3",
           "title": "应用列表",
-          "path": "/pages/appList"
+          "path": "/app/appList"
         },
         {
           "id": "4",
           "title": "应用详情",
-          "path": "/pages/appDetail"
+          "path": "/app/appDetail"
         }
       ]
     },
@@ -145,12 +145,12 @@
         {
           "id": "3",
           "title": "应用列表",
-          "path": "/pages/appList"
+          "path": "/app/appList"
         },
         {
           "id": "4",
           "title": "应用详情",
-          "path": "/pages/appDetail"
+          "path": "/app/appDetail"
         }
       ]
     }
