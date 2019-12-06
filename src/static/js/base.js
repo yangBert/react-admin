@@ -1,6 +1,6 @@
 const TOKENSTRING = "token"
 export default {
-  localStorage: { 
+  localStorage: {
     get: k => {
       return localStorage.getItem(k);
     },
@@ -8,7 +8,7 @@ export default {
       localStorage.setItem(k, v);
     }
   },
-  token: { 
+  token: {
     get: () => {
       return localStorage.getItem(TOKENSTRING);
     },

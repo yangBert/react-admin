@@ -7,7 +7,7 @@ const { SubMenu } = Menu;
 
 class SideMenuUI extends React.Component {
   rootSubmenuKeys = this.props.menus.map(item => (
-    item.id  
+    item.id
   ))
   state = {
     openKeys: [],

@@ -50,6 +50,22 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+.clearfix{
+	zoom:1;
+}
+.clearfix:after{
+	display:block;
+	content:'';
+	visibility:hidden;
+	height:0;
+	clear:both;
+}
+
+.pullLeft {
+	float: left;
+}
+
 .pageContentColor{
 	background-color:#fff;
 	padding: 20px 10px 10px 10px;

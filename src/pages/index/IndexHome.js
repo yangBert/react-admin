@@ -20,14 +20,16 @@ function IndexHome(props) {
           <div className={props.collapsed ? styles.paddingMin : styles.paddingMax}>
             <Header propsGlobal={props} className={styles.header} />
             <div className={props.collapsed ? styles.contentMin : styles.contentMax}>
+
+              {/* <Suspense fallback={<Spin />}> */}
               <Suspense fallback={<Spin />}>
-                {routes.map((route, index) => (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    component={route.component}
-                  />
-                ))}
+                  {routes.map((route, index) => (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      component={route.component}
+                    />
+                  ))}
               </Suspense>
             </div>
           </div>
@@ -39,7 +41,7 @@ function IndexHome(props) {
 
 const mapState = state => ({
   collapsed: state.header.collapsed,
-  loginState: state.login.loginState
+  loginState: state.login.loginState,
 })
 
 export default withRouter(connect(mapState, null)(IndexHome));

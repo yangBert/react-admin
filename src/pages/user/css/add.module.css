@@ -5,11 +5,16 @@
   font-size:11px;
 }
 
-/**新增*/
 .formLine {
-  text-align:center;
+  margin-bottom: 10px;
 }
 
-.lineOne {
-  width: 70%;
+.formLine label {
+  width: 130px;
+  text-align:right;
+  padding-right: 10px;
+}
+
+.inline {
+  width: 350px;
 }
