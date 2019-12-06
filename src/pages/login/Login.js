@@ -4,6 +4,7 @@ import styles from './login.module.css';
 import img from 'static/img/1.png';
 import logo from 'static/img/logo.png';
 import LoginButton from './LoginButton';
+import platForm from 'static/js/config';
 
 
 function Login(props) {
@@ -22,7 +23,7 @@ function Login(props) {
         <div className={styles.pageCenter}>
           <img className={styles.imgOhter} src={img} alt="浮云" />
           <img className={styles.logo} src={logo} alt="" />
-          <h2 className={styles.title}>云上贵州证统一认证平台</h2>
+          <h2 className={styles.title}>{platForm.platFormName}</h2>
           <LoginButton loginProps={props} />
         </div>
       </div>

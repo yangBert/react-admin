@@ -8,7 +8,7 @@ const initMenu = menus => ({
 
 const getMenus = () => {
   return dispatch => {
-    axios.get('/api/sideMenu/menu.json')
+    axios.get('/menu.json')
       .then(function (res) {
         // handle success
         if (res.data.menus.length > 0) {

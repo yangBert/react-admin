@@ -1,0 +1,19 @@
+.formLine {
+  display:flex;
+  width: 30%;
+  max-width: 350px;
+  margin-right:10px;
+}
+
+.formLine label {
+  line-height: 2.3;
+  padding-right: 5px;
+}
+
+.inline {
+  flex:1;
+}
+
+.form {
+  margin-bottom: 40px;
+}

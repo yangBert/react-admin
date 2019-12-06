@@ -14,7 +14,7 @@ const logoutAction = propsGlobal => ({
 
 const loginSubmit = data => {
   return dispatch => {
-    axios.get('/api/user/login.json', data)
+    axios.get('/login.json', data)
       .then(function (res) {
         // handle success
         console.log(res);

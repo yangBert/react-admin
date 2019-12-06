@@ -16,6 +16,12 @@ function AddModal(props) {
   const [signcert, setSigncert] = useState("")
 
 
+  const [refAdminName, setRefAdminName] = useState(null)
+  const [refDepartment, setRefDepartment] = useState(null)
+  const [refAdminId, setRefAdminId] = useState(null)
+  const [refSigncert, setRefSigncert] = useState(null)
+
+
   const $operationType = props.operationType
   const $addModalvisible = props.addModalvisible
   const $adminName = $operationType === "edit" ? props.record.adminName : ""
@@ -31,15 +37,28 @@ function AddModal(props) {
     setSigncert($signcert);
   }, [$addModalvisible, $operationType, $adminName, $department, $adminId, $signcert]);
 
+
   //新增管理员提交数据
   function collectData() {
-    props.changeAddModalvisible(false, "", {})
+    if (adminName === "") {
+      refAdminName.focus()
+      return;
+    } else if (department === "") {
+      refDepartment.focus()
+      return;
+    } else if (adminId === "") {
+      refAdminId.focus()
+      return;
+    } else if (signcert === "") {
+      refSigncert.focus()
+      return;
+    }
     props.addUser({
       adminName,
       department,
       adminId,
       signcert
-    })
+    }, $operationType === "edit")
   }
 
   //初始化连接
@@ -82,6 +101,7 @@ function AddModal(props) {
 
   return (
     <div className={styles.tableForm}>
+
       <Modal
         title="新增管理员"
         width={600}
@@ -93,24 +113,39 @@ function AddModal(props) {
         onCancel={() => props.changeAddModalvisible(false, "", {})}
       >
         <Form>
+
           <div className={`${styles.formLine} clearfix`}><label className="pullLeft">管理员名称：</label>
             <div className={`${styles.inline} pullLeft`}>
-              <Input onChange={e => setAdminName(e.target.value)} value={adminName} />
+              <Input
+                allowClear
+                ref={input => setRefAdminName(input)}
+                onChange={e => setAdminName(e.target.value)}
+                value={adminName} />
             </div>
           </div>
+
           <div className={`${styles.formLine} clearfix`}><label className="pullLeft">部门：</label>
             <div className={`${styles.inline} pullLeft`}>
-              <Input onChange={e => setDepartment(e.target.value)} value={department} />
+              <Input
+                allowClear
+                ref={input => setRefDepartment(input)}
+                onChange={e => setDepartment(e.target.value)}
+                value={department} />
             </div>
           </div>
           <div className={`${styles.formLine} clearfix`}><label className="pullLeft">签名证书序列号：</label>
             <div className={`${styles.inline} pullLeft`}>
-              <Input value={adminId} />
+              <Input
+                ref={input => setRefAdminId(input)}
+                value={adminId} />
             </div>
           </div>
           <div className={`${styles.formLine} clearfix`}><label className="pullLeft">签名证书：</label>
             <div className={`${styles.inline} pullLeft`}>
-              <TextArea value={signcert} rows={2}></TextArea>
+              <TextArea
+                ref={input => setRefSigncert(input)}
+                value={signcert}
+                rows={2}></TextArea>
             </div>
           </div>
           <div className={`${styles.formLine} clearfix`}><label className="pullLeft">&nbsp;</label>
@@ -119,25 +154,25 @@ function AddModal(props) {
             </div>
           </div>
         </Form>
-
       </Modal>
-    </div>
+    </div >
   )
 }
 
 const mapState = state => ({
   addModalvisible: state.user.addModalvisible,
   operationType: state.user.operationType,
-  record: state.user.record
+  record: state.user.record,
+  spinning: state.user.spinning
 })
 
 const mapDispatch = dispatch => ({
   changeAddModalvisible: (addModalvisible, operationType, record) => {
-    const action = creators.createChangeAddModalvisibleAction(addModalvisible, operationType, record);
+    const action = creators.changeAddModalvisibleAction(addModalvisible, operationType, record);
     dispatch(action);
   },
-  addUser: requestData => {
-    const action = creators.createAddUserAction(requestData);
+  addUser: (requestData, type) => {
+    const action = creators.createAddUserAction(requestData, type);
     dispatch(action);
   }
 })

@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import spinningTypes from 'pages/common/spinning/spinningTypes';
+import spinningTypes from 'pages/common/layer/spinning/spinningTypes';
 
 const defaultState = {
   list: [],
