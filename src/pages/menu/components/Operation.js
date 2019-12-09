@@ -11,26 +11,25 @@ function Oper(props) {
     <div>
 
       <Button
-        onClick={() => props.changeAddModalvisible(true, "edit", props.record)}
+        onClick={() => props.changeEditModalvisible(true, props.record)}
         style={fontSmall}
         type="primary"
         size="small"
         ghost
-      >编辑</Button>&nbsp;&nbsp;
-      <Popconfirm
+      >修改</Button>&nbsp;&nbsp;
+       <Popconfirm
         placement="left"
         title="确定删除吗?"
         onConfirm={() => {
-          const requestData = "adminId=" + props.record.adminId
-          const params = { ...props.params, pageSize: 10, pageNo: 1 }
-          props.deleteUser({ requestData, params })
+          const requestData = "menuId=" + props.record.menuId
+          props.deleteMenu(requestData)
         }}
         okText="确定"
         icon={<Icon type="question-circle" />}
         cancelText="取消">
         <Button style={fontSmall} type="danger" size="small" ghost>删除</Button>
       </Popconfirm>&nbsp;&nbsp;
-      <Switch
+      {/* <Switch
         checkedChildren="启用"
         unCheckedChildren="禁用"
         defaultChecked={props.record.status === "1" ? true : false}
@@ -43,7 +42,7 @@ function Oper(props) {
           const params = { ...props.params, pageSize: 10, pageNo: 1 }
           props.changeStatus({ requestData, params })
         }}
-      />
+      /> */}
     </div >
   )
 }
@@ -54,18 +53,14 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  changeAddModalvisible: (addModalvisible, operationType, record) => {
-    const action = creators.changeAddModalvisibleAction(addModalvisible, operationType, record);
+  changeEditModalvisible: (visible, record) => {
+    const action = creators.changeEditModalvisibleAction(visible, record);
     dispatch(action);
   },
-  deleteUser: req => {
-    const action = creators.createDeleteUserAction(req);
+  deleteMenu: req => {
+    const action = creators.deleteMenuAction(req);
     dispatch(action);
-  },
-  changeStatus: req => {
-    const action = creators.createChangeStatusAction(req);
-    dispatch(action);
-  },
+  }
 })
 
 export default connect(mapState, mapDispatch)(Oper);

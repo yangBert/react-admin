@@ -1,11 +1,15 @@
-import menuReducer from 'pages/common/menu/store/reducer';
+import sliderMenuReducer from 'pages/common/menu/store/reducer';
 import headReducer from 'pages/common/header/store/reducer';
 import userReducer from 'pages/user/store/reducer';
 import loginReducer from 'pages/login/store/reducer';
+import roleReducer from 'pages/role/store/reducer';
+import menuReducer from 'pages/menu/store/reducer';
 
 export default {
   login: loginReducer,
-  sideMenu: menuReducer,
+  sideMenu: sliderMenuReducer,
   header: headReducer,
   user: userReducer,
+  role: roleReducer,
+  menu: menuReducer,
 };

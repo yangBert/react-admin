@@ -2,53 +2,31 @@
   "success": true,
   "menus": [
     {
-      "id": "sub1",
-      "title": "管理员管理",
+      "id": "system",
+      "title": "系统管理",
       "icon": "user-add",
       "childs": [
         {
           "id": "1",
-          "title": "管理员列表",
-          "path": "/user/userList"
+          "title": "管理员管理",
+          "path": "/system/userList"
         },
         {
           "id": "2",
-          "title": "操作日志",
-          "path": "/user/userDetail"
-        }
-      ]
-    },
-    {
-      "id": "sub2",
-      "title": "应用管理",
-      "icon": "appstore",
-      "childs": [
-        {
-          "id": "3",
-          "title": "应用列表",
-          "path": "/app/appList"
-        },
-        {
-          "id": "4",
-          "title": "应用详情",
-          "path": "/app/appDetail"
+          "title": "菜单管理",
+          "path": "/system/menuList"
         }
       ]
     },
     {
       "id": "sub3",
-      "title": "日志管理",
+      "title": "权限管理",
       "icon": "bug",
       "childs": [
         {
           "id": "3",
-          "title": "应用列表",
-          "path": "/app/appList"
-        },
-        {
-          "id": "4",
-          "title": "应用详情",
-          "path": "/app/appDetail"
+          "title": "角色管理",
+          "path": "/role/roleList"
         }
       ]
     },

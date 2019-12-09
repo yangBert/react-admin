@@ -21,9 +21,8 @@ function Oper(props) {
         placement="left"
         title="确定删除吗?"
         onConfirm={() => {
-          const requestData = "adminId=" + props.record.adminId
-          const params = { ...props.params, pageSize: 10, pageNo: 1 }
-          props.deleteUser({ requestData, params })
+          const data = "roleId=" +props.record.roleId
+          props.deleteRole(data)
         }}
         okText="确定"
         icon={<Icon type="question-circle" />}
@@ -38,9 +37,9 @@ function Oper(props) {
           const status = checked ? "1" : "0"
           const requestData = {
             status: status,
-            adminId: props.record.adminId
+            roleId: props.record.roleId
           }
-          const params = { ...props.params, pageSize: 10, pageNo: 1 }
+          const params = { ...props.params}
           props.changeStatus({ requestData, params })
         }}
       />
@@ -58,8 +57,8 @@ const mapDispatch = dispatch => ({
     const action = creators.changeAddModalvisibleAction(addModalvisible, operationType, record);
     dispatch(action);
   },
-  deleteUser: req => {
-    const action = creators.createDeleteUserAction(req);
+  deleteRole: req => {
+    const action = creators.createDeleteRoleAction(req);
     dispatch(action);
   },
   changeStatus: req => {

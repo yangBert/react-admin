@@ -6,6 +6,7 @@ import Oper from './components/Operation';
 import AddModal from './components/AddModal';
 import SearchForm from './components/SearchForm';
 import styles from './css/UserList.module.css';
+import $$ from 'static/js/base';
 
 const { confirm } = Modal;
 
@@ -32,7 +33,12 @@ const columns = [
   { title: '管理员名称', dataIndex: 'adminName', key: 'adminName' },
   { title: '签名证书序列号', dataIndex: 'adminId', key: 'adminId' },
   { title: '所属部门', dataIndex: 'department', key: 'department' },
-  { title: '更新时间', dataIndex: 'lastTime', key: 'lastTime' },
+  {
+    title: '更新时间', dataIndex: 'lastTime', key: 'lastTime',
+    render: lastTime => (
+      <span>{$$.getHours(lastTime)}</span>
+    )
+  },
   {
     title: '签名证书', dataIndex: 'signcert', key: 'signcert',
     render: signcert => (
@@ -55,11 +61,25 @@ const columns = [
 
 class UserList extends Component {
   componentDidMount() {
-    this.props.queryUserList({});
+    this.props.queryUserList({ pageSize: 10, pageNo: 1 });
+  }
+
+  paginationChange = (pageNo, pageSize) => {
+    this.props.queryUserList({ pageSize, pageNo })
+  }
+
+  paginationShowSizeChange = (pageNo, pageSize) => {
+    this.props.queryUserList({ pageSize, pageNo })
   }
 
   render() {
     const list = this.props.list
+    const pagination = {
+      ...this.props.pagination,
+      onChange: this.paginationChange,
+      onShowSizeChange: this.paginationShowSizeChange,
+    }
+
     return (
       <div className="pageContentColor">
         <AddModal changeSpinning={this.props.changeSpinning} />
@@ -77,10 +97,12 @@ class UserList extends Component {
             ><Icon type="user-add" />角色配置</Button>
           </div>
           <Table
+            bordered
             columns={columns}
             dataSource={list}
             rowKey={record => record.adminId}
             size="small"
+            pagination={pagination}
           />
         </Spin>
       </div >
@@ -90,6 +112,7 @@ class UserList extends Component {
 
 const mapState = state => ({
   list: state.user.list,
+  pagination: state.user.pagination,
   spinning: state.user.spinning
 })
 

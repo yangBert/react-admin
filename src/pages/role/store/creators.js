@@ -3,8 +3,6 @@ import * as requestURL from 'static/js/requestURL';
 import * as request from 'static/js/request';
 import spinningAction from 'pages/common/layer/spinning';
 import notification from 'pages/common/layer/notification';
-import createPagination from 'static/js/pagination';
-
 
 const changeAddModalvisibleAction = (addModalvisible, operationType, record) => ({
   type: types.CHANGE_ADD_MODAL_VISIBLE,
@@ -13,46 +11,45 @@ const changeAddModalvisibleAction = (addModalvisible, operationType, record) => 
   record,
 })
 
-const queryUserAction = (list, pagination) => ({
-  type: types.QUERY_USER_LIST,
-  list,
-  pagination,
+const queryRoleAction = (list) => ({
+  type: types.QUERY_ROLE_LIST,
+  list
 })
 
-const createAddUserAction = (requestData, type) => {
+const createAddRoleAction = (requestData, type) => {
   return dispatch => {
-    const url = type ? requestURL.managerUpdateAdminInfoURL : requestURL.managerRegistertURL;
-    console.log("requestData", requestData)
+    const url = type ? requestURL.powerUpdateRoleURL : requestURL.powerNewRoleURL;
+    console.log("requestData", url, requestData);
     request.json(url, requestData, res => {
+      console.log("res", res)
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
           notification('success', message)
           const action = changeAddModalvisibleAction(false, "", {});
           dispatch(action);
-          dispatch(createQueryUserAction({ pageSize: 10, pageNo: 1 }));
+          dispatch(queryRoleListAction({}));
         } else {
           notification('error', message)
         }
       } else {
         notification('error', res)
       }
-      console.log("res", res)
     })
   }
 }
 
-const createQueryUserAction = requestData => {
+const queryRoleListAction = requestData => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("Query requestData", requestData)
-    request.json(requestURL.managerSelectAdminListURL, requestData, res => {
+    console.log("Query requestData========", requestData)
+    request.json(requestURL.powerSelectAllRoleURL, requestData, res => {
       dispatch(spinningAction(false))
-      console.log("Query res", res)
+      console.log("Query res=========", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
-          const action = queryUserAction(data.results, createPagination(data))
+          const action = queryRoleAction(data)
           dispatch(action)
         } else {
           notification('error', message)
@@ -64,21 +61,22 @@ const createQueryUserAction = requestData => {
   }
 }
 
-const createDeleteUserAction = req => {
+const createDeleteRoleAction = requestData => {
   return dispatch => {
-    console.log("delete", req.requestData)
-    request.json(requestURL.managerDeleteAdminURL, req.requestData, res => {
+    console.log("managerDeleteAdminURL", requestURL.powerDeleteRoleURL, requestData)
+    request.json(requestURL.powerDeleteRoleURL, requestData, res => {
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
-          dispatch(createQueryUserAction(req.params));
+          dispatch(queryRoleListAction({}));
         } else {
           notification('error', message)
         }
       } else {
+        console.log(res)
         //notification('error', res)
       }
-      console.log("delete", res)
+
     })
   }
 }
@@ -90,7 +88,7 @@ const createChangeStatusAction = req => {
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
-          dispatch(createQueryUserAction(req.params));
+          dispatch(queryRoleAction(req.params));
         } else {
           notification('error', message)
         }
@@ -108,10 +106,10 @@ const createChangeParamsAction = params => ({
 })
 
 export {
-  createQueryUserAction,
+  queryRoleListAction,
   changeAddModalvisibleAction,
-  createAddUserAction,
-  createDeleteUserAction,
+  createAddRoleAction,
+  createDeleteRoleAction,
   createChangeStatusAction,
   createChangeParamsAction,
 }

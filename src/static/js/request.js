@@ -7,7 +7,6 @@ function json(requestURL, requestData, callback) {
     method: 'post',
     data: requestData,
   }).then(res => {
-    console.log("Jlksdjfklsdf", res)
     callback(res)
   }).catch(error => {
     callback(error)

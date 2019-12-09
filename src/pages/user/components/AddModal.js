@@ -53,6 +53,7 @@ function AddModal(props) {
       refSigncert.focus()
       return;
     }
+
     props.addUser({
       adminName,
       department,

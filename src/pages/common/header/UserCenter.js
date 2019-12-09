@@ -10,7 +10,7 @@ function UserCenter(props) {
   const propsGlobal = React.useContext(PropsContext);
   useEffect(() => {
     if($$.token.get() === ""){
-      $$.logout(propsGlobal)
+      //$$.logout(propsGlobal)
     }
   });
   const menu = (
