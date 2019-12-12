@@ -7,7 +7,6 @@ const defaultState = {
   addModalvisible: false,
   record: {},
   spinning: false,
-  params: {},
   menuModalvisible: false,
   menuList: [],
   checkedKeys: [],

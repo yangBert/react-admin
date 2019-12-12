@@ -1,17 +1,17 @@
 import axios from 'axios';
 import qs from 'qs';
 
+const error500 = "500，服务器发生错误"
+
 function json(requestURL, requestData, callback) {
   axios({
     url: requestURL,
     method: 'post',
     data: requestData,
   }).then(res => {
-    console.log("-==========", res)
     callback(res)
-  }).catch(err => {
-    console.log("500，服务器发生错误-----------------", err)
-    callback("500，服务器发生错误")
+  }).catch(() => {
+    callback(error500)
   })
 }
 
@@ -26,20 +26,19 @@ function jsonArr(requestURL, requestData, callback) {
   }).then(res => {
     callback(res)
   }).catch(() => {
-    callback("500，服务器发生错误")
+    callback(error500)
   })
 }
 
 function formString(requestURL, requestData, callback) {
-  console.log(qs.stringify(requestData))
   axios({
     url: requestURL,
     method: 'post',
     data: qs.stringify(requestData),
   }).then(res => {
     callback(res)
-  }).catch(error => {
-    callback(error)
+  }).catch(() => {
+    callback(error500)
   })
 }
 
@@ -53,21 +52,9 @@ function formData(requestURL, requestData, callback) {
     }],
   }).then(res => {
     callback(res)
-  }).catch(error => {
-    callback(error)
+  }).catch(() => {
+    callback(error500)
   })
 }
 
-function string(requestURL, requestData, callback) {
-  axios({
-    url: requestURL,
-    method: 'post',
-    data: requestData,
-  }).then(res => {
-    callback(res)
-  }).catch(error => {
-    callback(error)
-  })
-}
-
-export { formString, formData, json, jsonArr, string }
+export { json, jsonArr, formString, formData }

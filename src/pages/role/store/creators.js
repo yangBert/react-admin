@@ -24,6 +24,7 @@ const queryRoleAction = (list) => ({
   list
 })
 
+//菜单弹出层显示和隐藏
 const menuModalvisibleAction = (menuModalvisible, selectedRoleId, checkedKeys) => ({
   type: types.CHANGE_MENU_MODAL_VISIBLE,
   menuModalvisible,
@@ -119,8 +120,6 @@ const createChangeStatusAction = req => {
   }
 }
 
-
-
 //查询所有系统菜单
 const queryMenuAction = requestData => {
   return dispatch => {
@@ -196,14 +195,10 @@ const roleBindMenuAction = requestData => {
   }
 }
 
+//改变选中的角色
 const changeCheckedKeysAction = checkedKeys => ({
   type: types.CHANGE_CHECKED_KEYS_ACTION,
   checkedKeys,
-})
-
-const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
-  params
 })
 
 export {
@@ -212,7 +207,6 @@ export {
   createAddRoleAction,
   createDeleteRoleAction,
   createChangeStatusAction,
-  createChangeParamsAction,
   menuModalvisibleAction,
   queryMenuAction,
   roleBindMenuAction,

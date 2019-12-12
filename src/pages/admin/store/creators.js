@@ -5,11 +5,13 @@ import spinningAction from 'pages/common/layer/spinning';
 import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 
+//新增或修改提交按钮loading状态
 const changeConfirmLoadingAction = ConfirmLoading => ({
   type: types.CHANGE_CONFIRM_LOADING,
   ConfirmLoading,
 })
 
+//改变新增或修改弹出层显示或隐藏
 const changeAddModalvisibleAction = (addModalvisible, operationType, record) => ({
   type: types.CHANGE_ADD_MODAL_VISIBLE,
   addModalvisible,
@@ -17,17 +19,20 @@ const changeAddModalvisibleAction = (addModalvisible, operationType, record) => 
   record,
 })
 
+//查询管理员action
 const queryUserAction = (list, pagination) => ({
   type: types.QUERY_USER_LIST,
   list,
   pagination,
 })
 
+//初始化已选中的角色
 const initSelectedRole = selectedRoles => ({
   type: types.INIT_SELECTED_ROLES,
   selectedRoles,
 })
 
+//改变角色配置弹出层显示隐藏
 const changeRoleModalVisibleAction = roleModalVisible => ({
   type: types.CHANGE_ROLE_MODAL_VISIBLE,
   roleModalVisible,
@@ -79,10 +84,8 @@ const createAddUserAction = (requestData, type) => {
 const createQueryUserAction = requestData => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("Query requestData", requestData)
     request.json(requestURL.managerSelectAdminListURL, requestData, res => {
       dispatch(spinningAction(false))
-      console.log("Query res", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
@@ -101,7 +104,6 @@ const createQueryUserAction = requestData => {
 //删除管理员
 const createDeleteUserAction = req => {
   return dispatch => {
-    console.log("delete", req.requestData)
     request.json(requestURL.managerDeleteAdminURL, req.requestData, res => {
       if (res.data) {
         const { success, message } = res.data && res.data
@@ -181,7 +183,6 @@ const queryAllRoleAction = requestData => {
 //管理员查询已绑定角色
 const querySelectedRoleAction = adminId => {
   return dispatch => {
-    console.log("reqreqreqreq", "adminId=" + adminId)
     request.json(requestURL.powerSelectUserRole, "adminId=" + adminId, res => {
       dispatch(spinningAction(false))
       if (res.data) {
@@ -221,6 +222,7 @@ const bindRoleAction = req => {
   }
 }
 
+//查询携带参数
 const createChangeParamsAction = params => ({
   type: types.CHANGE_SEARCH_PARAMS,
   params

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import { Table, Button, Spin, Icon,Tag } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from './store/creators';
@@ -51,19 +50,6 @@ const columns = [
     render: (text, record) => <Oper text={text} record={record} />,
   },
 ];
-
-// rowSelection objects indicates the need for row selection
-// const rowSelection = {
-//   onChange: (selectedRowKeys, selectedRows) => {
-//     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-//   },
-//   onSelect: (record, selected, selectedRows) => {
-//     console.log(record, selected, selectedRows);
-//   },
-//   onSelectAll: (selected, selectedRows, changeRows) => {
-//     console.log(selected, selectedRows, changeRows);
-//   },
-// };
 
 class MenuList extends Component {
   componentDidMount() {
