@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Button, Spin, Tag, Icon, Modal, message } from 'antd';
+import { withRouter } from 'react-router-dom';
+import { Table, Button, Spin, Icon,Tag } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from './store/creators';
 import Oper from './components/Operation';
@@ -14,25 +15,35 @@ const columns = [
     key: 'menuName',
   },
   {
+    title: '路由地址',
+    dataIndex: 'menuRoute',
+    key: 'menuRoute',
+  },
+  {
     title: '菜单图标',
     dataIndex: 'menuLogo',
     key: 'menuLogo',
-  },
-  {
-    title: '菜单ID',
-    dataIndex: 'menuId',
-    key: 'menuId',
+    align: 'center',
+    render: menuLogo => (
+      <Icon type={menuLogo} />
+    )
   },
   {
     title: '菜单状态',
     dataIndex: 'menuStatue',
     key: 'menuStatue',
+    align: 'center',
+    render: roleStatue => (
+      <span>
+        {
+          roleStatue === 1 ?
+            <Tag color="green">已启用</Tag> :
+            <Tag color="red">已禁用</Tag>
+        }
+      </span>
+    ),
   },
-  {
-    title: '路由地址',
-    dataIndex: 'menuRoute',
-    key: 'menuRoute',
-  },
+
   {
     title: '操作',
     dataIndex: 'operation',
@@ -42,17 +53,17 @@ const columns = [
 ];
 
 // rowSelection objects indicates the need for row selection
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-  },
-  onSelect: (record, selected, selectedRows) => {
-    console.log(record, selected, selectedRows);
-  },
-  onSelectAll: (selected, selectedRows, changeRows) => {
-    console.log(selected, selectedRows, changeRows);
-  },
-};
+// const rowSelection = {
+//   onChange: (selectedRowKeys, selectedRows) => {
+//     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+//   },
+//   onSelect: (record, selected, selectedRows) => {
+//     console.log(record, selected, selectedRows);
+//   },
+//   onSelectAll: (selected, selectedRows, changeRows) => {
+//     console.log(selected, selectedRows, changeRows);
+//   },
+// };
 
 class MenuList extends Component {
   componentDidMount() {
@@ -64,8 +75,7 @@ class MenuList extends Component {
 
     return (
       <div className="pageContentColor">
-        <Add />
-        <Edit />
+
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <div className={styles.buttonForm}>
             <Button
@@ -73,20 +83,19 @@ class MenuList extends Component {
               className={styles.addButton}
               onClick={() => this.props.changeAddModalvisible(true)}
             ><Icon type="plus" />新增</Button>
-            <Button
-              className={styles.addButton}
-            //onClick={() => this.props.changeAddModalvisible(true, "add", {})}
-            ><Icon type="user-add" />角色配置</Button>
           </div>
           <Table
             bordered
+            expandIconAsCell={true}
             columns={columns}
             dataSource={list}
             rowKey={record => record.key}
-            size=""
-          // columns={columns} rowSelection={rowSelection} dataSource={data}
+            size="small"
+            pagination={false}
           />
         </Spin>
+        <Add />
+        <Edit />
       </div >
     )
   }

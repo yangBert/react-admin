@@ -20,8 +20,6 @@ function IndexHome(props) {
           <div className={props.collapsed ? styles.paddingMin : styles.paddingMax}>
             <Header propsGlobal={props} className={styles.header} />
             <div className={props.collapsed ? styles.contentMin : styles.contentMax}>
-
-              {/* <Suspense fallback={<Spin />}> */}
               <Suspense fallback={<Spin />}>
                   {routes.map((route, index) => (
                     <Route

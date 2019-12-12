@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { Table, Button, Spin, Tag, Icon, Modal, message } from 'antd';
+import { Table, Spin, Tag, Modal, message } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from './store/creators';
-import Oper from './components/Operation';
-import AddModal from './components/AddModal';
 import SearchForm from './components/SearchForm';
-import styles from './css/UserList.module.css';
 import $$ from 'static/js/base';
 
 const { confirm } = Modal;
@@ -29,34 +26,36 @@ function showConfirm(signcert) {
   });
 }
 
+// createTime: "2019-12-11T12:15:02.000+0000"
+// id: 26
+// idCard: "MTIzMTM="
+// idCardHash: "633928E344711BDAEB1834B078B0089B6D4D671F767101ECB840BBB52FFC03C1"
+// lastUpdateTime: "2019-12-11T12:15:02.000+0000"
+// name: null
+// password: null
+// realName: "dasdasdas"
+// sourceId: 0
+// state: "1"
+
 const columns = [
-  { title: '管理员名称', dataIndex: 'adminName', key: 'adminName' },
-  { title: '签名证书序列号', dataIndex: 'adminId', key: 'adminId' },
-  { title: '所属部门', dataIndex: 'department', key: 'department' },
+  { title: '用户名称', dataIndex: 'realName', key: 'realName' },
+  { title: '身份证号', dataIndex: 'idCard', key: 'idCard' },
   {
-    title: '更新时间', dataIndex: 'lastTime', key: 'lastTime',
-    render: lastTime => (
-      <span>{$$.getHours(lastTime)}</span>
+    title: '注册时间', dataIndex: 'createTime', key: 'createTime',
+    render: createTime => (
+      <span>{$$.getHours(createTime)}</span>
     )
   },
   {
-    title: '签名证书', dataIndex: 'signcert', key: 'signcert',
-    render: signcert => (
-      <span type="primary" style={{ fontSize: "12px", color: "#3E8FFD", cursor: "pointer" }}
-        onClick={() => showConfirm(signcert)}
-      >查看签名证书</span>
+    title: '最后登录时间', dataIndex: 'lastUpdateTime', key: 'lastUpdateTime',
+    render: lastUpdateTime => (
+      <span>{$$.getHours(lastUpdateTime)}</span>
     )
   },
   {
-    title: '状态', dataIndex: 'status', key: 'status',
-    render: text => <span>{text === "1" ? <Tag color="green">已启用</Tag> : <Tag color="red">已禁用</Tag>}</span>,
-  },
-  {
-    title: '操作',
-    dataIndex: 'operation',
-    key: 'operation',
-    render: (text, record) => <Oper text={text} record={record} />,
-  },
+    title: '状态', dataIndex: 'state', key: 'state',
+    render: state => <span>{state === "1" ? <Tag color="green">已启用</Tag> : <Tag color="red">已禁用</Tag>}</span>,
+  }
 ];
 
 class UserList extends Component {
@@ -82,25 +81,13 @@ class UserList extends Component {
 
     return (
       <div className="pageContentColor">
-        <AddModal changeSpinning={this.props.changeSpinning} />
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <SearchForm />
-          <div className={styles.buttonForm}>
-            <Button
-              type="primary"
-              className={styles.addButton}
-              onClick={() => this.props.changeAddModalvisible(true, "add", {})}
-            ><Icon type="plus" />新增</Button>
-            <Button
-              className={styles.addButton}
-              onClick={() => this.props.changeAddModalvisible(true, "add", {})}
-            ><Icon type="user-add" />角色配置</Button>
-          </div>
           <Table
             bordered
             columns={columns}
             dataSource={list}
-            rowKey={record => record.adminId}
+            rowKey={record => record.id}
             size="small"
             pagination={pagination}
           />
@@ -119,10 +106,6 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   queryUserList: requestData => {
     const action = creators.createQueryUserAction(requestData);
-    dispatch(action);
-  },
-  changeAddModalvisible: (addModalvisible, operationType) => {
-    const action = creators.changeAddModalvisibleAction(addModalvisible, operationType);
     dispatch(action);
   },
 })

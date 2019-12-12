@@ -1,53 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Input, Form } from 'antd';
+import { Modal, Input, Form, Tree } from 'antd';
 import styles from '../css/add.module.css';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 
-//const { TreeNode } = Tree;
+const { TreeNode } = Tree;
 
 function Edit(props) {
-  //const list = props.list
-  //const [treeVisible, setTreeVisible] = useState("hidden")
+  const list = props.list
+  const [treeVisible, setTreeVisible] = useState("hidden")
   const [menuId, setMenuId] = useState("")
-  const [editModalvisible, setEditModalvisible] = useState(false)
+  //const [editModalvisible, setEditModalvisible] = useState(false)
 
-  //const [parentName, setParentName] = useState("")
-  //const [menuFatherid, setMenuFatherid] = useState("")
+  const [parentName, setParentName] = useState("")
+  const [menuFatherid, setMenuFatherid] = useState("")
   const [menuName, setMenuName] = useState("")
   const [menuRoute, setMenuRoute] = useState("")
   const [menuLogo, setMenuLogo] = useState("")
 
-
-
-
   const [refMenuName, setRefMenuName] = useState(null)
   const [refMenuRoute, setRefMenuRoute] = useState(null)
-  //const [refParentName, setRefParentName] = useState(null)
+  const [refParentName, setRefParentName] = useState(null)
   const [refMenuLogo, setRefMenuLogo] = useState(null)
 
-  const $editModalvisible = props.editModalvisible
-  const editRecord = props.editRecord
-  console.log("$editModalvisible====", editRecord)
-
+  //const $editModalvisible = props.editModalvisible
+  const $parentName = props.editRecord && props.editRecord.parentName
+  const $menuName= props.editRecord && props.editRecord.menuName
+  const $menuRoute = props.editRecord && props.editRecord.menuRoute
+  const $menuLogo = props.editRecord && props.editRecord.menuLogo
+  const $menuId = props.editRecord && props.editRecord.menuId
   useEffect(() => {
-    setEditModalvisible($editModalvisible)
-    //setParentName()
-    //setMenuFatherid(editRecord.menuFatherid)
-    setMenuName(editRecord.menuName)
-    setMenuRoute(editRecord.menuRoute)
-    setMenuLogo(editRecord.menuLogo)
-    setMenuId(editRecord.menuId)
+      setParentName($parentName)
+      setMenuName($menuName)
+      setMenuRoute($menuRoute)
+      setMenuLogo($menuLogo)
+      setMenuId($menuId)
+  }, [$parentName,$menuName,$menuRoute,$menuLogo,$menuId]);
 
-  }, [$editModalvisible, editRecord]);
-
-  //新增管理员提交数据
+  //修改提交数据
   function collectData() {
-    // if (parentName === "") {
-    //   refParentName.focus()
-    //   return;
-    // } 
-    if (menuName === "") {
+    if (parentName === "") {
+      refParentName.focus()
+      return;
+    } else if (menuName === "") {
       refMenuName.focus()
       return;
     } else if (menuRoute === "") {
@@ -59,7 +54,7 @@ function Edit(props) {
     }
 
     props.editMenu({
-      //menuFatherid,
+      menuFatherid,
       menuName,
       menuRoute,
       menuLogo,
@@ -68,31 +63,31 @@ function Edit(props) {
 
   }
 
-  // function onSelect(expandedKeys, e) {
-  //   setMenuFatherid(expandedKeys[0])
-  //   setParentName(e.node.props.title)
-  //   setTreeVisible("hidden")
-  // };
+  function onSelect(expandedKeys, e) {
+    setMenuFatherid(expandedKeys[0])
+    setParentName(e.node.props.title)
+    setTreeVisible("hidden")
+  };
 
   //递归菜单
-  // function mapMenuList(menus) {
-  //   return (
-  //     menus.map(i => {
-  //       if (i.children && i.children.length > 0) {
-  //         return (
-  //           <TreeNode
-  //             key={i.key}
-  //             title={i.menuName}
-  //           >
-  //             {mapMenuList(i.children)}
-  //           </TreeNode>
-  //         )
-  //       } else {
-  //         return <TreeNode title={i.menuName} key={i.key} />
-  //       }
-  //     })
-  //   )
-  // }
+  function mapMenuList(menus) {
+    return (
+      menus.map(i => {
+        if (i.children && i.children.length > 0) {
+          return (
+            <TreeNode
+              key={i.key}
+              title={i.menuName}
+            >
+              {mapMenuList(i.children)}
+            </TreeNode>
+          )
+        } else {
+          return <TreeNode title={i.menuName} key={i.key} />
+        }
+      })
+    )
+  }
 
   return (
     <div className={styles.tableForm}>
@@ -100,15 +95,16 @@ function Edit(props) {
         title="修改菜单"
         width={600}
         style={{ top: 20 }}
-        visible={editModalvisible}
+        visible={props.editModalvisible}
         cancelText="取消"
         okText="确定"
         confirmLoading={props.editConfirmLoading}
         onOk={() => collectData()}
         onCancel={() => props.changeEditModalvisible(false)}
+        afterClose={() => setTreeVisible("hidden")}
       >
         <Form>
-          {/* <div className={`${styles.formLine} clearfix`}><label className="pullLeft">上级菜单：</label>
+          <div className={`${styles.formLine} clearfix`}><label className="pullLeft">上级菜单：</label>
             <div className={`${styles.inline} pullLeft`}>
               <Input
                 ref={input => setRefParentName(input)}
@@ -121,7 +117,7 @@ function Edit(props) {
                 </Tree>
               </div>
             </div>
-          </div> */}
+          </div>
           <div className={`${styles.formLine} clearfix`}><label className="pullLeft">菜单名称：</label>
             <div className={`${styles.inline} pullLeft`}>
               <Input

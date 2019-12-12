@@ -9,24 +9,17 @@
         {
           "id": "1",
           "title": "管理员管理",
-          "path": "/system/userList"
+          "path": "/system/adminList"
         },
         {
           "id": "2",
           "title": "菜单管理",
           "path": "/system/menuList"
-        }
-      ]
-    },
-    {
-      "id": "sub3",
-      "title": "权限管理",
-      "icon": "bug",
-      "childs": [
+        },
         {
           "id": "3",
           "title": "角色管理",
-          "path": "/role/roleList"
+          "path": "/system/roleList"
         }
       ]
     },
@@ -37,8 +30,8 @@
       "childs": [
         {
           "id": "3",
-          "title": "应用列表",
-          "path": "/app/appList"
+          "title": "用户管理",
+          "path": "/platform/userList"
         },
         {
           "id": "4",

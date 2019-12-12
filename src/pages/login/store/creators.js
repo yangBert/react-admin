@@ -21,7 +21,6 @@ const loginSubmit = requestData => {
     request.json(requestURL.managerLoginURL, requestData, res => {
       if (res.data) {
         const { success, message, data } = res.data && res.data
-
         if (success) {
           const action = loginAction(true)
           dispatch(action)
@@ -31,7 +30,6 @@ const loginSubmit = requestData => {
       } else {
         notification('error', res)
       }
-      console.log("managerLoginURL",res)
     })
   }
 }

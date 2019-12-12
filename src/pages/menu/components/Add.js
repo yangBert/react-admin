@@ -27,8 +27,6 @@ function Add(props) {
   const [refMenuLogo, setRefMenuLogo] = useState(null)
 
   const $addModalvisible = props.addModalvisible
-  console.log("addModalvisibleaddModalvisible", $addModalvisible)
-
   useEffect(() => {
     setParentName("")
     setMenuFatherid("")
@@ -37,7 +35,6 @@ function Add(props) {
     setMenuLogo("")
     setAddModalvisible($addModalvisible)
     //setAdminName($menuName);
-    console.log($addModalvisible)
   }, [$addModalvisible]);
 
   //新增管理员提交数据

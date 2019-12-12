@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Input, Form } from 'antd';
-import styles from 'pages/user/css/add.module.css';
+import styles from '../css/add.module.css';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 

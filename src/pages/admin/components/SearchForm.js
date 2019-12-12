@@ -85,6 +85,10 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
+  changeAddModalvisible: (addModalvisible, operationType, record) => {
+    const action = creators.changeAddModalvisibleAction(addModalvisible, operationType, record);
+    dispatch(action);
+  },
   queryUserList: requestData => {
     const action = creators.createQueryUserAction(requestData);
     dispatch(action);

@@ -1,24 +1,29 @@
-import {lazy} from 'react';
+import { lazy } from 'react';
 const Home = lazy(() => import('pages/home'));
-const UserList = lazy(() => import('pages/user/UserList'));
+const AdminList = lazy(() => import('pages/admin/AdminList'));
 const MenuList = lazy(() => import('pages/menu/MenuList'));
 const RoleList = lazy(() => import('pages/role/RoleList'));
+const UserList = lazy(() => import('pages/user/UserList'));
 const routes = [
   {
     path: "/home",
     component: Home
   },
   {
-    path: "/system/userList",
-    component: UserList
+    path: "/system/adminList",
+    component: AdminList
   },
   {
     path: "/system/menuList",
     component: MenuList
   },
   {
-    path: "/role/roleList",
+    path: "/system/roleList",
     component: RoleList
+  },
+  {
+    path: "/platform/userList",
+    component: UserList
   }
 ];
 export default routes;

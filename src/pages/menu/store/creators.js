@@ -3,23 +3,32 @@ import * as requestURL from 'static/js/requestURL';
 import * as request from 'static/js/request';
 import spinningAction from 'pages/common/layer/spinning';
 import notification from 'pages/common/layer/notification';
-import createPagination from 'static/js/pagination';
 
 const changeAddModalvisibleAction = addModalvisible => ({
   type: types.CHANGE_ADD_MODAL_VISIBLE,
   addModalvisible,
 })
 
-const changeEditModalvisibleAction = (editModalvisible, editRecord) => ({
+const changeEditModalvisibleAction = editModalvisible => ({
   type: types.CHANGE_EDIT_MODAL_VISIBLE,
   editModalvisible,
-  editRecord,
 })
 
-const initMenuAction = (list, pagination) => ({
+const changeEditRecordAction = editRecord => ({
+  type: types.CHANGE_EDIT_RECORD,
+  editRecord
+})
+
+const changeEditAction = record => {
+  return dispatch => {
+    dispatch(changeEditModalvisibleAction(true))
+    dispatch(changeEditRecordAction(record))
+  }
+}
+
+const initMenuAction = (list) => ({
   type: types.INIT_MENU_LIST,
   list,
-  pagination,
 })
 
 const changeaddConfirmLoadingAction = addConfirmLoading => ({
@@ -64,8 +73,9 @@ const editMenuAction = requestData => {
         const { success, message } = res.data && res.data
         if (success) {
           const action = queryMenuAction({})
+          dispatch(changeEditModalvisibleAction(false))
           dispatch(action)
-          dispatch(changeEditModalvisibleAction(false, {}))
+          notification('success', message)
         } else {
           notification('error', message)
         }
@@ -79,10 +89,7 @@ const editMenuAction = requestData => {
 //删除菜单
 const deleteMenuAction = requestData => {
   return dispatch => {
-    console.log("requestData", requestData)
     request.json(requestURL.powerDeleteMenu, requestData, res => {
-      console.log("res", res)
-
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
@@ -98,19 +105,17 @@ const deleteMenuAction = requestData => {
   }
 }
 
-
+//查询菜单
 const queryMenuAction = requestData => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("Query requestData", requestData)
-    console.log("Query requestData", requestURL.powerSelectAllMenu)
     request.json(requestURL.powerSelectAllMenu, requestData, res => {
+      console.log("all", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
-          console.log("Query res", data)
-          const action = initMenuAction(data, createPagination(data))
+          const action = initMenuAction(implementMenusData(data))
           dispatch(action)
         } else {
           notification('error', message)
@@ -122,12 +127,33 @@ const queryMenuAction = requestData => {
   }
 }
 
+//处理菜单查询返回数据---删除空children
+function implementMenusData(data) {
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].children && data[i].children.length > 0) {
+      implementMenusData(data[i].children)
+    } else if (data[i].children && data[i].children.length === 0) {
+      delete data[i].children
+    }
+  }
+  return implementParentName(data)
+}
 
-
-
-
-
-
+//给每个菜单添加父菜单名字
+function implementParentName(data) {
+  for (let i = 0; i < data.length; i++) {
+    const parentName = data[i].menuName
+    if (data[i].children && data[i].children.length > 0) {
+      for (let j = 0; j < data[i].children.length; j++) {
+        data[i].children[j].parentName = parentName
+        if (data[i].children[j].children && data[i].children[j].children.length > 0) {
+          implementParentName(data[i].children[j].children)
+        }
+      }
+    }
+  }
+  return data
+}
 
 export {
   queryMenuAction,
@@ -135,5 +161,6 @@ export {
   changeEditModalvisibleAction,
   addMenuAction,
   editMenuAction,
-  deleteMenuAction
+  deleteMenuAction,
+  changeEditAction,
 }
