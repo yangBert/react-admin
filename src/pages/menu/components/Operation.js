@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 import { Button, Switch, Popconfirm, Icon } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
@@ -19,8 +20,8 @@ function Oper(props) {
         placement="left"
         title="确定删除吗?"
         onConfirm={() => {
-          const requestData = "id=" + props.record.menuId
-          props.deleteMenu(requestData)
+          const data = "menuId=" + props.record.menuId
+          props.deleteMenu({ props, data })
         }}
         okText="确定"
         icon={<Icon type="question-circle" />}
@@ -33,11 +34,11 @@ function Oper(props) {
         defaultChecked={props.record.menuStatue === 1 ? true : false}
         onChange={checked => {
           const status = checked ? 1 : 0
-          const requestData = {
+          const data = {
             menuStatue: status,
             menuId: props.record.menuId
           }
-          props.updateMenu(requestData)
+          props.updateMenu({ props, data })
         }}
       />
     </div >
@@ -64,4 +65,4 @@ const mapDispatch = dispatch => ({
   }
 })
 
-export default connect(mapState, mapDispatch)(Oper);
+export default withRouter(connect(mapState, mapDispatch)(Oper));

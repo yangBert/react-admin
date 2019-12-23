@@ -39,10 +39,10 @@ const initMenuAction = (menuList) => ({
 })
 
 //新增角色或修改角色
-const createAddRoleAction = (requestData, type) => {
+const createAddRoleAction = req => {
   return dispatch => {
-    const url = type ? requestURL.powerUpdateRoleURL : requestURL.powerNewRoleURL;
-    request.json(url, requestData, res => {
+    const url = req.type ? requestURL.powerUpdateRoleURL : requestURL.powerNewRoleURL;
+    request.json(url, req.data, res => {
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
@@ -54,17 +54,17 @@ const createAddRoleAction = (requestData, type) => {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
 }
 
 //查询角色
-const queryRoleListAction = requestData => {
+const queryRoleListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    request.json(requestURL.powerSelectAllRoleURL, requestData, res => {
+    request.json(requestURL.powerSelectAllRoleURL, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
@@ -75,16 +75,16 @@ const queryRoleListAction = requestData => {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
 }
 
 //删除角色
-const createDeleteRoleAction = requestData => {
+const createDeleteRoleAction = req => {
   return dispatch => {
-    request.json(requestURL.powerDeleteRoleURL, requestData, res => {
+    request.json(requestURL.powerDeleteRoleURL, req.data, res => {
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
@@ -93,9 +93,8 @@ const createDeleteRoleAction = requestData => {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
-
     })
   }
 }
@@ -103,28 +102,27 @@ const createDeleteRoleAction = requestData => {
 //改变角色状态
 const createChangeStatusAction = req => {
   return dispatch => {
-    request.json(requestURL.powerUpdateRoleURL, req.requestData, res => {
+    request.json(requestURL.powerUpdateRoleURL, req.data, res => {
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
-          dispatch(queryRoleListAction({})); 
+          dispatch(queryRoleListAction({}));
           notification('success', message)
         } else {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
-
     })
   }
 }
 
 //查询所有系统菜单
-const queryMenuAction = requestData => {
+const queryMenuAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    request.json(requestURL.powerSelectAllMenu, requestData, res => {
+    request.json(requestURL.powerSelectAllMenu, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
@@ -135,7 +133,7 @@ const queryMenuAction = requestData => {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
@@ -152,32 +150,36 @@ function implementData(data) {
   return arr
 }
 
+
 //查询角色已绑定的菜单
-const queryHaveMenusAction = requestData => {
+const queryHaveMenusAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    request.json(requestURL.powerSelectUserMenu, requestData, res => {
+    request.json(requestURL.powerSelectUserMenu, req.data, res => {
       dispatch(spinningAction(false))
+      console.log("查询角色已绑定的菜单", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
-          const action = menuModalvisibleAction(true, requestData.userId, implementData(data))
+          const action = menuModalvisibleAction(true, req.data.userId, implementData(data))
           dispatch(action)
         } else {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
 }
 
 //保存角色权限分配
-const roleBindMenuAction = requestData => {
+const roleBindMenuAction = req => {
   return dispatch => {
     dispatch(changeConfirmLoadingAction(true))
-    request.jsonArr(requestURL.powerUserBindMenu, requestData, res => {
+    console.log("保存角色权限分配", req.data)
+    request.jsonArr(requestURL.powerUserBindMenu, req.data, res => {
+      console.log("保存角色权限分配resresres", res)
       dispatch(changeConfirmLoadingAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
@@ -189,7 +191,7 @@ const roleBindMenuAction = requestData => {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }

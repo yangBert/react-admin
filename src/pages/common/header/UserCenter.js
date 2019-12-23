@@ -1,21 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Menu, Dropdown, Icon } from 'antd';
 import styles from 'pages/common/header/userCenter.module.css';
-import { connect } from 'react-redux';
 import PropsContext from 'pages/index/props';
-import * as creators from 'pages/login/store/creators';
 import $$ from 'static/js/base.js';
 
-function UserCenter(props) {
+function UserCenter() {
   const propsGlobal = React.useContext(PropsContext);
-  useEffect(() => {
-    if($$.token.get() === ""){
-      //$$.logout(propsGlobal)
-    }
-  });
   const menu = (
     <Menu>
-      <Menu.Item key="0" onClick={() => props.logoutFn(propsGlobal)}>
+      <Menu.Item key="0" onClick={() => $$.logout(propsGlobal)}>
         <Icon
           className={styles.logout}
           type="logout"
@@ -38,16 +31,4 @@ function UserCenter(props) {
   )
 }
 
-const mapState = state => ({
-  loginState: state.login.loginState
-})
-
-const mapDispatch = dispatch => ({
-  logoutFn: propsGlobal => {
-    const action = creators.logoutAction(propsGlobal)
-    dispatch(action)
-
-  }
-})
-
-export default connect(mapState, mapDispatch)(UserCenter);
+export default UserCenter;

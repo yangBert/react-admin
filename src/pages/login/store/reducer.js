@@ -1,21 +1,16 @@
 import * as types from './actionTypes'
-import * as logoutTypes from 'pages/common/header/store/actionTypes'
-import $$ from 'static/js/base.js';
-
 const defaultState = {
-  loginState: false,
-  randomNum: ""
+  loginLoading: false
 };
 
 export default (state = defaultState, action) => {
   let newState = JSON.parse(JSON.stringify(state))
-  if (action.type === types.USER_LOGIN) {
-    return { newState, loginState: action.loginState }
-  }else if(action.type === logoutTypes.USER_LOGOUT) {
-    $$.logout(action.propsGlobal)
-    return { newState, loginState: action.loginState }
-  }else if(action.type === types.LOGIN_RANDNUM){
-    return { newState, randomNum: action.randomNum }
+  switch (action.type) {
+    case types.CHANGE_LOGIN_LOADING:
+      newState.loginLoading = action.loginLoading
+      break;
+    default:
+      break;
   }
-  return state
+  return newState
 }

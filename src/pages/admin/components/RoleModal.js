@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from "react-router-dom";
 import { Modal, Checkbox } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
@@ -28,7 +29,7 @@ function RoleModal(props) {
         roleId: selectedRoles[i]
       })
     }
-    props.bindRole(arr)
+    props.bindRole({ props, data: arr })
   }
 
   return (
@@ -74,4 +75,4 @@ const mapDispatch = dispatch => ({
   }
 })
 
-export default connect(mapState, mapDispatch)(RoleModal);
+export default withRouter(connect(mapState, mapDispatch)(RoleModal));

@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from 'pages/common/header/header.module.css';
 import { Icon } from 'antd';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as types from './store/actionTypes';
 import UserCenter from './UserCenter';
 import logo from 'static/img/logo.png';
 import platForm from 'static/js/config';
-import HistoryLink from 'pages/common/history/HistoryLink';
+//import HistoryLink from 'pages/common/history/HistoryLink';
 function Header(props) {
   return (
     <div>
@@ -17,9 +18,9 @@ function Header(props) {
         <UserCenter />
       </div>
 
-      <div className={styles.history}>
+      {/* <div className={styles.history}>
         <HistoryLink />
-      </div>
+      </div> */}
     </div>
   )
 }
@@ -35,4 +36,4 @@ const mapDispatch = dispatch => ({
   }
 })
 
-export default connect(mapState, mapDispatch)(Header);
+export default withRouter(connect(mapState, mapDispatch)(Header));

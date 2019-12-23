@@ -5,7 +5,7 @@ import spinningAction from 'pages/common/layer/spinning';
 import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 
-const queryUserAction = (list, pagination) => ({
+const initQueryUserAction = (list, pagination) => ({
   type: types.QUERY_USER_LIST,
   list,
   pagination,
@@ -16,32 +16,27 @@ const createChangeParamsAction = params => ({
   params
 })
 
-//查询管理员
-const createQueryUserAction = requestData => {
+//查询用户
+const createQueryUserAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("Query requestData", requestData)
-    request.json(requestURL.userSelectUsers, requestData, res => {
+    request.json(requestURL.userSelectUsers, req.data, res => {
+      console.log("查询用户", res)
       dispatch(spinningAction(false))
-      console.log("Query res", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
-          const action = queryUserAction(data.results, createPagination(data))
+          const action = initQueryUserAction(data.results, createPagination(data))
           dispatch(action)
         } else {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
 }
-
-
-
-
 
 export {
   createQueryUserAction,

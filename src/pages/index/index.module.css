@@ -5,6 +5,8 @@
   left:0;
   height: 100%;
   z-index: 2;
+  overflow:scroll;
+  padding-bottom:40px;
 }
 
 .paddingMax {
@@ -18,16 +20,17 @@
 }
 
 .contentMax {
-  padding:20px 256px 20px 20px;
+  padding:20px 256px 220px 20px;
   height:100%;
   width:100%;
   position:absolute;
   overflow-y: scroll;
   background-color: rgb(241, 241, 241);
+
 }
 
 .contentMin {
-  padding:20px 80px 20px 10px;
+  padding:20px 80px 220px 10px;
   height:100%;
   width:100%;
   position:absolute;

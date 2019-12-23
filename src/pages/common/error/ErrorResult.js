@@ -1,13 +1,13 @@
 import React from 'react';
-import { Result, Button } from 'antd';
+import { Result } from 'antd';
 
 function ErrorResult() {
   return <Result
     status="500"
     title="500"
-    subTitle="Sorry, the server is wrong."
-    extra={<Button type="primary">Back Home</Button>}
-  /> 
+    style={{ marginBottom: "200px" }}
+    subTitle="对不起，服务器出错了..."
+  />
 }
 
 export default ErrorResult

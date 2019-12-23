@@ -2,10 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 const breadcrumbNameMap = {
   '/system': '系统管理',
-  '/system/userList': '管理员列表',
+  '/system/adminList': '管理员管理',
   '/system/menuList': '菜单管理',
-  '/role': '权限管理',
-  '/role/roleList': '角色管理',
+  '/system/roleList': '角色管理',
+
+  '/platform': '系统管理',
+  '/platform/userList': '用户管理',
+
+  '/app': '平台管理',
+  '/app/appList': '应用管理',
 };
 
 export default function switchURL(url) {

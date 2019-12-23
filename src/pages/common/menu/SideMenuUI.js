@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { Menu, Icon } from 'antd';
 import styles from 'pages/common/menu/menu.module.css';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 const { SubMenu } = Menu;
 
 class SideMenuUI extends React.Component {
+
   rootSubmenuKeys = this.props.menus.map(item => (
     item.id
   ))
@@ -32,13 +34,34 @@ class SideMenuUI extends React.Component {
     });
   };
 
+  //递归菜单
+  mapMenuList(menus) {
+    return (
+      menus.map(i => {
+        if (i.children && i.children.length > 0) {
+          return (
+            <SubMenu
+              key={i.key}
+              title={<span>
+                <Icon type={i.menuLogo} />
+                <span>{i.menuName}</span>
+              </span>
+              }
+            >
+              {this.mapMenuList(i.children)}
+            </SubMenu>
+          )
+        } else {
+          return <Menu.Item key={i.key}><Link to={i.menuRoute}>{i.menuName}</Link></Menu.Item>
+        }
+      })
+    )
+  }
+
   render() {
-    const menus = this.props.menus;
     return (
       <div className={this.props.collapsed ? styles.menuMin : styles.menuMax}>
         <Menu
-          //defaultSelectedKeys="100001"
-          // defaultOpenKeys={menus[0] && [menus[0].id]}
           selectedKeys={[this.state.current]}
           mode="inline"
           theme="dark"
@@ -54,26 +77,27 @@ class SideMenuUI extends React.Component {
             </Link>
           </Menu.Item>
           {
-            menus.map(p => {
-              return (
-                <SubMenu
-                  className={styles.sliderItem}
-                  key={p.id}
-                  title={
-                    <span>
-                      <Icon type={p.icon} />
-                      <span>{p.title}</span>
-                    </span>
-                  }
-                >
-                  {
-                    p.childs.map(c => (
-                      <Menu.Item key={c.id}><Link to={c.path}>{c.title}</Link></Menu.Item>
-                    ))
-                  }
-                </SubMenu>
-              )
-            })
+            this.mapMenuList(this.props.menus)
+            // this.props.menus.map(p => {
+            //   return (
+            //     <SubMenu
+            //       className={styles.sliderItem}
+            //       key={p.id}
+            //       title={
+            //         <span>
+            //           <Icon type={p.icon} />
+            //           <span>{p.title}</span>
+            //         </span>
+            //       }
+            //     >
+            //       {
+            //         p.childs.map(c => (
+            //           <Menu.Item key={c.id}><Link to={c.path}>{c.title}</Link></Menu.Item>
+            //         ))
+            //       }
+            //     </SubMenu>
+            //   )
+            // })
           }
         </Menu>
       </div>
@@ -82,7 +106,8 @@ class SideMenuUI extends React.Component {
 }
 
 const mapState = state => ({
-  collapsed: state.header.collapsed
+  collapsed: state.header.collapsed,
+  menus: state.slider.menus,
 })
 
-export default connect(mapState, null)(SideMenuUI);
+export default withRouter(connect(mapState, null)(SideMenuUI));

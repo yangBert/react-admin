@@ -24,7 +24,7 @@ const columns = [
 class UserList extends Component {
 
   componentDidMount() {
-    this.props.queryRoleList({});
+    this.props.queryRoleList({ props: this.props, data: {} });
   }
 
   rowSelection = {
@@ -42,7 +42,7 @@ class UserList extends Component {
     // }
 
     return (
-      <div className="pageContentColor">
+      <div className={`${styles.pageContet} pageContentColor`}>
         <AddModal changeSpinning={this.props.changeSpinning} />
         <MenuModal />
         <Spin tip="Loading..." spinning={this.props.spinning}>
@@ -78,8 +78,8 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  queryRoleList: requestData => {
-    const action = creators.queryRoleListAction(requestData);
+  queryRoleList: req => {
+    const action = creators.queryRoleListAction(req);
     dispatch(action);
   },
   changeAddModalvisible: (addModalvisible, operationType) => {

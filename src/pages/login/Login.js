@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+
 import styles from './login.module.css';
 import img from 'static/img/1.png';
 import logo from 'static/img/logo.png';
@@ -32,4 +32,4 @@ function Login(props) {
   )
 }
 
-export default withRouter(Login);
+export default Login;

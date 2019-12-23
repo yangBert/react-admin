@@ -1,34 +1,30 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import SideMenuUI from './SideMenuUI';
 import { connect } from 'react-redux';
-import * as creators from './store/creators';
+import * as creators from 'pages/common/menu/store/creators';
+import { withRouter } from 'react-router';
 
 class SideMenu extends Component {
 
   componentDidMount() {
-    this.props.initMenu();
+    this.props.getSliderMenu({ props: this.props, data: {} });
+    //this.props.queryMenuListTest({ props: this.props, data: { pageNo: 1, pageSize: 100 } })
   }
 
   render() {
-    const menus = this.props.menus
-    return (
-      <Fragment>
-        {menus.length > 0 ? <SideMenuUI menus={menus} /> : ''}
-      </Fragment>
-    )
+    //const menus = this.props.menus
+    return <SideMenuUI ></SideMenuUI>
   }
-  
+
 }
 
-const mapState = state => ({
-  menus: state.sideMenu.menus,
-});
-
 const mapDispatch = dispatch => ({
-  initMenu: () => {
-    const action = creators.getMenus();
+  getSliderMenu: props => {
+
+    //const action = creators.getMenus(props);
+    const action = creators.queryMenuAction(props);
     dispatch(action);
-  }
+  },
 });
 
-export default connect(mapState, mapDispatch)(SideMenu);
+export default withRouter(connect(null, mapDispatch)(SideMenu));

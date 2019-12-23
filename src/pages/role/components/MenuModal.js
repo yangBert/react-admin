@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { Modal, Tree } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
@@ -12,26 +13,27 @@ class MenuModal extends React.Component {
     expandedKeys: [],
     autoExpandParent: true,
     checkedKeys: [],
-    selectedKeys: [],
+    //selectedKeys: [],
     submitData: {}
   };
 
   componentDidMount() {
-    this.props.queryMenuList({});
+    this.props.queryMenuList({ props: this.props, data: {} });
   }
 
   createSubmitData = () => {
     let keys = this.props.checkedKeys
-    let arr = []
+    let data = []
     for (let i = 0; i < keys.length; i++) {
       let o = {
         userType: '1',
         userId: this.props.selectedRoleId,
         menuId: keys[i]
       }
-      arr.push(o)
+      data.push(o)
     }
-    this.props.roleBindMenu(arr)
+
+    this.props.roleBindMenu({ props: this.props, data })
   }
 
   onExpand = expandedKeys => {
@@ -41,14 +43,19 @@ class MenuModal extends React.Component {
     });
   };
 
-  onCheck = checkedKeys => {
-    this.setState({ checkedKeys });
-    this.props.changeCheckedKeys(checkedKeys)
+  onCheck = (checkedKeys, e) => {
+
+    //let checkedKeysResult = [...checkedKeys, ...info.halfCheckedKeys];
+    console.log("checkedKeys", checkedKeys)
+    console.log("e", e)
+    //this.setState({ checkedKeys: checkedKeysResult });
+    this.props.changeCheckedKeys(checkedKeys.checked)
   };
 
-  onSelect = (selectedKeys, info) => {
-    this.setState({ selectedKeys });
-  };
+  // onSelect = (selectedKeys) => {
+  //   console.log("selectedKeys", selectedKeys)
+  //   this.setState({ selectedKeys });
+  // };
 
   renderTreeNodes = data =>
     data.map(item => {
@@ -65,7 +72,7 @@ class MenuModal extends React.Component {
     return (
       <div>
         <Modal
-          title="权限配置"
+          title="分配权限"
           style={{ top: 20 }}
           width={360}
           bodyStyle={{ height: "300px", overflow: "auto" }}
@@ -75,14 +82,15 @@ class MenuModal extends React.Component {
           onCancel={() => this.props.changeMenuModalvisible(false)}
         >
           <Tree
-            checkable
+            checkable={true}
+            checkStrictly={true}
             onExpand={this.onExpand}
             expandedKeys={this.state.expandedKeys}
-            autoExpandParent={this.state.autoExpandParent}
+            //autoExpandParent={this.state.autoExpandParent}
             onCheck={this.onCheck}
             checkedKeys={this.props.checkedKeys}
-            onSelect={this.onSelect}
-            selectedKeys={this.state.selectedKeys}
+          //onSelect={this.onSelect}
+          //selectedKeys={this.state.selectedKeys}
           >
             {this.renderTreeNodes(this.props.menuList)}
           </Tree>
@@ -108,12 +116,12 @@ const mapDispatch = dispatch => ({
     const action = creators.menuModalvisibleAction(menuModalvisible);
     dispatch(action);
   },
-  queryMenuList: requestData => {
-    const action = creators.queryMenuAction(requestData);
+  queryMenuList: req => {
+    const action = creators.queryMenuAction(req);
     dispatch(action);
   },
-  roleBindMenu: requestData => {
-    const action = creators.roleBindMenuAction(requestData);
+  roleBindMenu: req => {
+    const action = creators.roleBindMenuAction(req);
     dispatch(action);
   },
   changeCheckedKeys: checkedKeys => {
@@ -122,4 +130,4 @@ const mapDispatch = dispatch => ({
   },
 })
 
-export default connect(mapState, mapDispatch)(MenuModal);
+export default withRouter(connect(mapState, mapDispatch)(MenuModal));

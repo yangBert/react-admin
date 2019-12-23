@@ -1,5 +1,8 @@
 //const $base = "http://192.168.1.170:3000";
 
+//登录权限查询
+export const powerSelectAdminMenu = "/api/v1/uamBase/power/selectAdminMenu";
+
 //管理员管理
 export const managerRegistertURL = "/api/v1/uamBase/manager/register";
 export const managerDeleteAdminURL = "/api/v1/uamBase/manager/deleteAdmin";
@@ -26,5 +29,46 @@ export const powerDeleteMenu = "/api/v1/uamBase/power/deleteMenu";
 
 //用户管理
 export const userSelectUsers = "/api/v1/uamBase/user/selectUsers";
+
+//证书管理
+export const certManageSelectCerts = "/api/v1/uamManager/certManage/selectCerts";
+
+//应用管理
+export const plateSettingSelectAppData = "/api/v1/uamManager/plateSetting/SelectAppData";
+export const plateSettingAddAppData = "/api/v1/uamManager/plateSetting/AddAppData";
+export const plateSettingSelectAppAuthSecret = "/api/v1/uamManager/plateSetting/SelectAppAuthSecret";
+export const plateSettingUpdateApp = "/api/v1/uamManager/plateSetting/UpdateApp";
+export const plateSettingAppDetail = "/api/v1/uamManager/plateSetting/appDetail";
+export const plateSettingAppAudit = "/api/v1/uamManager/plateSetting/appAudit";
+export const plateSettingUpdateAppWithOutFile = "/api/v1/uamManager/plateSetting/UpdateAppWithOutFile";
+
+
+//字典管理
+export const plateSettingSelectDictionaryType = "/api/v1/uamManager/plateSetting/SelectDictionaryType";
+export const plateSettingAddDicType = "/api/v1/uamManager/plateSetting/AddDicType";
+export const plateSettingDeleteDicType = "/api/v1/uamManager/plateSetting/DeleteDicType";
+export const plateSettingUpdateDicType = "/api/v1/uamManager/plateSetting/UpdateDicType";
+
+export const plateSettingSelectDictionaryApp = "/api/v1/uamManager/plateSetting/SelectDictionaryApp";
+export const plateSettingUpdateDictionaryApp = "/api/v1/uamManager/plateSetting/UpdateDictionaryApp";
+export const plateSettingAddDictionaryApp = "/api/v1/uamManager/plateSetting/AddDictionaryApp";
+export const plateSettingDeleteDictionaryApp = "/api/v1/uamManager/plateSetting/DeleteDictionaryApp";
+
+export const plateSettingAppType = "/api/v1/uamManager/plateSetting/AppType";
+export const plateSettingDictByNine = "/api/v1/uamManager/plateSetting/DictByNine";
+export const plateSettingLoginType = "/api/v1/uamManager/plateSetting/LoginType";
+export const plateSettingSelectCA = "/api/v1/uamManager/plateSetting/SelectCA";
+
+
+//文件上传
+export const uploadUploadApplyFile = "/api/v1/upload/uploadApplyFile";
+
+//机构管理
+export const orgQueryByPage = "/api/v1/manager/org/queryByPage";
+
+
+
+
+
 
 

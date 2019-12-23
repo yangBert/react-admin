@@ -42,6 +42,8 @@ export default (state = defaultState, action) => {
     case types.CHANGE_CONFIRM_LOADING:
       newState.ConfirmLoading = action.ConfirmLoading
       break;
+    default:
+      break;
   }
   return newState
 }

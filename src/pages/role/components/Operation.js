@@ -10,7 +10,7 @@ function Oper(props) {
   return (
     <div>
       <Button
-        onClick={() => props.queryHaveMenus({ userId: props.record.roleId, userType: "1" })}
+        onClick={() => props.queryHaveMenus({ props: props, data: { userId: props.record.roleId, userType: "1" } })}
         style={fontSmall}
         type="primary"
         size="small"
@@ -28,7 +28,7 @@ function Oper(props) {
         title="确定删除吗?"
         onConfirm={() => {
           const data = { roleId: props.record.roleId }
-          props.deleteRole(data)
+          props.deleteRole({props,data})
         }}
         okText="确定"
         icon={<Icon type="question-circle" />}
@@ -41,12 +41,11 @@ function Oper(props) {
         defaultChecked={props.record.roleStatue === 1 ? true : false}
         onChange={checked => {
           const status = checked ? 1 : 0
-          const requestData = {
+          const data = {
             roleStatue: status,
             roleId: props.record.roleId
           }
-          const params = { ...props.params }
-          props.changeStatus({ requestData, params })
+          props.changeStatus({ props, data })
         }}
       />
     </div >

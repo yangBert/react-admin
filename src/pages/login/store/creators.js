@@ -3,27 +3,20 @@ import * as requestURL from 'static/js/requestURL';
 import * as request from 'static/js/request';
 //import spinningAction from 'pages/common/layer/spinning';
 import notification from 'pages/common/layer/notification';
+import $$ from 'static/js/base.js';
 
-const loginAction = state => ({
-  type: types.USER_LOGIN,
-  loginState: state
-})
 
-const logoutAction = propsGlobal => ({
-  type: types.USER_LOGOUT,
-  loginState: false,
-  propsGlobal: propsGlobal
-})
-
-const loginSubmit = requestData => {
+const loginSubmit = req => {
   return dispatch => {
-    console.log("requestData",requestData)
-    request.json(requestURL.managerLoginURL, requestData, res => {
+    console.log("reqreqreq", req.data)
+    request.json(requestURL.managerLoginURL, req.data, res => {
+      console.log("resresres", res)
+      dispatch(changeLoginLoading(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
-          const action = loginAction(true)
-          dispatch(action)
+          $$.token.set(data)
+          req.props.history.push("/home")
         } else {
           notification('error', message)
         }
@@ -34,39 +27,45 @@ const loginSubmit = requestData => {
   }
 }
 
-// const getRandomAction = propsGlobal => ({
-//   type: types.USER_LOGOUT,
-//   loginState: false,
-//   propsGlobal: propsGlobal
-// })
-
-
 //签名
-function pkcs1SignData_PIN(dispatch, GZCA, containerName, original, certserial) {
+function pkcs1SignData_PIN(props, dispatch, GZCA, containerName, original, certserial) {
   GZCA.GZCA_Pkcs1SignData_PIN(containerName, original, function (res) {
     console.log("签名结果=", res);
     if (res.success) {
       const signData = res.SignData;
-      const datas = { certserial, signData };
-      dispatch(loginSubmit(datas));
+      const data = { certserial, signData };
+      dispatch(loginSubmit({ data, props }));
     } else {
+      dispatch(changeLoginLoading(false))
       notification('error', res.msg)
     }
   });
 }
 
+//改变编辑弹出层提交按钮loading状态
+const changeLoginLoading = loginLoading => ({
+  type: types.CHANGE_LOGIN_LOADING,
+  loginLoading,
+})
+
+//获取随机数原文
 const getRandomAction = params => {
   return dispatch => {
-    request.json(requestURL.managerBuildRandNumURL, params.certserial, res => {
+    console.log("getRandomAction=", params.certserial);
+    dispatch(changeLoginLoading(true))
+    request.json(requestURL.managerBuildRandNumURL, "certserial=" + params.certserial, res => {
+      console.log("res=", res);
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
-          pkcs1SignData_PIN(dispatch, params.GZCA, params.ContainerName, data, params.certserial)
+          pkcs1SignData_PIN(params.props, dispatch, params.GZCA, params.ContainerName, data, params.certserial)
         } else {
           notification('error', message)
+          dispatch(changeLoginLoading(false))
         }
       } else {
         notification('error', res)
+        dispatch(changeLoginLoading(false))
       }
     })
   }
@@ -74,7 +73,5 @@ const getRandomAction = params => {
 
 export {
   getRandomAction,
-
-  //loginSubmit,
-  logoutAction
+  changeLoginLoading,
 }

@@ -53,13 +53,14 @@ function AddModal(props) {
       refSigncert.focus()
       return;
     }
-
-    props.addUser({
+    const data = {
       adminName,
       department,
       adminId,
       signcert
-    }, $operationType === "edit")
+    }
+    const type = $operationType === "edit"
+    props.addUser({ props, data, type })
   }
 
   //初始化连接
@@ -173,8 +174,8 @@ const mapDispatch = dispatch => ({
     const action = creators.changeAddModalvisibleAction(addModalvisible, operationType, record);
     dispatch(action);
   },
-  addUser: (requestData, type) => {
-    const action = creators.createAddUserAction(requestData, type);
+  addUser: req => {
+    const action = creators.createAddUserAction(req);
     dispatch(action);
   }
 })

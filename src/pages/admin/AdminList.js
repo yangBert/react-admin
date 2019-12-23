@@ -63,15 +63,21 @@ const columns = [
 
 class AdminList extends Component {
   componentDidMount() {
-    this.props.queryUserList({ pageSize: 10, pageNo: 1 });
+    this.sendFn(1, 10)
   }
 
   paginationChange = (pageNo, pageSize) => {
-    this.props.queryUserList({ pageSize, pageNo })
+    this.sendFn(pageNo, pageSize)
   }
 
   paginationShowSizeChange = (pageNo, pageSize) => {
-    this.props.queryUserList({ pageSize, pageNo })
+    this.sendFn(pageNo, pageSize)
+  }
+
+  sendFn(pageNo, pageSize) {
+    const params = this.props.params
+    const data = { ...params, pageNo, pageSize }
+    this.props.queryUserList({ props: this.props, data });
   }
 
   render() {
@@ -83,7 +89,7 @@ class AdminList extends Component {
     }
 
     return (
-      <div className="pageContentColor">
+      <div className={`${styles.pageContet} pageContentColor`}>
         <AddModal changeSpinning={this.props.changeSpinning} />
         <RoleModal />
         <Spin tip="Loading..." spinning={this.props.spinning}>
@@ -103,7 +109,7 @@ class AdminList extends Component {
             bordered
             columns={columns}
             dataSource={list}
-            rowKey={record => record.adminId}
+            rowKey={(record, index) => index}
             size="small"
             pagination={pagination}
           />
@@ -116,12 +122,13 @@ class AdminList extends Component {
 const mapState = state => ({
   list: state.admin.list,
   pagination: state.admin.pagination,
-  spinning: state.admin.spinning
+  spinning: state.admin.spinning,
+  params: state.admin.params,
 })
 
 const mapDispatch = dispatch => ({
-  queryUserList: requestData => {
-    const action = creators.createQueryUserAction(requestData);
+  queryUserList: req => {
+    const action = creators.createQueryUserAction(req);
     dispatch(action);
   },
   changeAddModalvisible: (addModalvisible, operationType) => {

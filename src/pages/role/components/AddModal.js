@@ -29,10 +29,9 @@ function AddModal(props) {
       refRoleName.focus()
       return;
     }
-    props.addRole({
-      roleName,
-      roleId
-    }, $operationType === "edit")
+    const data = { roleName, roleId }
+    const type = $operationType === "edit"
+    props.addRole({ props, data, type })
   }
 
   return (
@@ -77,8 +76,8 @@ const mapDispatch = dispatch => ({
     const action = creators.changeAddModalvisibleAction(addModalvisible, operationType, record);
     dispatch(action);
   },
-  addRole: (requestData, type) => {
-    const action = creators.createAddRoleAction(requestData, type);
+  addRole: req => {
+    const action = creators.createAddRoleAction(req);
     dispatch(action);
   }
 })

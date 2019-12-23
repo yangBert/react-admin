@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Spin, Icon,Tag } from 'antd';
+import { Table, Button, Spin, Icon, Tag } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from './store/creators';
 import Oper from './components/Operation';
@@ -53,14 +53,14 @@ const columns = [
 
 class MenuList extends Component {
   componentDidMount() {
-    this.props.queryMenuList({});
+    this.props.queryMenuList({ props: this.props, data: {} });
   }
 
   render() {
     const list = this.props.list
 
     return (
-      <div className="pageContentColor">
+      <div className={`${styles.pageContet} pageContentColor`}>
 
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <div className={styles.buttonForm}>
@@ -94,8 +94,8 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  queryMenuList: requestData => {
-    const action = creators.queryMenuAction(requestData);
+  queryMenuList: req => {
+    const action = creators.queryMenuAction(req);
     dispatch(action);
   },
   changeAddModalvisible: visible => {

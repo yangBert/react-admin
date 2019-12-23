@@ -18,20 +18,24 @@ function SearchForm(props) {
 
   function search() {
     const { adminName, adminId, status } = props.params
-    props.queryUserList({
+    const data = {
       pageSize: 10,
       pageNo: 1,
       adminName,
       adminId,
       status,
-    })
+    }
+    props.queryUserList({ props, data });
   }
+
+
 
   function reset() {
     setAdminName("");
     setAdminId("");
     setStatus("");
-    props.queryUserList({ pageSize: 10, pageNo: 1 });
+    const data = { pageNo: 1, pageSize: 10 }
+    props.queryUserList({ props, data });
   }
 
   return (
@@ -89,8 +93,8 @@ const mapDispatch = dispatch => ({
     const action = creators.changeAddModalvisibleAction(addModalvisible, operationType, record);
     dispatch(action);
   },
-  queryUserList: requestData => {
-    const action = creators.createQueryUserAction(requestData);
+  queryUserList: req => {
+    const action = creators.createQueryUserAction(req);
     dispatch(action);
   },
   changeSearchParams: params => {

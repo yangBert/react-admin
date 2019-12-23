@@ -29,99 +29,36 @@
       "icon": "setting",
       "childs": [
         {
-          "id": "3",
+          "id": "4",
           "title": "用户管理",
           "path": "/platform/userList"
-        },
-        {
-          "id": "4",
-          "title": "应用详情",
-          "path": "/app/appDetail"
         }
       ]
     },
     {
       "id": "sub5",
-      "title": "权限管理",
+      "title": "业务管理",
       "icon": "lock",
       "childs": [
         {
-          "id": "3",
-          "title": "应用列表",
+          "id": "5",
+          "title": "证书列表",
+          "path": "/cert/certList"
+        },
+        {
+          "id": "6",
+          "title": "应用管理",
           "path": "/app/appList"
         },
         {
-          "id": "4",
-          "title": "应用详情",
-          "path": "/app/appDetail"
-        }
-      ]
-    },
-    {
-      "id": "sub6",
-      "title": "数据统计",
-      "icon": "dot-chart",
-      "childs": [
-        {
-          "id": "3",
-          "title": "应用列表",
-          "path": "/app/appList"
+          "id": "7",
+          "title": "字典类型管理",
+          "path": "/dictType/dictTypeList"
         },
         {
-          "id": "4",
-          "title": "应用详情",
-          "path": "/app/appDetail"
-        }
-      ]
-    },
-    {
-      "id": "sub7",
-      "title": "文档管理",
-      "icon": "file-word",
-      "childs": [
-        {
-          "id": "3",
-          "title": "应用列表",
-          "path": "/app/appList"
-        },
-        {
-          "id": "4",
-          "title": "应用详情",
-          "path": "/app/appDetail"
-        }
-      ]
-    },
-    {
-      "id": "sub8",
-      "title": "业务管理",
-      "icon": "deployment-unit",
-      "childs": [
-        {
-          "id": "3",
-          "title": "应用列表",
-          "path": "/app/appList"
-        },
-        {
-          "id": "4",
-          "title": "应用详情",
-          "path": "/app/appDetail"
-        }
-      ]
-    },
-    {
-      "id": "sub9",
-      "title": "权限管理",
-      "icon": "team",
-      "childs": [
-        {
-          "id": "3",
-          "title": "应用列表",
-          "path": "/app/appList"
-        },
-        {
-          "id": "4",
-          "title": "应用详情",
-          "path": "/app/appDetail"
+          "id": "8",
+          "title": "字典数据管理",
+          "path": "/dictData/dictDataList"
         }
       ]
     }

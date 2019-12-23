@@ -53,6 +53,8 @@ export default (state = defaultState, action) => {
     case types.CHANGE_CONFIRMLOADING_ROLE:
       newState.ConfirmLoadingRole = action.ConfirmLoadingRole
       break;
+    default:
+      break;
   }
   return newState
 }

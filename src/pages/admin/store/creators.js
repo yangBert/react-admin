@@ -57,11 +57,11 @@ const changeConfirmLoadingRole = ConfirmLoadingRole => ({
 })
 
 //新增或修改管理员
-const createAddUserAction = (requestData, type) => {
-  return dispatch => {
-    const url = type ? requestURL.managerUpdateAdminInfoURL : requestURL.managerRegistertURL;
+const createAddUserAction = req => {
+  return (dispatch, getState) => {
+    const url = req.type ? requestURL.managerUpdateAdminInfoURL : requestURL.managerRegistertURL;
     dispatch(changeConfirmLoadingAction(true))
-    request.json(url, requestData, res => {
+    request.json(url, req.data, res => {
       dispatch(changeConfirmLoadingAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
@@ -69,23 +69,31 @@ const createAddUserAction = (requestData, type) => {
           notification('success', message)
           const action = changeAddModalvisibleAction(false, "", {});
           dispatch(action);
-          dispatch(createQueryUserAction({ pageSize: 10, pageNo: 1 }));
+
+          const pagination = getState().admin.pagination
+          const params = {
+            ...getState().admin.params,
+            pageNo: pagination.current,
+            pageSize: pagination.pageSize
+          }
+          dispatch(createQueryUserAction({ props: req.props, data: params }));
         } else {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
 }
 
 //查询管理员
-const createQueryUserAction = requestData => {
+const createQueryUserAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    request.json(requestURL.managerSelectAdminListURL, requestData, res => {
+    request.json(requestURL.managerSelectAdminListURL, req.data, res => {
       dispatch(spinningAction(false))
+      console.log("res", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
@@ -95,7 +103,7 @@ const createQueryUserAction = requestData => {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
@@ -103,17 +111,22 @@ const createQueryUserAction = requestData => {
 
 //删除管理员
 const createDeleteUserAction = req => {
-  return dispatch => {
-    request.json(requestURL.managerDeleteAdminURL, req.requestData, res => {
+  return (dispatch, getState) => {
+    request.json(requestURL.managerDeleteAdminURL, req.data, res => {
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
-          dispatch(createQueryUserAction(req.params));
+          const params = {
+            ...getState().dictType.params,
+            pageNo: 1,
+            pageSize: 10
+          }
+          dispatch(createQueryUserAction({ props: req.props, data: params }));
         } else {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
@@ -121,17 +134,23 @@ const createDeleteUserAction = req => {
 
 //修改管理员状态
 const createChangeStatusAction = req => {
-  return dispatch => {
-    request.json(requestURL.managerUpdateAdminInfoURL, req.requestData, res => {
+  return (dispatch, getState) => {
+    request.json(requestURL.managerUpdateAdminInfoURL, req.data, res => {
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
-          dispatch(createQueryUserAction(req.params));
+          const pagination = getState().admin.pagination
+          const params = {
+            ...getState().admin.params,
+            pageNo: pagination.current,
+            pageSize: pagination.pageSize
+          }
+          dispatch(createQueryUserAction({ props: req.props, data: params }));
         } else {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
@@ -160,7 +179,7 @@ function mapAllRoles(list) {
 }
 
 //查询所有角色
-const queryAllRoleAction = requestData => {
+const queryAllRoleAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
     request.json(requestURL.powerSelectAllRoleURL, {}, res => {
@@ -169,34 +188,34 @@ const queryAllRoleAction = requestData => {
         if (success) {
           const action = initRoleAllAction(mapAllRoles(data))
           dispatch(action)
-          dispatch(querySelectedRoleAction(requestData))
+          dispatch(querySelectedRoleAction(req))
         } else {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
 }
 
 //管理员查询已绑定角色
-const querySelectedRoleAction = adminId => {
+const querySelectedRoleAction = req => {
   return dispatch => {
-    request.json(requestURL.powerSelectUserRole, "adminId=" + adminId, res => {
+    request.json(requestURL.powerSelectUserRole, "adminId=" + req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
           const selectedRoles = mapSelectedRoles(data)
           dispatch(initSelectedRole(selectedRoles))
-          dispatch(initRoleAdminId(adminId))
+          dispatch(initRoleAdminId(req.data))
           dispatch(changeRoleModalVisibleAction(true))
         } else {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
@@ -206,7 +225,7 @@ const querySelectedRoleAction = adminId => {
 const bindRoleAction = req => {
   return dispatch => {
     dispatch(changeConfirmLoadingRole(true))
-    request.jsonArr(requestURL.powerUserBindRole, req, res => {
+    request.jsonArr(requestURL.powerUserBindRole, req.data, res => {
       dispatch(changeConfirmLoadingRole(false))
       if (res.data) {
         const { success, message } = res.data && res.data
@@ -216,7 +235,7 @@ const bindRoleAction = req => {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }

@@ -1,30 +1,10 @@
 import React, { Component } from 'react';
-import { Table, Spin, Tag, Modal, message } from 'antd';
+import { Table, Spin, Tag } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from './store/creators';
 import SearchForm from './components/SearchForm';
 import $$ from 'static/js/base';
-
-const { confirm } = Modal;
-
-function showConfirm(signcert) {
-  confirm({
-    title: '签名证书Base64',
-    okText: "复制",
-    cancelText: "取消",
-    width: 516,
-    content: <div>
-      <textarea name="" id="document-copy-textarea-text" cols="60" rows="5" defaultValue={signcert}></textarea>
-    </div>,
-    onOk() {
-      var input = document.getElementById("document-copy-textarea-text");
-      input.value = signcert;
-      input.select();
-      document.execCommand("copy");
-      message.success('复制成功');
-    }
-  });
-}
+import styles from './css/UserList.module.css';
 
 // createTime: "2019-12-11T12:15:02.000+0000"
 // id: 26
@@ -60,15 +40,20 @@ const columns = [
 
 class UserList extends Component {
   componentDidMount() {
-    this.props.queryUserList({ pageSize: 10, pageNo: 1 });
+    this.sendFn(1, 10)
   }
 
   paginationChange = (pageNo, pageSize) => {
-    this.props.queryUserList({ pageSize, pageNo })
+    this.sendFn(pageNo, pageSize)
   }
 
   paginationShowSizeChange = (pageNo, pageSize) => {
-    this.props.queryUserList({ pageSize, pageNo })
+    this.sendFn(pageNo, pageSize)
+  }
+
+  sendFn(pageNo, pageSize) {
+    const data = { pageNo, pageSize }
+    this.props.queryUserList({ props: this.props, data });
   }
 
   render() {
@@ -80,14 +65,14 @@ class UserList extends Component {
     }
 
     return (
-      <div className="pageContentColor">
+      <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <SearchForm />
           <Table
             bordered
             columns={columns}
             dataSource={list}
-            rowKey={record => record.id}
+            rowKey={(record, index) => index}
             size="small"
             pagination={pagination}
           />
@@ -104,8 +89,8 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  queryUserList: requestData => {
-    const action = creators.createQueryUserAction(requestData);
+  queryUserList: req => {
+    const action = creators.createQueryUserAction(req);
     dispatch(action);
   },
 })

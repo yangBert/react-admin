@@ -1,0 +1,73 @@
+import React from 'react';
+import { Switch, Button } from 'antd';
+import { connect } from 'react-redux';
+import * as creators from '../store/creators';
+import { withRouter, Link } from 'react-router-dom';
+
+function Oper(props) {
+
+  // function editApp(id) {
+  //   props.editFormApp({ props, data: { id } })
+  // }
+  return (
+    <div>
+      <Link to={{ pathname: '/app/add', state: { editAppId: props.record.id } }}>
+        <Button
+          // onClick={() => editApp(props.record.id)}
+          style={{ fontSize: "12px" }}
+          type="primary"
+          size="small"
+          ghost
+        >修改</Button>&nbsp;&nbsp;
+      </Link>
+      <Switch
+        checkedChildren="启用"
+        unCheckedChildren="禁用"
+        defaultChecked={props.record.appStatus === 1 ? true : false}
+        onChange={checked => {
+          const appStatus = checked ? 1 : 2
+          const data = {
+            appStatus: appStatus,
+            id: props.record.id
+          }
+          props.changeAppStatus({ props, data })
+        }}
+      />
+      &nbsp;&nbsp;
+      <Button
+        onClick={() => props.showSecret({ props, data: "appID=" + props.record.id })}
+        style={{ fontSize: "12px" }}
+        type="primary"
+        size="small"
+        ghost
+      >查看密钥</Button>&nbsp;&nbsp;
+      <Link to={{ pathname: '/app/detail', state: { editAppId: props.record.id, rowauditStatus: props.record.auditStatus } }}>
+        <Button
+          // onClick={() => props.detailApp({ props, data: props.record })}
+          style={{ fontSize: "12px" }}
+          type="primary"
+          size="small"
+          ghost
+        >详情</Button>
+      </Link>
+    </div >
+  )
+}
+
+const mapState = state => ({
+  params: state.app.params,
+})
+
+const mapDispatch = dispatch => ({
+  changeAppStatus: req => {
+    const action = creators.createChangeAppStatusAction(req);
+    dispatch(action);
+  },
+  showSecret: req => {
+    const action = creators.showSecretAction(req);
+    dispatch(action);
+  },
+
+})
+
+export default withRouter(connect(mapState, mapDispatch)(Oper));

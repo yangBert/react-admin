@@ -49,37 +49,37 @@ const changeEditConfirmLoadingAction = editConfirmLoading => ({
 })
 
 //新增菜单
-const addMenuAction = requestData => {
+const addMenuAction = req => {
   return dispatch => {
     dispatch(changeaddConfirmLoadingAction(true))
-    request.json(requestURL.powerNewMenu, requestData, res => {
+    request.json(requestURL.powerNewMenu, req.data, res => {
       dispatch(changeaddConfirmLoadingAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
-          const action = queryMenuAction({})
+          const action = queryMenuAction({ props: req.props, data: {} })
           dispatch(action)
           dispatch(changeAddModalvisibleAction(false))
         } else {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
 }
 
 //修改菜单
-const editMenuAction = requestData => {
+const editMenuAction = req => {
   return dispatch => {
     dispatch(changeEditConfirmLoadingAction(true))
-    request.json(requestURL.powerUpdateMenu, requestData, res => {
+    request.json(requestURL.powerUpdateMenu, req.data, res => {
       dispatch(changeEditConfirmLoadingAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
-          const action = queryMenuAction({})
+          const action = queryMenuAction({ props: req.props, data: {} })
           dispatch(changeEditModalvisibleAction(false))
           dispatch(action)
           notification('success', message)
@@ -87,36 +87,38 @@ const editMenuAction = requestData => {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
 }
 
 //删除菜单
-const deleteMenuAction = requestData => {
+const deleteMenuAction = req => {
   return dispatch => {
-    request.json(requestURL.powerDeleteMenu, requestData, res => {
+    request.json(requestURL.powerDeleteMenu, req.data, res => {
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
-          const action = queryMenuAction({})
+          notification('success', message)
+          const action = queryMenuAction({ props: req.props, data: {} })
           dispatch(action)
         } else {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }
 }
 
 //查询菜单
-const queryMenuAction = requestData => {
+const queryMenuAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    request.json(requestURL.powerSelectAllMenu, requestData, res => {
+    request.json(requestURL.powerSelectAllMenu, req.data, res => {
+      console.log("查询菜单查询菜单", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
@@ -127,7 +129,7 @@ const queryMenuAction = requestData => {
           notification('error', message)
         }
       } else {
-        notification('error', res)
+        req.props.history.push("/500")
       }
     })
   }

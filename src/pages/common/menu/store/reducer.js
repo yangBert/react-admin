@@ -1,13 +1,17 @@
 import * as types from './actionTypes';
 
 const defaultState = {
-  menus: []
+  menus: [],
 };
 
 export default (state = defaultState, action) => {
-  if (action.type === types.INIT_MENUS) {
-    const newState = {...state, ...action.menus};
-    return newState;
+  let newState = JSON.parse(JSON.stringify(state))
+  switch (action.type) {
+    case types.INIT_MENUS:
+      newState.menus = action.menus
+      break;
+    default:
+      break;
   }
-  return state;
+  return newState
 }
