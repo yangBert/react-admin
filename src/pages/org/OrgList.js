@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Table, Button, Spin, Icon, Tag } from 'antd';
+import { Table, Button, Spin, Icon } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from './store/creators';
 import Oper from './components/Operation';
-import Add from './components/Add';
-import Edit from './components/Edit';
 import styles from './css/UserList.module.css';
+import { Link } from 'react-router-dom';
+// import AddModal from './components/AddModal';
 
 const columns = [
   {
@@ -34,45 +34,65 @@ const columns = [
 ];
 
 class OrgList extends Component {
+
   componentDidMount() {
-    this.props.queryOrgList({ props: this.props, data: {} });
+    this.sendFn(1, 10)
+  }
+
+  paginationChange = (pageNo, pageSize) => {
+    this.sendFn(pageNo, pageSize)
+  }
+
+  paginationShowSizeChange = (pageNo, pageSize) => {
+    this.sendFn(pageNo, pageSize)
+  }
+
+  sendFn(pageNo, pageSize) {
+    const params = this.props.params
+    const data = { ...params, pageNo, pageSize }
+    this.props.queryOrgList({ props: this.props, data });
   }
 
   render() {
     const list = this.props.list
-
+    const pagination = {
+      ...this.props.pagination,
+      onChange: this.paginationChange,
+      onShowSizeChange: this.paginationShowSizeChange,
+    }
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
-
+        {/* <AddModal /> */}
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <div className={styles.buttonForm}>
-            <Button
-              type="primary"
-              className={styles.addButton}
-              onClick={() => this.props.changeAddModalvisible(true)}
-            ><Icon type="plus" />新增</Button>
+            <Link
+              to={{ pathname: '/org/orgAdd', state: { list: this.props.list } }}>
+              <Button
+                type="primary"
+                className={styles.addButton}
+              // onClick={() => this.props.changeAddModalvisible(true)}
+              ><Icon type="plus" />新增</Button>
+            </Link>
           </div>
           <Table
             bordered
             expandIconAsCell={true}
             columns={columns}
             dataSource={list}
-            rowKey={record => record.orgCode}
+            rowKey={record => record.id}
             size="small"
-            pagination={false}
+            pagination={pagination}
           />
         </Spin>
-        <Add />
-        <Edit />
       </div >
     )
   }
 }
 
 const mapState = state => ({
-  list: state.menu.list,
-  spinning: state.menu.spinning,
-  addModalvisible: state.menu.addModalvisible,
+  list: state.org.list,
+  spinning: state.org.spinning,
+  // addModalvisible: state.org.addModalvisible,
 })
 
 const mapDispatch = dispatch => ({
@@ -80,9 +100,5 @@ const mapDispatch = dispatch => ({
     const action = creators.queryOrgListAction(req);
     dispatch(action);
   },
-  changeAddModalvisible: visible => {
-    const action = creators.changeAddModalvisibleAction(visible);
-    dispatch(action);
-  }
 })
 export default connect(mapState, mapDispatch)(OrgList);

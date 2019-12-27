@@ -32,6 +32,7 @@ export const userSelectUsers = "/api/v1/uamBase/user/selectUsers";
 
 //证书管理
 export const certManageSelectCerts = "/api/v1/uamManager/certManage/selectCerts";
+export const certManageInsert = "/api/v1/uamManager/certManage/insert";
 
 //应用管理
 export const plateSettingSelectAppData = "/api/v1/uamManager/plateSetting/SelectAppData";
@@ -65,6 +66,16 @@ export const uploadUploadApplyFile = "/api/v1/upload/uploadApplyFile";
 
 //机构管理
 export const orgQueryByPage = "/api/v1/manager/org/queryByPage";
+export const orgQueryAllOrgTree = "/api/v1/manager/org/queryAllOrgTree";
+export const orgAddOrg = "/api/v1/manager/org/addOrg";
+export const orgUpdateOrg = "/api/v1/manager/org/updateOrg";
+
+
+//公告管理
+export const noticeQueryByPage = "/api/v1/manager/notice/queryByPage";
+export const noticeUpdateNotice = "/api/v1/manager/notice/updateNotice";
+export const noticePublishNotice = "/api/v1/manager/notice/publishNotice";
+export const noticeAddNotice = "/api/v1/manager/notice/addNotice";
 
 
 

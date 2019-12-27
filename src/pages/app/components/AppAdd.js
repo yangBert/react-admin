@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import styles from '../css/add.module.css';
 import * as creators from '../store/creators';
-import $$ from 'static/js/base';
+//import $$ from 'static/js/base';
 
 const { Option } = Select;
 
@@ -43,6 +43,8 @@ class AppAdd extends Component {
     //查询应用所有信息
     if (this.props.location.state && this.props.location.state.editAppId) {
       this.props.queryEditAppInfor({ com: this, data: { id: this.props.location.state.editAppId } })
+    } else {
+      this.props.emptyValue()
     }
   }
 
@@ -98,31 +100,31 @@ class AppAdd extends Component {
     } = data
 
     if (appName === "") {
-      message("应用名称不能为空")
+      message.error("应用名称不能为空")
       return;
     } else if (url === "") {
-      message("应用访问地址不能为空")
+      message.error("应用访问地址不能为空")
       return;
     } else if (describes === "") {
-      message("应用描述不能为空")
+      message.error("应用描述不能为空")
       return;
     } else if (redirectUrl === "") {
-      message("推送URL不能为空")
+      message.error("推送URL不能为空")
       return;
     } else if (!imgURL) {
-      message("请上传应用LOGO")
+      message.error("请上传应用LOGO")
       return;
     } else if (appType === "") {
-      message("请选择应用类型")
+      message.error("请选择应用类型")
       return;
     } else if (auditMode === "") {
-      message("请选择审核模式")
+      message.error("请选择审核模式")
       return;
     } else if (landingModes.length === 0) {
-      message("请选择登陆认证方式")
+      message.error("请选择登陆认证方式")
       return;
     } else if (supportCAs.length === 0) {
-      message("请选择支持CA机构")
+      message.error("请选择支持CA机构")
       return;
     }
 
@@ -368,7 +370,10 @@ const mapDispatch = dispatch => ({
     const action = creators.queryEditAppAction(value);
     dispatch(action);
   },
-
+  emptyValue: () => {
+    const action = creators.emptyAddValueAction();
+    dispatch(action);
+  },
 })
 
 export default withRouter(connect(mapState, mapDispatch)(AppAdd));

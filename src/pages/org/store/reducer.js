@@ -1,39 +1,50 @@
 import * as types from './actionTypes';
 const defaultState = {
   list: [],
-  sliderMenuList: [],
-  operationType: "",
-  addModalvisible: false,
-  editModalvisible: false,
-  editRecord: null,
   spinning: false,
-  addConfirmLoading: false,
-  editConfirmLoading: false,
+  editParentOrgName: "",
+  editPid: 100000000,
+  editPorgCode: "",
+  editOrgName: "",
+  editOrgCode: "",
+  editOrgDesc: "",
+  editId: "",
+  treeList: [],
+  saveLoading: false,
 };
 
 export default (state = defaultState, action) => {
   let newState = JSON.parse(JSON.stringify(state))
   switch (action.type) {
-    case types.CHANGE_ADD_CONFIRM_LOADING:
-      newState.addConfirmLoading = action.addConfirmLoading
-      break;
-    case types.CHANGE_EDIT_CONFIRM_LOADING:
-      newState.editConfirmLoading = action.editConfirmLoading
-      break;
-    case types.INIT_MENU_LIST:
+    case types.INIT_ORG_LIST:
       newState.list = action.list
       break;
-    case types.CHANGE_ADD_MODAL_VISIBLE:
-      newState.addModalvisible = action.addModalvisible
+    case types.SET_ORG_NAME:
+      newState.editOrgName = action.editOrgName
       break;
-    case types.CHANGE_EDIT_MODAL_VISIBLE:
-      newState.editModalvisible = action.editModalvisible
+    case types.SET_ORG_CODE:
+      newState.editOrgCode = action.editOrgCode
       break;
-    case types.CHANGE_EDIT_RECORD:
-      newState.editRecord = action.editRecord
+    case types.SET_ORG_DESC:
+      newState.editOrgDesc = action.editOrgDesc
       break;
-    case types.INIT_SLIDER_MENU_LIST:
-      newState.sliderMenuList = action.sliderMenuList
+    case types.INIT_FORM_VALUES:
+      newState.editOrgName = action.record.orgName
+      newState.editOrgCode = action.record.orgCode
+      newState.editOrgDesc = action.record.orgDesc
+      newState.editId = action.record.id
+      newState.editPid = action.record.pid
+      newState.editPorgCode = action.record.porgCode
+      break;
+    case types.INIT_ORG_TREE_DATA:
+      newState.treeList = action.treeList
+      break;
+    case types.SET_EDIT_TREE_VALUE:
+      newState.editPorgCode = action.tree.orgCode
+      newState.editPid = action.tree.id
+      break;
+    case types.CHANGE_SAVE_LOADING:
+      newState.saveLoading = action.saveLoading
       break;
     default:
       break;

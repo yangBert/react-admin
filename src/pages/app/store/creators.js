@@ -20,6 +20,11 @@ const createChangeParamsAction = params => ({
   params
 })
 
+//新增清空value
+const emptyAddValueAction = () => ({
+  type: types.EMPTY_ADD_VALUE,
+})
+
 //审核应用
 const appAuditAction = req => {
   return dispatch => {
@@ -33,8 +38,7 @@ const appAuditAction = req => {
         if (success) {
           notification('success', message)
           req.com.setState({ visibleModal: false })
-          req.com.props.history.push("/app/appList")
-          //dispatch(queryEditAppAction({ com: req.com, data: { id: req.com.props.location.state.editAppId } }))
+          req.com.props.history.push("/app/authList")
         } else {
           notification('error', message)
         }
@@ -161,7 +165,7 @@ const createChangeAppStatusAction = req => {
   return (dispatch, getState) => {
     console.log("req", req, requestURL.plateSettingUpdateApp);
     dispatch(spinningAction(true))
-    request.json(requestURL.plateSettingUpdateApp, req.data, res => {
+    request.json(requestURL.plateSettingUpdateAppWithOutFile, req.data, res => {
       dispatch(spinningAction(false))
       console.log("resres", res);
       if (res.data) {
@@ -395,5 +399,6 @@ export {
   saveAppFormAction,
   showSecretAction,
   queryEditAppAction,
-  appAuditAction
+  appAuditAction,
+  emptyAddValueAction
 }

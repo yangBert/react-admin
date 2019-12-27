@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Table, Spin, Tag, Button, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as creators from './store/creators';
-import SearchForm from './components/SearchForm';
+import * as creators from '../store/creators';
+import SearchForm from './SearchForm';
 import $$ from 'static/js/base';
-import styles from './css/UserList.module.css';
-import Oper from './components/Operation';
+import styles from '../css/UserList.module.css';
+import Oper from './OperationAuth';
 
 const getAuditStatus = s => {
   return s === 2 ? '待审核' : s === 0 ? '审核未通过' : s === 1 ? '审核已通过' : '未定义';
@@ -21,12 +21,12 @@ const columns = [
       <span>{$$.getHours(createTime)}</span>
     )
   },
-  // {
-  //   title: '审核状态', dataIndex: 'auditStatus', key: 'auditStatus', align: 'center',
-  //   render: s => (
-  //     <span>{getAuditStatus(s)}</span>
-  //   ),
-  // },
+  {
+    title: '审核状态', dataIndex: 'auditStatus', key: 'auditStatus', align: 'center',
+    render: s => (
+      <span>{getAuditStatus(s)}</span>
+    ),
+  },
   {
     title: '应用状态', dataIndex: 'appStatus', key: 'appStatus', align: 'center',
     render: text => <span>
@@ -84,14 +84,14 @@ class AppList extends Component {
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <SearchForm />
-          <div className={styles.buttonForm}>
+          {/* <div className={styles.buttonForm}>
             <Link to="/app/add">
               <Button
                 type="primary"
                 className={styles.addButton}
               ><Icon type="plus" />新增</Button>
             </Link>
-          </div>
+          </div> */}
           <Table
             bordered
             columns={columns}

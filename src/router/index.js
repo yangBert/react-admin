@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-const Home = lazy(() => import('pages/home'));
+const Home = lazy(() => import('pages/menu/MenuList'));
 const ErrorResult = lazy(() => import('pages/common/error/ErrorResult'));
 const AdminList = lazy(() => import('pages/admin/AdminList'));
 const MenuList = lazy(() => import('pages/menu/MenuList'));
@@ -8,11 +8,14 @@ const UserList = lazy(() => import('pages/user/UserList'));
 const CertList = lazy(() => import('pages/cert/CertList'));
 const AppList = lazy(() => import('pages/app/AppList'));
 const AppAdd = lazy(() => import('pages/app/components/AppAdd'));
+const AppAuthList = lazy(() => import('pages/app/components/AppAuthList'));
+const AppDetail = lazy(() => import('pages/app/components/AppDetail'));
 const DictTypeList = lazy(() => import('pages/dictType/DictTypeList'));
 const DictDataList = lazy(() => import('pages/dictData'));
-const AppDetail = lazy(() => import('pages/app/components/AppDetail'));
 const OrgList = lazy(() => import('pages/org/OrgList'));
-
+const OrgAdd = lazy(() => import('pages/org/components/OrgAdd'));
+const NoticeList = lazy(() => import('pages/notice/NoticeList'));
+const NoticeAdd = lazy(() => import('pages/notice/components/NoticeAdd'));
 
 const routes = [
   {
@@ -55,7 +58,10 @@ const routes = [
     path: "/app/detail",
     component: AppDetail
   },
-
+  {
+    path: "/app/authList",
+    component: AppAuthList
+  },
   {
     path: "/dictType/dictTypeList",
     component: DictTypeList
@@ -67,7 +73,18 @@ const routes = [
   {
     path: "/org/orgList",
     component: OrgList
+  },
+  {
+    path: "/org/orgAdd",
+    component: OrgAdd
+  },
+  {
+    path: "/notice/noticeList",
+    component: NoticeList
+  },
+  {
+    path: "/notice/noticeAdd",
+    component: NoticeAdd
   }
-
 ];
 export default routes;

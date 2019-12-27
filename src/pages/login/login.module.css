@@ -1,30 +1,30 @@
 .pageCenter {
-  width: 500px;
+  width: 600px;
   position: fixed;
   margin: 0 auto;
   top: 30%;
   left: 50%;
-  margin-left: -260px;
+  margin-left: -300px;
   text-align:center;
 }
 
 .logo {
-  width: 90px;
+  width: 66px;
   position:relative;
   z-index: 100;
 }
 
 .title{
-  font-size: 26px;
+  font-size: 23px;
   display:inline;
   position:relative;
-  bottom: -15px;
+  bottom: -11px;
   margin-left: 20px;
   font-weight:bold;
 }
 
 .submit {
-  width: 380px;
+  width: 460px;
   text-align:cetner;
   margin-top: 50px;
   color: #fff;

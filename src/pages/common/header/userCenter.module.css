@@ -1,13 +1,14 @@
 .container {
-  float:right;
-  margin-top: 15px;
   margin-right: 10px;
   cursor: pointer;
+  height:100%;
+  padding-top:5px;
 }
 
 .userImage {
   width: 30px;
   margin-right:5px;
+  margin-top:10px;
 }
 
 .logout, .setting {

@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { Table, Spin, Button, Modal, message, Tag } from 'antd';
+import { Table, Spin, Modal, message, Button, Icon } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from './store/creators';
 import SearchForm from './components/SearchForm';
 import styles from './css/UserList.module.css';
+import { Link } from 'react-router-dom';
 import $$ from 'static/js/base';
+import pageConfig from './config';
+import Oper from './components/Operation';
+
 const { confirm } = Modal;
 
 function showConfirm(signcert) {
@@ -27,45 +31,30 @@ function showConfirm(signcert) {
 }
 
 const columns = [
-  { title: '签名证书序列号', dataIndex: 'certSerNum', key: 'certSerNum' },
+  { title: '标题', dataIndex: 'title', key: 'title' },
+  { title: '创建人', dataIndex: 'creater', key: 'creater' },
+  { title: '发布人', dataIndex: 'publisher', key: 'publisher' },
   {
-    title: '有效开始日期', dataIndex: 'validityBegin', key: 'validityBegin',
-    render: validityBegin => (
-      <span>{$$.getHours(validityBegin)}</span>
+    title: '发布时间', dataIndex: 'publishTime', key: 'publishTime', align: 'center',
+    render: publishTime => (
+      <span>{$$.getHours(publishTime)}</span>
     )
   },
   {
-    title: '有效结束日期', dataIndex: 'validityEnd', key: 'validityEnd',
-    render: validityEnd => (
-      <span>{$$.getHours(validityEnd)}</span>
-    )
-  },
-  {
-    title: '状态', dataIndex: 'state', key: 'state',
+    title: '状态', dataIndex: 'state', key: 'state', align: 'center',
     render: state => (
-      <span>
-        {
-          state === '1' ?
-            <Tag color="green">已启用</Tag> :
-            <Tag color="red">已禁用</Tag>
-        }
-      </span>
+      <span>{pageConfig.getState(state)}</span>
     )
   },
-
   {
-    title: '签名证书', dataIndex: 'signcert', key: 'signcert', align: 'center',
-    render: signcert => (
-      <Button type="primary" ghost
-        size="small"
-        style={{ fontSize: "12px" }}
-        onClick={() => showConfirm(signcert)}
-      >查看</Button>
-    )
+    title: '操作',
+    dataIndex: 'operation',
+    key: 'operation',
+    render: (text, record) => <Oper text={text} record={record} />,
   },
 ];
 
-class CertList extends Component {
+class NoticeList extends Component {
   componentDidMount() {
     this.sendFn(1, 10)
   }
@@ -81,7 +70,7 @@ class CertList extends Component {
   sendFn(pageNo, pageSize) {
     //const params = this.props.params
     const data = { pageNo, pageSize }
-    this.props.queryCertlist({ props: this.props, data });
+    this.props.queryNoticelist({ props: this.props, data });
   }
 
   render() {
@@ -96,6 +85,14 @@ class CertList extends Component {
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <SearchForm />
+          <div className={styles.buttonForm}>
+            <Link to="/notice/noticeAdd">
+              <Button
+                type="primary"
+                className={styles.addButton}
+              ><Icon type="plus" />新增</Button>
+            </Link>
+          </div>
           <Table
             bordered
             columns={columns}
@@ -103,6 +100,7 @@ class CertList extends Component {
             rowKey={(record, index) => index}
             size="small"
             pagination={pagination}
+            rowClassName={styles.table}
           />
         </Spin>
       </div >
@@ -111,17 +109,17 @@ class CertList extends Component {
 }
 
 const mapState = state => ({
-  list: state.cert.list,
-  pagination: state.cert.pagination,
-  spinning: state.cert.spinning,
-  params: state.cert.params,
+  list: state.notice.list,
+  pagination: state.notice.pagination,
+  spinning: state.notice.spinning,
+  params: state.notice.params,
 })
 
 const mapDispatch = dispatch => ({
-  queryCertlist: req => {
-    const action = creators.createQueryCertlistAction(req);
+  queryNoticelist: req => {
+    const action = creators.queryNoticelistAction(req);
     dispatch(action);
   },
 })
 
-export default connect(mapState, mapDispatch)(CertList);
+export default connect(mapState, mapDispatch)(NoticeList);

@@ -6,9 +6,6 @@ import { withRouter, Link } from 'react-router-dom';
 
 function Oper(props) {
 
-  // function editApp(id) {
-  //   props.editFormApp({ props, data: { id } })
-  // }
   return (
     <div>
       <Link to={{ pathname: '/app/add', state: { editAppId: props.record.id } }}>
@@ -40,16 +37,7 @@ function Oper(props) {
         type="primary"
         size="small"
         ghost
-      >查看密钥</Button>&nbsp;&nbsp;
-      <Link to={{ pathname: '/app/detail', state: { editAppId: props.record.id, rowauditStatus: props.record.auditStatus } }}>
-        <Button
-          // onClick={() => props.detailApp({ props, data: props.record })}
-          style={{ fontSize: "12px" }}
-          type="primary"
-          size="small"
-          ghost
-        >详情</Button>
-      </Link>
+      >查看密钥</Button>
     </div >
   )
 }

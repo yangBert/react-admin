@@ -1,19 +1,17 @@
 .header {
   background-color: #fefefe;
   height: 60px;
+  line-height: 50px;
   width:100%;
   padding-left:20px;
   border:1px solid rgb(233, 233, 233);
 }
 .header h1 {
   color:#000;
-  display:inline;
-  line-height: 50px;
   font-size: 20px;
   font-weight: bold;
-  position:relative;
-  bottom:-5px;
-  margin-left:10px;
+  margin-left:15px;
+  margin-top:5px;
 }
 
 .history {
@@ -24,15 +22,12 @@
 .collapsedBtn {
   font-size: 22px;
   margin-right:20px;
+  margin-left:20px;
   color: rgb(29, 107, 185);
-  position:relative;
-  bottom:-8px;
-}
-
-.userCenter {
-  float:right;
+  margin-top:20px;
 }
 
 .logo {
-  width: 50px;
+  height: 32px;
+  margin-top:12px;
 }

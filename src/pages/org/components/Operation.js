@@ -1,21 +1,22 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { Button, Switch, Popconfirm, Icon } from 'antd';
+import { withRouter, Link } from 'react-router-dom';
+import { Button } from 'antd';
 import { connect } from 'react-redux';
-import * as creators from '../store/creators';
+// import * as creators from '../store/creators';
 
 
 function Oper(props) {
   const fontSmall = { fontSize: "12px" };
   return (
     <div>
-      <Button
-        onClick={() => props.changeEdit(props.record)}
-        style={fontSmall}
-        type="primary"
-        size="small"
-        ghost
-      >修改</Button>&nbsp;&nbsp;
+      <Link to={{ pathname: '/org/orgAdd', state: { record: props.record, list: props.list } }}>
+        <Button
+          style={fontSmall}
+          type="primary"
+          size="small"
+          ghost
+        >修改</Button>
+      </Link>
       {/* <Popconfirm
         placement="left"
         title="确定删除吗?"
@@ -28,7 +29,7 @@ function Oper(props) {
         cancelText="取消">
         <Button style={fontSmall} type="danger" size="small" ghost>删除</Button>
       </Popconfirm>&nbsp;&nbsp; */}
-      <Switch
+      {/* <Switch
         checkedChildren="启用"
         unCheckedChildren="禁用"
         defaultChecked={props.record.menuStatue === 1 ? true : false}
@@ -40,29 +41,13 @@ function Oper(props) {
           }
           props.updateMenu({ props, data })
         }}
-      />
+      /> */}
     </div >
   )
 }
 
 const mapState = state => ({
-  params: state.admin.params,
-  isQuery: state.admin.isQuery
+  list: state.org.list,
 })
 
-const mapDispatch = dispatch => ({
-  changeEdit: record => {
-    const action = creators.changeEditAction(record);
-    dispatch(action);
-  },
-  deleteMenu: req => {
-    const action = creators.deleteMenuAction(req);
-    dispatch(action);
-  },
-  updateMenu: req => {
-    const action = creators.editMenuAction(req);
-    dispatch(action);
-  }
-})
-
-export default withRouter(connect(mapState, mapDispatch)(Oper));
+export default withRouter(connect(mapState, null)(Oper));

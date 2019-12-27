@@ -23,11 +23,11 @@ function UserCenter() {
 
   return (
     <Dropdown overlay={menu}>
-      <div className={styles.container}>
-        <img className={styles.userImage} src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png" alt="avatar" />
-        <span>admin</span>
+      <div className={`${styles.container} clearfix`}>
+        <img className={`${styles.userImage} pullLeft`} src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png" alt="avatar" />
+        <span className={`${styles.userName} pullLeft`}>admin</span>
       </div>
-    </Dropdown>
+    </Dropdown >
   )
 }
 

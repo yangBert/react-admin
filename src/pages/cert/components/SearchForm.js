@@ -1,70 +1,82 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Input, Icon, Select } from 'antd';
+import { Button, Input, Icon, Select, DatePicker } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/SearchForm.module.css';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 function SearchForm(props) {
-  const [adminName, setAdminName] = useState("")
-  const [adminId, setAdminId] = useState("")
-  const [status, setStatus] = useState("")
+  const [certSerNum, setCertSerNum] = useState("")
+  const [validityBegin, setValidityBegin] = useState("")
+  const [validityEnd, setValidityEnd] = useState("")
+  const [state, setState] = useState("")
 
   const { changeSearchParams } = props;
   useEffect(() => {
-    changeSearchParams({ adminName, adminId, status })
-  }, [adminName, adminId, status, changeSearchParams]);
+    changeSearchParams({ certSerNum, validityBegin, validityEnd, state })
+  }, [certSerNum, validityBegin, validityEnd, state, changeSearchParams]);
 
   function search() {
-    const { adminName, adminId, status } = props.params
+    const { certSerNum, state, validityBegin, validityEnd } = props.params
     const data = {
       pageSize: 10,
       pageNo: 1,
-      adminName,
-      adminId,
-      status,
+      certSerNum,
+      validityBegin,
+      validityEnd,
+      state,
     }
     props.queryCertlist({ props, data });
   }
 
-
-
   function reset() {
-    setAdminName("");
-    setAdminId("");
-    setStatus("");
+    setCertSerNum("");
+    setValidityBegin("");
+    setValidityEnd("");
+    setState("");
     const data = { pageNo: 1, pageSize: 10 }
     props.queryCertlist({ props, data });
+  }
+
+  function onChangePicker(dates, dateStrings) {
+    setValidityBegin(dateStrings[0])
+    setValidityEnd(dateStrings[1])
   }
 
   return (
     <div>
       <div className={`${styles.form} clearfix`}>
         <div className={`${styles.formLine} pullLeft`}>
-          <label className="pullLeft">管理员名称:</label>
+          <label className="pullLeft">签名证书序列号:</label>
           <div className={`${styles.inline} pullLeft`}>
             <Input
               allowClear
-              onChange={e => setAdminName(e.target.value)}
-              value={adminName}
+              onChange={e => setCertSerNum(e.target.value)}
+              value={certSerNum}
             />
           </div>
         </div>
         <div className={`${styles.formLine} pullLeft`}>
-          <label className="pullLeft">证书序列号:</label>
+          <label className="pullLeft">有效日期:</label>
           <div className={`${styles.inline} pullLeft`}>
-            <Input
-              allowClear
-              onChange={e => setAdminId(e.target.value)}
-              value={adminId}
+            <RangePicker
+              ranges={{
+                Today: [moment(), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+              }}
+              onChange={onChangePicker}
             />
           </div>
         </div>
         <div className={`${styles.formLine} pullLeft`}>
           <label className="pullLeft">状态:</label>
           <div className={`${styles.inline} pullLeft`}>
-            <Select value={status} style={{ width: "100%" }} onChange={value => setStatus(value)}>
+            <Select value={state} style={{ width: "100%" }} onChange={value => setState(value)}>
               <Option value="">请选择</Option>
               <Option value="1">启用</Option>
               <Option value="0">禁用</Option>
@@ -85,7 +97,7 @@ function SearchForm(props) {
 }
 
 const mapState = state => ({
-  params: state.admin.params
+  params: state.cert.params
 })
 
 const mapDispatch = dispatch => ({

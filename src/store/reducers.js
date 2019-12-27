@@ -10,7 +10,9 @@ import userReducer from 'pages/user/store/reducer';
 import appReducer from 'pages/app/store/reducer';
 import dictTypeReducer from 'pages/dictType/store/reducer';
 import dictDataReducer from 'pages/dictData/store/reducer';
-
+import noticeReducer from 'pages/notice/store/reducer';
+import orgReducer from 'pages/org/store/reducer';
+import certReducer from 'pages/cert/store/reducer';
 
 export default {
   login: loginReducer,
@@ -24,4 +26,7 @@ export default {
   app: appReducer,
   dictType: dictTypeReducer,
   dictData: dictDataReducer,
+  notice: noticeReducer,
+  org: orgReducer,
+  cert: certReducer
 };

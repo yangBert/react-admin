@@ -4,62 +4,42 @@ import * as request from 'static/js/request';
 import spinningAction from 'pages/common/layer/spinning';
 import notification from 'pages/common/layer/notification';
 
-////改变新增弹出层显示和隐藏
-const changeAddModalvisibleAction = addModalvisible => ({
-  type: types.CHANGE_ADD_MODAL_VISIBLE,
-  addModalvisible,
+//保存按钮Loading
+const changeSaveLoadingAction = (saveLoading) => ({
+  type: types.CHANGE_SAVE_LOADING,
+  saveLoading,
 })
 
-//改变修改弹出层显示和隐藏
-const changeEditModalvisibleAction = editModalvisible => ({
-  type: types.CHANGE_EDIT_MODAL_VISIBLE,
-  editModalvisible,
-})
-
-//初始化要编辑的某一行数据
-const changeEditRecordAction = editRecord => ({
-  type: types.CHANGE_EDIT_RECORD,
-  editRecord
-})
-
-//改变修改弹出层显示和隐藏
-const changeEditAction = record => {
-  return dispatch => {
-    dispatch(changeEditModalvisibleAction(true))
-    dispatch(changeEditRecordAction(record))
-  }
-}
-
-//初始化菜单
-const initMenuAction = (list) => ({
-  type: types.INIT_MENU_LIST,
+//初始化机构列表
+const initOrgAction = (list) => ({
+  type: types.INIT_ORG_LIST,
   list,
 })
 
-//新增弹出层提交按钮loading状态
-const changeaddConfirmLoadingAction = addConfirmLoading => ({
-  type: types.CHANGE_ADD_CONFIRM_LOADING,
-  addConfirmLoading,
+//初始化机构树数据
+const initOrgTreeAction = (treeList) => ({
+  type: types.INIT_ORG_TREE_DATA,
+  treeList,
 })
 
-//改变编辑弹出层提交按钮loading状态
-const changeEditConfirmLoadingAction = editConfirmLoading => ({
-  type: types.CHANGE_EDIT_CONFIRM_LOADING,
-  editConfirmLoading,
-})
-
-//新增菜单
-const addMenuAction = req => {
+//新增机构
+const createAddOrgAction = req => {
   return dispatch => {
-    dispatch(changeaddConfirmLoadingAction(true))
-    request.json(requestURL.powerNewMenu, req.data, res => {
-      dispatch(changeaddConfirmLoadingAction(false))
+    console.log("req.data", req.data)
+    let url;
+    if (req.data.id) {
+      url = requestURL.orgUpdateOrg
+    } else {
+      url = requestURL.orgAddOrg
+    }
+    dispatch(changeSaveLoadingAction(true))
+    request.json(url, req.data, res => {
+      dispatch(changeSaveLoadingAction(false))
+      console.log("res", res)
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
-          //const action = queryMenuAction({ props: req.props, data: {} })
-          // dispatch(action)
-          // dispatch(changeAddModalvisibleAction(false))
+          notification('success', message)
         } else {
           notification('error', message)
         }
@@ -70,70 +50,6 @@ const addMenuAction = req => {
   }
 }
 
-//修改菜单
-const editMenuAction = req => {
-  return dispatch => {
-    dispatch(changeEditConfirmLoadingAction(true))
-    request.json(requestURL.powerUpdateMenu, req.data, res => {
-      dispatch(changeEditConfirmLoadingAction(false))
-      if (res.data) {
-        const { success, message } = res.data && res.data
-        if (success) {
-          // const action = queryMenuAction({ props: req.props, data: {} })
-          // dispatch(changeEditModalvisibleAction(false))
-          // dispatch(action)
-          // notification('success', message)
-        } else {
-          notification('error', message)
-        }
-      } else {
-        req.props.history.push("/500")
-      }
-    })
-  }
-}
-
-//删除菜单
-const deleteMenuAction = req => {
-  return dispatch => {
-    request.json(requestURL.powerDeleteMenu, req.data, res => {
-      if (res.data) {
-        const { success, message } = res.data && res.data
-        if (success) {
-          // notification('success', message)
-          // const action = queryMenuAction({ props: req.props, data: {} })
-          // dispatch(action)
-        } else {
-          notification('error', message)
-        }
-      } else {
-        req.props.history.push("/500")
-      }
-    })
-  }
-}
-
-//查询机构
-const queryOrgListAction = req => {
-  return dispatch => {
-    dispatch(spinningAction(true))
-    request.json(requestURL.orgQueryByPage, req.data, res => {
-      console.log("查询机构", res)
-      dispatch(spinningAction(false))
-      if (res.data) {
-        const { success, message, data } = res.data && res.data
-        if (success) {
-          const action = initMenuAction(data.results)
-          dispatch(action)
-        } else {
-          notification('error', message)
-        }
-      } else {
-        req.props.history.push("/500")
-      }
-    })
-  }
-}
 
 //处理菜单查询返回数据---删除空children
 function implementMenusData(data) {
@@ -144,13 +60,29 @@ function implementMenusData(data) {
       delete data[i].children
     }
   }
-  return implementParentName(data)
+  return data
+}
+
+//机构树数据处理
+function implementTreeData(data) {
+  for (let i = 0; i < data.length; i++) {
+
+    data[i].title = data[i].orgName
+    data[i].value = data[i].orgCode
+    data[i].orgCode = data[i].orgCode
+    data[i].key = data[i].id
+    data[i].pid = data[i].pid
+    if (data[i].children && data[i].children.length > 0) {
+      implementTreeData(data[i].children)
+    }
+  }
+  return data
 }
 
 //给每个菜单添加父菜单名字
 function implementParentName(data) {
   for (let i = 0; i < data.length; i++) {
-    const parentName = data[i].menuName
+    const parentName = data[i].orgName
     if (data[i].children && data[i].children.length > 0) {
       for (let j = 0; j < data[i].children.length; j++) {
         data[i].children[j].parentName = parentName
@@ -163,12 +95,77 @@ function implementParentName(data) {
   return data
 }
 
+//查询机构
+const queryOrgListAction = req => {
+  return dispatch => {
+    dispatch(spinningAction(true))
+    request.json(requestURL.orgQueryAllOrgTree, req.data, res => {
+      dispatch(spinningAction(false))
+      if (res.data) {
+        const { success, message, data } = res.data && res.data
+        if (success) {
+          const action = initOrgAction(implementMenusData(data))
+          const treeAction = initOrgTreeAction(implementTreeData(implementTreeData(data)))
+          dispatch(action)
+          dispatch(treeAction)
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
+//机构树数据处理
+const initTreeAction = req => {
+  return dispatch => {
+    const treeAction = initOrgTreeAction(implementTreeData(implementTreeData(req)))
+    dispatch(treeAction)
+  }
+}
+
+
+//初始化表单
+const initValuesAction = record => ({
+  type: types.INIT_FORM_VALUES,
+  record,
+})
+
+//改变表单机构名称
+const setOrgNameAction = editOrgName => ({
+  type: types.SET_ORG_NAME,
+  editOrgName,
+})
+
+//改变表单机构编码
+const setOrgCodeAction = editOrgCode => ({
+  type: types.SET_ORG_CODE,
+  editOrgCode,
+})
+
+//改变表单机构描述
+const setOrgDescAction = editOrgDesc => ({
+  type: types.SET_ORG_DESC,
+  editOrgDesc,
+})
+
+//改变表单机构树
+const setTreeValueAction = tree => ({
+  type: types.SET_EDIT_TREE_VALUE,
+  tree,
+})
+
+
 export {
   queryOrgListAction,
-  changeAddModalvisibleAction,
-  changeEditModalvisibleAction,
-  addMenuAction,
-  editMenuAction,
-  deleteMenuAction,
-  changeEditAction,
+  createAddOrgAction,
+  setOrgNameAction,
+  setOrgCodeAction,
+  setOrgDescAction,
+  initValuesAction,
+  setTreeValueAction,
+  initTreeAction,
+  changeSaveLoadingAction,
 }

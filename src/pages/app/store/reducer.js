@@ -7,14 +7,22 @@ const defaultState = {
   spinning: false,
   params: {},
   rowAppId: null,
-  form: {},
+  form: {
+    appName: "",
+    url: "",
+    describes: "",
+    redirectUrl: "",
+    appType: "",
+    auditMode: "",
+    landingModes: [],
+    supportCAs: [],
+  },
   iconBase64: "",
   editLoading: false,
 };
 
 export default (state = defaultState, action) => {
   let newState = JSON.parse(JSON.stringify(state))
-  console.log("==========", action)
   switch (action.type) {
     case spinningTypes:
       newState.spinning = action.spinning
@@ -77,6 +85,16 @@ export default (state = defaultState, action) => {
       break;
     case types.CHANGE_ROW_AUDIT_STATUS:
       newState.rowauditStatus = action.rowauditStatus
+      break;
+    case types.EMPTY_ADD_VALUE:
+      newState.form.appName = ""
+      newState.form.url = ""
+      newState.form.describes = ""
+      newState.form.redirectUrl = ""
+      newState.form.appType = ""
+      newState.form.auditMode = ""
+      newState.form.landingModes = []
+      newState.form.supportCAs = []
       break;
     default:
       break;

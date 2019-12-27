@@ -11,9 +11,6 @@ function configFn(url, data, method) {
     data,
   }
   const AuthToken = $$.token.get()
-  console.log("AuthToken--------------", AuthToken)
-  // const urlArr = url.split("/")
-  // const bl = urlArr[urlArr.length - 1] === 'selectAdminMenu'
   if (AuthToken) {
     config.headers = {}
     config.headers.AuthToken = AuthToken
