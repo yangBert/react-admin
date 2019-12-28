@@ -1,8 +1,8 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button, Switch, Popconfirm, Icon } from 'antd';
 import { connect } from 'react-redux';
-// import * as creators from '../store/creators';
+import * as creators from '../store/creators';
 
 
 function Oper(props) {
@@ -16,32 +16,21 @@ function Oper(props) {
           size="small"
           ghost
         >修改</Button>
-      </Link>
-      {/* <Popconfirm
-        placement="left"
-        title="确定删除吗?"
-        onConfirm={() => {
-          const data = "menuId=" + props.record.menuId
-          props.deleteMenu({ props, data })
-        }}
-        okText="确定"
-        icon={<Icon type="question-circle" />}
-        cancelText="取消">
-        <Button style={fontSmall} type="danger" size="small" ghost>删除</Button>
-      </Popconfirm>&nbsp;&nbsp; */}
-      {/* <Switch
+      </Link>&nbsp;&nbsp;
+      <Switch
         checkedChildren="启用"
         unCheckedChildren="禁用"
-        defaultChecked={props.record.menuStatue === 1 ? true : false}
+        defaultChecked={props.record.state === 'NORMAL' ? true : false}
         onChange={checked => {
-          const status = checked ? 1 : 0
+          const state = checked ? 'NORMAL' : 'INVILD'
           const data = {
-            menuStatue: status,
-            menuId: props.record.menuId
+            state,
+            id: props.record.id
           }
-          props.updateMenu({ props, data })
+          props.updateOrgUpdate({ props, data })
         }}
-      /> */}
+      />
+
     </div >
   )
 }
@@ -50,4 +39,11 @@ const mapState = state => ({
   list: state.org.list,
 })
 
-export default withRouter(connect(mapState, null)(Oper));
+const mapDispatch = dispatch => ({
+  updateOrgUpdate: req => {
+    const action = creators.updateOrgUpdateAction(req);
+    dispatch(action);
+  },
+})
+
+export default withRouter(connect(mapState, mapDispatch)(Oper));

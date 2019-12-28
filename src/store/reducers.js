@@ -13,6 +13,9 @@ import dictDataReducer from 'pages/dictData/store/reducer';
 import noticeReducer from 'pages/notice/store/reducer';
 import orgReducer from 'pages/org/store/reducer';
 import certReducer from 'pages/cert/store/reducer';
+import productReducer from 'pages/product/store/reducer';
+import certificationReducer from 'pages/certification/store/reducer';
+
 
 export default {
   login: loginReducer,
@@ -28,5 +31,7 @@ export default {
   dictData: dictDataReducer,
   notice: noticeReducer,
   org: orgReducer,
-  cert: certReducer
+  cert: certReducer,
+  product: productReducer,
+  certification: certificationReducer
 };

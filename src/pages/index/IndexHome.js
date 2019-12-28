@@ -12,6 +12,7 @@ import PropsContext from './props';
 import NoMatch from 'pages/common/error/NotFind';
 
 function IndexHome(props) {
+  window.$GLOBALPROPS = props
   return (
     <div>
       <Router>

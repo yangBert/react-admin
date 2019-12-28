@@ -4,21 +4,14 @@ import { connect } from 'react-redux';
 import * as creators from './store/creators';
 import SearchForm from './components/SearchForm';
 import styles from './css/UserList.module.css';
-import { Link } from 'react-router-dom';
-import $$ from 'static/js/base';
-import pageConfig from './config';
 import Oper from './components/Operation';
 
 const columns = [
-  { title: '标题', dataIndex: 'title', key: 'title' },
-  { title: '创建人', dataIndex: 'creater', key: 'creater' },
-  { title: '发布人', dataIndex: 'publisher', key: 'publisher' },
-  {
-    title: '发布时间', dataIndex: 'publishTime', key: 'publishTime', align: 'center',
-    render: publishTime => (
-      <span>{$$.getHours(publishTime)}</span>
-    )
-  },
+  { title: '认证源名称', dataIndex: 'authName', key: 'authName' },
+  { title: '认证等级', dataIndex: 'authLevel', key: 'authLevel' },
+  { title: '认证源接口方式', dataIndex: 'authStyle', key: 'authStyle' },
+  { title: '认证接入URL', dataIndex: 'url', key: 'url' },
+  { title: '认证源状态', dataIndex: 'status', key: 'status' },
   {
     title: '操作',
     dataIndex: 'operation',
@@ -27,7 +20,7 @@ const columns = [
   },
 ];
 
-class NoticeList extends Component {
+class certificationList extends Component {
   componentDidMount() {
     this.sendFn(1, 10)
   }
@@ -43,7 +36,7 @@ class NoticeList extends Component {
   sendFn(pageNo, pageSize) {
     //const params = this.props.params
     const data = { pageNo, pageSize }
-    this.props.queryNoticelist({ props: this.props, data });
+    this.props.querylist({ props: this.props, data });
   }
 
   render() {
@@ -58,14 +51,14 @@ class NoticeList extends Component {
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <SearchForm />
-          <div className={styles.buttonForm}>
+          {/* <div className={styles.buttonForm}>
             <Link to="/notice/noticeAdd">
               <Button
                 type="primary"
                 className={styles.addButton}
               ><Icon type="plus" />新增</Button>
             </Link>
-          </div>
+          </div> */}
           <Table
             bordered
             columns={columns}
@@ -82,17 +75,17 @@ class NoticeList extends Component {
 }
 
 const mapState = state => ({
-  list: state.notice.list,
-  pagination: state.notice.pagination,
-  spinning: state.notice.spinning,
-  params: state.notice.params,
+  list: state.certification.list,
+  pagination: state.certification.pagination,
+  spinning: state.certification.spinning,
+  params: state.certification.params,
 })
 
 const mapDispatch = dispatch => ({
-  queryNoticelist: req => {
-    const action = creators.queryNoticelistAction(req);
+  querylist: req => {
+    const action = creators.querylistAction(req);
     dispatch(action);
   },
 })
 
-export default connect(mapState, mapDispatch)(NoticeList);
+export default connect(mapState, mapDispatch)(certificationList);

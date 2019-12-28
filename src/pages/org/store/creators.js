@@ -69,27 +69,9 @@ function implementTreeData(data) {
 
     data[i].title = data[i].orgName
     data[i].value = data[i].orgCode
-    data[i].orgCode = data[i].orgCode
     data[i].key = data[i].id
-    data[i].pid = data[i].pid
     if (data[i].children && data[i].children.length > 0) {
       implementTreeData(data[i].children)
-    }
-  }
-  return data
-}
-
-//给每个菜单添加父菜单名字
-function implementParentName(data) {
-  for (let i = 0; i < data.length; i++) {
-    const parentName = data[i].orgName
-    if (data[i].children && data[i].children.length > 0) {
-      for (let j = 0; j < data[i].children.length; j++) {
-        data[i].children[j].parentName = parentName
-        if (data[i].children[j].children && data[i].children[j].children.length > 0) {
-          implementParentName(data[i].children[j].children)
-        }
-      }
     }
   }
   return data
@@ -101,6 +83,7 @@ const queryOrgListAction = req => {
     dispatch(spinningAction(true))
     request.json(requestURL.orgQueryAllOrgTree, req.data, res => {
       dispatch(spinningAction(false))
+      console.log("查询机构data", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
@@ -108,6 +91,27 @@ const queryOrgListAction = req => {
           const treeAction = initOrgTreeAction(implementTreeData(implementTreeData(data)))
           dispatch(action)
           dispatch(treeAction)
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
+//修改机构状态
+const updateOrgUpdateAction = req => {
+  return dispatch => {
+    console.log("req", req)
+    request.json(requestURL.orgUpdateOrgState, req.data, res => {
+      console.log("res", res)
+      if (res.data) {
+        const { success, message } = res.data && res.data
+        if (success) {
+          const action = queryOrgListAction({ props: req.props, data: { pageNo: 1, pageSize: 10 } })
+          dispatch(action)
         } else {
           notification('error', message)
         }
@@ -168,4 +172,5 @@ export {
   setTreeValueAction,
   initTreeAction,
   changeSaveLoadingAction,
+  updateOrgUpdateAction,
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Button } from 'antd';
+import { Button } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import { withRouter, Link } from 'react-router-dom';

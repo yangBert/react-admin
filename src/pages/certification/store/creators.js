@@ -5,8 +5,8 @@ import spinningAction from 'pages/common/layer/spinning';
 import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 
-const initNoticeListAction = list => ({
-  type: types.QUERY_NOTICE_LIST,
+const initListAction = list => ({
+  type: types.INIT_LIST,
   list
 })
 
@@ -35,17 +35,17 @@ const createSaveNoticeAction = req => {
 }
 
 //查询公告列表
-const queryNoticelistAction = req => {
+const querylistAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
     console.log("查询公告列表列表req", req.data)
-    request.json(requestURL.noticeQueryByPage, req.data, res => {
+    request.json(requestURL.authSelectByPage, req.data, res => {
       console.log("查询公告列表res", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
-          const action = initNoticeListAction(data.results, createPagination(data))
+          const action = initListAction(data.results, createPagination(data))
           dispatch(action)
         } else {
           notification('error', message)
@@ -100,7 +100,7 @@ const changeEditorContentAction = editContent => ({
 })
 
 export {
-  queryNoticelistAction,
+  querylistAction,
   createSaveNoticeAction,
   createChangeParamsAction,
   changeEditTitleAction,

@@ -1,8 +1,16 @@
 import axios from 'axios';
 import qs from 'qs';
 import $$ from 'static/js/base';
+import notification from 'pages/common/layer/notification';
+const errorMsg = "请求失败"
 
-const error500 = "500，服务器发生错误"
+function authRedirect() {
+  $$.token.set("")
+  if (window.$GLOBALPROPS) {
+    window.$GLOBALPROPS.history.push("/")
+  }
+  notification("error", errorMsg)
+}
 
 function configFn(url, data, method) {
   const config = {
@@ -24,32 +32,37 @@ function json(requestURL, requestData, callback) {
     callback(res)
   }).catch(err => {
     console.log(err)
-    callback(error500)
+    authRedirect()
   })
 }
 
 function getJson(requestURL, requestData, callback) {
-  const config = configFn(requestURL, requestData, 'get')
+  const config = configFn(requestURL, requestData, 'GET')
   axios(config).then(res => {
     callback(res)
   }).catch(err => {
     console.log(err)
-    callback(error500)
+    authRedirect()
   })
 }
 
 function jsonArr(requestURL, requestData, callback) {
-  axios({
+  let config = {
     url: requestURL,
-    method: 'post',
+    method: 'POST',
     headers: {
       "Content-Type": "application/json",
     },
     data: requestData,
-  }).then(res => {
+  }
+  const AuthToken = $$.token.get()
+  if (AuthToken) {
+    config.headers.AuthToken = AuthToken
+  }
+  axios(config).then(res => {
     callback(res)
   }).catch(() => {
-    callback(error500)
+    authRedirect()
   })
 }
 
@@ -61,7 +74,7 @@ function formString(requestURL, requestData, callback) {
   }).then(res => {
     callback(res)
   }).catch(() => {
-    callback(error500)
+    authRedirect()
   })
 }
 
@@ -77,7 +90,7 @@ function formData(requestURL, requestData, callback) {
   }).then(res => {
     callback(res)
   }).catch(() => {
-    callback(error500)
+    authRedirect()
   })
 }
 
@@ -89,7 +102,7 @@ function urlToBlob(requestURL, callback) {
   }).then(res => {
     callback(res)
   }).catch(() => {
-    callback(error500)
+    authRedirect()
   })
 }
 

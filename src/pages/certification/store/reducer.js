@@ -6,9 +6,6 @@ const defaultState = {
   pagination: {},
   spinning: false,
   params: {},
-  editTitle: "",
-  editContent: "",
-  detailInfo: null
 };
 
 export default (state = defaultState, action) => {
@@ -17,20 +14,11 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.QUERY_NOTICE_LIST:
+    case types.INIT_LIST:
       newState.list = action.list
       break;
     case types.CHANGE_SEARCH_PARAMS:
       newState.params = action.params
-      break;
-    case types.CHANGE_EDIT_TITLE:
-      newState.editTitle = action.editTitle
-      break;
-    case types.CHANGE_EDIT_CONTENT:
-      newState.editContent = action.editContent
-      break;
-    case types.INIT_NOTICE_DETAIL:
-      newState.detailInfo = action.detailInfo
       break;
     default:
       break;

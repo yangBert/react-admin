@@ -6,9 +6,10 @@ const defaultState = {
   pagination: {},
   spinning: false,
   params: {},
-  editTitle: "",
-  editContent: "",
-  detailInfo: null
+  ConfirmLoading: false,
+  operationType: "",
+  addModalvisible: false,
+  record: {},
 };
 
 export default (state = defaultState, action) => {
@@ -17,20 +18,23 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.QUERY_NOTICE_LIST:
+    case types.QUERY_DICT_TYPE_LIST:
+      newState.typeList = action.typeList
+      break;
+    case types.QUERY_DICT_DATA_LIST:
       newState.list = action.list
+      newState.pagination = action.pagination
       break;
     case types.CHANGE_SEARCH_PARAMS:
       newState.params = action.params
       break;
-    case types.CHANGE_EDIT_TITLE:
-      newState.editTitle = action.editTitle
+    case types.CHANGE_CONFIRM_LOADING:
+      newState.ConfirmLoading = action.ConfirmLoading
       break;
-    case types.CHANGE_EDIT_CONTENT:
-      newState.editContent = action.editContent
-      break;
-    case types.INIT_NOTICE_DETAIL:
-      newState.detailInfo = action.detailInfo
+    case types.CHANGE_ADD_MODAL_VISIBLE:
+      newState.operationType = action.operationType
+      newState.addModalvisible = action.addModalvisible
+      newState.record = action.record
       break;
     default:
       break;

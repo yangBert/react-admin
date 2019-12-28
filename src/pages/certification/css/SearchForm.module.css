@@ -1,8 +1,8 @@
 .formLine {
   display:flex;
   width: 30.3333%;
-  max-width: 360px;
-  min-width: 280px;
+  /* max-width: 500px;
+  min-width: 400px; */
   margin-right:10px;
   margin-bottom:20px;
 }
@@ -10,7 +10,7 @@
 .formLine label {
   line-height: 2.3;
   padding-right: 5px;
-  width:100px;
+  width:120px;
   font-size:14px;
   text-align:right;
 }
@@ -21,9 +21,14 @@
 
 .form {
   margin-bottom: 20px;
+  margin-top:20px;
 }
 
 .formButton {
-  margin-bottom:20px;
+  margin-bottom:40px;
   text-align:center;
+}
+
+.button {
+  margin-left:15px;
 }

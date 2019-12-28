@@ -1,4 +1,3 @@
-//const $base = "http://192.168.1.170:3000";
 
 //登录权限查询
 export const powerSelectAdminMenu = "/api/v1/uamBase/power/selectAdminMenu";
@@ -8,10 +7,11 @@ export const managerRegistertURL = "/api/v1/uamBase/manager/register";
 export const managerDeleteAdminURL = "/api/v1/uamBase/manager/deleteAdmin";
 export const managerUpdateAdminInfoURL = "/api/v1/uamBase/manager/updateAdminInfo";
 export const managerSelectAdminListURL = "/api/v1/uamBase/manager/selectAdminList";
-export const managerLoginURL = "/api/v1/uamBase/manager/login";
-export const managerBuildRandNumURL = "/api/v1/uamBase/manager/buildRandNum";
+export const managerLoginURL = "/api/v1/uamBase/manager/login.htm";
+export const managerBuildRandNumURL = "/api/v1/uamBase/manager/buildRandNum.htm";
 export const powerSelectUserRole = "/api/v1/uamBase/power/selectUserRole";
 export const powerUserBindRole = "/api/v1/uamBase/power/userBindRole";
+export const managerSelectLoginAdminInfo = "/api/v1/uamBase/manager/selectLoginAdminInfo";
 
 //角色管理
 export const powerNewRoleURL = "/api/v1/uamBase/power/newRole";
@@ -69,6 +69,7 @@ export const orgQueryByPage = "/api/v1/manager/org/queryByPage";
 export const orgQueryAllOrgTree = "/api/v1/manager/org/queryAllOrgTree";
 export const orgAddOrg = "/api/v1/manager/org/addOrg";
 export const orgUpdateOrg = "/api/v1/manager/org/updateOrg";
+export const orgUpdateOrgState = "/api/v1/manager/org/updateOrgState";
 
 
 //公告管理
@@ -76,6 +77,17 @@ export const noticeQueryByPage = "/api/v1/manager/notice/queryByPage";
 export const noticeUpdateNotice = "/api/v1/manager/notice/updateNotice";
 export const noticePublishNotice = "/api/v1/manager/notice/publishNotice";
 export const noticeAddNotice = "/api/v1/manager/notice/addNotice";
+export const noticeGetNoticeDetail = "/api/v1/manager/notice/getNoticeDetail";
+
+//产品管理
+export const productSelectByPage = "/api/v1/manager/product/selectByPage";
+export const productAddProduct = "/api/v1/manager/product/addProduct";
+export const productUpdateProduct = "/api/v1/manager/product/updateProduct";
+
+//认证源管理
+export const authSelectByPage = "/api/v1/manager/auth/selectByPage";
+export const authAddAuth = "/api/v1/manager/auth/addAuth";
+
 
 
 

@@ -1,34 +1,37 @@
 import React, { Component } from 'react';
 import { Table, Spin, Button, Icon } from 'antd';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as creators from './store/creators';
-import SearchForm from './components/SearchForm';
 import styles from './css/UserList.module.css';
-import { Link } from 'react-router-dom';
-import $$ from 'static/js/base';
-import pageConfig from './config';
 import Oper from './components/Operation';
+import AddModal from './components/AddModal';
+import SearchForm from './components/SearchForm';
+import $$ from 'static/js/base';
 
 const columns = [
-  { title: '标题', dataIndex: 'title', key: 'title' },
-  { title: '创建人', dataIndex: 'creater', key: 'creater' },
-  { title: '发布人', dataIndex: 'publisher', key: 'publisher' },
+  { title: '产品名称', dataIndex: 'productName', key: 'productName' },
+  { title: '产品描述', dataIndex: 'productDesc', key: 'productDesc' },
   {
-    title: '发布时间', dataIndex: 'publishTime', key: 'publishTime', align: 'center',
-    render: publishTime => (
-      <span>{$$.getHours(publishTime)}</span>
+    title: '上线时间', dataIndex: 'publishAt', key: 'publishAt',
+    render: publishAt => (
+      <span>{$$.getHours(publishAt)}</span>
     )
+  },
+  {
+    title: '产品状态', dataIndex: 'status', key: 'status', align: 'center'
   },
   {
     title: '操作',
     dataIndex: 'operation',
     key: 'operation',
     render: (text, record) => <Oper text={text} record={record} />,
-  },
+  }
 ];
 
-class NoticeList extends Component {
+class ProductList extends Component {
   componentDidMount() {
+    this.props.queryList({ props: this.props, data: { pageNo: 1, pageSize: 10 } })
     this.sendFn(1, 10)
   }
 
@@ -43,7 +46,8 @@ class NoticeList extends Component {
   sendFn(pageNo, pageSize) {
     //const params = this.props.params
     const data = { pageNo, pageSize }
-    this.props.queryNoticelist({ props: this.props, data });
+    //this.props.queryDictlist({ props: this.props, data });
+    this.props.queryList({ props: this.props, data })
   }
 
   render() {
@@ -57,14 +61,14 @@ class NoticeList extends Component {
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
+          <AddModal />
           <SearchForm />
           <div className={styles.buttonForm}>
-            <Link to="/notice/noticeAdd">
-              <Button
-                type="primary"
-                className={styles.addButton}
-              ><Icon type="plus" />新增</Button>
-            </Link>
+            <Button
+              type="primary"
+              className={styles.addButton}
+              onClick={() => this.props.changeAddModalvisible(true, "add", {})}
+            ><Icon type="plus" />新增</Button>
           </div>
           <Table
             bordered
@@ -73,7 +77,6 @@ class NoticeList extends Component {
             rowKey={(record, index) => index}
             size="small"
             pagination={pagination}
-            rowClassName={styles.table}
           />
         </Spin>
       </div >
@@ -82,17 +85,22 @@ class NoticeList extends Component {
 }
 
 const mapState = state => ({
-  list: state.notice.list,
-  pagination: state.notice.pagination,
-  spinning: state.notice.spinning,
-  params: state.notice.params,
+  list: state.product.list,
+  pagination: state.product.pagination,
+  spinning: state.product.spinning,
+  params: state.product.params,
 })
 
 const mapDispatch = dispatch => ({
-  queryNoticelist: req => {
-    const action = creators.queryNoticelistAction(req);
+  changeAddModalvisible: (addModalvisible, operationType, record) => {
+    const action = creators.changeAddModalvisibleAction(addModalvisible, operationType, record);
     dispatch(action);
   },
+  queryList: req => {
+    const action = creators.queryListAction(req);
+    dispatch(action);
+  },
+
 })
 
-export default connect(mapState, mapDispatch)(NoticeList);
+export default withRouter(connect(mapState, mapDispatch)(ProductList));

@@ -8,7 +8,7 @@ import 'braft-editor/dist/index.css';
 import { Link } from 'react-router-dom';
 import $$ from 'static/js/base';
 
-class NoticeAdd extends Component {
+class CertificationAdd extends Component {
   componentDidMount() {
     this.props.handleEditorChange(BraftEditor.createEditorState(null))//初始化富文本编辑器
     if (this.props.location.state && this.props.location.state.editId) {
@@ -25,14 +25,13 @@ class NoticeAdd extends Component {
       message.error('请填公告内容');
       return
     }
-    const creater = $$.localStorage.get("adminId")
-    console.log(creater)
+    const userNo = $$.localStorage.get("adminId")
     const req = {
       props: this.props,
       data: {
         title: editTitle,
         content: editContent,
-        creater
+        userNo
       }
     }
 
@@ -51,7 +50,7 @@ class NoticeAdd extends Component {
           <div className="clearfix">
             <div className={`${styles.form} pullLeft`}>
               <div className={`${styles.formLine} pullLeft`}>
-                <label className="pullLeft">公告标题:</label>
+                <label className="pullLeft">公告标题SDFSDF:</label>
                 <div className={`${styles.inline} pullLeft`}>
                   <Input
                     placeholder="请输入标题"
@@ -66,7 +65,7 @@ class NoticeAdd extends Component {
               <Button type="primary" className={`${styles.button}`}
                 onClick={() => this.save()}
               >保存公告</Button>
-              <Link to="/notice/NoticeList">
+              <Link to="/certification/list">
                 <Button className={`${styles.button}`}>返回列表</Button>
               </Link>
             </div>
@@ -90,7 +89,7 @@ class NoticeAdd extends Component {
 const mapState = state => ({
   spinning: state.notice.spinning,
   editTitle: state.notice.editTitle,
-  editContent: state.notice.editContent
+  editContent: state.notice.editContent,
 })
 
 const mapDispatch = dispatch => ({
@@ -112,4 +111,4 @@ const mapDispatch = dispatch => ({
   },
 })
 
-export default connect(mapState, mapDispatch)(NoticeAdd);
+export default connect(mapState, mapDispatch)(CertificationAdd);

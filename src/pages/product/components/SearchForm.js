@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Input, Icon, DatePicker } from 'antd';
+import { Button, Icon, Select, Input, DatePicker } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/SearchForm.module.css';
@@ -7,65 +7,64 @@ import moment from 'moment';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 
+//const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 function SearchForm(props) {
-  const [title, setTitle] = useState("")
-  const [publishTimeStart, setPublishTimeStart] = useState(null)
-  const [publishTimeEnd, setPublishTimeEnd] = useState(null)
-
-
-
+  const [productName, setProductName] = useState("")
+  const [publishAt, setPublishAt] = useState(null)
+  const [publishBy, setPublishBy] = useState(null)
   const { changeSearchParams } = props;
   useEffect(() => {
-    changeSearchParams({ title })
-  }, [title, changeSearchParams]);
+    changeSearchParams({ productName })
+  }, [productName, changeSearchParams]);
 
   function search() {
-    const { title } = props.params
-    const start = publishTimeStart && publishTimeStart.format('YYYY-MM-DD')
-    const end = publishTimeEnd && publishTimeEnd.format('YYYY-MM-DD')
+    const { productName } = props.params
+    const start = publishAt && publishAt.format('YYYY-MM-DD')
+    const end = publishBy && publishBy.format('YYYY-MM-DD')
     const data = {
       pageSize: 10,
       pageNo: 1,
-      title,
+      productName,
       start,
-      end
+      end,
     }
-    props.queryCertlist({ props, data });
+    props.queryList({ props, data });
   }
 
   function reset() {
-    setTitle("");
-    setPublishTimeStart(null);
-    setPublishTimeEnd(null);
+    setProductName("");
+    setPublishAt(null);
+    setPublishBy(null);
     const data = { pageNo: 1, pageSize: 10 }
-    props.queryCertlist({ props, data });
+    props.queryList({ props, data });
   }
 
   function onChangePicker(dates, dateStrings) {
-    setPublishTimeStart(moment(dateStrings[0]))
-    setPublishTimeEnd(moment(dateStrings[1]))
+    setPublishAt(moment(dateStrings[0]))
+    setPublishBy(moment(dateStrings[1]))
   }
 
   return (
     <div>
       <div className={`${styles.form} clearfix`}>
         <div className={`${styles.formLine} pullLeft`}>
-          <label className="pullLeft">公告标题:</label>
+          <label className="pullLeft">产品名称:</label>
           <div className={`${styles.inline} pullLeft`}>
             <Input
+              placeholder="产品名称"
               allowClear
-              onChange={e => setTitle(e.target.value)}
-              value={title}
+              onChange={e => setProductName(e.target.value)}
+              value={productName}
             />
           </div>
         </div>
         <div className={`${styles.formLine} pullLeft`}>
-          <label className="pullLeft">发布日期:</label>
+          <label className="pullLeft">日期:</label>
           <div className={`${styles.inline} pullLeft`}>
             <RangePicker
-              value={[publishTimeStart, publishTimeEnd]}
+              value={[publishAt, publishBy]}
               ranges={{
                 Today: [moment(), moment()],
                 'This Month': [moment().startOf('month'), moment().endOf('month')],
@@ -77,10 +76,11 @@ function SearchForm(props) {
         {/* <div className={`${styles.formLine} pullLeft`}>
           <label className="pullLeft">状态:</label>
           <div className={`${styles.inline} pullLeft`}>
-            <Select value={status} style={{ width: "100%" }} onChange={value => setStatus(value)}>
+            <Select value={type} style={{ width: "100%" }} onChange={value => setType(value)}>
               <Option value="">请选择</Option>
-              <Option value="1">启用</Option>
-              <Option value="0">禁用</Option>
+              <Option value="1">请选择</Option>
+              <Option value="2">请选择</Option>
+              <Option value="3">请选择</Option>
             </Select>
           </div>
         </div> */}
@@ -98,19 +98,19 @@ function SearchForm(props) {
 }
 
 const mapState = state => ({
-  params: state.notice.params
+  params: state.product.params,
 })
 
 const mapDispatch = dispatch => ({
 
-  queryCertlist: req => {
-    const action = creators.queryNoticelistAction(req);
+  queryList: req => {
+    const action = creators.queryListAction(req);
     dispatch(action);
   },
   changeSearchParams: params => {
     const action = creators.createChangeParamsAction(params);
     dispatch(action);
-  }
+  },
 })
 
 export default connect(mapState, mapDispatch)(SearchForm);

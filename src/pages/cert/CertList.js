@@ -1,30 +1,11 @@
 import React, { Component } from 'react';
-import { Table, Spin, Button, Modal, message, Tag } from 'antd';
+import { Table, Spin, Tag } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from './store/creators';
 import SearchForm from './components/SearchForm';
 import styles from './css/UserList.module.css';
 import $$ from 'static/js/base';
-const { confirm } = Modal;
-
-function showConfirm(signcert) {
-  confirm({
-    title: '签名证书Base64',
-    okText: "复制",
-    cancelText: "取消",
-    width: 516,
-    content: <div>
-      <textarea name="" id="document-copy-textarea-text" cols="60" rows="5" defaultValue={signcert}></textarea>
-    </div>,
-    onOk() {
-      var input = document.getElementById("document-copy-textarea-text");
-      input.value = signcert;
-      input.select();
-      document.execCommand("copy");
-      message.success('复制成功');
-    }
-  });
-}
+import Oper from './components/Operation';
 
 const columns = [
   { title: '签名证书序列号', dataIndex: 'certSerNum', key: 'certSerNum' },
@@ -52,16 +33,11 @@ const columns = [
       </span>
     )
   },
-
   {
-    title: '签名证书', dataIndex: 'signcert', key: 'signcert', align: 'center',
-    render: signcert => (
-      <Button type="primary" ghost
-        size="small"
-        style={{ fontSize: "12px" }}
-        onClick={() => showConfirm(signcert)}
-      >查看</Button>
-    )
+    title: '操作',
+    dataIndex: 'operation',
+    key: 'operation',
+    render: (text, record) => <Oper text={text} record={record} />,
   },
 ];
 

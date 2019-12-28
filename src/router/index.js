@@ -6,6 +6,7 @@ const MenuList = lazy(() => import('pages/menu/MenuList'));
 const RoleList = lazy(() => import('pages/role/RoleList'));
 const UserList = lazy(() => import('pages/user/UserList'));
 const CertList = lazy(() => import('pages/cert/CertList'));
+const CertDetail = lazy(() => import('pages/cert/components/CertDetail'));
 const AppList = lazy(() => import('pages/app/AppList'));
 const AppAdd = lazy(() => import('pages/app/components/AppAdd'));
 const AppAuthList = lazy(() => import('pages/app/components/AppAuthList'));
@@ -16,6 +17,9 @@ const OrgList = lazy(() => import('pages/org/OrgList'));
 const OrgAdd = lazy(() => import('pages/org/components/OrgAdd'));
 const NoticeList = lazy(() => import('pages/notice/NoticeList'));
 const NoticeAdd = lazy(() => import('pages/notice/components/NoticeAdd'));
+const ProductList = lazy(() => import('pages/product'));
+const CertificationList = lazy(() => import('pages/certification'));
+const CertificationAdd = lazy(() => import('pages/certification/components/CertificationAdd'));
 
 const routes = [
   {
@@ -45,6 +49,10 @@ const routes = [
   {
     path: "/cert/certList",
     component: CertList
+  },
+  {
+    path: "/cert/certDetail",
+    component: CertDetail
   },
   {
     path: "/app/appList",
@@ -85,6 +93,19 @@ const routes = [
   {
     path: "/notice/noticeAdd",
     component: NoticeAdd
-  }
+  },
+  {
+    path: "/product/productList",
+    component: ProductList
+  },
+  {
+    path: "/certification/list",
+    component: CertificationList
+  },
+  {
+    path: "/certification/add",
+    component: CertificationAdd
+  },
+
 ];
 export default routes;

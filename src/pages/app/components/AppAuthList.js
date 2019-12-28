@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Spin, Tag, Button, Icon } from 'antd';
-import { Link } from 'react-router-dom';
+import { Table, Spin, Tag } from 'antd';
+//import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import SearchForm from './SearchForm';
@@ -13,22 +13,22 @@ const getAuditStatus = s => {
 }
 
 const columns = [
-  { title: '应用名称', dataIndex: 'appName', key: 'appName', align: 'center' },
-  { title: '应用描述', dataIndex: 'describes', key: 'describes', align: 'center' },
+  { title: '应用名称', dataIndex: 'appName', key: 'appName' },
+  { title: '应用描述', dataIndex: 'describes', key: 'describes' },
   {
-    title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center',
+    title: '创建时间', dataIndex: 'createTime', key: 'createTime',
     render: createTime => (
       <span>{$$.getHours(createTime)}</span>
     )
   },
   {
-    title: '审核状态', dataIndex: 'auditStatus', key: 'auditStatus', align: 'center',
+    title: '审核状态', dataIndex: 'auditStatus', key: 'auditStatus',
     render: s => (
       <span>{getAuditStatus(s)}</span>
     ),
   },
   {
-    title: '应用状态', dataIndex: 'appStatus', key: 'appStatus', align: 'center',
+    title: '应用状态', dataIndex: 'appStatus', key: 'appStatus',
     render: text => <span>
       {
         text === 1 ?

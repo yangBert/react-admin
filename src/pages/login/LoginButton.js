@@ -23,7 +23,6 @@ function LoginButton(props) {
   function getUkeyList() {
     const CertType = 1;
     GZCA.GZCA_GetCertList(true, CertType, function (res) {
-      console.log(res)
       if (res.success) {
         getCert(res.ContainerName, CertType)
       } else {

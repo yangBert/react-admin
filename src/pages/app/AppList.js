@@ -8,15 +8,15 @@ import $$ from 'static/js/base';
 import styles from './css/UserList.module.css';
 import Oper from './components/Operation';
 
-const getAuditStatus = s => {
-  return s === 2 ? '待审核' : s === 0 ? '审核未通过' : s === 1 ? '审核已通过' : '未定义';
-}
+// const getAuditStatus = s => {
+//   return s === 2 ? '待审核' : s === 0 ? '审核未通过' : s === 1 ? '审核已通过' : '未定义';
+// }
 
 const columns = [
-  { title: '应用名称', dataIndex: 'appName', key: 'appName', align: 'center' },
-  { title: '应用描述', dataIndex: 'describes', key: 'describes', align: 'center' },
+  { title: '应用名称', dataIndex: 'appName', key: 'appName' },
+  { title: '应用描述', dataIndex: 'describes', key: 'describes' },
   {
-    title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center',
+    title: '创建时间', dataIndex: 'createTime', key: 'createTime',
     render: createTime => (
       <span>{$$.getHours(createTime)}</span>
     )

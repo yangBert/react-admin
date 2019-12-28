@@ -18,7 +18,7 @@ function SearchForm(props) {
       appStatus,
       auditStatus,
     })
-  }, [appName, appStatus, auditStatus]);
+  }, [appName, appStatus, auditStatus, changeSearchParams]);
 
   function search() {
     const { appName, appStatus, auditStatus } = props.params

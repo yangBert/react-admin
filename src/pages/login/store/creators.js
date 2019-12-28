@@ -8,9 +8,7 @@ import $$ from 'static/js/base.js';
 
 const loginSubmit = req => {
   return dispatch => {
-    console.log("reqreqreq", req.data)
     request.json(requestURL.managerLoginURL, req.data, res => {
-      console.log("resresres", res)
       dispatch(changeLoginLoading(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
@@ -30,7 +28,6 @@ const loginSubmit = req => {
 //签名
 function pkcs1SignData_PIN(props, dispatch, GZCA, containerName, original, certserial) {
   GZCA.GZCA_Pkcs1SignData_PIN(containerName, original, function (res) {
-    console.log("签名结果=", res);
     if (res.success) {
       const signData = res.SignData;
       const data = { certserial, signData };
@@ -51,10 +48,8 @@ const changeLoginLoading = loginLoading => ({
 //获取随机数原文
 const getRandomAction = params => {
   return dispatch => {
-    console.log("getRandomAction=", params.certserial);
     dispatch(changeLoginLoading(true))
     request.json(requestURL.managerBuildRandNumURL, "certserial=" + params.certserial, res => {
-      console.log("res=", res);
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
