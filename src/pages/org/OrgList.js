@@ -55,11 +55,11 @@ class OrgList extends Component {
 
   render() {
     const list = this.props.list
-    const pagination = {
-      ...this.props.pagination,
-      onChange: this.paginationChange,
-      onShowSizeChange: this.paginationShowSizeChange,
-    }
+    // const pagination = {
+    //   ...this.props.pagination,
+    //   onChange: this.paginationChange,
+    //   onShowSizeChange: this.paginationShowSizeChange,
+    // }
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         {/* <AddModal /> */}
@@ -81,7 +81,7 @@ class OrgList extends Component {
             dataSource={list}
             rowKey={record => record.id}
             size="small"
-            pagination={pagination}
+            pagination={false}
           />
         </Spin>
       </div >

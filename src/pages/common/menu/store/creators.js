@@ -21,7 +21,6 @@ const getMenus = req => {
           const action = initMenuAction(res.data.menus);
           dispatch(action);
         }
-        console.log(res);
       })
       .catch(function (error) {
         // handle error
@@ -34,7 +33,6 @@ const getMenus = req => {
 const queryMenuAction = req => {
   return dispatch => {
     request.getJson(requestURL.powerSelectAdminMenu, req.data, res => {
-      console.log("查询菜单查询菜单", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {

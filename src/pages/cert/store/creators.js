@@ -14,13 +14,11 @@ const queryCertListAction = list => ({
 const createQueryCertlistAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("查询证书列表req", req)
     request.json(requestURL.certManageSelectCerts, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
-          console.log("查询证书列表res===", data.results)
           const action = queryCertListAction(data.results, createPagination(data))
           dispatch(action)
         } else {
@@ -37,9 +35,7 @@ const createQueryCertlistAction = req => {
 const createInsertCertAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("用户证书注册", req)
     request.json(requestURL.certManageInsert, req.data, res => {
-      console.log("用户证书注册res", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data

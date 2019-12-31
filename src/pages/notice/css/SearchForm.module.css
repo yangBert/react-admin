@@ -1,11 +1,16 @@
 .formLine {
   display:flex;
-  width: 25%;
-  max-width: 300px;
+  min-width: 410px;
   margin-right:10px;
 }
 
-.formLine label {
+.title {
+  display:flex;
+  margin-right:10px;
+  width: 300px;
+}
+
+.title label,.formLine label {
   line-height: 2.3;
   padding-right: 5px;
 }

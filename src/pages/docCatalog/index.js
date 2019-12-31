@@ -30,7 +30,7 @@ const columns = [
   },
 ];
 
-class certificationList extends Component {
+class DocCatalogList extends Component {
   componentDidMount() {
     this.sendFn(1, 10)
   }
@@ -85,10 +85,10 @@ class certificationList extends Component {
 }
 
 const mapState = state => ({
-  list: state.certification.list,
-  pagination: state.certification.pagination,
-  spinning: state.certification.spinning,
-  params: state.certification.params,
+  list: state.docCatalog.list,
+  pagination: state.docCatalog.pagination,
+  spinning: state.docCatalog.spinning,
+  params: state.docCatalog.params,
 })
 
 const mapDispatch = dispatch => ({
@@ -98,4 +98,4 @@ const mapDispatch = dispatch => ({
   },
 })
 
-export default connect(mapState, mapDispatch)(certificationList);
+export default connect(mapState, mapDispatch)(DocCatalogList);

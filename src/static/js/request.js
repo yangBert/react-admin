@@ -31,7 +31,6 @@ function json(requestURL, requestData, callback) {
   axios(config).then(res => {
     callback(res)
   }).catch(err => {
-    console.log(err)
     authRedirect()
   })
 }

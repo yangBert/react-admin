@@ -50,9 +50,7 @@ const queryDictTypeListAction = req => {
 const deleteDictTypeAction = req => {
   return (dispatch, getState) => {
     dispatch(spinningAction(true))
-    console.log("reqreq-----", req.data)
     request.json(requestURL.plateSettingDeleteDicType, req.data, res => {
-      console.log("resresresresFFFFF", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data

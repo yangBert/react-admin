@@ -4,26 +4,32 @@ import * as request from 'static/js/request';
 import spinningAction from 'pages/common/layer/spinning';
 import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
+import { Modal } from 'antd'
 
-const initNoticeListAction = list => ({
+const initNoticeListAction = (list, pagination) => ({
   type: types.QUERY_NOTICE_LIST,
-  list
+  list,
+  pagination
 })
 
 //保存公告
 const createSaveNoticeAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("保存公告req", req.data)
     const url = req.data.id ? requestURL.noticeUpdateNotice : requestURL.noticeAddNotice
     request.json(url, req.data, res => {
-      console.log("保存公告res", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
-          // const action = initNoticeListAction(data.results, createPagination(data))
-          // dispatch(action)
+          Modal.success({
+            title: '系统提示',
+            content: message,
+            okText: '确认',
+            onOk: () => {
+              req.props.history.goBack()
+            }
+          });
         } else {
           notification('error', message)
         }
@@ -38,9 +44,7 @@ const createSaveNoticeAction = req => {
 const queryNoticelistAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("查询公告列表列表req", req.data)
     request.json(requestURL.noticeQueryByPage, req.data, res => {
-      console.log("查询公告列表res", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
@@ -61,9 +65,7 @@ const queryNoticelistAction = req => {
 const queryNoticeDetailAction = req => {
   return (dispatch, getState) => {
     dispatch(spinningAction(true))
-    console.log("公告详情", req.data)
     request.json(requestURL.noticeGetNoticeDetail, req.data, res => {
-      console.log("公告详情res", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
@@ -80,6 +82,37 @@ const queryNoticeDetailAction = req => {
   }
 }
 
+//发布公告
+const publishNoticeAction = req => {
+  return (dispatch, getState) => {
+    dispatch(spinningAction(true))
+    request.json(requestURL.noticePublishNotice, req.data, res => {
+      dispatch(spinningAction(false))
+      if (res.data) {
+        const { success, message } = res.data && res.data
+        if (success) {
+          Modal.success({
+            title: '系统提示',
+            content: message,
+            okText: '确认',
+            onOk: () => {
+              const params = {
+                ...getState().notice.params,
+                pageNo: 1,
+                pageSize: 10
+              }
+              dispatch(queryNoticelistAction({ props: req.props, data: params }));
+            }
+          });
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
 
 //查询携带参数
 const createChangeParamsAction = params => ({
@@ -106,4 +139,5 @@ export {
   changeEditTitleAction,
   changeEditorContentAction,
   queryNoticeDetailAction,
+  publishNoticeAction,
 }

@@ -21,7 +21,6 @@ export default (state = defaultState, action) => {
       break;
     case types.INIT_LIST:
       newState.list = action.list
-      newState.pagination = action.pagination
       break;
     case types.CHANGE_SEARCH_PARAMS:
       newState.params = action.params

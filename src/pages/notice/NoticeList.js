@@ -6,13 +6,12 @@ import SearchForm from './components/SearchForm';
 import styles from './css/UserList.module.css';
 import { Link } from 'react-router-dom';
 import $$ from 'static/js/base';
-import pageConfig from './config';
 import Oper from './components/Operation';
 
 const columns = [
   { title: '标题', dataIndex: 'title', key: 'title' },
-  { title: '创建人', dataIndex: 'creater', key: 'creater' },
-  { title: '发布人', dataIndex: 'publisher', key: 'publisher' },
+  { title: '创建人', dataIndex: 'createrName', key: 'createrName', align: 'center' },
+  { title: '发布人', dataIndex: 'publisherName', key: 'publisherName', align: 'center' },
   {
     title: '发布时间', dataIndex: 'publishTime', key: 'publishTime', align: 'center',
     render: publishTime => (

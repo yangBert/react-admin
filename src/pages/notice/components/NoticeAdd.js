@@ -26,13 +26,14 @@ class NoticeAdd extends Component {
       return
     }
     const creater = $$.localStorage.get("adminId")
-    console.log(creater)
+    const createrName = $$.localStorage.get("adminName")
     const req = {
       props: this.props,
       data: {
         title: editTitle,
         content: editContent,
-        creater
+        creater,
+        createrName,
       }
     }
 

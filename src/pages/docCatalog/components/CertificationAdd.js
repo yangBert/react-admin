@@ -43,7 +43,7 @@ class CertificationAdd extends Component {
     } if ($$.trim(editAuthStyle) === "") {
       message.error('请选择认证源接口方式');
       return
-    } if (this.props.location.state && $$.trim(editStatus) === "") {
+    } if ($$.trim(editStatus) === "") {
       message.error('请选择状态');
       return
     }
@@ -139,22 +139,19 @@ class CertificationAdd extends Component {
                     </Select>
                   </div>
                 </div>
-                {this.props.location.state &&
-                  <div className={`${styles.formLine} pullLeft`}>
-                    <label className="pullLeft">认证源状态:</label>
-                    <div className={`${styles.inline} pullLeft`}>
-                      <Select
-                        style={{ width: "100%" }}
-                        onChange={value => this.props.onChangeEditStatus(value)}
-                        value={this.props.editStatus}
-                      >
-                        <Option value="">请选择</Option>
-                        {this.initStatus()}
-                      </Select>
-                    </div>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className="pullLeft">认证源状态:</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Select
+                      style={{ width: "100%" }}
+                      onChange={value => this.props.onChangeEditStatus(value)}
+                      value={this.props.editStatus}
+                    >
+                      <Option value="">请选择</Option>
+                      {this.initStatus()}
+                    </Select>
                   </div>
-                }
-
+                </div>
               </Form>
             </Card>
 

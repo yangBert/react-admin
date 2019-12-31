@@ -21,7 +21,6 @@ const createQueryUserAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
     request.json(requestURL.userSelectUsers, req.data, res => {
-      console.log("查询用户", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data

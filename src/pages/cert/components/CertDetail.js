@@ -8,7 +8,6 @@ const { TextArea } = Input;
 function CertDetail(props) {
 
   const info = props.location.state.detailInfo
-  console.log(info)
   return (
     <div className={`${styles.pageContet} pageContentColor`}>
       <div className={styles.info}>

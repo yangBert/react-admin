@@ -1,9 +1,9 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Button, Switch, Popconfirm, Icon } from 'antd';
+import { Button, Switch } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
-
+import $$ from 'static/js/base';
 
 function Oper(props) {
   const fontSmall = { fontSize: "12px" };
@@ -23,9 +23,13 @@ function Oper(props) {
         defaultChecked={props.record.state === 'NORMAL' ? true : false}
         onChange={checked => {
           const state = checked ? 'NORMAL' : 'INVILD'
+          const userNo = $$.localStorage.get("adminId")
+          const orgCode = props.record.orgCode
           const data = {
             state,
-            id: props.record.id
+            id: props.record.id,
+            orgCode,
+            userNo
           }
           props.updateOrgUpdate({ props, data })
         }}

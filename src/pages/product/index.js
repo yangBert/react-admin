@@ -8,18 +8,20 @@ import Oper from './components/Operation';
 import AddModal from './components/AddModal';
 import SearchForm from './components/SearchForm';
 import $$ from 'static/js/base';
+import * as enumerate from 'static/js/enumerate';
 
 const columns = [
-  { title: '产品名称', dataIndex: 'productName', key: 'productName' },
-  { title: '产品描述', dataIndex: 'productDesc', key: 'productDesc' },
+  { title: '产品名称', dataIndex: 'productName', key: 'productName', align: 'center' },
+  { title: '产品描述', dataIndex: 'productDesc', key: 'productDesc', align: 'center' },
   {
-    title: '上线时间', dataIndex: 'publishAt', key: 'publishAt',
+    title: '创建时间', dataIndex: 'publishAt', key: 'publishAt', align: 'center',
     render: publishAt => (
       <span>{$$.getHours(publishAt)}</span>
     )
   },
   {
-    title: '产品状态', dataIndex: 'status', key: 'status', align: 'center'
+    title: '产品状态', dataIndex: 'status', key: 'status', align: 'center',
+    render: status => enumerate.baseState.get(status)
   },
   {
     title: '操作',
@@ -31,7 +33,7 @@ const columns = [
 
 class ProductList extends Component {
   componentDidMount() {
-    this.props.queryList({ props: this.props, data: { pageNo: 1, pageSize: 10 } })
+    //this.props.queryList({ props: this.props, data: { pageNo: 1, pageSize: 10 } })
     this.sendFn(1, 10)
   }
 

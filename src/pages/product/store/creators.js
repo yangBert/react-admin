@@ -30,9 +30,7 @@ const changeConfirmLoadingAction = ConfirmLoading => ({
 const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("reqreq查询字典数据-----", req)
     request.json(requestURL.productSelectByPage, req.data, res => {
-      console.log("resresresresFFFFF", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
@@ -54,9 +52,7 @@ const createAddAction = req => {
   return (dispatch, getState) => {
     const url = req.type ? requestURL.productUpdateProduct : requestURL.productAddProduct;
     dispatch(changeConfirmLoadingAction(true))
-    console.log("新增", url, req.data)
     request.json(url, req.data, res => {
-      console.log("新增res", url, res)
       dispatch(changeConfirmLoadingAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data

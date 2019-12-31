@@ -28,11 +28,9 @@ const emptyAddValueAction = () => ({
 //审核应用
 const appAuditAction = req => {
   return dispatch => {
-    console.log("审核应用", req.data, requestURL.plateSettingAppAudit)
     dispatch(spinningAction(true))
     request.json(requestURL.plateSettingAppAudit, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("审核应用", res)
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
@@ -52,11 +50,9 @@ const appAuditAction = req => {
 //修改查询信息
 const queryEditAppAction = req => {
   return dispatch => {
-    console.log("修改查询信息", req.data, requestURL.plateSettingAppDetail)
     dispatch(spinningAction(true))
     request.json(requestURL.plateSettingAppDetail, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("修改查询信息", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
@@ -117,9 +113,7 @@ function dataURLtoFile(dataurl, filename) {//将base64转换为文件
 const createQueryAppListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("查询应用列表", req.data, requestURL.plateSettingSelectAppData)
     request.json(requestURL.plateSettingSelectAppData, req.data, res => {
-      console.log("查询应用列表返回", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
@@ -163,11 +157,9 @@ const showSecretAction = req => {
 //修改应用状态
 const createChangeAppStatusAction = req => {
   return (dispatch, getState) => {
-    console.log("req", req, requestURL.plateSettingUpdateApp);
     dispatch(spinningAction(true))
     request.json(requestURL.plateSettingUpdateAppWithOutFile, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("resres", res);
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
@@ -225,9 +217,7 @@ const initAllAppTypes = allAppTypes => ({
 //查询所有应用类型
 const queryAllAppTypeAction = req => {
   return dispatch => {
-    console.log("req", req);
     request.json(requestURL.plateSettingDictByNine, req.data, res => {
-      console.log("resres", res);
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
@@ -251,9 +241,7 @@ const initAllSupportCAs = allSupportCAs => ({
 //查询所有支持CA机构
 const queryAllSupportCAsAction = req => {
   return dispatch => {
-    console.log("req", req);
     request.json(requestURL.plateSettingSelectCA, req.data, res => {
-      console.log("resres", res);
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
@@ -280,7 +268,6 @@ const saveAppFormAction = req => {
     dispatch(changeSaveLoading(true))
     let url;
     if (req.props.location.state && req.props.location.state.editAppId) {
-      console.log("idididid", req.data.get("id"));
       url = requestURL.plateSettingUpdateAppWithOutFile
     } else {
       url = requestURL.plateSettingAddAppData

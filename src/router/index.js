@@ -20,6 +20,7 @@ const NoticeAdd = lazy(() => import('pages/notice/components/NoticeAdd'));
 const ProductList = lazy(() => import('pages/product'));
 const CertificationList = lazy(() => import('pages/certification'));
 const CertificationAdd = lazy(() => import('pages/certification/components/CertificationAdd'));
+const DocCatalogList = lazy(() => import('pages/docCatalog'));
 
 const routes = [
   {
@@ -106,6 +107,9 @@ const routes = [
     path: "/certification/add",
     component: CertificationAdd
   },
-
+  {
+    path: "/docCatalog/list",
+    component: DocCatalogList
+  },
 ];
 export default routes;

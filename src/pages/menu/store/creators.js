@@ -118,7 +118,6 @@ const queryMenuAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
     request.json(requestURL.powerSelectAllMenu, req.data, res => {
-      console.log("查询菜单查询菜单", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data

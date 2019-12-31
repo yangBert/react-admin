@@ -40,7 +40,6 @@ class DictDataList extends Component {
   sendFn(pageNo, pageSize) {
     //const params = this.props.params
     const data = { pageNo, pageSize }
-    console.log("this.props:queryDictList", this.props.queryDictList)
     //this.props.queryDictlist({ props: this.props, data });
     this.props.queryDictList({ props: this.props, data })
   }

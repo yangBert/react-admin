@@ -157,7 +157,6 @@ const queryHaveMenusAction = req => {
     dispatch(spinningAction(true))
     request.json(requestURL.powerSelectUserMenu, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("查询角色已绑定的菜单", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
@@ -177,9 +176,7 @@ const queryHaveMenusAction = req => {
 const roleBindMenuAction = req => {
   return dispatch => {
     dispatch(changeConfirmLoadingAction(true))
-    console.log("保存角色权限分配", req.data)
     request.jsonArr(requestURL.powerUserBindMenu, req.data, res => {
-      console.log("保存角色权限分配resresres", res)
       dispatch(changeConfirmLoadingAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data

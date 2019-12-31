@@ -11,10 +11,8 @@ const { RangePicker } = DatePicker;
 
 function SearchForm(props) {
   const [title, setTitle] = useState("")
-  const [publishTimeStart, setPublishTimeStart] = useState(null)
-  const [publishTimeEnd, setPublishTimeEnd] = useState(null)
-
-
+  const [publishStartTimeString, setPublishStartTimeString] = useState(null)
+  const [publishEndTimeString, setPublishEndTimeString] = useState(null)
 
   const { changeSearchParams } = props;
   useEffect(() => {
@@ -23,35 +21,36 @@ function SearchForm(props) {
 
   function search() {
     const { title } = props.params
-    const start = publishTimeStart && publishTimeStart.format('YYYY-MM-DD')
-    const end = publishTimeEnd && publishTimeEnd.format('YYYY-MM-DD')
+
+    const start = publishStartTimeString && publishStartTimeString.format('YYYY-MM-DD HH:mm:ss')
+    const end = publishEndTimeString && publishEndTimeString.format('YYYY-MM-DD HH:mm:ss')
     const data = {
       pageSize: 10,
       pageNo: 1,
       title,
-      start,
-      end
+      publishStartTimeString: start,
+      publishEndTimeString: end
     }
     props.queryCertlist({ props, data });
   }
 
   function reset() {
     setTitle("");
-    setPublishTimeStart(null);
-    setPublishTimeEnd(null);
+    setPublishStartTimeString(null);
+    setPublishEndTimeString(null);
     const data = { pageNo: 1, pageSize: 10 }
     props.queryCertlist({ props, data });
   }
 
   function onChangePicker(dates, dateStrings) {
-    setPublishTimeStart(moment(dateStrings[0]))
-    setPublishTimeEnd(moment(dateStrings[1]))
+    setPublishStartTimeString(moment(dateStrings[0]))
+    setPublishEndTimeString(moment(dateStrings[1]))
   }
 
   return (
     <div>
       <div className={`${styles.form} clearfix`}>
-        <div className={`${styles.formLine} pullLeft`}>
+        <div className={`${styles.title} pullLeft`}>
           <label className="pullLeft">公告标题:</label>
           <div className={`${styles.inline} pullLeft`}>
             <Input
@@ -65,7 +64,8 @@ function SearchForm(props) {
           <label className="pullLeft">发布日期:</label>
           <div className={`${styles.inline} pullLeft`}>
             <RangePicker
-              value={[publishTimeStart, publishTimeEnd]}
+              showTime
+              value={[publishStartTimeString, publishEndTimeString]}
               ranges={{
                 Today: [moment(), moment()],
                 'This Month': [moment().startOf('month'), moment().endOf('month')],
@@ -93,7 +93,7 @@ function SearchForm(props) {
           </Button>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

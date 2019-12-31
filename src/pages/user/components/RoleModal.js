@@ -12,13 +12,11 @@ function RoleModal(props) {
   const _selectedRoles = props.selectedRoles
 
   useEffect(() => {
-    console.log("selectedRoles", _selectedRoles)
     setSelectedRoles(_selectedRoles)
     setRoleAllList(_roleAllList)
   }, [_selectedRoles, _roleAllList]);
 
   function changeCheckboxGroup(keys) {
-    console.log("keys", keys)
     setSelectedRoles(keys)
   }
 
@@ -30,13 +28,12 @@ function RoleModal(props) {
         roleId: selectedRoles[i]
       })
     }
-    console.log("roleAdminId", props.roleAdminId)
     props.bindRole(arr)
   }
 
   return (
     <Modal
-      title="权限配置"
+      title="权陝酝置"
       style={{ top: 20 }}
       width={360}
       bodyStyle={{ height: "300px", overflow: "auto" }}

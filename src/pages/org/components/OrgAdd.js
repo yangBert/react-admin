@@ -51,13 +51,11 @@ class OrgAdd extends Component {
     if (editId) {
       req.data.id = editId
     }
-    console.log(req)
     this.props.save(req)
   }
 
   onChangeTreeSelect = (value, label, extra) => {
     this.props.setTreeValue(extra.triggerNode.props)
-    console.log(extra.triggerNode.props.id);
   }
 
   render() {

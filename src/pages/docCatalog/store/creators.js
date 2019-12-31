@@ -6,10 +6,9 @@ import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 import { Modal } from 'antd'
 
-const initListAction = (list, pagination) => ({
+const initListAction = list => ({
   type: types.INIT_LIST,
-  list,
-  pagination
+  list
 })
 
 //保存认证源
@@ -40,11 +39,11 @@ const createSaveFormAction = req => {
   }
 }
 
-//查询认证源
+//查询目录列表
 const querylistAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    request.json(requestURL.authSelectByPage, req.data, res => {
+    request.json(requestURL.docQueryCatalogPages, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data

@@ -1,5 +1,3 @@
-//import sliderMenuReducer from 'pages/common/menu/store/reducer';
-
 import sliderReducer from 'pages/common/menu/store/reducer';
 import headReducer from 'pages/common/header/store/reducer';
 import adminReducer from 'pages/admin/store/reducer';
@@ -15,11 +13,10 @@ import orgReducer from 'pages/org/store/reducer';
 import certReducer from 'pages/cert/store/reducer';
 import productReducer from 'pages/product/store/reducer';
 import certificationReducer from 'pages/certification/store/reducer';
-
+import docCatalogReducer from 'pages/docCatalog/store/reducer';
 
 export default {
   login: loginReducer,
-  //sideMenu: sliderMenuReducer,
   slider: sliderReducer,
   header: headReducer,
   admin: adminReducer,
@@ -33,5 +30,6 @@ export default {
   org: orgReducer,
   cert: certReducer,
   product: productReducer,
-  certification: certificationReducer
+  certification: certificationReducer,
+  docCatalog: docCatalogReducer,
 };

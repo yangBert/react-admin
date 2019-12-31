@@ -34,9 +34,7 @@ const changeConfirmLoadingAction = ConfirmLoading => ({
 const queryDictDataListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("reqreq查询字典数据-----", req)
     request.json(requestURL.plateSettingSelectDictionaryApp, req.data, res => {
-      console.log("resresresresFFFFF", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
@@ -57,9 +55,7 @@ const queryDictDataListAction = req => {
 const deleteDictDataAction = req => {
   return (dispatch, getState) => {
     dispatch(spinningAction(true))
-    console.log("删除字典类型req-----", req)
     request.json(requestURL.plateSettingDeleteDictionaryApp, req.data, res => {
-      console.log("删除字典类型res", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
@@ -81,9 +77,7 @@ const createAddAction = req => {
   return (dispatch, getState) => {
     const url = req.type ? requestURL.plateSettingUpdateDictionaryApp : requestURL.plateSettingAddDictionaryApp;
     dispatch(changeConfirmLoadingAction(true))
-    console.log("新增", url, req.data)
     request.json(url, req.data, res => {
-      console.log("新增res", url, res)
       dispatch(changeConfirmLoadingAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data

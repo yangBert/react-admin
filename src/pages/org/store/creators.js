@@ -25,7 +25,6 @@ const initOrgTreeAction = (treeList) => ({
 //新增机构
 const createAddOrgAction = req => {
   return dispatch => {
-    console.log("req.data", req.data)
     let url;
     if (req.data.id) {
       url = requestURL.orgUpdateOrg
@@ -35,7 +34,6 @@ const createAddOrgAction = req => {
     dispatch(changeSaveLoadingAction(true))
     request.json(url, req.data, res => {
       dispatch(changeSaveLoadingAction(false))
-      console.log("res", res)
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
@@ -83,7 +81,6 @@ const queryOrgListAction = req => {
     dispatch(spinningAction(true))
     request.json(requestURL.orgQueryAllOrgTree, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("查询机构data", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
@@ -104,9 +101,7 @@ const queryOrgListAction = req => {
 //修改机构状态
 const updateOrgUpdateAction = req => {
   return dispatch => {
-    console.log("req", req)
     request.json(requestURL.orgUpdateOrgState, req.data, res => {
-      console.log("res", res)
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {

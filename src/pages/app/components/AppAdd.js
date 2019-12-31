@@ -158,7 +158,6 @@ class AppAdd extends Component {
     const imgURL = this.props.iconBase64 || this.props.icon
     return (
       <div className={styles.pageContet}>
-        {/* <h3 className={styles.childTitle}>新增</h3> */}
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <div className="pageContentColor">
             <Card title="基本信息" bordered={false}>

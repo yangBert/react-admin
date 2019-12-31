@@ -46,14 +46,11 @@ class MenuModal extends React.Component {
   onCheck = (checkedKeys, e) => {
 
     //let checkedKeysResult = [...checkedKeys, ...info.halfCheckedKeys];
-    console.log("checkedKeys", checkedKeys)
-    console.log("e", e)
     //this.setState({ checkedKeys: checkedKeysResult });
     this.props.changeCheckedKeys(checkedKeys.checked)
   };
 
   // onSelect = (selectedKeys) => {
-  //   console.log("selectedKeys", selectedKeys)
   //   this.setState({ selectedKeys });
   // };
 
@@ -72,7 +69,7 @@ class MenuModal extends React.Component {
     return (
       <div>
         <Modal
-          title="分配权限"
+          title="分酝权陝"
           style={{ top: 20 }}
           width={360}
           bodyStyle={{ height: "300px", overflow: "auto" }}

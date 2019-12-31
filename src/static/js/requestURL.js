@@ -60,7 +60,6 @@ export const plateSettingDictByNine = "/api/v1/uamManager/plateSetting/DictByNin
 export const plateSettingLoginType = "/api/v1/uamManager/plateSetting/LoginType";
 export const plateSettingSelectCA = "/api/v1/uamManager/plateSetting/SelectCA";
 
-
 //文件上传
 export const uploadUploadApplyFile = "/api/v1/upload/uploadApplyFile";
 
@@ -87,6 +86,11 @@ export const productUpdateProduct = "/api/v1/manager/product/updateProduct";
 //认证源管理
 export const authSelectByPage = "/api/v1/manager/auth/selectByPage";
 export const authAddAuth = "/api/v1/manager/auth/addAuth";
+export const authUpdateAuth = "/api/v1/manager/auth/updateAuth";
+export const authDelAuth = "/api/v1/manager/auth/delAuth";
+
+//文档管理
+export const docQueryCatalogPages = "/api/v1/manager/doc/queryCatalogPages";
 
 
 
