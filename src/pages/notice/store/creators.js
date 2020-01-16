@@ -5,7 +5,7 @@ import spinningAction from 'pages/common/layer/spinning';
 import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 import { Modal } from 'antd'
-
+import BraftEditor from 'braft-editor';
 const initNoticeListAction = (list, pagination) => ({
   type: types.QUERY_NOTICE_LIST,
   list,
@@ -44,10 +44,12 @@ const createSaveNoticeAction = req => {
 const queryNoticelistAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
+    console.log("req.data", req.data)
     request.json(requestURL.noticeQueryByPage, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
+        console.log("res", res)
         if (success) {
           const action = initNoticeListAction(data.results, createPagination(data))
           dispatch(action)
@@ -63,7 +65,7 @@ const queryNoticelistAction = req => {
 
 //公告详情
 const queryNoticeDetailAction = req => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(spinningAction(true))
     request.json(requestURL.noticeGetNoticeDetail, req.data, res => {
       dispatch(spinningAction(false))
@@ -71,7 +73,8 @@ const queryNoticeDetailAction = req => {
         const { success, message, data } = res.data && res.data
         if (success) {
           dispatch(changeEditTitleAction(data.title))
-          dispatch(changeEditorContentAction(data.content))
+          dispatch(changeEditorContentAction(BraftEditor.createEditorState(data.content)))
+          dispatch(changeEditorStateAction(data.state))
         } else {
           notification('error', message)
         }
@@ -96,10 +99,11 @@ const publishNoticeAction = req => {
             content: message,
             okText: '确认',
             onOk: () => {
+              const pagination = getState().notice.pagination
               const params = {
                 ...getState().notice.params,
-                pageNo: 1,
-                pageSize: 10
+                pageNo: pagination.current,
+                pageSize: pagination.pageSize,
               }
               dispatch(queryNoticelistAction({ props: req.props, data: params }));
             }
@@ -131,6 +135,13 @@ const changeEditorContentAction = editContent => ({
   type: types.CHANGE_EDIT_CONTENT,
   editContent
 })
+
+//编辑改变富文本内容
+const changeEditorStateAction = editState => ({
+  type: types.CHANGE_EDIT_STATE,
+  editState
+})
+
 
 export {
   queryNoticelistAction,

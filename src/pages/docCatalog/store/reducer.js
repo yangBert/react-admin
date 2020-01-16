@@ -3,14 +3,13 @@ import spinningTypes from 'pages/common/layer/spinning/spinningTypes';
 
 const defaultState = {
   list: [],
+  productList: [],
   pagination: {},
   spinning: false,
   params: {},
-  editAuthName: "",
-  editURL: "",
-  editAuthLevel: "",
-  editAuthStyle: "",
-  editStatus: ""
+  editProductCode: "",
+  editName: "",
+  editOrders: "",
 };
 
 export default (state = defaultState, action) => {
@@ -25,27 +24,17 @@ export default (state = defaultState, action) => {
     case types.CHANGE_SEARCH_PARAMS:
       newState.params = action.params
       break;
-    case types.CHANGE_EDIT_AUTH_NAME:
-      newState.editAuthName = action.editAuthName
+    case types.INIT_PRODUCT_LIST:
+      newState.productList = action.productList
       break;
-    case types.CHANGE_EDIT_URL:
-      newState.editURL = action.editURL
+    case types.CHANGE_EDIT_PRODUCT_CODE:
+      newState.editProductCode = action.editProductCode
       break;
-    case types.CHANGE_AUTH_LEVE:
-      newState.editAuthLevel = action.editAuthLevel
+    case types.CHANGE_EDIT_NAME:
+      newState.editName = action.editName
       break;
-    case types.CHANGE_AUTH_STYLE:
-      newState.editAuthStyle = action.editAuthStyle
-      break;
-    case types.CHANGE_EDIT_STATUS:
-      newState.editStatus = action.editStatus
-      break;
-    case types.CLEAN_FORM:
-      newState.editAuthName = ""
-      newState.editURL = ""
-      newState.editAuthLevel = ""
-      newState.editAuthStyle = ""
-      newState.editStatus = ""
+    case types.CHANGE_EDIT_ORDERS:
+      newState.editOrders = action.editOrders
       break;
     default:
       break;

@@ -3,6 +3,7 @@ import { Button, Popconfirm, Icon } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import { withRouter } from 'react-router-dom';
+import $$ from 'static/js/base';
 
 function Oper(props) {
   const fontSmall = { fontSize: "12px" };
@@ -19,8 +20,13 @@ function Oper(props) {
         placement="left"
         title="确定删除吗?"
         onConfirm={() => {
-          const data = "productCode=" + props.record.productCode
-          props.deleteData({ props, data })
+          const userNo = $$.localStorage.get("adminId")
+          const data = {
+            userNo,
+            productCode: props.record.productCode,
+            status: "DEL",
+          }
+          props.deleteRow({ props, data })
         }}
         okText="确定"
         icon={<Icon type="question-circle" />}
@@ -39,6 +45,10 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   changeAddModalvisible: (addModalvisible, operationType, record) => {
     const action = creators.changeAddModalvisibleAction(addModalvisible, operationType, record);
+    dispatch(action);
+  },
+  deleteRow: req => {
+    const action = creators.deleteRowAction(req);
     dispatch(action);
   },
 })

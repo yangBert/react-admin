@@ -4,109 +4,69 @@ import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/SearchForm.module.css';
 import { Link } from 'react-router-dom';
-import * as enumerate from 'static/js/enumerate';
 const { Option } = Select;
 
 function SearchForm(props) {
-  const [authName, setAuthName] = useState("")
-  const [authLevel, setAuthLevel] = useState("")
-  const [authStyle, setAuthStyle] = useState("")
-  const [status, setStatus] = useState("")
+  const [name, setName] = useState("")
+  const [productCode, setProductCode] = useState("")
 
 
   const { changeSearchParams } = props;
   useEffect(() => {
-    changeSearchParams({ authName, authLevel, authStyle, status })
-  }, [authName, authLevel, authStyle, status, changeSearchParams]);
+    changeSearchParams({ name, productCode })
+  }, [name, productCode, changeSearchParams]);
 
   function search() {
-    const { authName, authLevel, authStyle, status } = props.params
+    const { name, productCode } = props.params
 
     const data = {
       pageSize: 10,
       pageNo: 1,
-      authName,
-      authLevel,
-      authStyle,
-      status
+      name,
+      productCode,
     }
     props.querylist({ props, data });
   }
 
   function reset() {
-    setAuthName("")
-    setAuthLevel("")
-    setAuthStyle("")
-    setStatus("")
+    setName("")
+    setProductCode("")
     const data = { pageNo: 1, pageSize: 10 }
     props.querylist({ props, data });
   }
 
-  function initAuthStyle() {
-    const t = enumerate.interfaceTypes.data
-    return t.map(item => <Option key={item} value={item}>{enumerate.interfaceTypes.get(item)}</Option>)
-  }
-
-  function initStatus() {
-    const t = enumerate.baseState.data
-    return t.map(item => <Option key={item} value={item}>{enumerate.baseState.get(item)}</Option>)
-  }
-
-  function initAuthLevel() {
-    const t = enumerate.authSafety.data
-    return t.map(item => <Option key={item} value={item}>{enumerate.authSafety.get(item)}</Option>)
+  function initProductList(list) {
+    return list.map(item => (
+      <Option key={item.productCode} value={item.productCode}>{item.productName}</Option>
+    ))
   }
 
   return (
     <div>
       <div className={`${styles.form} clearfix`}>
         <div className={`${styles.formLine} pullLeft`}>
-          <label className="pullLeft">认证源名称:</label>
+          <label className="pullLeft">分类名称:</label>
           <div className={`${styles.inline} pullLeft`}>
             <Input
               allowClear
-              onChange={e => setAuthName(e.target.value)}
-              value={authName}
+              onChange={e => setName(e.target.value)}
+              value={name}
             />
           </div>
         </div>
         <div className={`${styles.formLine} pullLeft`}>
-          <label className="pullLeft">认证等级:</label>
+          <label className="pullLeft">选择产品:</label>
           <div className={`${styles.inline} pullLeft`}>
             <Select
-              value={authLevel}
+              value={productCode}
               style={{ width: "100%" }}
-              onChange={value => setAuthLevel(value)}
+              onChange={value => setProductCode(value)}
             >
               <Option value="">请选择</Option>
-              {initAuthLevel()}
-            </Select>
-          </div>
-        </div>
-        <div className={`${styles.formLine} pullLeft`}>
-          <label className="pullLeft">认证源接口方式:</label>
-          <div className={`${styles.inline} pullLeft`}>
-            <Select
-              value={authStyle}
-              style={{ width: "100%" }}
-              onChange={value => setAuthStyle(value)}
-
-            >
-              <Option value="">请选择</Option>
-              {initAuthStyle()}
-            </Select>
-          </div>
-        </div>
-        <div className={`${styles.formLine} pullLeft`}>
-          <label className="pullLeft">认证源状态:</label>
-          <div className={`${styles.inline} pullLeft`}>
-            <Select
-              value={status}
-              style={{ width: "100%" }}
-              onChange={value => setStatus(value)}
-            >
-              <Option value="">请选择</Option>
-              {initStatus()}
+              {
+                (props.productList) ?
+                  initProductList(props.productList) : ""
+              }
             </Select>
           </div>
         </div>
@@ -119,7 +79,13 @@ function SearchForm(props) {
         <Button className={styles.button} onClick={() => reset()} type="primary" ghost>
           <Icon type="undo" />重置
           </Button>
-        <Link className={styles.button} to="/certification/add">
+        <Link
+          className={styles.button}
+          to={{
+            pathname: "/docCatalog/add",
+            state: { productList: props.productList }
+          }}
+        >
           <Button
             type="primary"
             className={styles.addButton}
@@ -133,11 +99,11 @@ function SearchForm(props) {
 }
 
 const mapState = state => ({
-  params: state.certification.params
+  params: state.docCatalog.params,
+  productList: state.docCatalog.productList,
 })
 
 const mapDispatch = dispatch => ({
-
   querylist: req => {
     const action = creators.querylistAction(req);
     dispatch(action);

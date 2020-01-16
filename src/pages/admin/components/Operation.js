@@ -37,7 +37,7 @@ function Oper(props) {
       <Switch
         checkedChildren="启用"
         unCheckedChildren="禁用"
-        defaultChecked={props.record.status === "1" ? true : false}
+        checked={props.record.status === "1" ? true : false}
         onChange={checked => {
           const status = checked ? "1" : "0"
           const data = {

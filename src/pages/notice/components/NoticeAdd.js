@@ -9,15 +9,18 @@ import { Link } from 'react-router-dom';
 import $$ from 'static/js/base';
 
 class NoticeAdd extends Component {
+  state = {
+    editorState: BraftEditor.createEditorState('<p>Hello <b>World!</b></p>')
+  }
   componentDidMount() {
-    this.props.handleEditorChange(BraftEditor.createEditorState(null))//初始化富文本编辑器
+    this.props.handleEditorChange(BraftEditor.createEditorState('<p>Hello <b>World!</b></p>'))//初始化富文本编辑器
     if (this.props.location.state && this.props.location.state.editId) {
       this.props.queryNoticeDetail({ props: this.props, data: { id: this.props.location.state.editId } })
     }
   }
 
   save() {
-    const { editTitle, editContent } = this.props;
+    const { editTitle, editContent, editState } = this.props;
     if ($$.trim(editTitle) === "") {
       message.error('请填写公告标题');
       return
@@ -31,9 +34,10 @@ class NoticeAdd extends Component {
       props: this.props,
       data: {
         title: editTitle,
-        content: editContent,
+        content: editContent.toHTML(),
         creater,
         createrName,
+        state: editState,
       }
     }
 
@@ -43,6 +47,12 @@ class NoticeAdd extends Component {
     }
 
     this.props.saveNotice(req)
+  }
+
+  handleEditorChange = (editorState) => {
+    this.setState({
+      editorState: editorState,
+    })
   }
 
   render() {
@@ -76,10 +86,8 @@ class NoticeAdd extends Component {
           <div className={`${styles.editContent} my-component`}>
             <BraftEditor
               placeholder="请输入正文内容"
-              defaultValue={this.props.editContent}
-              value={BraftEditor.createEditorState(this.props.editContent)}
+              value={this.props.editContent}
               onChange={this.props.handleEditorChange}
-            // onSave={this.submitContent}
             />
           </div>
         </Spin>
@@ -91,7 +99,8 @@ class NoticeAdd extends Component {
 const mapState = state => ({
   spinning: state.notice.spinning,
   editTitle: state.notice.editTitle,
-  editContent: state.notice.editContent
+  editContent: state.notice.editContent,
+  editState: state.notice.editState,
 })
 
 const mapDispatch = dispatch => ({
@@ -104,7 +113,7 @@ const mapDispatch = dispatch => ({
     dispatch(action);
   },
   handleEditorChange: editorState => {
-    const action = creators.changeEditorContentAction(editorState.toHTML());
+    const action = creators.changeEditorContentAction(editorState);
     dispatch(action);
   },
   queryNoticeDetail: req => {

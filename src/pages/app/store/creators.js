@@ -25,6 +25,19 @@ const emptyAddValueAction = () => ({
   type: types.EMPTY_ADD_VALUE,
 })
 
+//初始化树
+const initOrgTreesAction = orgList => ({
+  type: types.INIT_ORG_TREES,
+  orgList,
+})
+
+//改变机构树
+const onChangeOrgTreeSelectAction = orgCode => ({
+  type: types.CHANGE_TREE_ORG_CODE,
+  orgCode,
+})
+
+
 //审核应用
 const appAuditAction = req => {
   return dispatch => {
@@ -130,6 +143,55 @@ const createQueryAppListAction = req => {
   }
 }
 
+//递归处理菜单查询返回数据---删除空children
+function implementMenusData(data) {
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].children && data[i].children.length > 0) {
+      implementMenusData(data[i].children)
+    } else if (data[i].children && data[i].children.length === 0) {
+      delete data[i].children
+    }
+  }
+  return data
+}
+
+//递归机构树数据处理
+function implementTreeData(data) {
+  for (let i = 0; i < data.length; i++) {
+
+    data[i].title = data[i].orgName
+    data[i].value = data[i].id
+    data[i].key = data[i].id
+    if (data[i].children && data[i].children.length > 0) {
+      implementTreeData(data[i].children)
+    }
+  }
+  return data
+}
+
+//查询机构树
+const queryOrgListAction = req => {
+  return dispatch => {
+    dispatch(spinningAction(true))
+    request.json(requestURL.orgQueryAllOrgTree, req.data, res => {
+      dispatch(spinningAction(false))
+      if (res.data) {
+        const { success, message, data } = res.data && res.data
+        if (success) {
+          const trees = implementTreeData(implementMenusData(data))
+          const action = initOrgTreesAction(trees)
+          dispatch(action)
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
+
 //查询应用授权密钥
 const showSecretAction = req => {
   return () => {
@@ -197,6 +259,7 @@ const queryLoginTypeAction = req => {
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
+          console.log(data)
           const arr = implementResponseType(JSON.parse(data))
           dispatch(initAllLandingModes(arr));
         } else {
@@ -224,7 +287,8 @@ const queryAllAppTypeAction = req => {
           const arr = implementResponseType(JSON.parse(data))
           dispatch(initAllAppTypes(arr));
         } else {
-          notification('error', message)
+          console.log(res.data)
+          //notification('error', message)
         }
       } else {
         req.props.history.push("/500")
@@ -257,6 +321,30 @@ const queryAllSupportCAsAction = req => {
   }
 }
 
+const initAllAuthLevel = allAuthLevel => ({
+  type: types.INIT_ALL_AUTH_LEVEL,
+  allAuthLevel,
+})
+
+//查询所有认证源等级
+const getAuthLevelAction = req => {
+  return dispatch => {
+    request.json(requestURL.authGetAuthLevel, req.data, res => {
+      if (res.data) {
+        const { success, message, data } = res.data && res.data
+        if (success) {
+          dispatch(initAllAuthLevel(data));
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
+
 const changeSaveLoading = saveLoading => ({
   type: types.CHANGE_SAVE_LOADING,
   saveLoading
@@ -272,7 +360,7 @@ const saveAppFormAction = req => {
     } else {
       url = requestURL.plateSettingAddAppData
     }
-
+    console.log("data send", req.data)
     request.formData(url, req.data, res => {
       dispatch(changeSaveLoading(false))
       if (res.data) {
@@ -283,8 +371,7 @@ const saveAppFormAction = req => {
             content: message,
             onOk() {
               req.props.history.push("/app/appList")
-            },
-            onCancel() { },
+            }
           });
         } else {
           notification('error', message)
@@ -382,10 +469,13 @@ export {
   queryLoginTypeAction,
   queryAllSupportCAsAction,
   queryAllAppTypeAction,
+  getAuthLevelAction,
   setIconBase64Action,
   saveAppFormAction,
   showSecretAction,
   queryEditAppAction,
   appAuditAction,
-  emptyAddValueAction
+  emptyAddValueAction,
+  queryOrgListAction,
+  onChangeOrgTreeSelectAction,
 }

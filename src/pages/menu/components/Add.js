@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Input, Form, Tree } from 'antd';
+import { Modal, Input, Form, TreeSelect } from 'antd';
 import styles from '../css/add.module.css';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 
-const { TreeNode } = Tree;
-
 function Add(props) {
   const list = props.list
-  const [treeVisible, setTreeVisible] = useState("hidden")
-
   const [addModalvisible, setAddModalvisible] = useState(false)
-
-  const [parentName, setParentName] = useState("")
   const [menuFatherid, setMenuFatherid] = useState("")
   const [menuName, setMenuName] = useState("")
   const [menuRoute, setMenuRoute] = useState("")
@@ -23,12 +17,10 @@ function Add(props) {
 
   const [refMenuName, setRefMenuName] = useState(null)
   const [refMenuRoute, setRefMenuRoute] = useState(null)
-  const [refParentName, setRefParentName] = useState(null)
   const [refMenuLogo, setRefMenuLogo] = useState(null)
 
   const $addModalvisible = props.addModalvisible
   useEffect(() => {
-    setParentName("")
     setMenuFatherid("")
     setMenuName("")
     setMenuRoute("")
@@ -39,10 +31,7 @@ function Add(props) {
 
   //新增管理员提交数据
   function collectData() {
-    if (parentName === "") {
-      refParentName.focus()
-      return;
-    } else if (menuName === "") {
+    if (menuName === "") {
       refMenuName.focus()
       return;
     } else if (menuRoute === "") {
@@ -63,30 +52,20 @@ function Add(props) {
 
   }
 
-  function onSelect(expandedKeys, e) {
-    setMenuFatherid(expandedKeys[0])
-    setParentName(e.node.props.title)
-    setTreeVisible("hidden")
-  };
+  function onChangeTreeSelect(value) {
+    setMenuFatherid(value)
+  }
 
-  //递归菜单
-  function mapMenuList(menus) {
-    return (
-      menus.map(i => {
-        if (i.children && i.children.length > 0) {
-          return (
-            <TreeNode
-              key={i.key}
-              title={i.menuName}
-            >
-              {mapMenuList(i.children)}
-            </TreeNode>
-          )
-        } else {
-          return <TreeNode title={i.menuName} key={i.key} />
-        }
-      })
-    )
+  //递归
+  function recursiveFn(arr) {
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].title = arr[i].menuName
+      arr[i].value = arr[i].menuId
+      if (arr[i].children && arr[i].children.length > 0) {
+        recursiveFn(arr[i].children)
+      }
+    }
+    return arr;
   }
 
   return (
@@ -105,16 +84,15 @@ function Add(props) {
         <Form>
           <div className={`${styles.formLine} clearfix`}><label className="pullLeft">上级菜单：</label>
             <div className={`${styles.inline} pullLeft`}>
-              <Input
-                ref={input => setRefParentName(input)}
-                onFocus={e => setTreeVisible("visible")}
-                value={parentName}
+              <TreeSelect
+                style={{ width: '100%' }}
+                value={menuFatherid}
+                dropdownStyle={{ maxHeight: 250, overflow: 'auto' }}
+                treeData={recursiveFn(list)}
+                placeholder="请选择"
+                treeDefaultExpandAll
+                onChange={onChangeTreeSelect}
               />
-              <div className={`${styles.tree} ${styles[treeVisible]}`}>
-                <Tree onSelect={onSelect}>
-                  {mapMenuList(list)}
-                </Tree>
-              </div>
             </div>
           </div>
           <div className={`${styles.formLine} clearfix`}><label className="pullLeft">菜单名称：</label>

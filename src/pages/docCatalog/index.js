@@ -5,22 +5,19 @@ import * as creators from './store/creators';
 import SearchForm from './components/SearchForm';
 import styles from './css/UserList.module.css';
 import Oper from './components/Operation';
-import * as enumerate from 'static/js/enumerate';
+import $$ from 'static/js/base';
 
 const columns = [
-  { title: '认证源名称', dataIndex: 'authName', key: 'authName' },
-  { title: '认证接入URL', dataIndex: 'url', key: 'url' },
+
+  { title: '分类编码', dataIndex: 'code', key: 'code' },
+  { title: '分类名称', dataIndex: 'name', key: 'name', align: 'center' },
+  { title: '所属产品', dataIndex: 'productName', key: 'productName', align: 'center' },
   {
-    title: '认证源接口方式', dataIndex: 'authStyle', key: 'authStyle', align: 'center',
-    render: authStyle => enumerate.interfaceTypes.get(authStyle)
+    title: '创建日期', dataIndex: 'createAt', key: 'createAt', align: 'center',
+    render: createAt => $$.getHours(createAt)
   },
   {
-    title: '认证等级', dataIndex: 'authLevel', key: 'authLevel', align: 'center',
-    render: authLevel => enumerate.authSafety.get(authLevel)
-  },
-  {
-    title: '认证源状态', dataIndex: 'status', key: 'status', align: 'center',
-    render: status => enumerate.baseState.get(status)
+    title: '创建人', dataIndex: 'createBy', key: 'createBy', align: 'center'
   },
   {
     title: '操作',
@@ -33,6 +30,7 @@ const columns = [
 class DocCatalogList extends Component {
   componentDidMount() {
     this.sendFn(1, 10)
+    this.props.queryProductList({ props: this.props, data: { pageSize: 10, pageNo: 1 } })
   }
 
   paginationChange = (pageNo, pageSize) => {
@@ -94,6 +92,10 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   querylist: req => {
     const action = creators.querylistAction(req);
+    dispatch(action);
+  },
+  queryProductList: req => {
+    const action = creators.queryProductListAction(req);
     dispatch(action);
   },
 })

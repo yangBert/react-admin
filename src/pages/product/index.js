@@ -11,6 +11,7 @@ import $$ from 'static/js/base';
 import * as enumerate from 'static/js/enumerate';
 
 const columns = [
+  { title: '产品编码', dataIndex: 'productCode', key: 'productCode', align: 'center' },
   { title: '产品名称', dataIndex: 'productName', key: 'productName', align: 'center' },
   { title: '产品描述', dataIndex: 'productDesc', key: 'productDesc', align: 'center' },
   {

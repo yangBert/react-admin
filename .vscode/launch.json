@@ -8,7 +8,7 @@
       "type": "chrome",
       "request": "launch", //launch / attach 两种方式；这里使用launch
       "name": "Launch Chrome against localhost", //开心的设置个名字
-      "url": "http://localhost:3000", //项目地址
+      "url": "http://localhost:3001", //项目地址
       "webRoot": "${workspaceFolder}/react-admin/"
     }
     //还有很多可以配置的属性，可以通过上面文档查看

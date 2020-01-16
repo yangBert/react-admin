@@ -15,7 +15,13 @@ const columns = [
   {
     title: '发布时间', dataIndex: 'publishTime', key: 'publishTime', align: 'center',
     render: publishTime => (
-      <span>{$$.getHours(publishTime)}</span>
+      <span>{publishTime && $$.getHours(publishTime)}</span>
+    )
+  },
+  {
+    title: '发布状态', dataIndex: 'state', key: 'state', align: 'center',
+    render: state => (
+      <span>{state === 4 ? "已发布" : "未发布"}</span>
     )
   },
   {

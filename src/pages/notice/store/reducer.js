@@ -8,7 +8,8 @@ const defaultState = {
   params: {},
   editTitle: "",
   editContent: "",
-  detailInfo: null
+  editState: "",
+  detailInfo: null,
 };
 
 export default (state = defaultState, action) => {
@@ -32,6 +33,9 @@ export default (state = defaultState, action) => {
       break;
     case types.INIT_NOTICE_DETAIL:
       newState.detailInfo = action.detailInfo
+      break;
+    case types.CHANGE_EDIT_STATE:
+      newState.editState = action.editState
       break;
     default:
       break;

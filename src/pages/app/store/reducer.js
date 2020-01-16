@@ -16,9 +16,15 @@ const defaultState = {
     auditMode: "",
     landingModes: [],
     supportCAs: [],
+    allAuthLevel: [],
+    allLandingModes: [],
+    allSupportCAs: [],
+    allAppTypes: [],
   },
   iconBase64: "",
   editLoading: false,
+  orgList: [],
+  editOrgCode: ""
 };
 
 export default (state = defaultState, action) => {
@@ -37,6 +43,13 @@ export default (state = defaultState, action) => {
     case types.CHANGE_ROW_APP_ID:
       newState.rowAppId = action.rowAppId
       break;
+    case types.INIT_ORG_TREES:
+      newState.orgList = action.orgList
+      break;
+    case types.CHANGE_TREE_ORG_CODE:
+      newState.form.orgCode = action.orgCode
+      break;
+
     //修改表单值
     case types.CHANGE_FORM_APP_NAME:
       newState.form.appName = action.appName
@@ -64,6 +77,9 @@ export default (state = defaultState, action) => {
       break;
     case types.CHANGE_FORM_SUPPORTCAS:
       newState.form.supportCAs = action.supportCAs
+      break;
+    case types.INIT_ALL_AUTH_LEVEL:
+      newState.form.allAuthLevel = action.allAuthLevel
       break;
     case types.INIT_ALL_LANDING_MODES:
       newState.form.allLandingModes = action.allLandingModes

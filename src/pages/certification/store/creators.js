@@ -27,7 +27,8 @@ const createSaveFormAction = req => {
             content: message,
             okText: '确认',
             onOk: () => {
-              dispatch(cleanFormAction())
+              req.props.history.goBack();
+              //dispatch(cleanFormAction())
             }
           });
         } else {

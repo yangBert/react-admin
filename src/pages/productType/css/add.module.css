@@ -1,0 +1,44 @@
+.tableForm{
+  padding-bottom: 12px;
+}
+.operButton{
+  font-size:11px;
+}
+
+.formLine {
+  margin-bottom: 23px;
+  text-align:center;
+}
+
+.formLine label {
+  width: 130px;
+  text-align:right;
+  padding-right: 10px;
+  margin-top:5px;
+}
+
+.inline {
+  width: 350px;
+  position:relative;
+}
+
+.tree{
+  position:absolute;
+  top:40px;
+  left:0;
+  width:100%;
+  background:#fff;
+  border:1px solid #ddd;
+  text-align:left;
+  height: 200px;
+  overflow:auto;
+  z-index: 999;
+}
+
+.visible {
+  display:block;
+}
+
+.hidden {
+  display:none;
+}

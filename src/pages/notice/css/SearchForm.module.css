@@ -1,24 +1,23 @@
 .formLine {
   display:flex;
-  min-width: 410px;
-  margin-right:10px;
+  width: 410px;
+  margin-bottom:20px;
 }
-
+/* 
 .title {
   display:flex;
   margin-right:10px;
-  width: 300px;
-}
+  width: 50%;
+  margin-bottom:20px;
+} */
 
 .title label,.formLine label {
   line-height: 2.3;
   padding-right: 5px;
+  width:100px;
+  text-align:right;
 }
 
 .inline {
   flex:1;
-}
-
-.form {
-  margin-bottom: 40px;
 }

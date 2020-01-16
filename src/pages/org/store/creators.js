@@ -49,7 +49,7 @@ const createAddOrgAction = req => {
 }
 
 
-//处理菜单查询返回数据---删除空children
+//递归处理菜单查询返回数据---删除空children
 function implementMenusData(data) {
   for (let i = 0; i < data.length; i++) {
     if (data[i].children && data[i].children.length > 0) {
@@ -61,7 +61,7 @@ function implementMenusData(data) {
   return data
 }
 
-//机构树数据处理
+//递归机构树数据处理
 function implementTreeData(data) {
   for (let i = 0; i < data.length; i++) {
 
@@ -84,6 +84,7 @@ const queryOrgListAction = req => {
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
+          console.log("results", data)
           const action = initOrgAction(implementMenusData(data))
           const treeAction = initOrgTreeAction(implementTreeData(implementTreeData(data)))
           dispatch(action)

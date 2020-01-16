@@ -8,10 +8,6 @@ import $$ from 'static/js/base';
 import styles from './css/UserList.module.css';
 import Oper from './components/Operation';
 
-// const getAuditStatus = s => {
-//   return s === 2 ? '待审核' : s === 0 ? '审核未通过' : s === 1 ? '审核已通过' : '未定义';
-// }
-
 const columns = [
   { title: '应用名称', dataIndex: 'appName', key: 'appName' },
   { title: '应用描述', dataIndex: 'describes', key: 'describes' },
@@ -21,12 +17,6 @@ const columns = [
       <span>{$$.getHours(createTime)}</span>
     )
   },
-  // {
-  //   title: '审核状态', dataIndex: 'auditStatus', key: 'auditStatus', align: 'center',
-  //   render: s => (
-  //     <span>{getAuditStatus(s)}</span>
-  //   ),
-  // },
   {
     title: '应用状态', dataIndex: 'appStatus', key: 'appStatus', align: 'center',
     render: text => <span>
@@ -55,6 +45,9 @@ class AppList extends Component {
 
     //查询所有的应用类型
     this.props.queryAllAppType({ props: this.props, data: {} })
+
+    //获取认证源等级
+    this.props.getAuthLevel({ props: this.props, data: {} })
     this.sendFn(1, 10)
   }
 
@@ -85,7 +78,17 @@ class AppList extends Component {
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <SearchForm />
           <div className={styles.buttonForm}>
-            <Link to="/app/add">
+            <Link
+              to={{
+                pathname: '/app/appList/add',
+                state: {
+                  allLandingModes: this.props.allLandingModes,
+                  allSupportCAs: this.props.allSupportCAs,
+                  allAppTypes: this.props.allAppTypes,
+                  allAuthLevel: this.props.allAuthLevel,
+                }
+              }}
+            >
               <Button
                 type="primary"
                 className={styles.addButton}
@@ -111,6 +114,10 @@ const mapState = state => ({
   pagination: state.app.pagination,
   spinning: state.app.spinning,
   params: state.app.params,
+  allAuthLevel: state.app.form.allAuthLevel,
+  allLandingModes: state.app.form.allLandingModes,
+  allSupportCAs: state.app.form.allSupportCAs,
+  allAppTypes: state.app.form.allAppTypes,
 })
 
 const mapDispatch = dispatch => ({
@@ -130,6 +137,10 @@ const mapDispatch = dispatch => ({
     const action = creators.queryAllAppTypeAction(value);
     dispatch(action);
   },
+  getAuthLevel: req => {
+    const action = creators.getAuthLevelAction(req);
+    dispatch(action);
+  }
 })
 
 export default connect(mapState, mapDispatch)(AppList);

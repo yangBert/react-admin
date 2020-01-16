@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
-import { Card, Form, Input, Upload, Icon, message, Select, Checkbox, Button, Spin } from 'antd';
+import {
+  Card,
+  Form,
+  Input,
+  Upload,
+  Icon,
+  message,
+  Select,
+  Checkbox,
+  Button,
+  Spin,
+  TreeSelect,
+} from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import styles from '../css/add.module.css';
@@ -40,6 +52,8 @@ class AppAdd extends Component {
   };
 
   componentDidMount() {
+    //查询机构
+    this.props.queryOrgList({ props: this.props, data: { pageNo: 1, pageSize: 10 } });
     //查询应用所有信息
     if (this.props.location.state && this.props.location.state.editAppId) {
       this.props.queryEditAppInfor({ com: this, data: { id: this.props.location.state.editAppId } })
@@ -96,7 +110,8 @@ class AppAdd extends Component {
       appType,
       auditMode,
       landingModes,
-      supportCAs
+      supportCAs,
+      orgCode
     } = data
 
     if (appName === "") {
@@ -108,10 +123,15 @@ class AppAdd extends Component {
     } else if (describes === "") {
       message.error("应用描述不能为空")
       return;
-    } else if (redirectUrl === "") {
+    }
+    else if (redirectUrl === "") {
       message.error("推送URL不能为空")
       return;
-    } else if (!imgURL) {
+    } else if (orgCode === "") {
+      message.error("请选择机构")
+      return;
+    }
+    else if (!imgURL) {
       message.error("请上传应用LOGO")
       return;
     } else if (appType === "") {
@@ -138,6 +158,7 @@ class AppAdd extends Component {
     formDatas.append("auditMode", data.auditMode);
     formDatas.append("landingModes", data.landingModes);
     formDatas.append("supportCAs", data.supportCAs);
+    formDatas.append("orgCode", data.orgCode);
     if (this.props.location.state && this.props.location.state.editAppId) {
       formDatas.append("id", this.props.location.state.editAppId);
     }
@@ -148,6 +169,18 @@ class AppAdd extends Component {
     this.props.history.goBack()
   }
 
+  //递归
+  recursiveFn(arr) {
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].title = arr[i].menuName
+      arr[i].value = arr[i].menuId
+      if (arr[i].children && arr[i].children.length > 0) {
+        this.recursiveFn(arr[i].children)
+      }
+    }
+    return arr;
+  }
+
   render() {
     const uploadButton = (
       <div>
@@ -156,6 +189,7 @@ class AppAdd extends Component {
       </div>
     );
     const imgURL = this.props.iconBase64 || this.props.icon
+    const { allLandingModes, allSupportCAs, allAppTypes, allAuthLevel } = this.props.location.state
     return (
       <div className={styles.pageContet}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
@@ -165,6 +199,7 @@ class AppAdd extends Component {
                 <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">应用名称：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
+                      className={styles.text}
                       placeholder="请输入应用名称"
                       //ref={refappName => this.setState({refappName})}
                       onChange={e => this.props.onChangeAppName(e.target.value)}
@@ -175,6 +210,7 @@ class AppAdd extends Component {
                 <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">应用访问地址：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
+                      className={styles.text}
                       placeholder="请输入应用访问地址"
                       //ref={refurl => this.setState({ refurl })}
                       onChange={e => this.props.onChangeUrl(e.target.value)}
@@ -185,6 +221,7 @@ class AppAdd extends Component {
                 <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">应用描述：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
+                      className={styles.text}
                       placeholder="请输入应用描述"
                       //ref={refdescribes => this.setState({refdescribes})}
                       onChange={e => this.props.onChangeDescribes(e.target.value)}
@@ -192,9 +229,11 @@ class AppAdd extends Component {
                     />
                   </div>
                 </div>
+
                 <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">推送URL：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
+                      className={styles.text}
                       placeholder="请输入推送URL"
                       //ref={refredirectUrl => this.setState({refredirectUrl})}
                       onChange={e => this.props.onChangeRedirectUrl(e.target.value)}
@@ -202,7 +241,21 @@ class AppAdd extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">上传应用LOGO：</label>
+                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">请选择机构：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <TreeSelect
+                      className={styles.text}
+                      style={{ width: '100%' }}
+                      value={this.props.orgCode}
+                      dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                      treeData={this.props.orgList}
+                      placeholder="请选择"
+                      treeDefaultExpandAll
+                      onChange={value => this.props.onChangeTreeSelect(value)}
+                    />
+                  </div>
+                </div>
+                <div className={`${styles.formBlock} pullLeft`}><label className="pullLeft">上传应用LOGO：</label>
                   <Upload
                     name="avatar"
                     listType="picture-card"
@@ -219,6 +272,7 @@ class AppAdd extends Component {
                     }
                   </Upload>
                 </div>
+
               </Form>
             </Card>
           </div >
@@ -229,13 +283,12 @@ class AppAdd extends Component {
                 <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">应用类型：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Select
-                      //ref={refappType => this.setState({refappType})}
                       value={this.props.appType ? this.props.appType : ""}
                       onChange={value => this.props.onChangeAppType(value)}
                     >
                       <Option value="">请选择</Option>
                       {
-                        this.props.allAppTypes && this.props.allAppTypes.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>)
+                        allAppTypes.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>)
                       }
                     </Select>
                   </div>
@@ -257,7 +310,7 @@ class AppAdd extends Component {
                   <div className={`${styles.inline} pullLeft`}>
                     <Checkbox.Group
 
-                      options={this.props.allLandingModes}
+                      options={allLandingModes}
                       value={this.props.landingModes}
                       onChange={this.props.changeLandingModes}
                     />
@@ -266,8 +319,7 @@ class AppAdd extends Component {
                 <div className={`${styles.formLine} clearfix`}><label className="pullLeft">支持CA机构：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Checkbox.Group
-
-                      options={this.props.allSupportCAs}
+                      options={allSupportCAs}
                       value={this.props.supportCAs}
                       onChange={this.props.onChangeSupportCAs}
                     />
@@ -309,14 +361,13 @@ const mapState = state => ({
   auditMode: state.app.form.auditMode,
   landingModes: state.app.form.landingModes,
   supportCAs: state.app.form.supportCAs,
-  allLandingModes: state.app.form.allLandingModes,
-  allSupportCAs: state.app.form.allSupportCAs,
-  allAppTypes: state.app.form.allAppTypes,
   iconBase64: state.app.iconBase64,
   form: state.app.form,
   saveLoading: state.app.saveLoading,
   editAppId: state.app.editAppId,
   spinning: state.app.spinning,
+  orgList: state.app.orgList,
+  orgCode: state.app.form.orgCode,
 })
 
 const mapDispatch = dispatch => ({
@@ -371,6 +422,14 @@ const mapDispatch = dispatch => ({
   },
   emptyValue: () => {
     const action = creators.emptyAddValueAction();
+    dispatch(action);
+  },
+  queryOrgList: req => {
+    const action = creators.queryOrgListAction(req);
+    dispatch(action);
+  },
+  onChangeTreeSelect: req => {
+    const action = creators.onChangeOrgTreeSelectAction(req);
     dispatch(action);
   },
 })

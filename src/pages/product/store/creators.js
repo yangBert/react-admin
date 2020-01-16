@@ -60,11 +60,37 @@ const createAddAction = req => {
           notification('success', message)
           const action = changeAddModalvisibleAction(false, "", {});
           dispatch(action);
-          const pagination = getState().dictData.pagination
+          const pagination = getState().product.pagination
           const params = {
-            ...getState().dictData.params,
+            ...getState().product.params,
             pageNo: pagination.current,
             pageSize: pagination.pageSize
+          }
+          dispatch(queryListAction({ props: req.props, data: params }));
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
+const deleteRowAction = req => {
+  return (dispatch, getState) => {
+    const url = requestURL.productDelProduct;
+
+    request.json(url, req.data, res => {
+
+      if (res.data) {
+        const { success, message } = res.data && res.data
+        if (success) {
+          notification('success', message)
+          const params = {
+            ...getState().product.params,
+            pageNo: 1,
+            pageSize: 10
           }
           dispatch(queryListAction({ props: req.props, data: params }));
         } else {
@@ -89,4 +115,5 @@ export {
   changeAddModalvisibleAction,
   createAddAction,
   createChangeParamsAction,
+  deleteRowAction,
 }

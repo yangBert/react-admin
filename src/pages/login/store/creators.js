@@ -49,6 +49,7 @@ const changeLoginLoading = loginLoading => ({
 const getRandomAction = params => {
   return dispatch => {
     dispatch(changeLoginLoading(true))
+    console.log("certserial=", "certserial=" + params.certserial)
     request.json(requestURL.managerBuildRandNumURL, "certserial=" + params.certserial, res => {
       if (res.data) {
         const { success, message, data } = res.data && res.data

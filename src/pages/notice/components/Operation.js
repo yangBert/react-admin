@@ -19,7 +19,11 @@ function Oper(props) {
   }
   return (
     <div>
-      <Link to={{ pathname: '/notice/noticeAdd', state: { editId: props.record.id } }}>
+      <Link
+        to={{
+          pathname: '/notice/noticeAdd',
+          state: { editId: props.record.id }
+        }}>
         <Button
           style={fontSmall}
           type="primary"

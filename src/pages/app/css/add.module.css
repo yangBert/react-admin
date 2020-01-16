@@ -20,15 +20,25 @@
 }
 
 .formLine {
-  width: 40%;
+  width: 45%;
   display:flex;
   margin-bottom:22px;
   position:relative;
 }
 
-.formLine label{
-  width: 10%;
-  min-width: 120px;
+.formBlock{
+  width: 100%;
+  display:flex;
+  margin-bottom:28px;
+  position:relative;
+}
+
+.text {
+  max-width:800px;
+}
+
+.formLine label,.formBlock label{
+  width: 150px;
   text-align: right;
   line-height: 2;
 }

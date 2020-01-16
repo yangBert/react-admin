@@ -1,15 +1,15 @@
 import axios from 'axios';
-import qs from 'qs';
+//import qs from 'qs';
 import $$ from 'static/js/base';
 import notification from 'pages/common/layer/notification';
-const errorMsg = "请求失败"
+const errorMsg = "请求失败,请检查网络"
 
-function authRedirect() {
+function authRedirect(message) {
   $$.token.set("")
   if (window.$GLOBALPROPS) {
     window.$GLOBALPROPS.history.push("/")
   }
-  notification("error", errorMsg)
+  notification("error", message)
 }
 
 function configFn(url, data, method) {
@@ -29,19 +29,28 @@ function configFn(url, data, method) {
 function json(requestURL, requestData, callback) {
   const config = configFn(requestURL, requestData, 'post')
   axios(config).then(res => {
-    callback(res)
-  }).catch(err => {
-    authRedirect()
+    if (res.data && !res.data.success && res.data.errCode === '400') {
+      authRedirect(res.data.message)
+    } else {
+      callback(res)
+    }
+  }).catch((err) => {
+    console.log(err);
+    callback(errorMsg);
   })
 }
 
 function getJson(requestURL, requestData, callback) {
   const config = configFn(requestURL, requestData, 'GET')
   axios(config).then(res => {
-    callback(res)
+    if (res.data && !res.data.success && res.data.errCode === '400') {
+      authRedirect(res.data.message)
+    } else {
+      callback(res)
+    }
   }).catch(err => {
-    console.log(err)
-    authRedirect()
+    console.log(err);
+    callback(errorMsg);
   })
 }
 
@@ -51,6 +60,7 @@ function jsonArr(requestURL, requestData, callback) {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
+      'AuthToken': $$.token.get()
     },
     data: requestData,
   }
@@ -59,37 +69,39 @@ function jsonArr(requestURL, requestData, callback) {
     config.headers.AuthToken = AuthToken
   }
   axios(config).then(res => {
-    callback(res)
-  }).catch(() => {
-    authRedirect()
+    if (res.data && !res.data.success && res.data.errCode === '400') {
+      authRedirect(res.data.message)
+    } else {
+      callback(res)
+    }
+  }).catch((err) => {
+    console.log(err);
+    callback(errorMsg);
   })
 }
 
-function formString(requestURL, requestData, callback) {
-  axios({
-    url: requestURL,
-    method: 'post',
-    data: qs.stringify(requestData),
-  }).then(res => {
-    callback(res)
-  }).catch(() => {
-    authRedirect()
-  })
-}
 
 function formData(requestURL, requestData, callback) {
   axios({
     url: requestURL,
     method: 'post',
     data: requestData,
-    headers: { 'Content-Type': 'multipart/form-data' },
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'AuthToken': $$.token.get()
+    },
     // transformRequest: [function (data) {
     //   return qs.stringify(data);
     // }],
   }).then(res => {
-    callback(res)
-  }).catch(() => {
-    authRedirect()
+    if (res.data && !res.data.success && res.data.errCode === '400') {
+      authRedirect(res.data.message)
+    } else {
+      callback(res)
+    }
+  }).catch((err) => {
+    console.log(err);
+    callback(errorMsg);
   })
 }
 
@@ -99,10 +111,15 @@ function urlToBlob(requestURL, callback) {
     method: 'get',
     responseType: 'blob'
   }).then(res => {
-    callback(res)
-  }).catch(() => {
-    authRedirect()
+    if (res.data && !res.data.success && res.data.errCode === '400') {
+      authRedirect(res.data.message)
+    } else {
+      callback(res)
+    }
+  }).catch((err) => {
+    console.log(err);
+    callback(errorMsg);
   })
 }
 
-export { json, jsonArr, formString, formData, urlToBlob, getJson }
+export { json, jsonArr, formData, urlToBlob, getJson }

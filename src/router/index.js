@@ -21,6 +21,21 @@ const ProductList = lazy(() => import('pages/product'));
 const CertificationList = lazy(() => import('pages/certification'));
 const CertificationAdd = lazy(() => import('pages/certification/components/CertificationAdd'));
 const DocCatalogList = lazy(() => import('pages/docCatalog'));
+const DocCatalogAdd = lazy(() => import('pages/docCatalog/components/Add'));
+const DocList = lazy(() => import('pages/doc'));
+const DocAdd = lazy(() => import('pages/doc/components/Add'));
+const PlatSettingList = lazy(() => import('pages/platSetting'));
+const PlatSettingAdd = lazy(() => import('pages/platSetting/components/Add'));
+const BillingList = lazy(() => import('pages/billing'));
+const BillingAdd = lazy(() => import('pages/billing/components/Add'));
+const ProductTypeList = lazy(() => import('pages/productType'));
+const PreferentialList = lazy(() => import('pages/preferential'));
+const PreferentialAdd = lazy(() => import('pages/preferential/components/Add'));
+const AccountList = lazy(() => import('pages/account'));
+const AccountAdd = lazy(() => import('pages/account/components/Add'));
+const AccountDetail = lazy(() => import('pages/account/components/Detail'));
+const ChargeConsumeList = lazy(() => import('pages/chargeConsume'));
+const ChargeRechargeList = lazy(() => import('pages/chargeRecharge'));
 
 const routes = [
   {
@@ -60,7 +75,7 @@ const routes = [
     component: AppList
   },
   {
-    path: "/app/add",
+    path: "/app/appList/add",
     component: AppAdd
   },
   {
@@ -111,5 +126,66 @@ const routes = [
     path: "/docCatalog/list",
     component: DocCatalogList
   },
+  {
+    path: "/docCatalog/add",
+    component: DocCatalogAdd
+  },
+  {
+    path: "/doc/list",
+    component: DocList
+  },
+  {
+    path: "/doc/add",
+    component: DocAdd
+  },
+  {
+    path: "/platSetting/list",
+    component: PlatSettingList
+  },
+  {
+    path: "/platSetting/add",
+    component: PlatSettingAdd
+  },
+  {
+    path: "/billing/list",
+    component: BillingList
+  },
+  {
+    path: "/billing/add",
+    component: BillingAdd
+  },
+  {
+    path: "/productType/list",
+    component: ProductTypeList
+  },
+  {
+    path: "/account/list",
+    component: AccountList
+  },
+  {
+    path: "/account/add",
+    component: AccountAdd
+  },
+  {
+    path: "/account/detail",
+    component: AccountDetail
+  },
+  {
+    path: "/preferential/list",
+    component: PreferentialList
+  },
+  {
+    path: "/preferential/add",
+    component: PreferentialAdd
+  },
+  {
+    path: "/chargeConsume/list",
+    component: ChargeConsumeList
+  },
+  {
+    path: "/chargeRecharge/list",
+    component: ChargeRechargeList
+  },
+
 ];
 export default routes;

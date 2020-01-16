@@ -1,0 +1,39 @@
+.formLine {
+  display:flex;
+  max-width: 400px;
+  width:45%;
+  margin-left:15px;
+  margin-bottom:20px;
+}
+
+.formLine label {
+  line-height: 2.3;
+  padding-right: 5px;
+  margin-left:10px;
+}
+
+.inline {
+  flex:1;
+}
+
+.form {
+  margin-bottom: 20px;
+}
+
+.pageContet{
+  padding:30px;
+  margin-top:20px;
+}
+
+.editContent{
+  border:1px solid #ddd;
+}
+
+.button{
+  margin-left:10px;
+}
+
+.buttonRow{
+  text-align:right;
+  margin-bottom:20px;
+}

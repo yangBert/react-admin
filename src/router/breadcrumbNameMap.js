@@ -11,11 +11,12 @@ const breadcrumbNameMap = {
 
   '/app': '平台管理',
   '/app/appList': '应用管理',
+  '/app/appList/add': '编辑应用',
 };
 
 export default function switchURL(url) {
   const name = breadcrumbNameMap[url]
-  const bl = url === "/system"
+  const bl = url.split("/").length === 2
   if (bl) {
     return <span>{name}</span>
   } else {

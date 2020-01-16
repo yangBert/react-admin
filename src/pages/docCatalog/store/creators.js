@@ -6,16 +6,24 @@ import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 import { Modal } from 'antd'
 
-const initListAction = list => ({
+const initListAction = (list, pagination) => ({
   type: types.INIT_LIST,
-  list
+  list,
+  pagination
 })
 
-//保存认证源
-const createSaveFormAction = req => {
+
+const initProductListAction = productList => ({
+  type: types.INIT_PRODUCT_LIST,
+  productList,
+})
+
+//保存
+const saveFormAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    const url = req.data.authCode ? requestURL.authUpdateAuth : requestURL.authAddAuth
+    const url = req.data.id ? requestURL.docUpdateDocCatalog : requestURL.docAddDocCatalog
+    console.log("修改", req.data)
     request.json(url, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
@@ -26,7 +34,7 @@ const createSaveFormAction = req => {
             content: message,
             okText: '确认',
             onOk: () => {
-              dispatch(cleanFormAction())
+              req.props.history.goBack()
             }
           });
         } else {
@@ -43,11 +51,13 @@ const createSaveFormAction = req => {
 const querylistAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
+    console.log("req", req.data)
     request.json(requestURL.docQueryCatalogPages, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
+          console.log(res)
           const action = initListAction(data.results, createPagination(data))
           dispatch(action)
         } else {
@@ -60,22 +70,15 @@ const querylistAction = req => {
   }
 }
 
-//删除认证源
-const deleteRowAction = req => {
-  return (dispatch, getState) => {
-    dispatch(spinningAction(true))
-    request.json(requestURL.authDelAuth, req.data, res => {
-      dispatch(spinningAction(false))
+//查询所有产品列表
+const queryProductListAction = req => {
+  return dispatch => {
+    request.json(requestURL.productSelectByPage, req.data, res => {
       if (res.data) {
-        const { success, message } = res.data && res.data
+        const { success, message, data } = res.data && res.data
         if (success) {
-          const params = {
-            ...getState().certification.params,
-            pageNo: 1,
-            pageSize: 10
-          }
-          dispatch(querylistAction({ props: req.props, data: params }));
-          notification('success', message)
+          const action = initProductListAction(data.results)
+          dispatch(action)
         } else {
           notification('error', message)
         }
@@ -93,50 +96,32 @@ const createChangeParamsAction = params => ({
   params
 })
 
-//认证源名称
-const changeAuthNameAction = editAuthName => ({
-  type: types.CHANGE_EDIT_AUTH_NAME,
-  editAuthName
+//改变产品
+const onChangeProductCodeAction = editProductCode => ({
+  type: types.CHANGE_EDIT_PRODUCT_CODE,
+  editProductCode
 })
 
-//认证接入URL
-const changeEditURLAction = editURL => ({
-  type: types.CHANGE_EDIT_URL,
-  editURL
+//改变产品名称
+const onChangeEditNameAction = editName => ({
+  type: types.CHANGE_EDIT_NAME,
+  editName
 })
 
-//认证等级
-const changeAuthLevelAction = editAuthLevel => ({
-  type: types.CHANGE_AUTH_LEVE,
-  editAuthLevel
+//排序号
+const onChangeOrdersAction = editOrders => ({
+  type: types.CHANGE_EDIT_ORDERS,
+  editOrders
 })
 
-//认证源接口方式
-const changeAuthStyleAction = editAuthStyle => ({
-  type: types.CHANGE_AUTH_STYLE,
-  editAuthStyle
-})
 
-//认证源接状态
-const changeEditStatusAction = editStatus => ({
-  type: types.CHANGE_EDIT_STATUS,
-  editStatus
-})
-
-//清空表单
-const cleanFormAction = () => ({
-  type: types.CLEAN_FORM,
-})
 
 export {
   querylistAction,
-  createSaveFormAction,
+  saveFormAction,
   createChangeParamsAction,
-  changeAuthNameAction,
-  changeEditURLAction,
-  changeAuthLevelAction,
-  changeAuthStyleAction,
-  changeEditStatusAction,
-  cleanFormAction,
-  deleteRowAction
+  queryProductListAction,
+  onChangeProductCodeAction,
+  onChangeEditNameAction,
+  onChangeOrdersAction,
 }

@@ -1,0 +1,60 @@
+.childTitle {
+  font-size: 20px;
+  color:#777;
+  padding-left:20px;
+  margin-bottom:26px;
+}
+
+.tit{
+  border: 1px solid #ddd;
+  width:100%;
+  padding: 20px;
+}
+
+.pageContet{
+  padding-bottom: 240px;
+}
+
+.form{
+  padding: 30px 0 0 0;
+}
+
+.formLine {
+  width: 45%;
+  display:flex;
+  margin-bottom:22px;
+  position:relative;
+}
+
+.formBlock{
+  width: 90%;
+  display:flex;
+  margin-bottom:28px;
+  position:relative;
+}
+
+.text {
+  max-width:800px;
+}
+
+.formLine label,.formBlock label{
+  width: 150px;
+  text-align: right;
+  line-height: 2;
+}
+
+.inline{
+  flex:1;
+}
+
+.formButton{
+  margin-top: 40px;
+  text-align: center;
+}
+
+.formbtn{
+  width: 150px;
+  text-align:center;
+  font-size: 15px;
+  margin-left:16px;
+}

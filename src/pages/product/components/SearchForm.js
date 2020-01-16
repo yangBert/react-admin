@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Icon, Select, Input, DatePicker } from 'antd';
+import { Button, Icon, Input } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/SearchForm.module.css';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-moment.locale('zh-cn');
 
 //const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 function SearchForm(props) {
   const [productName, setProductName] = useState("")
-  const [publishAt, setPublishAt] = useState(null)
-  const [publishBy, setPublishBy] = useState(null)
   const { changeSearchParams } = props;
   useEffect(() => {
     changeSearchParams({ productName })
@@ -21,29 +15,18 @@ function SearchForm(props) {
 
   function search() {
     const { productName } = props.params
-    const start = publishAt && publishAt.format('YYYY-MM-DD')
-    const end = publishBy && publishBy.format('YYYY-MM-DD')
     const data = {
       pageSize: 10,
       pageNo: 1,
       productName,
-      start,
-      end,
     }
     props.queryList({ props, data });
   }
 
   function reset() {
     setProductName("");
-    setPublishAt(null);
-    setPublishBy(null);
     const data = { pageNo: 1, pageSize: 10 }
     props.queryList({ props, data });
-  }
-
-  function onChangePicker(dates, dateStrings) {
-    setPublishAt(moment(dateStrings[0]))
-    setPublishBy(moment(dateStrings[1]))
   }
 
   return (
@@ -57,19 +40,6 @@ function SearchForm(props) {
               allowClear
               onChange={e => setProductName(e.target.value)}
               value={productName}
-            />
-          </div>
-        </div>
-        <div className={`${styles.formLine} pullLeft`}>
-          <label className="pullLeft">日期:</label>
-          <div className={`${styles.inline} pullLeft`}>
-            <RangePicker
-              value={[publishAt, publishBy]}
-              ranges={{
-                Today: [moment(), moment()],
-                'This Month': [moment().startOf('month'), moment().endOf('month')],
-              }}
-              onChange={onChangePicker}
             />
           </div>
         </div>
