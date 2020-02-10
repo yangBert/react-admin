@@ -50,7 +50,7 @@ class Add extends Component {
       message.error('请填写账户访问密钥');
       return
     }
-    //const creater = $$.localStorage.get("adminId")
+    const creater = $$.localStorage.get("adminId")
     const createrName = $$.localStorage.get("adminName")
     const req = {
       props: this.props,
@@ -60,13 +60,16 @@ class Add extends Component {
         orgCode: editOrgCode,
         parentAccount: $$.trim(editParentAccount),
         accessScrect: $$.trim(editAccessScrect),
-        createdBy: createrName,
+        createdBy: creater,
       }
     }
 
     const editId = this.props.location.state.editRecord && this.props.location.state.editRecord.id
     if (editId) {
       req.data.id = editId
+      req.data.userNo = creater
+      req.data.accountCode = this.props.location.state.editRecord.accountCode
+      delete req.data.createdBy
     }
     console.log("idsdfsdfsdf", req)
     this.props.save(req)

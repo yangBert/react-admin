@@ -1,9 +1,9 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Button, Switch, Popconfirm, Icon } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
-
+import $$ from 'static/js/base';
 
 function Oper(props) {
   const fontSmall = { fontSize: "12px" };
@@ -20,15 +20,19 @@ function Oper(props) {
         placement="left"
         title="确定删除吗?"
         onConfirm={() => {
-          const data = "menuId=" + props.record.menuId
-          props.deleteMenu({ props, data })
+          const publishAt = $$.localStorage.get("adminName")
+          const data = {
+            productTypeCode: props.record.productTypeCode,
+            publishAt,
+          }
+          props.delete({ props, data })
         }}
         okText="确定"
         icon={<Icon type="question-circle" />}
         cancelText="取消">
         <Button style={fontSmall} type="danger" size="small" ghost>删除</Button>
-      </Popconfirm>&nbsp;&nbsp;
-      <Switch
+      </Popconfirm>
+      {/* <Switch
         checkedChildren="启用"
         unCheckedChildren="禁用"
         defaultChecked={props.record.menuStatue === 1 ? true : false}
@@ -40,7 +44,7 @@ function Oper(props) {
           }
           props.updateMenu({ props, data })
         }}
-      />
+      /> */}
     </div >
   )
 }
@@ -55,12 +59,12 @@ const mapDispatch = dispatch => ({
     const action = creators.changeEditAction(record);
     dispatch(action);
   },
-  deleteMenu: req => {
-    const action = creators.deleteMenuAction(req);
+  delete: req => {
+    const action = creators.deleteAction(req);
     dispatch(action);
   },
   updateMenu: req => {
-    const action = creators.editMenuAction(req);
+    const action = creators.editAction(req);
     dispatch(action);
   }
 })

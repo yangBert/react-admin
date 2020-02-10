@@ -20,7 +20,6 @@ function Oper(props) {
           }
         }}>
         <Button
-          // onClick={() => editApp(props.record.id)}
           style={{ fontSize: "12px" }}
           type="primary"
           size="small"
@@ -47,7 +46,24 @@ function Oper(props) {
         type="primary"
         size="small"
         ghost
-      >查看密钥</Button>
+      >密钥</Button>
+      &nbsp;&nbsp;
+      <Link
+        to={{
+          pathname: '/app/chargeApp',
+          state: {
+            editAppId: props.record.id,
+            appCode: props.record.appCode,
+            allProductType: props.allProductType
+          }
+        }}>
+        <Button
+          style={{ fontSize: "12px" }}
+          type="primary"
+          size="small"
+          ghost
+        >配置</Button>&nbsp;&nbsp;
+      </Link>
     </div >
   )
 }
@@ -58,6 +74,7 @@ const mapState = state => ({
   allSupportCAs: state.app.form.allSupportCAs,
   allAppTypes: state.app.form.allAppTypes,
   allAuthLevel: state.app.form.allAuthLevel,
+  allProductType: state.app.allProductType,
 })
 
 const mapDispatch = dispatch => ({

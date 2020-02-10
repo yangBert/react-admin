@@ -9,6 +9,7 @@ import styles from './css/UserList.module.css';
 import Oper from './components/Operation';
 
 const columns = [
+  { title: '应用编码', dataIndex: 'appCode', key: 'appCode', align: 'center' },
   { title: '应用名称', dataIndex: 'appName', key: 'appName' },
   { title: '应用描述', dataIndex: 'describes', key: 'describes' },
   {
@@ -48,6 +49,10 @@ class AppList extends Component {
 
     //获取认证源等级
     this.props.getAuthLevel({ props: this.props, data: {} })
+
+    //查询所有产品类型
+    this.props.getProductType({ props: this.props, data: {} })
+
     this.sendFn(1, 10)
   }
 
@@ -140,7 +145,11 @@ const mapDispatch = dispatch => ({
   getAuthLevel: req => {
     const action = creators.getAuthLevelAction(req);
     dispatch(action);
-  }
+  },
+  getProductType: req => {
+    const action = creators.getProductTypeAction(req);
+    dispatch(action);
+  },
 })
 
 export default connect(mapState, mapDispatch)(AppList);

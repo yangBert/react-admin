@@ -57,8 +57,6 @@ class MenuList extends Component {
   }
 
   render() {
-    const list = this.props.list
-
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
 
@@ -74,11 +72,12 @@ class MenuList extends Component {
             bordered
             expandIconAsCell={true}
             columns={columns}
-            dataSource={list}
+            dataSource={this.props.list}
             rowKey={record => record.key}
             size="small"
             pagination={false}
           />
+
         </Spin>
         <Add />
         <Edit />
@@ -101,6 +100,6 @@ const mapDispatch = dispatch => ({
   changeAddModalvisible: visible => {
     const action = creators.changeAddModalvisibleAction(visible);
     dispatch(action);
-  }
+  },
 })
 export default connect(mapState, mapDispatch)(MenuList);

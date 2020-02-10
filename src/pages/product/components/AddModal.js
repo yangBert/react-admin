@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Input, Form } from 'antd';
+import { Modal, Input, Form, message, TreeSelect } from 'antd';
 import styles from '../css/add.module.css';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
@@ -10,6 +10,7 @@ const { TextArea } = Input;
 
 function AddModal(props) {
   const [addModalvisible, setAddModalvisible] = useState(false)
+  const [productTypeCode, setProductTypeCode] = useState("")
   const [productName, setProductName] = useState("")
   const [productDesc, setProductDesc] = useState("")
 
@@ -19,19 +20,31 @@ function AddModal(props) {
 
   const $operationType = props.operationType
   const $addModalvisible = props.addModalvisible
+
+  const $productTypeCode = $operationType === "edit" ? props.record.productTypeCode : ""
   const $productName = $operationType === "edit" ? props.record.productName : ""
   const $productDesc = $operationType === "edit" ? props.record.productDesc : ""
 
   useEffect(() => {
     setAddModalvisible($addModalvisible)
-    setProductName($productName);
-    setProductDesc($productDesc);
-  }, [$addModalvisible, $operationType, $productName, $productDesc]);
+    setProductTypeCode($productTypeCode)
+    setProductName($productName)
+    setProductDesc($productDesc)
+  }, [
+    $addModalvisible,
+    $operationType,
+    $productTypeCode,
+    $productName,
+    $productDesc
+  ]);
 
 
   //新增管理员提交数据
   function collectData() {
-    if ($$.trim(productName) === "") {
+    if (productTypeCode === "") {
+      message.error('请选择产品类型');
+      return;
+    } else if ($$.trim(productName) === "") {
       refProductName.focus()
       return;
     } else if ($$.trim(productDesc) === "") {
@@ -40,6 +53,7 @@ function AddModal(props) {
     }
     const userNo = $$.localStorage.get("adminId")
     const data = {
+      productTypeCode: productTypeCode,
       productName: $$.trim(productName),
       productDesc: $$.trim(productDesc),
       userNo
@@ -49,6 +63,18 @@ function AddModal(props) {
     }
     const type = $operationType === "edit"
     props.addDictData({ props, data, type })
+  }
+
+  //递归
+  function recursiveFn(arr) {
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].title = arr[i].productTypeName
+      arr[i].value = arr[i].productTypeCode
+      if (arr[i].children && arr[i].children.length > 0) {
+        recursiveFn(arr[i].children)
+      }
+    }
+    return arr;
   }
 
   return (
@@ -65,6 +91,19 @@ function AddModal(props) {
         onCancel={() => props.changeAddModalvisible(false, "", {})}
       >
         <Form>
+          <div className={`${styles.formLine} clearfix`}><label className="pullLeft">产品类型：</label>
+            <div className={`${styles.inline} pullLeft`}>
+              <TreeSelect
+                style={{ width: '100%' }}
+                value={productTypeCode}
+                dropdownStyle={{ maxHeight: 250, overflow: 'auto' }}
+                treeData={recursiveFn(props.allProductType)}
+                placeholder="请选择"
+                //treeDefaultExpandAll
+                onChange={value => setProductTypeCode(value)}
+              />
+            </div>
+          </div>
           <div className={`${styles.formLine} clearfix`}><label className="pullLeft">产品名称：</label>
             <div className={`${styles.inline} pullLeft`}>
               <Input
@@ -94,6 +133,7 @@ const mapState = state => ({
   operationType: state.product.operationType,
   record: state.product.record,
   ConfirmLoading: state.product.ConfirmLoading,
+  allProductType: state.product.allProductType,
 })
 
 const mapDispatch = dispatch => ({

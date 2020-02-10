@@ -37,7 +37,6 @@ const onChangeOrgTreeSelectAction = orgCode => ({
   orgCode,
 })
 
-
 //审核应用
 const appAuditAction = req => {
   return dispatch => {
@@ -344,10 +343,173 @@ const getAuthLevelAction = req => {
   }
 }
 
+const initAllProductType = allProductType => ({
+  type: types.INIT_ALL_PRODUCT_TYPE,
+  allProductType,
+})
+
+const initProductList = productList => ({
+  type: types.INIT_PRODUCT_LIST,
+  productList,
+})
+
+//初始化 计费策略列表
+const initBillingList = billingList => ({
+  type: types.INIT_BILLING_LIST,
+  billingList,
+})
+
+//change 计费策略
+const changeBillingAction = billing => ({
+  type: types.CHANGE_BILLING,
+  billing,
+})
+
+//搜索计费策略loading
+const changeBillingFetching = billingFetching => ({
+  type: types.CHANGE_BILLING_FETCHING,
+  billingFetching,
+})
+
+//搜索优惠策略loading
+const changePreferentialFetching = preferentialFetching => ({
+  type: types.CHANGE_PREFERENTIAL_FETCHING,
+  preferentialFetching,
+})
+
+//初始化 优惠策略
+const initPreferentialList = preferentialList => ({
+  type: types.INIT_PREFERENTIAL_LIST,
+  preferentialList,
+})
+
+//change 优惠策略
+const changePreferentialAction = preferential => ({
+  type: types.CHANGE_PREFERENTIAL,
+  preferential,
+})
+
+//选择产品
+const changeProductAction = product => ({
+  type: types.CHANGE_PRODUCT,
+  product,
+})
+
+//查询所有产品类型
+const getProductTypeAction = req => {
+  return dispatch => {
+    request.json(requestURL.productTypeSelectAll, req.data, res => {
+      if (res.data) {
+        const { success, message, data } = res.data && res.data
+        if (success) {
+          dispatch(initAllProductType(data));
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
+//根据 产品类型 查询 产品列表
+const changeProductTypeAction = req => {
+  return dispatch => {
+    console.log("req", req.data)
+    request.json(requestURL.productSelectByPage, req.data, res => {
+      console.log(res)
+      if (res.data) {
+        const { success, message, data } = res.data && res.data
+        if (success) {
+          dispatch(initProductList(data.results));
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
+//关键字查询 计费策略
+const queryBillingListAction = req => {
+  return dispatch => {
+    console.log("req", req.data)
+    dispatch(changeBillingFetching(true))
+    request.json(requestURL.chargeRuleQueryByPage, req.data, res => {
+      dispatch(changeBillingFetching(false))
+      console.log(res)
+      if (res.data) {
+        const { success, message, data } = res.data && res.data
+        if (success) {
+          dispatch(initBillingList(data.results));
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
+//关键字查询 优惠策略
+const queryPreferentialListAction = req => {
+  return dispatch => {
+    console.log("req", req.data)
+    dispatch(changePreferentialFetching(true))
+    request.json(requestURL.chargePreferentialQueryByPage, req.data, res => {
+      dispatch(changePreferentialFetching(false))
+      console.log(res)
+      if (res.data) {
+        const { success, message, data } = res.data && res.data
+        if (success) {
+          dispatch(initPreferentialList(data.results));
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
+//应用 计费策略 优惠策略 配置
+const saveFormAction = req => {
+  return () => {
+    request.json(requestURL.chargeAppAdd, req.data, res => {
+      if (res.data) {
+        const { success, message } = res.data && res.data
+        if (success) {
+          confirm({
+            title: '信息提示',
+            content: message,
+            onOk() {
+              req.props.history.goBack()
+            }
+          });
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
 
 const changeSaveLoading = saveLoading => ({
   type: types.CHANGE_SAVE_LOADING,
   saveLoading
+})
+
+//初始化应用配置
+const initChargeDetail = chargeDetail => ({
+  type: types.INIT_CHARGE_DETAIL,
+  chargeDetail
 })
 
 //应用新增保存
@@ -360,7 +522,6 @@ const saveAppFormAction = req => {
     } else {
       url = requestURL.plateSettingAddAppData
     }
-    console.log("data send", req.data)
     request.formData(url, req.data, res => {
       dispatch(changeSaveLoading(false))
       if (res.data) {
@@ -373,6 +534,34 @@ const saveAppFormAction = req => {
               req.props.history.push("/app/appList")
             }
           });
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
+//应用配置详情
+const queryChargeAppDetailAction = req => {
+  return (dispatch) => {
+    dispatch(changeSaveLoading(true))
+    console.log("req", req.data)
+    request.json(requestURL.chargeAppDetail, req.data, res => {
+      dispatch(changeSaveLoading(false))
+      console.log("res", res)
+      if (res.data) {
+        const { success, message, data } = res.data && res.data
+        if (success) {
+          if (data !== null) {
+
+            dispatch(changeProductAction(""))
+            dispatch(changeBillingAction(""))
+            dispatch(changePreferentialAction(""))
+            //dispatch(initChargeDetail(data))
+          }
         } else {
           notification('error', message)
         }
@@ -478,4 +667,13 @@ export {
   emptyAddValueAction,
   queryOrgListAction,
   onChangeOrgTreeSelectAction,
+  queryChargeAppDetailAction,
+  getProductTypeAction,
+  changeProductTypeAction,
+  changeProductAction,
+  queryBillingListAction,
+  changeBillingAction,
+  queryPreferentialListAction,
+  changePreferentialAction,
+  saveFormAction
 }

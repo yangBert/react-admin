@@ -13,6 +13,7 @@ const getAuditStatus = s => {
 }
 
 const columns = [
+  { title: '应用ID', dataIndex: 'id', key: 'id', align: 'center' },
   { title: '应用名称', dataIndex: 'appName', key: 'appName' },
   { title: '应用描述', dataIndex: 'describes', key: 'describes' },
   {

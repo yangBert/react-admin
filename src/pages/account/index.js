@@ -11,9 +11,24 @@ import Oper from './components/Operation';
 const columns = [
   { title: '账户编码', dataIndex: 'accountCode', key: 'accountCode', align: 'center' },
   { title: '账户名', dataIndex: 'accountName', key: 'accountName', align: 'center' },
-  { title: '账户类型', dataIndex: 'accountType', key: 'accountType', align: 'center' },
-  { title: '充值总金额', dataIndex: 'totalMoney', key: 'totalMoney', align: 'center' },
-  { title: '可用余额', dataIndex: 'balanceMoney', key: 'balanceMoney', align: 'center' },
+  {
+    title: '账户类型', dataIndex: 'accountType', key: 'accountType', align: 'center',
+    render: accountType => (
+      <span>{accountType === '01' ? '个人账户' : accountType === '02' ? '企业账户' : "未定义"}</span>
+    )
+  },
+  {
+    title: '充值总金额（元）', dataIndex: 'totalMoney', key: 'totalMoney', align: 'center',
+    render: totalMoney => (
+      <span>{totalMoney === null ? "0.00" : Number(totalMoney.toFixed(2))}</span>
+    )
+  },
+  {
+    title: '可用余额（元）', dataIndex: 'balanceMoney', key: 'balanceMoney', align: 'center',
+    render: balanceMoney => (
+      <span>{balanceMoney === null ? "0.00" : balanceMoney.toFixed(2)}</span>
+    )
+  },
   {
     title: '创建人', dataIndex: 'createdBy', key: 'createdBy', align: 'center'
   },

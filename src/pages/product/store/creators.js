@@ -26,10 +26,34 @@ const changeConfirmLoadingAction = ConfirmLoading => ({
   ConfirmLoading,
 })
 
+const initAllProductType = allProductType => ({
+  type: types.INIT_ALL_PRODUCT_TYPE,
+  allProductType,
+})
+
+//查询所有的产品类型
+const getProductTypeAction = req => {
+  return dispatch => {
+    request.json(requestURL.productTypeSelectAll, req.data, res => {
+      if (res.data) {
+        const { success, message, data } = res.data && res.data
+        if (success) {
+          dispatch(initAllProductType(data));
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
 //查询产品
 const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
+    console.log("req", req.data)
     request.json(requestURL.productSelectByPage, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
@@ -52,7 +76,9 @@ const createAddAction = req => {
   return (dispatch, getState) => {
     const url = req.type ? requestURL.productUpdateProduct : requestURL.productAddProduct;
     dispatch(changeConfirmLoadingAction(true))
+    console.log("修改", req.data)
     request.json(url, req.data, res => {
+      console.log("res", res)
       dispatch(changeConfirmLoadingAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
@@ -116,4 +142,5 @@ export {
   createAddAction,
   createChangeParamsAction,
   deleteRowAction,
+  getProductTypeAction
 }

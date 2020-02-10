@@ -6,38 +6,32 @@ import Oper from './components/Operation';
 import Add from './components/Add';
 import Edit from './components/Edit';
 import styles from './css/UserList.module.css';
+import * as enumerate from 'static/js/enumerate';
+
 
 const columns = [
   {
-    title: '菜单名称',
-    dataIndex: 'menuName',
-    key: 'menuName',
+    title: '产品类型名称',
+    dataIndex: 'productTypeName',
+    key: 'productTypeName',
   },
   {
-    title: '路由地址',
-    dataIndex: 'menuRoute',
-    key: 'menuRoute',
+    title: '产品类型编码',
+    dataIndex: 'productTypeCode',
+    key: 'productTypeCode',
   },
-  {
-    title: '菜单图标',
-    dataIndex: 'menuLogo',
-    key: 'menuLogo',
-    align: 'center',
-    render: menuLogo => (
-      <Icon type={menuLogo} />
-    )
-  },
+
   {
     title: '菜单状态',
-    dataIndex: 'menuStatue',
-    key: 'menuStatue',
+    dataIndex: 'status',
+    key: 'status',
     align: 'center',
-    render: roleStatue => (
+    render: status => (
       <span>
         {
-          roleStatue === 1 ?
+          status === 'NORMAL' ?
             <Tag color="green">已启用</Tag> :
-            <Tag color="red">已禁用</Tag>
+            <Tag color="red">{enumerate.baseState.get(status)}</Tag>
         }
       </span>
     ),
@@ -51,7 +45,7 @@ const columns = [
   },
 ];
 
-class MenuList extends Component {
+class List extends Component {
   componentDidMount() {
     this.props.queryMenuList({ props: this.props, data: {} });
   }
@@ -88,9 +82,9 @@ class MenuList extends Component {
 }
 
 const mapState = state => ({
-  list: state.menu.list,
-  spinning: state.menu.spinning,
-  addModalvisible: state.menu.addModalvisible,
+  list: state.productType.list,
+  spinning: state.productType.spinning,
+  addModalvisible: state.productType.addModalvisible,
 })
 
 const mapDispatch = dispatch => ({
@@ -103,4 +97,4 @@ const mapDispatch = dispatch => ({
     dispatch(action);
   }
 })
-export default connect(mapState, mapDispatch)(MenuList);
+export default connect(mapState, mapDispatch)(List);

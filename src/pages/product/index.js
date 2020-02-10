@@ -34,7 +34,9 @@ const columns = [
 
 class ProductList extends Component {
   componentDidMount() {
-    //this.props.queryList({ props: this.props, data: { pageNo: 1, pageSize: 10 } })
+    //查询所有产品类型
+    this.props.getProductType({ props: this.props, data: {} })
+
     this.sendFn(1, 10)
   }
 
@@ -103,7 +105,10 @@ const mapDispatch = dispatch => ({
     const action = creators.queryListAction(req);
     dispatch(action);
   },
-
+  getProductType: req => {
+    const action = creators.getProductTypeAction(req);
+    dispatch(action);
+  },
 })
 
 export default withRouter(connect(mapState, mapDispatch)(ProductList));

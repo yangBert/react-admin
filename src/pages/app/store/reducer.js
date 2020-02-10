@@ -24,7 +24,22 @@ const defaultState = {
   iconBase64: "",
   editLoading: false,
   orgList: [],
-  editOrgCode: ""
+  editOrgCode: "",
+  allProductType: [],
+  product: "",
+  productList: [],
+  billingList: [],
+  billing: "",
+  billingFetching: false,
+  preferentialFetching: false,
+  preferentialList: [],
+  preferential: "",
+  chargeDetail: {
+    productTypeCode: "",
+    productCode: "",
+    preferentialCode: "",
+    ruleCode: ""
+  }
 };
 
 export default (state = defaultState, action) => {
@@ -112,6 +127,37 @@ export default (state = defaultState, action) => {
       newState.form.landingModes = []
       newState.form.supportCAs = []
       break;
+    case types.INIT_ALL_PRODUCT_TYPE:
+      newState.allProductType = action.allProductType
+      break;
+    case types.INIT_CHARGE_DETAIL:
+      newState.chargeDetail = action.chargeDetail
+      break;
+    case types.INIT_PRODUCT_LIST:
+      newState.productList = action.productList
+      break;
+    case types.INIT_BILLING_LIST:
+      newState.billingList = action.billingList
+      break;
+    case types.CHANGE_BILLING:
+      newState.billing = action.billing
+      break;
+    case types.CHANGE_BILLING_FETCHING:
+      newState.billingFetching = action.billingFetching
+      break;
+    case types.CHANGE_PREFERENTIAL_FETCHING:
+      newState.preferentialFetching = action.preferentialFetching
+      break;
+    case types.INIT_PREFERENTIAL_LIST:
+      newState.preferentialList = action.preferentialList
+      break;
+    case types.CHANGE_PREFERENTIAL:
+      newState.preferential = action.preferential
+      break;
+    case types.CHANGE_PRODUCT:
+      newState.product = action.product
+      break;
+
     default:
       break;
   }

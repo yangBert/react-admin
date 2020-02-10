@@ -17,7 +17,6 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
   let newState = JSON.parse(JSON.stringify(state))
-  console.log("action", action)
   switch (action.type) {
     case spinningTypes:
       newState.spinning = action.spinning

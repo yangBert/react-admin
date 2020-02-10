@@ -43,6 +43,10 @@ export const plateSettingAppDetail = "/api/v1/uamManager/plateSetting/appDetail"
 export const plateSettingAppAudit = "/api/v1/uamManager/plateSetting/appAudit";
 export const plateSettingUpdateAppWithOutFile = "/api/v1/uamManager/plateSetting/UpdateAppWithOutFile";
 
+//应用配置
+export const chargeAppDetail = "/api/v1/manager/chargeApp/detail";
+export const chargeAppAdd = "/api/v1/manager/chargeApp/add";
+
 
 //字典管理
 export const plateSettingSelectDictionaryType = "/api/v1/uamManager/plateSetting/SelectDictionaryType";
@@ -77,11 +81,19 @@ export const noticePublishNotice = "/api/v1/manager/notice/publishNotice";
 export const noticeAddNotice = "/api/v1/manager/notice/addNotice";
 export const noticeGetNoticeDetail = "/api/v1/manager/notice/getNoticeDetail";
 
+//产品类型管理
+export const productTypeSelectByPage = "/api/v1/manager/productType/selectByPage";
+export const productTypeDelProductType = "/api/v1/manager/productType/delProductType";
+export const productTypeAddProductType = "/api/v1/manager/productType/addProductType";
+export const productTypeUpdateProductType = "/api/v1/manager/productType/updateProductType";
+export const productTypeSelectAll = "/api/v1/manager/productType/selectAll";
+
 //产品管理
 export const productSelectByPage = "/api/v1/manager/product/selectByPage";
 export const productAddProduct = "/api/v1/manager/product/addProduct";
 export const productUpdateProduct = "/api/v1/manager/product/updateProduct";
 export const productDelProduct = "/api/v1/manager/product/delProduct";
+export const productAuthCondition = "/api/v1/manager/product/authCondition";
 
 //认证源管理
 export const authSelectByPage = "/api/v1/manager/auth/selectByPage";

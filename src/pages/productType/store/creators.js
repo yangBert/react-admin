@@ -48,11 +48,11 @@ const changeEditConfirmLoadingAction = editConfirmLoading => ({
   editConfirmLoading,
 })
 
-//新增菜单
-const addMenuAction = req => {
+//新增
+const addAction = req => {
   return dispatch => {
     dispatch(changeaddConfirmLoadingAction(true))
-    request.json(requestURL.powerNewMenu, req.data, res => {
+    request.json(requestURL.productTypeAddProductType, req.data, res => {
       dispatch(changeaddConfirmLoadingAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
@@ -71,10 +71,12 @@ const addMenuAction = req => {
 }
 
 //修改菜单
-const editMenuAction = req => {
+const editAction = req => {
   return dispatch => {
     dispatch(changeEditConfirmLoadingAction(true))
-    request.json(requestURL.powerUpdateMenu, req.data, res => {
+    console.log("修改", req.data)
+    request.json(requestURL.productTypeUpdateProductType, req.data, res => {
+      console.log("res", res)
       dispatch(changeEditConfirmLoadingAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
@@ -94,9 +96,9 @@ const editMenuAction = req => {
 }
 
 //删除菜单
-const deleteMenuAction = req => {
+const deleteAction = req => {
   return dispatch => {
-    request.json(requestURL.powerDeleteMenu, req.data, res => {
+    request.json(requestURL.productTypeDelProductType, req.data, res => {
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
@@ -113,11 +115,13 @@ const deleteMenuAction = req => {
   }
 }
 
-//查询菜单
+//查询
 const queryMenuAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    request.json(requestURL.powerSelectAllMenu, req.data, res => {
+    console.log("req", req.data)
+    request.json(requestURL.productTypeSelectAll, req.data, res => {
+      console.log("res", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
@@ -166,8 +170,8 @@ export {
   queryMenuAction,
   changeAddModalvisibleAction,
   changeEditModalvisibleAction,
-  addMenuAction,
-  editMenuAction,
-  deleteMenuAction,
+  addAction,
+  editAction,
+  deleteAction,
   changeEditAction,
 }

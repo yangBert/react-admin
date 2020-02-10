@@ -10,6 +10,7 @@ const defaultState = {
   operationType: "",
   addModalvisible: false,
   record: {},
+  allProductType: []
 };
 
 export default (state = defaultState, action) => {
@@ -35,6 +36,9 @@ export default (state = defaultState, action) => {
       newState.operationType = action.operationType
       newState.addModalvisible = action.addModalvisible
       newState.record = action.record
+      break;
+    case types.INIT_ALL_PRODUCT_TYPE:
+      newState.allProductType = action.allProductType
       break;
     default:
       break;

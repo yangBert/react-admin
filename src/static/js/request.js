@@ -19,7 +19,9 @@ function configFn(url, data, method) {
     data,
   }
   const AuthToken = $$.token.get()
-  if (AuthToken) {
+  const a = url.split(".")
+  const bl = a[a.length - 1] !== "htm"
+  if (AuthToken && bl) {
     config.headers = {}
     config.headers.AuthToken = AuthToken
   }

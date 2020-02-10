@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card,Descriptions,Button } from 'antd';
-import {Link} from 'react-router-dom';
+import { Card, Descriptions, Button } from 'antd';
+import { Link } from 'react-router-dom';
 import styles from '../css/detail.module.css';
 import $$ from 'static/js/base';
 
@@ -39,20 +39,20 @@ function Detail(props) {
               <Descriptions.Item label="账户访问密钥">{accessScrect}</Descriptions.Item>
               <Descriptions.Item label="账户访问唯一编码">{accesskeyId}</Descriptions.Item>
               <Descriptions.Item label="所属于单位">{orgCode}</Descriptions.Item>
-              <Descriptions.Item label="可用余额">{balanceMoney}</Descriptions.Item>
-              <Descriptions.Item label="充值总金额">{totalMoney}</Descriptions.Item>
-              <Descriptions.Item label="最后一次充值金额">{lastRechargeMoney}</Descriptions.Item>
-              <Descriptions.Item label="最后一次充值时间">{$$.getHours(lastRechargeTime)}</Descriptions.Item>
-              <Descriptions.Item label="最后更新时间">{$$.getHours(lastUpdatedTime)}</Descriptions.Item>
+              <Descriptions.Item label="可用余额（元）">{balanceMoney === null ? "0.00" : balanceMoney}</Descriptions.Item>
+              <Descriptions.Item label="充值总金额（元）">{totalMoney === null ? "0.00" : totalMoney.toFixed(2)}</Descriptions.Item>
+              <Descriptions.Item label="最后一次充值金额（元）">{lastRechargeMoney === null ? "0.00" : lastRechargeMoney.toFixed(2)}</Descriptions.Item>
+              <Descriptions.Item label="最后一次充值时间">{lastRechargeTime && $$.getHours(lastRechargeTime)}</Descriptions.Item>
+              <Descriptions.Item label="最后更新时间">{lastUpdatedTime && $$.getHours(lastUpdatedTime)}</Descriptions.Item>
               <Descriptions.Item label="父账户">{parentAccount}</Descriptions.Item>
             </Descriptions>
 
           </Card>
         </div>
         <div className={styles.bottom}>
-            <Button 
-            type="primary" 
-            className={styles.back} 
+          <Button
+            type="primary"
+            className={styles.back}
             onClick={() => props.history.goBack()}
             size="large">返回</Button>
         </div>

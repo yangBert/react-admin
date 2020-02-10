@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-const Home = lazy(() => import('pages/menu/MenuList'));
+const Home = lazy(() => import('pages/home'));
 const ErrorResult = lazy(() => import('pages/common/error/ErrorResult'));
 const AdminList = lazy(() => import('pages/admin/AdminList'));
 const MenuList = lazy(() => import('pages/menu/MenuList'));
@@ -9,6 +9,7 @@ const CertList = lazy(() => import('pages/cert/CertList'));
 const CertDetail = lazy(() => import('pages/cert/components/CertDetail'));
 const AppList = lazy(() => import('pages/app/AppList'));
 const AppAdd = lazy(() => import('pages/app/components/AppAdd'));
+const AppChargeApp = lazy(() => import('pages/app/components/chargeApp'));
 const AppAuthList = lazy(() => import('pages/app/components/AppAuthList'));
 const AppDetail = lazy(() => import('pages/app/components/AppDetail'));
 const DictTypeList = lazy(() => import('pages/dictType/DictTypeList'));
@@ -77,6 +78,10 @@ const routes = [
   {
     path: "/app/appList/add",
     component: AppAdd
+  },
+  {
+    path: "/app/chargeApp",
+    component: AppChargeApp
   },
   {
     path: "/app/detail",
