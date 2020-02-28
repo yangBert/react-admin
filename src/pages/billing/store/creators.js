@@ -5,7 +5,6 @@ import spinningAction from 'pages/common/layer/spinning';
 import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 import { Modal } from 'antd'
-import BraftEditor from 'braft-editor';
 
 const initListAction = (list, pagination) => ({
   type: types.QUERY_LIST,

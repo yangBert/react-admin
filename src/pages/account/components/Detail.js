@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Descriptions, Button } from 'antd';
-import { Link } from 'react-router-dom';
 import styles from '../css/detail.module.css';
 import $$ from 'static/js/base';
 

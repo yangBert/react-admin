@@ -3,7 +3,6 @@ import { Spin, Input, Button, message, Card, Form, InputNumber, Select } from 'a
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/add.module.css';
-import { Link } from 'react-router-dom';
 import $$ from 'static/js/base';
 
 const { Option } = Select;

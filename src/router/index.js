@@ -49,6 +49,8 @@ const TokenPowerList = lazy(() => import('pages/tokenPower'));
 const TokenPowerAdd = lazy(() => import('pages/tokenPower/components/Add'));
 const TokenRoleList = lazy(() => import('pages/tokenRole'));
 const TokenRoleAdd = lazy(() => import('pages/tokenRole/components/Add'));
+const TokenConfigRole = lazy(() => import('pages/tokenRole/components/ConfigRole'));
+const VerifyServerLogList = lazy(() => import('pages/verifyServer'));
 
 const routes = [
   {
@@ -250,6 +252,14 @@ const routes = [
   {
     path: "/tokenRole/add",
     component: TokenRoleAdd
+  },
+  {
+    path: "/tokenRole/config",
+    component: TokenConfigRole
+  },
+  {
+    path: "/verifyServer/logList",
+    component: VerifyServerLogList
   },
 
 ];

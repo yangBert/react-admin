@@ -21,6 +21,19 @@ function Oper(props) {
           ghost
         >修改</Button>
       </Link>
+      <Link
+        to={{
+          pathname: "/tokenRole/config",
+          state: { record: props.record }
+        }}
+      >
+        <Button
+          style={fontSmall}
+          type="primary"
+          size="small"
+          ghost
+        >配置</Button>
+      </Link>
       <Popconfirm
         placement="left"
         title="确定删除吗?"
@@ -38,10 +51,6 @@ function Oper(props) {
 }
 
 const mapDispatch = dispatch => ({
-  updateState: req => {
-    const action = creators.updateStateAction(req);
-    dispatch(action);
-  },
   delete: req => {
     const action = creators.deleteAction(req);
     dispatch(action);

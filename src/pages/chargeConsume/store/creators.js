@@ -125,29 +125,6 @@ const queryOrgListAction = req => {
   }
 }
 
-
-//修改状态
-const updateStateAction = req => {
-  return dispatch => {
-    dispatch(spinningAction(true))
-    const url = requestURL.chargePreferentialUpdate
-    request.json(url, req.data, res => {
-      dispatch(spinningAction(false))
-      if (res.data) {
-        const { success, message } = res.data && res.data
-        if (success) {
-          const action = queryListAction({ props: req.props, data: { pageNo: 1, pageSize: 10 } })
-          dispatch(action)
-        } else {
-          notification('error', message)
-        }
-      } else {
-        req.props.history.push("/500")
-      }
-    })
-  }
-}
-
 //查询携带参数
 const createChangeParamsAction = params => ({
   type: types.CHANGE_SEARCH_PARAMS,

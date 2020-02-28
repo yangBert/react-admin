@@ -51,7 +51,7 @@ class Add extends Component {
       return
     }
     const creater = $$.localStorage.get("adminId")
-    const createrName = $$.localStorage.get("adminName")
+    //const createrName = $$.localStorage.get("adminName")
     const req = {
       props: this.props,
       data: {

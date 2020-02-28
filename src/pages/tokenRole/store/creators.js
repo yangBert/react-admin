@@ -22,11 +22,6 @@ const changeEeditRemarksAction = editRemarks => ({
   editRemarks
 })
 
-const onChangeEditStatusAction = editStatus => ({
-  type: types.CHANGE_EDIT_STATUS,
-  editStatus
-})
-
 //改变保存loading
 const onChangeSaveLoadingAction = saveLoading => ({
   type: types.CHANGE_SAVE_LOADING,
@@ -83,34 +78,6 @@ const queryListAction = req => {
   }
 }
 
-//修改状态
-const updateStateAction = req => {
-  return (dispatch, getState) => {
-    dispatch(spinningAction(true))
-    const url = requestURL.webManagerLinkChangeStatus
-    request.json(url, req.data, res => {
-      dispatch(spinningAction(false))
-      if (res.data) {
-        const { success, message } = res.data && res.data
-        if (success) {
-          const pagination = getState().link.pagination
-          const params = {
-            ...getState().link.params,
-            pageNo: pagination.current,
-            pageSize: pagination.pageSize
-          }
-          dispatch(queryListAction({ props: req.props, data: params }));
-
-        } else {
-          notification('error', message)
-        }
-      } else {
-        req.props.history.push("/500")
-      }
-    })
-  }
-}
-
 const deleteAction = req => {
   return (dispatch) => {
     dispatch(spinningAction(true))
@@ -136,8 +103,6 @@ const deleteAction = req => {
   }
 }
 
-
-
 //查询携带参数
 const createChangeParamsAction = params => ({
   type: types.CHANGE_SEARCH_PARAMS,
@@ -148,11 +113,8 @@ export {
   queryListAction,
   changeEditNameAction,
   changeEeditRemarksAction,
-  onChangeEditStatusAction,
   saveAction,
   deleteAction,
   onChangeSaveLoadingAction,
   createChangeParamsAction,
-  updateStateAction
-
 }

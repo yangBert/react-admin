@@ -201,7 +201,7 @@ class AppAdd extends Component {
       </div>
     );
     const imgURL = this.props.iconBase64 || this.props.icon
-    const { allLandingModes, allSupportCAs, allAppTypes, allAuthLevel } = this.props.location.state
+    const { allLandingModes, allSupportCAs, allAppTypes } = this.props.location.state
     return (
       <div className={styles.pageContet}>
         <Spin tip="Loading..." spinning={this.props.spinning}>

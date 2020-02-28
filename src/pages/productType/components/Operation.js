@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Button, Switch, Popconfirm, Icon } from 'antd';
+import { Button, Popconfirm, Icon } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import $$ from 'static/js/base';

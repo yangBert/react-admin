@@ -173,6 +173,7 @@ export const tokenPowerSelectInterList = "/api/v1/uamBase/tokenPower/selectInter
 export const uamBaseTokenPowerNewInter = "/api/v1/uamBase/tokenPower/newInter";
 export const uamBaseTokenPowerUpdateInter = "/api/v1/uamBase/tokenPower/updateInter";
 export const uamBaseTokenPowerDeleteInter = "/api/v1/uamBase/tokenPower/deleteInter";
+export const siteNoticeIndexSysList = "/web/site/notice/indexSysList";
 
 //token角色
 export const uamBaseTokenPowerNewTokenRole = "/api/v1/uamBase/tokenPower/newTokenRole";
@@ -182,7 +183,10 @@ export const uamBaseTokenPowerUpdateTokenRole = "/api/v1/uamBase/tokenPower/upda
 export const uamBaseTokenPowerNewTokenInterRole = "/api/v1/uamBase/tokenPower/newTokenInterRole";
 export const uamBaseTokenPowerSelectTokenInterRoleList = "/api/v1/uamBase/tokenPower/selectTokenInterRoleList";
 
-export const siteNoticeIndexSysList = "/web/site/notice/indexSysList";
+//签名验签服务器
+export const verifySelectLog = "/api/v1/verify/selectLog";
+
+
 
 
 

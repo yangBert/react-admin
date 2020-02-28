@@ -291,8 +291,8 @@ const queryAllAppTypeAction = req => {
           const arr = implementResponseType(JSON.parse(data))
           dispatch(initAllAppTypes(arr));
         } else {
-          console.log(res.data)
-          //notification('error', message)
+          //console.log(res.data)
+          notification('error', message)
         }
       } else {
         req.props.history.push("/500")
@@ -511,12 +511,6 @@ const changeSaveLoading = saveLoading => ({
   saveLoading
 })
 
-//初始化应用配置
-const initChargeDetail = chargeDetail => ({
-  type: types.INIT_CHARGE_DETAIL,
-  chargeDetail
-})
-
 //应用新增保存
 const saveAppFormAction = req => {
   return (dispatch) => {
@@ -550,32 +544,31 @@ const saveAppFormAction = req => {
 }
 
 //应用配置详情
-const queryChargeAppDetailAction = req => {
-  return (dispatch) => {
-    dispatch(changeSaveLoading(true))
-    console.log("req", req.data)
-    request.json(requestURL.chargeAppDetail, req.data, res => {
-      dispatch(changeSaveLoading(false))
-      console.log("res", res)
-      if (res.data) {
-        const { success, message, data } = res.data && res.data
-        if (success) {
-          if (data !== null) {
+// const queryChargeAppDetailAction = req => {
+//   return (dispatch) => {
+//     dispatch(changeSaveLoading(true))
+//     console.log("req", req.data)
+//     request.json(requestURL.chargeAppDetail, req.data, res => {
+//       dispatch(changeSaveLoading(false))
+//       console.log("res", res)
+//       if (res.data) {
+//         const { success, message, data } = res.data && res.data
+//         if (success) {
+//           if (data !== null) {
 
-            dispatch(changeProductAction(""))
-            dispatch(changeBillingAction(""))
-            dispatch(changePreferentialAction(""))
-            //dispatch(initChargeDetail(data))
-          }
-        } else {
-          notification('error', message)
-        }
-      } else {
-        req.props.history.push("/500")
-      }
-    })
-  }
-}
+//             dispatch(changeProductAction(""))
+//             dispatch(changeBillingAction(""))
+//             dispatch(changePreferentialAction(""))
+//           }
+//         } else {
+//           notification('error', message)
+//         }
+//       } else {
+//         req.props.history.push("/500")
+//       }
+//     })
+//   }
+// }
 
 //设置iconBae64
 const setIconBase64Action = iconBase64 => ({
@@ -678,7 +671,6 @@ export {
   emptyAddValueAction,
   queryOrgListAction,
   onChangeOrgTreeSelectAction,
-  queryChargeAppDetailAction,
   getProductTypeAction,
   changeProductTypeAction,
   changeProductAction,

@@ -137,9 +137,6 @@ export default (state = defaultState, action) => {
     case types.INIT_ALL_PRODUCT_TYPE:
       newState.allProductType = action.allProductType
       break;
-    case types.INIT_CHARGE_DETAIL:
-      newState.chargeDetail = action.chargeDetail
-      break;
     case types.INIT_PRODUCT_LIST:
       newState.productList = action.productList
       break;

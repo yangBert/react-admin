@@ -92,7 +92,7 @@ function SearchForm(props) {
               <Icon type="undo" />重置
             </Button>&nbsp;&nbsp;
             <Button type="primary" className={styles.addButton}>
-              <Link to="/tokenRole/add">
+              <Link to="/tokenPower/add">
                 <Icon type="plus" />新增
               </Link>
             </Button>

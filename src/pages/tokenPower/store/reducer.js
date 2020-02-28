@@ -9,9 +9,9 @@ const defaultState = {
   params: {},
   editTitle: "",
   editURL: "",
-  editRemarks:"",
-  editStatus:"",
-  detailInfo: null,
+  editRemarks: "",
+  selectedRowKeys: [],
+  roleId: ""
 };
 
 export default (state = defaultState, action) => {
@@ -36,17 +36,14 @@ export default (state = defaultState, action) => {
     case types.CHANGE_EDIT_REMARKS:
       newState.editRemarks = action.editRemarks
       break;
-    case types.CHANGE_EDIT_STATUS:
-      newState.editStatus = action.editStatus
-      break;
     case types.CHANGE_SAVE_LOADING:
       newState.saveLoading = action.saveLoading
       break;
-    case types.CHANGE_EDIT_CONTENT:
-      newState.editContent = action.editContent
+    case types.CHANGE_SELECTED_ROW_KEYS:
+      newState.selectedRowKeys = action.selectedRowKeys
       break;
-    case types.INIT_NOTICE_DETAIL:
-      newState.detailInfo = action.detailInfo
+    case types.INIT_ROLE_ID:
+      newState.roleId = action.roleId
       break;
     default:
       break;

@@ -82,10 +82,10 @@ const saveAction = req => {
 const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("req",requestURL.webManagerQueryApplyPages,req.data)
+    console.log("req", requestURL.webManagerQueryApplyPages, req.data)
     request.json(requestURL.webManagerQueryApplyPages, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("res",res)
+      console.log("res", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
@@ -116,29 +116,6 @@ const queryOrgListAction = req => {
         const { success, message, data } = res.data && res.data
         if (success) {
           const action = initOrgListAction(data)
-          dispatch(action)
-        } else {
-          notification('error', message)
-        }
-      } else {
-        req.props.history.push("/500")
-      }
-    })
-  }
-}
-
-
-//修改状态
-const updateStateAction = req => {
-  return dispatch => {
-    dispatch(spinningAction(true))
-    const url = requestURL.chargePreferentialUpdate
-    request.json(url, req.data, res => {
-      dispatch(spinningAction(false))
-      if (res.data) {
-        const { success, message } = res.data && res.data
-        if (success) {
-          const action = queryListAction({ props: req.props, data: { pageNo: 1, pageSize: 10 } })
           dispatch(action)
         } else {
           notification('error', message)

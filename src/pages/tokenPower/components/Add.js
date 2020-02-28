@@ -37,14 +37,12 @@ class Add extends Component {
       message.error('请输入接口备注');
       return
     }
-    const userNo = $$.localStorage.get("adminId")
     const req = {
       props: this.props,
       data: {
         title: $$.trim(editTitle),
         url: $$.trim(editURL),
         remarks: editRemarks,
-        userNo
       }
     }
 
@@ -85,7 +83,7 @@ class Add extends Component {
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
-                      placeholder="接口"
+                      placeholder="“/api/-xx/base/**”"
                       onChange={e => this.props.onChangeEditURL(e.target.value)}
                       value={this.props.editURL}
                     />

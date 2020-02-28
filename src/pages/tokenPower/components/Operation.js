@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button,Popconfirm,Icon } from 'antd';
+import { Button, Popconfirm, Icon } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import { withRouter, Link } from 'react-router-dom';
@@ -38,10 +38,6 @@ function Oper(props) {
 }
 
 const mapDispatch = dispatch => ({
-  updateState: req => {
-    const action = creators.updateStateAction(req);
-    dispatch(action);
-  },
   delete: req => {
     const action = creators.deleteAction(req);
     dispatch(action);

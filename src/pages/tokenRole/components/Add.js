@@ -116,7 +116,6 @@ const mapState = state => ({
   spinning: state.tokenRole.spinning,
   editName: state.tokenRole.editName,
   editRemarks: state.tokenRole.editRemarks,
-  status: state.tokenRole.editStatus,
   saveLoading: state.tokenRole.saveLoading,
 })
 

@@ -18,11 +18,11 @@ class chargeApp extends Component {
   componentDidMount() {
     if (this.props.location.state) {
       if (this.props.location.state.appCode) {
-        const appCode = this.props.location.state.appCode
-        this.props.queryChargeAppDetail({
-          props: this.props,
-          data: { appCode }
-        })
+        //const appCode = this.props.location.state.appCode
+        // this.props.queryChargeAppDetail({
+        //   props: this.props,
+        //   data: { appCode }
+        // })
       }
     }
   }
@@ -212,10 +212,10 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  queryChargeAppDetail: req => {
-    const action = creators.queryChargeAppDetailAction(req);
-    dispatch(action);
-  },
+  // queryChargeAppDetail: req => {
+  //   const action = creators.queryChargeAppDetailAction(req);
+  //   dispatch(action);
+  // },
   changeProduct: req => {
     const action = creators.changeProductAction(req);
     dispatch(action);

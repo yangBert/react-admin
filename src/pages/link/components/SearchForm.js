@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Input, Icon, DatePicker, Select } from 'antd';
+import { Button, Input, Icon, Select } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/SearchForm.module.css';
@@ -61,7 +61,7 @@ function SearchForm(props) {
   function mapStatus() {
     let statusArr = [];
     Object.keys(config.status).forEach(k => {
-      statusArr.push({k,v:config.status[k]})
+      statusArr.push({ k, v: config.status[k] })
     })
     return statusArr;
   }
@@ -87,7 +87,7 @@ function SearchForm(props) {
                 <Option value="">请选择</Option>
                 {
                   mapStatus().map(item => {
-                   return <Option value={item.k} key={item.k}>{item.v}</Option>
+                    return <Option value={item.k} key={item.k}>{item.v}</Option>
                   })
                 }
               </Select>

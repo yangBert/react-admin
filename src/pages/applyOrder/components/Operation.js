@@ -1,9 +1,7 @@
 import React from 'react';
-import { Button, Switch } from 'antd';
+import { Button } from 'antd';
 import { connect } from 'react-redux';
-import * as creators from '../store/creators';
 import { withRouter, Link } from 'react-router-dom';
-import $$ from 'static/js/base';
 
 function Oper(props) {
   const fontSmall = { fontSize: "12px", marginLeft: "5px" };

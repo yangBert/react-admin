@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Spin, Input, Button, message, Card, Form, InputNumber, Select } from 'antd';
+import { Spin, Input, Button, message, Card, Form } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/add.module.css';
-import { Link } from 'react-router-dom';
 import $$ from 'static/js/base';
 
-const { Option } = Select;
 const { TextArea } = Input;
 
 class Add extends Component {
