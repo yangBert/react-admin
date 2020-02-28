@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import styles from '../css/add.module.css';
 import * as creators from '../store/creators';
-//import $$ from 'static/js/base';
+import $$ from 'static/js/base';
 
 const { Option } = Select;
 
@@ -102,7 +102,7 @@ class AppAdd extends Component {
     const data = this.props.form
     const imgURL = this.props.iconBase64 || this.props.icon
     const file = this.state.icon
-    const {
+    let {
       appName,
       url,
       describes,
@@ -111,8 +111,14 @@ class AppAdd extends Component {
       auditMode,
       landingModes,
       supportCAs,
-      orgCode
+      orgCode,
+      tag
     } = data
+    appName = $$.trim(appName)
+    url = $$.trim(url)
+    describes = $$.trim(describes)
+    redirectUrl = $$.trim(redirectUrl)
+    tag = $$.trim(tag)
 
     if (appName === "") {
       message.error("应用名称不能为空")
@@ -140,6 +146,9 @@ class AppAdd extends Component {
     } else if (auditMode === "") {
       message.error("请选择审核模式")
       return;
+    } else if (tag === "") {
+      message.error("请输入标签")
+      return;
     } else if (landingModes.length === 0) {
       message.error("请选择登陆认证方式")
       return;
@@ -150,18 +159,21 @@ class AppAdd extends Component {
 
     var formDatas = new FormData();
     formDatas.append("file", file);
-    formDatas.append("appName", data.appName);
-    formDatas.append("url", data.url);
-    formDatas.append("describes", data.describes);
-    formDatas.append("redirectUrl", data.redirectUrl);
-    formDatas.append("appType", data.appType);
-    formDatas.append("auditMode", data.auditMode);
-    formDatas.append("landingModes", data.landingModes);
-    formDatas.append("supportCAs", data.supportCAs);
-    formDatas.append("orgCode", data.orgCode);
+    formDatas.append("appName", appName);
+    formDatas.append("url", url);
+    formDatas.append("describes", describes);
+    formDatas.append("redirectUrl", redirectUrl);
+    formDatas.append("appType", appType);
+    formDatas.append("auditMode", auditMode);
+    formDatas.append("landingModes", landingModes);
+    formDatas.append("supportCAs", supportCAs);
+    formDatas.append("orgCode", orgCode);
+    formDatas.append("tag", tag);
     if (this.props.location.state && this.props.location.state.editAppId) {
       formDatas.append("id", this.props.location.state.editAppId);
     }
+    console.log("data,", tag)
+    console.log("orgCode,", orgCode)
     this.props.saveAppForm({ props: this.props, data: formDatas })
   }
 
@@ -196,7 +208,7 @@ class AppAdd extends Component {
           <div className="pageContentColor">
             <Card title="基本信息" bordered={false}>
               <Form className={`${styles.form} clearfix`}>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">应用名称：</label>
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用名称：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
@@ -207,7 +219,7 @@ class AppAdd extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">应用访问地址：</label>
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用访问地址：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
@@ -218,7 +230,7 @@ class AppAdd extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">应用描述：</label>
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用描述：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
@@ -230,7 +242,7 @@ class AppAdd extends Component {
                   </div>
                 </div>
 
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">推送URL：</label>
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>推送URL：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
@@ -241,7 +253,7 @@ class AppAdd extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">请选择机构：</label>
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>请选择机构：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <TreeSelect
                       className={styles.text}
@@ -255,7 +267,7 @@ class AppAdd extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formBlock} pullLeft`}><label className="pullLeft">上传应用LOGO：</label>
+                <div className={`${styles.formBlock} pullLeft`}><label className={`${styles.label} pullLeft`}>上传应用LOGO：</label>
                   <Upload
                     name="avatar"
                     listType="picture-card"
@@ -280,7 +292,7 @@ class AppAdd extends Component {
           <div className="pageContentColor">
             <Card title="扩展信息" bordered={false}>
               <Form className={`${styles.form} clearfix`}>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">应用类型：</label>
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用类型：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Select
                       value={this.props.appType ? this.props.appType : ""}
@@ -293,7 +305,7 @@ class AppAdd extends Component {
                     </Select>
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">审核模式：</label>
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>审核模式：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Select
                       //ref={refauditMode => this.setState({refauditMode})}
@@ -306,7 +318,18 @@ class AppAdd extends Component {
                     </Select>
                   </div>
                 </div>
-                <div className={`${styles.formLine} clearfix`}><label className="pullLeft">登陆认证方式：</label>
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用标签：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Input
+                      className={styles.text}
+                      placeholder="请输入应用标签"
+                      onChange={e => this.props.onChangeTag(e.target.value)}
+                      value={this.props.tag}
+                    />
+                  </div>
+                </div>
+
+                <div className={`${styles.formBlock} clearfix`}><label className={`${styles.label} pullLeft`}>登陆认证方式：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Checkbox.Group
 
@@ -316,7 +339,7 @@ class AppAdd extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} clearfix`}><label className="pullLeft">支持CA机构：</label>
+                <div className={`${styles.formBlock} clearfix`}><label className={`${styles.label} pullLeft`}>支持CA机构：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Checkbox.Group
                       options={allSupportCAs}
@@ -368,6 +391,7 @@ const mapState = state => ({
   spinning: state.app.spinning,
   orgList: state.app.orgList,
   orgCode: state.app.form.orgCode,
+  tag: state.app.form.tag,
 })
 
 const mapDispatch = dispatch => ({
@@ -430,6 +454,10 @@ const mapDispatch = dispatch => ({
   },
   onChangeTreeSelect: req => {
     const action = creators.onChangeOrgTreeSelectAction(req);
+    dispatch(action);
+  },
+  onChangeTag: req => {
+    const action = creators.onChangeTagAction(req);
     dispatch(action);
   },
 })

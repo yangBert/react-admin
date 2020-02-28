@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Spin, Tag, Button, Icon } from 'antd';
-import { Link } from 'react-router-dom';
+import { Table, Spin, Tag } from 'antd';
+
 import { connect } from 'react-redux';
 import * as creators from './store/creators';
 import SearchForm from './components/SearchForm';
@@ -10,10 +10,10 @@ import Oper from './components/Operation';
 
 const columns = [
   { title: '应用编码', dataIndex: 'appCode', key: 'appCode', align: 'center' },
-  { title: '应用名称', dataIndex: 'appName', key: 'appName' },
-  { title: '应用描述', dataIndex: 'describes', key: 'describes' },
+  { title: '应用名称', dataIndex: 'appName', key: 'appName', align: 'center' },
+  // { title: '应用描述', dataIndex: 'describes', key: 'describes' },
   {
-    title: '创建时间', dataIndex: 'createTime', key: 'createTime',
+    title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center',
     render: createTime => (
       <span>{$$.getHours(createTime)}</span>
     )
@@ -82,24 +82,6 @@ class AppList extends Component {
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <SearchForm />
-          <div className={styles.buttonForm}>
-            <Link
-              to={{
-                pathname: '/app/appList/add',
-                state: {
-                  allLandingModes: this.props.allLandingModes,
-                  allSupportCAs: this.props.allSupportCAs,
-                  allAppTypes: this.props.allAppTypes,
-                  allAuthLevel: this.props.allAuthLevel,
-                }
-              }}
-            >
-              <Button
-                type="primary"
-                className={styles.addButton}
-              ><Icon type="plus" />新增</Button>
-            </Link>
-          </div>
           <Table
             bordered
             columns={columns}
@@ -119,10 +101,6 @@ const mapState = state => ({
   pagination: state.app.pagination,
   spinning: state.app.spinning,
   params: state.app.params,
-  allAuthLevel: state.app.form.allAuthLevel,
-  allLandingModes: state.app.form.allLandingModes,
-  allSupportCAs: state.app.form.allSupportCAs,
-  allAppTypes: state.app.form.allAppTypes,
 })
 
 const mapDispatch = dispatch => ({

@@ -22,6 +22,13 @@ import accountReducer from 'pages/account/store/reducer';
 import preferentialReducer from 'pages/preferential/store/reducer';
 import chargeConsumeReducer from 'pages/chargeConsume/store/reducer';
 import chargeRechargeReducer from 'pages/chargeRecharge/store/reducer';
+import applyOrderReducer from 'pages/applyOrder/store/reducer';
+import linkReducer from 'pages/link/store/reducer';
+import questionReducer from 'pages/question/store/reducer';
+import clientUserReducer from 'pages/clientUser/store/reducer';
+import tokenPowerReducer from 'pages/tokenPower/store/reducer';
+import tokenRoleReducer from 'pages/tokenRole/store/reducer';
+
 
 export default {
   login: loginReducer,
@@ -47,5 +54,11 @@ export default {
   account: accountReducer,
   preferential: preferentialReducer,
   chargeConsume: chargeConsumeReducer,
-  chargeRecharge: chargeRechargeReducer
+  chargeRecharge: chargeRechargeReducer,
+  applyOrder: applyOrderReducer,
+  link: linkReducer,
+  question: questionReducer,
+  clientUser: clientUserReducer,
+  tokenPower: tokenPowerReducer,
+  tokenRole: tokenRoleReducer,
 };

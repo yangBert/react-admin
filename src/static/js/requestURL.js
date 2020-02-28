@@ -144,6 +144,47 @@ export const chargeRecharge = "/api/v1/charge/recharge";
 export const chargeRechargeRecordByPage = "/api/v1/charge/rechargeRecordByPage";
 export const chargeRechargeDetail = "/api/v1/charge/rechargeDetail";
 
+//订单管理
+export const webManagerQueryApplyPages = "/web/manager/apply/queryApplyPages";
+export const webManagerGetApplyDetail = "/web/manager/getApplyDetail";
+export const webManagerAuditApply = "/web/manager/auditApply";
+
+//友情链接管理
+export const linkQueryLinksByPage = "/web/manager/link/queryLinksByPage";
+export const webManagerLinkAdd = "/web/manager/link/add";
+export const webManagerLinkUpdate = "/web/manager/link/update";
+export const webManagerLinkChangeStatus = "/web/manager/link/changeStatus";
+
+//常见问题管理
+export const questionQueryQuestionByPage = "/web/manager/question/queryQuestionByPage";
+export const webManagerQuestionAdd = "/web/manager/question/add";
+export const webManagerQuestionUpdate = "/web/manager/question/update";
+export const webManagerQuestionDetail = "/web/manager/question/detail";
+
+//客户管理
+export const clientUserChangeUserStatus = "/web/manager/user/changeUserStatus";
+export const clientUserQueryUserByPage = "/web/manager/user/queryUserByPage";
+export const webManagerUserRecharge = "/web/manager/user/userRecharge";
+export const webManagerUserDetail = "/web/manager/user/detail";
+export const webManagerUserChangeUserStatus = "/web/manager/user/changeUserStatus";
+
+//接口管理
+export const tokenPowerSelectInterList = "/api/v1/uamBase/tokenPower/selectInterList";
+export const uamBaseTokenPowerNewInter = "/api/v1/uamBase/tokenPower/newInter";
+export const uamBaseTokenPowerUpdateInter = "/api/v1/uamBase/tokenPower/updateInter";
+export const uamBaseTokenPowerDeleteInter = "/api/v1/uamBase/tokenPower/deleteInter";
+
+//token角色
+export const uamBaseTokenPowerNewTokenRole = "/api/v1/uamBase/tokenPower/newTokenRole";
+export const uamBaseTokenPowerSelectTokenRoleList = "/api/v1/uamBase/tokenPower/selectTokenRoleList";
+export const uamBaseTokenPowerDeleteTokenRole = "/api/v1/uamBase/tokenPower/deleteTokenRole";
+export const uamBaseTokenPowerUpdateTokenRole = "/api/v1/uamBase/tokenPower/updateTokenRole";
+export const uamBaseTokenPowerNewTokenInterRole = "/api/v1/uamBase/tokenPower/newTokenInterRole";
+export const uamBaseTokenPowerSelectTokenInterRoleList = "/api/v1/uamBase/tokenPower/selectTokenInterRoleList";
+
+export const siteNoticeIndexSysList = "/web/site/notice/indexSysList";
+
+
 
 
 

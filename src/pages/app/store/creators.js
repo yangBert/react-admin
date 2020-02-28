@@ -68,6 +68,7 @@ const queryEditAppAction = req => {
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
+          console.log("data", data)
           dispatch(onChangeAppNameAction(data.appName))
           dispatch(onChangeUrlAction(data.url))
           dispatch(onChangeDescribesAction(data.describes))
@@ -78,6 +79,9 @@ const queryEditAppAction = req => {
           dispatch(changeLandingModesAction(data.extInfoBean.landingModes))
           dispatch(onChangeSupportCAsAction(data.extInfoBean.supportCAs))
           dispatch(onChangeEditAppIdAction(data.id))
+          dispatch(onChangeOrgTreeSelectAction(data.orgCode))
+          dispatch(onChangeTagAction(data.tag))
+
           const iconArr = data.icon.split("gzdata.com.cn")
           const iconRUL = iconArr[iconArr.length - 1]
           implementURLtoBlob(req.com, iconRUL)
@@ -126,6 +130,7 @@ const createQueryAppListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
     request.json(requestURL.plateSettingSelectAppData, req.data, res => {
+      console.log("res", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
@@ -640,6 +645,11 @@ const onChangeEditAppIdAction = editAppId => ({
 })
 
 
+const onChangeTagAction = tag => ({
+  type: types.CHANGE_FORM_TAG,
+  tag
+})
+
 export {
   createQueryAppListAction,
   createChangeParamsAction,
@@ -654,6 +664,7 @@ export {
   onChangeAuditModeAction,
   changeLandingModesAction,
   onChangeSupportCAsAction,
+  onChangeTagAction,
 
   queryLoginTypeAction,
   queryAllSupportCAsAction,

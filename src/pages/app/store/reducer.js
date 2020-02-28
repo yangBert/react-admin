@@ -20,6 +20,7 @@ const defaultState = {
     allLandingModes: [],
     allSupportCAs: [],
     allAppTypes: [],
+    tag: "",
   },
   iconBase64: "",
   editLoading: false,
@@ -93,6 +94,9 @@ export default (state = defaultState, action) => {
     case types.CHANGE_FORM_SUPPORTCAS:
       newState.form.supportCAs = action.supportCAs
       break;
+    case types.CHANGE_FORM_TAG:
+      newState.form.tag = action.tag
+      break;
     case types.INIT_ALL_AUTH_LEVEL:
       newState.form.allAuthLevel = action.allAuthLevel
       break;
@@ -124,8 +128,11 @@ export default (state = defaultState, action) => {
       newState.form.redirectUrl = ""
       newState.form.appType = ""
       newState.form.auditMode = ""
+      newState.form.tag = ""
+      newState.form.orgCode = ""
       newState.form.landingModes = []
       newState.form.supportCAs = []
+      newState.iconBase64 = ""
       break;
     case types.INIT_ALL_PRODUCT_TYPE:
       newState.allProductType = action.allProductType

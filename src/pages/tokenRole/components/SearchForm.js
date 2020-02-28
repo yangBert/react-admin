@@ -10,49 +10,37 @@ moment.locale('zh-cn');
 
 
 function SearchForm(props) {
-  const [title, setTitle] = useState("")
-  const [url, setUrl] = useState("")
+  const [name, setName] = useState("")
 
   const { changeSearchParams } = props;
   useEffect(() => {
     changeSearchParams({
-      title,
-      url,
+      name,
     })
   }, [
-    title,
-    url,
+    name,
     changeSearchParams
   ]);
 
 
   function search() {
     const {
-      title,
-      url,
+      name,
     } = props.params
 
     const data = {
       pageSize: 10,
       pageNo: 1,
     }
-
-
-    if (title) {
-      data.title = title
+    if (name) {
+      data.name = name
     }
-
-    if (url !== "") {
-      data.url = url
-    }
-
     console.log("data", data)
     props.querylist({ props, data });
   }
 
   function reset() {
-    setTitle("");
-    setUrl("");
+    setName("");
     const data = { pageNo: 1, pageSize: 10 }
     props.querylist({ props, data });
   }
@@ -62,41 +50,27 @@ function SearchForm(props) {
       <div className={`${styles.form}`}>
         <div className="clearfix">
           <div className={`${styles.formLine} pullLeft`}>
-            <label className="pullLeft">接口标题:</label>
+            <label className="pullLeft">角色名称:</label>
             <div className={`${styles.inline} pullLeft`}>
               <Input
                 allowClear
-                onChange={e => setTitle(e.target.value)}
-                value={title}
+                onChange={e => setName(e.target.value)}
+                value={name}
               />
             </div>
           </div>
-          <div className={`${styles.formLine} pullLeft`}>
-            <label className="pullLeft">接口:</label>
-            <div className={`${styles.inline} pullLeft`}>
-              <Input
-                allowClear
-                onChange={e => setUrl(e.target.value)}
-                value={url}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="clearfix">
-          <div className={`${styles.formLine} pullLeft`}>
-            <label className="pullLeft">&nbsp;</label>
-            <Button onClick={() => search()} type="primary">
-              <Icon type="search" />查询
+          &nbsp;&nbsp;
+          <Button onClick={() => search()} type="primary">
+            <Icon type="search" />查询
             </Button>&nbsp;&nbsp;
             <Button onClick={() => reset()} type="primary" ghost>
-              <Icon type="undo" />重置
+            <Icon type="undo" />重置
             </Button>&nbsp;&nbsp;
             <Button type="primary" className={styles.addButton}>
-              <Link to="/tokenRole/add">
-                <Icon type="plus" />新增
+            <Link to="/tokenRole/add">
+              <Icon type="plus" />新增
               </Link>
-            </Button>
-          </div>
+          </Button>
         </div>
       </div>
     </div >

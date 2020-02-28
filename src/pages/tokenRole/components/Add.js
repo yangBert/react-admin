@@ -12,39 +12,34 @@ class Add extends Component {
 
   componentDidMount() {
     if (this.props.location.state && this.props.location.state.editRecord) {
-      const { title, url, remarks } = this.props.location.state.editRecord
-      this.setForm(title, url, remarks)
+      const { name, remarks } = this.props.location.state.editRecord
+      this.setForm(name, remarks)
     } else {
       this.setForm("", "", "")
     }
   }
 
-  setForm(title, url, remarks) {
-    this.props.onChangeEditTitle(title)
-    this.props.onChangeEditURL(url)
-    this.props.onChangeEeditRemarks(remarks)
+  setForm(name, remarks) {
+    this.props.changeEditName(name)
+    this.props.changeEeditRemarks(remarks)
   }
 
   save() {
-    const { editTitle, editURL, editRemarks } = this.props;
-    if ($$.trim(editTitle) === "") {
-      message.error('请输入接口标题');
+    let { editName, editRemarks } = this.props;
+    editName = $$.trim(editName)
+    editRemarks = $$.trim(editRemarks)
+    if (editName === "") {
+      message.error('请输入角色名称');
       return
-    } else if ($$.trim(editURL) === "") {
-      message.error('请输入接口');
-      return
-    } else if ($$.trim(editRemarks) === "") {
-      message.error('请输入接口备注');
+    } else if (editRemarks === "") {
+      message.error('请输入角色备注');
       return
     }
-    const userNo = $$.localStorage.get("adminId")
     const req = {
       props: this.props,
       data: {
-        title: $$.trim(editTitle),
-        url: $$.trim(editURL),
+        name: editName,
         remarks: editRemarks,
-        userNo
       }
     }
 
@@ -69,34 +64,24 @@ class Add extends Component {
       <div className={styles.pageContet}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <div className="pageContentColor">
-            <Card title="新增接口" bordered={false}>
-              <Form className={`${styles.form} clearfix`}>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">接口标题：</label>
+            <Card title="新增角色" bordered={false}>
+              <Form className={`${styles.form}`}>
+                <div className={`${styles.formLine} clearfix`}><label className="pullLeft">角色名称：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
-                      placeholder="接口标题"
-                      onChange={e => this.props.onChangeEditTitle(e.target.value)}
-                      value={this.props.editTitle}
+                      placeholder="请输入角色名称"
+                      onChange={e => this.props.changeEditName(e.target.value)}
+                      value={this.props.editName}
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">接口：</label>
-                  <div className={`${styles.inline} pullLeft`}>
-                    <Input
-                      className={styles.text}
-                      placeholder="接口"
-                      onChange={e => this.props.onChangeEditURL(e.target.value)}
-                      value={this.props.editURL}
-                    />
-                  </div>
-                </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">接口备注：</label>
+                <div className={`${styles.formLine} clearfix`}><label className="pullLeft">备注：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <TextArea rows={4}
                       className={styles.text}
-                      placeholder="接口备注"
-                      onChange={e => this.props.onChangeEeditRemarks(e.target.value)}
+                      placeholder="备注"
+                      onChange={e => this.props.changeEeditRemarks(e.target.value)}
                       value={this.props.editRemarks}
                     />
                   </div>
@@ -128,12 +113,11 @@ class Add extends Component {
 }
 
 const mapState = state => ({
-  spinning: state.tokenPower.spinning,
-  editTitle: state.tokenPower.editTitle,
-  editURL: state.tokenPower.editURL,
-  editRemarks: state.tokenPower.editRemarks,
-  status: state.tokenPower.editStatus,
-  saveLoading: state.tokenPower.saveLoading,
+  spinning: state.tokenRole.spinning,
+  editName: state.tokenRole.editName,
+  editRemarks: state.tokenRole.editRemarks,
+  status: state.tokenRole.editStatus,
+  saveLoading: state.tokenRole.saveLoading,
 })
 
 const mapDispatch = dispatch => ({
@@ -141,16 +125,12 @@ const mapDispatch = dispatch => ({
     const action = creators.saveAction(req);
     dispatch(action);
   },
-  onChangeEditTitle: value => {
-    const action = creators.onChangeEditTitleAction(value);
+  changeEditName: value => {
+    const action = creators.changeEditNameAction(value);
     dispatch(action);
   },
-  onChangeEditURL: value => {
-    const action = creators.onChangeEditURLAction(value);
-    dispatch(action);
-  },
-  onChangeEeditRemarks: value => {
-    const action = creators.onChangeEeditRemarksAction(value);
+  changeEeditRemarks: value => {
+    const action = creators.changeEeditRemarksAction(value);
     dispatch(action);
   },
 

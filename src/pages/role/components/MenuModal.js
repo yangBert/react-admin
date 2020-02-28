@@ -69,7 +69,7 @@ class MenuModal extends React.Component {
     return (
       <div>
         <Modal
-          title="分酝权陝"
+          title="分配权限"
           style={{ top: 20 }}
           width={360}
           bodyStyle={{ height: "300px", overflow: "auto" }}

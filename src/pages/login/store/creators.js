@@ -8,6 +8,7 @@ import $$ from 'static/js/base.js';
 
 const loginSubmit = req => {
   return dispatch => {
+    console.log("req=>",req.data.signData);
     request.json(requestURL.managerLoginURL, req.data, res => {
       dispatch(changeLoginLoading(false))
       if (res.data) {
@@ -28,6 +29,7 @@ const loginSubmit = req => {
 //签名
 function pkcs1SignData_PIN(props, dispatch, GZCA, containerName, original, certserial) {
   GZCA.GZCA_Pkcs1SignData_PIN(containerName, original, function (res) {
+    console.log(res)
     if (res.success) {
       const signData = res.SignData;
       const data = { certserial, signData };

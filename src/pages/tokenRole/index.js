@@ -7,12 +7,11 @@ import styles from './css/UserList.module.css';
 import Oper from './components/Operation';
 
 const columns = [
-  { title: '接口标题', dataIndex: 'title', key: 'title', align: 'center' },
-  { title: '接口', dataIndex: 'url', key: 'url', align: 'center' },
+  { title: '角色编码', dataIndex: 'id', key: 'id', align: 'center' },
+  { title: '角色名称', dataIndex: 'name', key: 'name', align: 'center' },
   {
     title: '备注', dataIndex: 'remarks', key: 'remarks', align: 'center'
   },
-
   {
     title: '操作',
     dataIndex: 'operation',
@@ -68,10 +67,10 @@ class List extends Component {
 }
 
 const mapState = state => ({
-  list: state.tokenPower.list,
-  pagination: state.tokenPower.pagination,
-  spinning: state.tokenPower.spinning,
-  params: state.tokenPower.params,
+  list: state.tokenRole.list,
+  pagination: state.tokenRole.pagination,
+  spinning: state.tokenRole.spinning,
+  params: state.tokenRole.params,
 })
 
 const mapDispatch = dispatch => ({

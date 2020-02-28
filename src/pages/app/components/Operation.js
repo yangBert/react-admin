@@ -48,7 +48,7 @@ function Oper(props) {
         ghost
       >密钥</Button>
       &nbsp;&nbsp;
-      <Link
+      {/* <Link
         to={{
           pathname: '/app/chargeApp',
           state: {
@@ -63,7 +63,7 @@ function Oper(props) {
           size="small"
           ghost
         >配置</Button>&nbsp;&nbsp;
-      </Link>
+      </Link> */}
     </div >
   )
 }

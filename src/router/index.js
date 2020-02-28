@@ -11,7 +11,7 @@ const AppList = lazy(() => import('pages/app/AppList'));
 const AppAdd = lazy(() => import('pages/app/components/AppAdd'));
 const AppChargeApp = lazy(() => import('pages/app/components/chargeApp'));
 const AppAuthList = lazy(() => import('pages/app/components/AppAuthList'));
-const AppDetail = lazy(() => import('pages/app/components/AppDetail'));
+const AppDetail = lazy(() => import('pages/app/components/Detail'));
 const DictTypeList = lazy(() => import('pages/dictType/DictTypeList'));
 const DictDataList = lazy(() => import('pages/dictData'));
 const OrgList = lazy(() => import('pages/org/OrgList'));
@@ -37,6 +37,18 @@ const AccountAdd = lazy(() => import('pages/account/components/Add'));
 const AccountDetail = lazy(() => import('pages/account/components/Detail'));
 const ChargeConsumeList = lazy(() => import('pages/chargeConsume'));
 const ChargeRechargeList = lazy(() => import('pages/chargeRecharge'));
+const ApplyOrderList = lazy(() => import('pages/applyOrder'));
+const ApplyOrderDetail = lazy(() => import('pages/applyOrder/components/Detail'));
+const LinkList = lazy(() => import('pages/link'));
+const LinkAdd = lazy(() => import('pages/link/components/Add'));
+const QuestionList = lazy(() => import('pages/question'));
+const QuestionAdd = lazy(() => import('pages/question/components/Add'));
+const ClientUserList = lazy(() => import('pages/clientUser'));
+const ClientUserDetail = lazy(() => import('pages/clientUser/components/Detail'));
+const TokenPowerList = lazy(() => import('pages/tokenPower'));
+const TokenPowerAdd = lazy(() => import('pages/tokenPower/components/Add'));
+const TokenRoleList = lazy(() => import('pages/tokenRole'));
+const TokenRoleAdd = lazy(() => import('pages/tokenRole/components/Add'));
 
 const routes = [
   {
@@ -190,6 +202,54 @@ const routes = [
   {
     path: "/chargeRecharge/list",
     component: ChargeRechargeList
+  },
+  {
+    path: "/applyOrder/list",
+    component: ApplyOrderList
+  },
+  {
+    path: "/applyOrder/detail",
+    component: ApplyOrderDetail
+  },
+  {
+    path: "/link/list",
+    component: LinkList
+  },
+  {
+    path: "/link/add",
+    component: LinkAdd
+  },
+  {
+    path: "/question/list",
+    component: QuestionList
+  },
+  {
+    path: "/question/add",
+    component: QuestionAdd
+  },
+  {
+    path: "/clientUser/list",
+    component: ClientUserList
+  },
+  {
+    path: "/clientUser/detail",
+    component: ClientUserDetail
+  },
+  {
+    path: "/tokenPower/list",
+    component: TokenPowerList
+  },
+  {
+    path: "/tokenPower/add",
+    component: TokenPowerAdd
+  },
+  {
+    path: "/tokenRole/list",
+    component: TokenRoleList
+  },
+  {
+    path: "/tokenRole/add",
+    component: TokenRoleAdd
   },
 
 ];

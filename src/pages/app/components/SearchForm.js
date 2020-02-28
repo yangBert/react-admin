@@ -3,10 +3,11 @@ import { Button, Input, Icon, Select } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/SearchForm.module.css';
-
+import { Link, withRouter } from 'react-router-dom';
 const { Option } = Select;
 
 function SearchForm(props) {
+  console.log("props", props)
   const [appName, setAppName] = useState("")
   const [appStatus, setAppStatus] = useState("")
   const [auditStatus, setAuditStatus] = useState("")
@@ -76,13 +77,35 @@ function SearchForm(props) {
             </Select>
           </div>
         </div>
+      </div>
+      <div className={`${styles.form} clearfix`}>
         <div className="pullLeft">
+          <label className="pullLeft">&nbsp;</label>
           <Button onClick={() => search()} type="primary">
             <Icon type="search" />查询
-          </Button>&nbsp;&nbsp;
-          <Button onClick={() => reset()} type="primary" ghost>
+            </Button>&nbsp;&nbsp;
+            <Button onClick={() => reset()} type="primary" ghost>
             <Icon type="undo" />重置
-          </Button>
+            </Button>&nbsp;&nbsp;
+            {
+            props.history.location.pathname === '/app/appList' ?
+              <Link
+                to={{
+                  pathname: '/app/appList/add',
+                  state: {
+                    allLandingModes: props.allLandingModes,
+                    allSupportCAs: props.allSupportCAs,
+                    allAppTypes: props.allAppTypes,
+                    allAuthLevel: props.allAuthLevel,
+                  }
+                }}
+              >
+                <Button
+                  type="primary"
+                  className={styles.addButton}
+                ><Icon type="plus" />新增</Button>
+              </Link> : ""
+          }
         </div>
       </div>
     </div>
@@ -90,7 +113,11 @@ function SearchForm(props) {
 }
 
 const mapState = state => ({
-  params: state.admin.params
+  params: state.app.params,
+  allAuthLevel: state.app.form.allAuthLevel,
+  allLandingModes: state.app.form.allLandingModes,
+  allSupportCAs: state.app.form.allSupportCAs,
+  allAppTypes: state.app.form.allAppTypes,
 })
 
 const mapDispatch = dispatch => ({
@@ -105,4 +132,4 @@ const mapDispatch = dispatch => ({
   }
 })
 
-export default connect(mapState, mapDispatch)(SearchForm);
+export default withRouter(connect(mapState, mapDispatch)(SearchForm));

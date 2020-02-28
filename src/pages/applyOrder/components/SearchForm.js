@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Select,Icon } from 'antd';
+import { Button, Select, Icon } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/SearchForm.module.css';
@@ -12,7 +12,7 @@ const { Option } = Select;
 
 
 
-function SearchForm(props){
+function SearchForm(props) {
   const [instanceType, setInstanceType] = useState("")
   const [accountCode, setAccountCode] = useState("")
   const [status, setStatus] = useState("")
@@ -98,7 +98,7 @@ function SearchForm(props){
   function mapConfig(key) {
     let arr = [];
     Object.keys(config[key]).forEach(k => {
-      arr.push({k,v:config[key][k]})
+      arr.push({ k, v: config[key][k] })
     })
     return arr;
   }
@@ -114,9 +114,9 @@ function SearchForm(props){
               <Select value={status} style={{ width: "100%" }} onChange={value => setStatus(value)}>
                 <Option value="">请选择</Option>
                 {
-                  
+
                   mapConfig("status").map(item => {
-                   return <Option value={item.k} key={item.k}>{item.v}</Option>
+                    return <Option value={item.k} key={item.k}>{item.v}</Option>
                   })
 
                 }
@@ -129,23 +129,24 @@ function SearchForm(props){
               <Select value={instanceType} style={{ width: "100%" }} onChange={value => setInstanceType(value)}>
                 <Option value="">请选择</Option>
                 {
-                  
+
                   mapConfig("instanceType").map(item => {
-                   return <Option value={item.k} key={item.k}>{item.v}</Option>
+                    return <Option value={item.k} key={item.k}>{item.v}</Option>
                   })
 
                 }
               </Select>
             </div>
           </div>
-          <div className={`${styles.formLine} pullLeft`}>&nbsp;&nbsp;
+          <div className={`${styles.formLine} pullLeft`}>
+            <label className="pullLeft">&nbsp;</label>
             <Button onClick={() => search()} type="primary">
               <Icon type="search" />查询
             </Button>&nbsp;&nbsp;
             <Button onClick={() => reset()} type="primary" ghost>
               <Icon type="undo" />重置
             </Button>
-        </div>
+          </div>
         </div>
       </div>
     </div >

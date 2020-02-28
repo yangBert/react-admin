@@ -14,22 +14,22 @@ const getAuditStatus = s => {
 
 const columns = [
   { title: '应用ID', dataIndex: 'id', key: 'id', align: 'center' },
-  { title: '应用名称', dataIndex: 'appName', key: 'appName' },
-  { title: '应用描述', dataIndex: 'describes', key: 'describes' },
+  { title: '应用名称', dataIndex: 'appName', key: 'appName', align: 'center' },
+  // { title: '应用描述', dataIndex: 'describes', key: 'describes' },
   {
-    title: '创建时间', dataIndex: 'createTime', key: 'createTime',
+    title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center',
     render: createTime => (
       <span>{$$.getHours(createTime)}</span>
     )
   },
   {
-    title: '审核状态', dataIndex: 'auditStatus', key: 'auditStatus',
+    title: '审核状态', dataIndex: 'auditStatus', key: 'auditStatus', align: 'center',
     render: s => (
       <span>{getAuditStatus(s)}</span>
     ),
   },
   {
-    title: '应用状态', dataIndex: 'appStatus', key: 'appStatus',
+    title: '应用状态', dataIndex: 'appStatus', key: 'appStatus', align: 'center',
     render: text => <span>
       {
         text === 1 ?
