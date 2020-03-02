@@ -28,6 +28,7 @@ import questionReducer from 'pages/question/store/reducer';
 import clientUserReducer from 'pages/clientUser/store/reducer';
 import tokenPowerReducer from 'pages/tokenPower/store/reducer';
 import tokenRoleReducer from 'pages/tokenRole/store/reducer';
+import chargeConfigReducer from 'pages/chargeConfig/store/reducer';
 
 
 export default {
@@ -61,4 +62,5 @@ export default {
   clientUser: clientUserReducer,
   tokenPower: tokenPowerReducer,
   tokenRole: tokenRoleReducer,
+  chargeConfig: chargeConfigReducer,
 };

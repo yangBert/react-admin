@@ -51,6 +51,8 @@ const TokenRoleList = lazy(() => import('pages/tokenRole'));
 const TokenRoleAdd = lazy(() => import('pages/tokenRole/components/Add'));
 const TokenConfigRole = lazy(() => import('pages/tokenRole/components/ConfigRole'));
 const VerifyServerLogList = lazy(() => import('pages/verifyServer'));
+const ChargeConfigList = lazy(() => import('pages/chargeConfig'));
+const ChargeConfigAdd = lazy(() => import('pages/chargeConfig/components/Add'));
 
 const routes = [
   {
@@ -260,6 +262,14 @@ const routes = [
   {
     path: "/verifyServer/logList",
     component: VerifyServerLogList
+  },
+  {
+    path: "/chargeConfig/list",
+    component: ChargeConfigList
+  },
+  {
+    path: "/chargeConfig/add",
+    component: ChargeConfigAdd
   },
 
 ];

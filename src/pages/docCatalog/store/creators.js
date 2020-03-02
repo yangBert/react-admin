@@ -58,8 +58,8 @@ const querylistAction = req => {
         const { success, message, data } = res.data && res.data
         if (success) {
           console.log(res)
-          const action = initListAction(data.results, createPagination(data))
-          dispatch(action)
+          // const action = initListAction(data, createPagination(data))
+          // dispatch(action)
         } else {
           notification('error', message)
         }

@@ -43,10 +43,12 @@ export const plateSettingAppDetail = "/api/v1/uamManager/plateSetting/appDetail"
 export const plateSettingAppAudit = "/api/v1/uamManager/plateSetting/appAudit";
 export const plateSettingUpdateAppWithOutFile = "/api/v1/uamManager/plateSetting/UpdateAppWithOutFile";
 
-//应用配置
+//计费优惠策略管理
 export const chargeAppDetail = "/api/v1/manager/chargeApp/detail";
 export const chargeAppAdd = "/api/v1/manager/chargeApp/add";
-
+export const chargeAppQueryByPage = "/api/v1/manager/chargeApp/queryByPage";
+export const chargeAppDelete = "/api/v1/manager/chargeApp/delete";
+export const chargeAppUpdate = "/api/v1/manager/chargeApp/update";
 
 //字典管理
 export const plateSettingSelectDictionaryType = "/api/v1/uamManager/plateSetting/SelectDictionaryType";

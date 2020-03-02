@@ -83,6 +83,7 @@ const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
     request.json(requestURL.chargeRechargeRecordByPage, req.data, res => {
+      console.log("res", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
