@@ -5,56 +5,73 @@ import * as creators from '../store/creators';
 import styles from '../css/add.module.css';
 import $$ from 'static/js/base';
 import * as config from '../config';
+import { Link } from 'react-router-dom';
 
 const { Search } = Input;
 
 class Add extends Component {
 
   componentDidMount() {
-    if (this.props.location.state && this.props.location.state.editRecord) {
-      const { title, url, imgUrl } = this.props.location.state.editRecord
-      this.props.onChangeEditTitle(title)
-      this.props.onChangeEditURL(url)
-      this.props.onChangeEditImageURL(imgUrl)
+    if (this.props.location.state.record) {
+      console.log("props===", this.props.location.state.record)
+      // const { title, url, imgUrl } = this.props.location.state.record
+      // this.props.onChangeEditTitle(title)
+      // this.props.onChangeEditURL(url)
+      // this.props.onChangeEditImageURL(imgUrl)
+    }
+    if (this.props.location.state.preferential) {
+      const { strategyCode, strategyName } = this.props.location.state.preferential
+      this.props.changeConfigStrategyName(strategyName)
+      this.props.changeConfigStrategyCode(strategyCode)
+    }
+    if (this.props.location.state.billing) {
+      const { billingCode, billingName } = this.props.location.state.billing
+      this.props.changeConfigBillingName(billingName)
+      this.props.changeConfigBillingCode(billingCode)
+    }
+    if (this.props.location.state.product) {
+      const { productCode, productName } = this.props.location.state.product
+      this.props.changeConfigProductName(productName)
+      this.props.changeConfigProductCode(productCode)
     }
   }
 
   save() {
-    const { editTitle, editURL, editImageURL } = this.props;
-    if ($$.trim(editTitle) === "") {
-      message.error('链接标题');
+    const { strategyCode, billingCode, productCode } = this.props;
+    if (productCode === "") {
+      message.error('请选择产品');
       return
-    } else if ($$.trim(editURL) === "") {
-      message.error('链接URL');
+    } else if (billingCode === "") {
+      message.error('请选择计费策略');
       return
-    } else if ($$.trim(editImageURL) === "") {
-      message.error('图片URL');
+    } else if (strategyCode === "") {
+      message.error('请选择优惠策略');
       return
     }
-    const userNo = $$.localStorage.get("adminId")
+    const appCode = this.props.location.state.appCode
     const req = {
       props: this.props,
       data: {
-        title: $$.trim(editTitle),
-        url: $$.trim(editURL),
-        imgUrl: editImageURL,
-        userNo
+        appCode,
+        productCode,
+        ruleCode: billingCode,
+        preferentialCode: strategyCode,
       }
     }
 
-    const editId = this.props.location.state && this.props.location.state.editRecord.id
-    if (editId) {
-      req.data.id = editId
-    }
+    //const editId = this.props.location.state && this.props.location.state.record.id
+    // if (editId) {
+    //   req.data.id = editId
+    // }
     this.props.save(req)
   }
 
-  mapStatus() {
-    let statusArr = [];
-    Object.keys(config.status).forEach(k => {
-      statusArr.push({ k, v: config.status[k] })
-    })
-    return statusArr;
+  selectList(pathname) {
+    const o = {
+      pathname,
+      state: { appCode: this.props.location.state.appCode }
+    }
+    this.props.history.push(o)
   }
 
   render() {
@@ -62,34 +79,41 @@ class Add extends Component {
       <div className={styles.pageContet}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <div className="pageContentColor">
-            <Card title="链接信息" bordered={false}>
+            <Card title="配置" bordered={false}>
               <Form className={`${styles.form} clearfix`}>
                 <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">产品：</label>
                   <div className={`${styles.inline} pullLeft`}>
-                    <Search placeholder="请选择产品" onSearch={value => console.log(value)} enterButton="选择产品" />
-                  </div>
-                </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">链接URL：</label>
-                  <div className={`${styles.inline} pullLeft`}>
-                    <Input
-                      className={styles.text}
-                      placeholder="链接URL"
-                      onChange={e => this.props.onChangeEditURL(e.target.value)}
-                      value={this.props.editURL}
+                    <Search
+                      placeholder="请选择产品"
+                      onSearch={() => this.selectList("/chargeConfig/product")}
+                      onChange={e => null}
+                      enterButton="选择"
+                      value={this.props.productName}
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">图片URL：</label>
+                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">计费策略：</label>
                   <div className={`${styles.inline} pullLeft`}>
-                    <Input
-                      className={styles.text}
-                      placeholder="图片URL"
-                      onChange={e => this.props.onChangeEditImageURL(e.target.value)}
-                      value={this.props.editImageURL}
+                    <Search
+                      placeholder="请选择计费策略"
+                      onSearch={() => this.selectList("/chargeConfig/billing")}
+                      onChange={e => null}
+                      enterButton="选择"
+                      value={this.props.billingName}
                     />
                   </div>
                 </div>
-
+                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">优惠策略：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Search
+                      placeholder="请选择优惠策略"
+                      onSearch={() => this.selectList("/chargeConfig/creferential")}
+                      onChange={e => null}
+                      enterButton="选择"
+                      value={this.props.strategyName}
+                    />
+                  </div>
+                </div>
               </Form>
             </Card>
           </div >
@@ -101,13 +125,21 @@ class Add extends Component {
               className={styles.formbtn}
               onClick={() => this.save()}
               loading={this.props.saveLoading}
-            >保存</Button>
-            <Button
-              size="large"
-              type="primary"
-              className={styles.formbtn}
-              onClick={() => this.props.history.goBack()}
-            >返回列表</Button>
+            >保存
+            </Button>
+            <Link
+              to={{
+                pathname: '/chargeConfig/list',
+                state: {
+                  appCode: this.props.location.state.appCode,
+                }
+              }}>
+              <Button
+                size="large"
+                type="primary"
+                className={styles.formbtn}
+              >返回列表</Button>
+            </Link>
           </div>
         </Spin>
       </div>
@@ -116,32 +148,46 @@ class Add extends Component {
 }
 
 const mapState = state => ({
-  spinning: state.link.spinning,
-  editTitle: state.link.editTitle,
-  editURL: state.link.editURL,
-  editImageURL: state.link.editImageURL,
-  status: state.link.editStatus,
-  saveLoading: state.link.saveLoading,
+  spinning: state.chargeConfig.spinning,
+  strategyCode: state.chargeConfig.strategyCode,
+  strategyName: state.chargeConfig.strategyName,
+  billingName: state.chargeConfig.billingName,
+  billingCode: state.chargeConfig.billingCode,
+  productName: state.chargeConfig.productName,
+  productCode: state.chargeConfig.productCode,
+  status: state.chargeConfig.editStatus,
+  saveLoading: state.chargeConfig.saveLoading,
 })
 
 const mapDispatch = dispatch => ({
-  // save: req => {
-  //   const action = creators.saveAction(req);
-  //   dispatch(action);
-  // },
-  // onChangeEditTitle: value => {
-  //   const action = creators.onChangeEditTitleAction(value);
-  //   dispatch(action);
-  // },
-  // onChangeEditURL: value => {
-  //   const action = creators.onChangeEditURLAction(value);
-  //   dispatch(action);
-  // },
-  // onChangeEditImageURL: value => {
-  //   const action = creators.onChangeEditImageURLAction(value);
-  //   dispatch(action);
-  // },
-
+  save: req => {
+    const action = creators.saveAction(req);
+    dispatch(action);
+  },
+  changeConfigBillingCode: value => {
+    const action = creators.changeConfigBillingCodeAction(value);
+    dispatch(action);
+  },
+  changeConfigBillingName: value => {
+    const action = creators.changeConfigBillingNameAction(value);
+    dispatch(action);
+  },
+  changeConfigStrategyCode: value => {
+    const action = creators.changeConfigStrategyCodeAction(value);
+    dispatch(action);
+  },
+  changeConfigStrategyName: value => {
+    const action = creators.changeConfigStrategyNameAction(value);
+    dispatch(action);
+  },
+  changeConfigProductName: value => {
+    const action = creators.changeConfigProductNameAction(value);
+    dispatch(action);
+  },
+  changeConfigProductCode: value => {
+    const action = creators.changeConfigProductCodeAction(value);
+    dispatch(action);
+  },
 })
 
 export default connect(mapState, mapDispatch)(Add);

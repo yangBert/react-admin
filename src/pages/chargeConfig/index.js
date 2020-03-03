@@ -57,6 +57,8 @@ class List extends Component {
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
+          <h2 style={{ fontSize: "17px" }}>收费配置</h2>
+          <br />
           <SearchForm />
           <Table
             bordered

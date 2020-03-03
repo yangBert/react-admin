@@ -53,6 +53,9 @@ const TokenConfigRole = lazy(() => import('pages/tokenRole/components/ConfigRole
 const VerifyServerLogList = lazy(() => import('pages/verifyServer'));
 const ChargeConfigList = lazy(() => import('pages/chargeConfig'));
 const ChargeConfigAdd = lazy(() => import('pages/chargeConfig/components/Add'));
+const ChargeConfigPreferential = lazy(() => import('pages/chargeConfig/components/Preferential'));
+const ChargeConfigBilling = lazy(() => import('pages/chargeConfig/components/Billing'));
+const ChargeConfigProduct = lazy(() => import('pages/chargeConfig/components/Product'));
 
 const routes = [
   {
@@ -271,6 +274,17 @@ const routes = [
     path: "/chargeConfig/add",
     component: ChargeConfigAdd
   },
-
+  {
+    path: "/chargeConfig/creferential",
+    component: ChargeConfigPreferential
+  },
+  {
+    path: "/chargeConfig/billing",
+    component: ChargeConfigBilling
+  },
+  {
+    path: "/chargeConfig/product",
+    component: ChargeConfigProduct
+  },
 ];
 export default routes;

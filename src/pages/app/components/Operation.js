@@ -53,7 +53,6 @@ function Oper(props) {
           pathname: '/chargeConfig/list',
           state: {
             appCode: props.record.appCode,
-            allProductType: props.allProductType
           }
         }}>
         <Button

@@ -5,11 +5,12 @@ import * as creators from '../store/creators';
 import styles from '../css/SearchForm.module.css';
 import moment from 'moment';
 import * as config from '../config';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 
 function SearchForm(props) {
+  console.log("props", props)
   const [idCard, setIdCard] = useState("")
   const [userRealname, setUserRealname] = useState("")
   const [status, setStatus] = useState("")
@@ -62,15 +63,6 @@ function SearchForm(props) {
     props.querylist({ props, data });
   }
 
-
-  function mapStatus() {
-    let statusArr = [];
-    Object.keys(config.status).forEach(k => {
-      statusArr.push({ k, v: config.status[k] })
-    })
-    return statusArr;
-  }
-
   return (
     <div>
       <div className={`${styles.form}`}>
@@ -96,7 +88,7 @@ function SearchForm(props) {
             <Link
             to={{
               pathname: "/chargeConfig/add",
-              state: { record: props.record }
+              state: { appCode: props.location.state.appCode }
             }}
           >
             <Button onClick={() => reset()} type="primary" ghost>
@@ -126,4 +118,4 @@ const mapDispatch = dispatch => ({
   }
 })
 
-export default connect(mapState, mapDispatch)(SearchForm);
+export default withRouter(connect(mapState, mapDispatch)(SearchForm));

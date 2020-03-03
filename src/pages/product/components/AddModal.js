@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Input, Form, message, TreeSelect } from 'antd';
+import { Modal, Input, Form, message, TreeSelect, Select } from 'antd';
 import styles from '../css/add.module.css';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import { withRouter } from 'react-router-dom';
 import $$ from 'static/js/base';
+import * as config from '../config';
 
 const { TextArea } = Input;
+const { Option } = Select;
 
 function AddModal(props) {
   const [addModalvisible, setAddModalvisible] = useState(false)
   const [productTypeCode, setProductTypeCode] = useState("")
   const [productName, setProductName] = useState("")
   const [productDesc, setProductDesc] = useState("")
+  const [status, setStatus] = useState("")
 
   const [refProductName, setRefProductName] = useState(null)
   const [refProductDesc, setRefProductDesc] = useState(null)
@@ -24,18 +27,21 @@ function AddModal(props) {
   const $productTypeCode = $operationType === "edit" ? props.record.productTypeCode : ""
   const $productName = $operationType === "edit" ? props.record.productName : ""
   const $productDesc = $operationType === "edit" ? props.record.productDesc : ""
+  const $status = $operationType === "edit" ? props.record.status : ""
 
   useEffect(() => {
     setAddModalvisible($addModalvisible)
     setProductTypeCode($productTypeCode)
     setProductName($productName)
     setProductDesc($productDesc)
+    setStatus($status)
   }, [
     $addModalvisible,
     $operationType,
     $productTypeCode,
     $productName,
-    $productDesc
+    $productDesc,
+    $status
   ]);
 
 
@@ -60,6 +66,7 @@ function AddModal(props) {
     }
     if ($operationType === "edit") {
       data.productCode = props.record.productCode
+      data.status = status
     }
     const type = $operationType === "edit"
     props.addDictData({ props, data, type })
@@ -75,6 +82,14 @@ function AddModal(props) {
       }
     }
     return arr;
+  }
+
+  function mapStatus() {
+    let statusArr = [];
+    Object.keys(config.status).forEach(k => {
+      statusArr.push({ k, v: config.status[k] })
+    })
+    return statusArr;
   }
 
   return (
@@ -104,7 +119,8 @@ function AddModal(props) {
               />
             </div>
           </div>
-          <div className={`${styles.formLine} clearfix`}><label className="pullLeft">产品名称：</label>
+          <div className={`${styles.formLine} clearfix`}>
+            <label className="pullLeft">产品名称：</label>
             <div className={`${styles.inline} pullLeft`}>
               <Input
                 allowClear
@@ -113,6 +129,23 @@ function AddModal(props) {
                 value={productName} />
             </div>
           </div>
+          {
+            props.operationType === 'edit' ?
+
+              <div className={`${styles.formLine} clearfix`}>
+                <label className="pullLeft">产品状态：</label>
+                <div className={`${styles.inline} pullLeft`}>
+                  <Select value={status} style={{ width: "100%" }} onChange={value => setStatus(value)}>
+                    <Option value="">请选择</Option>
+                    {
+                      mapStatus().map(item => {
+                        return <Option value={item.k} key={item.k}>{item.v}</Option>
+                      })
+                    }
+                  </Select>
+                </div>
+              </div> : ""
+          }
           <div className={`${styles.formLine} clearfix`}><label className="pullLeft">产品描述：</label>
             <div className={`${styles.inline} pullLeft`}>
               <TextArea rows={4}

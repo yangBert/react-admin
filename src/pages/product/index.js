@@ -8,7 +8,7 @@ import Oper from './components/Operation';
 import AddModal from './components/AddModal';
 import SearchForm from './components/SearchForm';
 import $$ from 'static/js/base';
-import * as enumerate from 'static/js/enumerate';
+import * as config from './config';
 
 const columns = [
   { title: '产品编码', dataIndex: 'productCode', key: 'productCode', align: 'center' },
@@ -22,7 +22,7 @@ const columns = [
   },
   {
     title: '产品状态', dataIndex: 'status', key: 'status', align: 'center',
-    render: status => enumerate.baseState.get(status)
+    render: status => <span>{config.status[status] ? config.status[status] : "--"}</span>,
   },
   {
     title: '操作',
