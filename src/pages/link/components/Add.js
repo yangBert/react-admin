@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/add.module.css';
 import $$ from 'static/js/base';
-import * as config from '../config';
 
+let imageFile = null
 class Add extends Component {
+  state = {
+    loading: false,
+  };
 
   componentDidMount() {
     if (this.props.location.state && this.props.location.state.editRecord) {
@@ -14,45 +17,48 @@ class Add extends Component {
       this.props.onChangeEditTitle(title)
       this.props.onChangeEditURL(url)
       this.props.onChangeEditImageURL(imgUrl)
+      this.props.changeShowImage(true)
     }
   }
 
   save() {
-    const { editTitle, editURL,editImageURL } = this.props;
+    const { editTitle, editURL } = this.props;
     if ($$.trim(editTitle) === "") {
-      message.error('链接标题');
+      message.error('请上填写链接标题');
       return
     } else if ($$.trim(editURL) === "") {
-      message.error('链接URL');
+      message.error('请上填写链接URL');
       return
-    }else if ($$.trim(editImageURL) === "") {
-      message.error('图片URL');
+    } else if (!imageFile) {
+      message.error('请上传图片');
       return
     }
     const userNo = $$.localStorage.get("adminId")
-    const req = {
-      props: this.props,
-      data: {
-        title: $$.trim(editTitle),
-        url: $$.trim(editURL),
-        imgUrl:editImageURL,
-        userNo
-      }
-    }
+    var formDatas = new FormData();
+    formDatas.append("file", imageFile);
+    formDatas.append("userNo", userNo);
+    formDatas.append("title", editTitle);
+    formDatas.append("url", editURL);
 
     const editId = this.props.location.state && this.props.location.state.editRecord.id
     if (editId) {
-      req.data.id = editId
+      formDatas.append("id", editId);
     }
-    this.props.save(req)
+    this.props.save({ props: this.props, data: formDatas })
   }
 
-  mapStatus() {
-    let statusArr = [];
-    Object.keys(config.status).forEach(k => {
-      statusArr.push({k,v:config.status[k]})
-    })
-    return statusArr;
+  clickFile() {
+    this.refs.myFile.click();
+  }
+
+  fileChange(ele) {
+    imageFile = ele.files[0]
+    var reader = new FileReader();
+    reader.readAsDataURL(imageFile);
+    reader.onload = () => {
+      this.refs.img.src = reader.result
+      this.props.changeShowImage(true)
+    }
   }
 
   render() {
@@ -82,14 +88,25 @@ class Add extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">图片URL：</label>
+                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">上传图片：</label>
                   <div className={`${styles.inline} pullLeft`}>
-                    <Input
-                      className={styles.text}
-                      placeholder="图片URL"
-                      onChange={e => this.props.onChangeEditImageURL(e.target.value)}
-                      value={this.props.editImageURL}
-                    />
+
+                    <div className={styles.uploadImg}>
+                      <img
+                        src={this.props.editImageURL}
+                        ref="img"
+                        className={this.props.showImage ? styles.showimg : styles.hiddenimg}
+                        alt="上传"
+                      />
+                    </div>
+                    <Button
+                      type="primary"
+                      className={styles.upload}
+                      onClick={() => this.clickFile()}
+                    >
+                      选择文件
+                    </Button>
+                    <input onChange={e => this.fileChange(e.target)} type="file" style={{ display: "none" }} ref="myFile" />
                   </div>
                 </div>
 
@@ -113,7 +130,7 @@ class Add extends Component {
             >返回列表</Button>
           </div>
         </Spin>
-      </div>
+      </div >
     )
   }
 }
@@ -122,6 +139,7 @@ const mapState = state => ({
   spinning: state.link.spinning,
   editTitle: state.link.editTitle,
   editURL: state.link.editURL,
+  showImage: state.link.showImage,
   editImageURL: state.link.editImageURL,
   status: state.link.editStatus,
   saveLoading: state.link.saveLoading,
@@ -144,7 +162,10 @@ const mapDispatch = dispatch => ({
     const action = creators.onChangeEditImageURLAction(value);
     dispatch(action);
   },
-
+  changeShowImage: value => {
+    const action = creators.changeShowImageAction(value);
+    dispatch(action);
+  },
 })
 
 export default connect(mapState, mapDispatch)(Add);

@@ -93,7 +93,17 @@ function SearchForm(props) {
           >
             <Button onClick={() => reset()} type="primary" ghost>
               <Icon type="plus" />新增
-            </Button>
+                </Button>
+          </Link>
+          &nbsp;&nbsp;
+          <Link
+            to={{
+              pathname: "/app/appList",
+            }}
+          >
+            <Button onClick={() => reset()} type="primary" ghost>
+              <Icon type="rollback" />返回
+                </Button>
           </Link>
         </div>
       </div >

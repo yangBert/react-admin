@@ -82,10 +82,8 @@ const saveAction = req => {
 const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("req", requestURL.webManagerQueryApplyPages, req.data)
     request.json(requestURL.webManagerQueryApplyPages, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("res", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {

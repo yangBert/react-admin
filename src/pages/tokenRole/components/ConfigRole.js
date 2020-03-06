@@ -30,7 +30,7 @@ class ConfigRole extends Component {
     this.props.querylist({ props: this.props, data });
   }
 
-  onSelectChange = selectedRowKeys => {
+  onSelectChange = (selectedRowKeys, a) => {
     this.props.changeSelectedRowKeys(selectedRowKeys);
   };
 

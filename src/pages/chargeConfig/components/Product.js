@@ -23,17 +23,25 @@ class Product extends Component {
   }
   componentDidMount() {
     this.sendFn(1, 10)
+    if (this.props.location.state.params) {
+      this.props.changeProductSelectedKeys([this.props.location.state.params])
+    }
+  }
+
+  collectData(productCode, productName) {
+    this.props.changeProductSelectedKeys([productCode])
+    this.setState({
+      product: {
+        productCode,
+        productName,
+      }
+    })
   }
 
   rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       const { productCode, productName } = selectedRows[0]
-      this.setState({
-        product: {
-          productCode,
-          productName,
-        }
-      })
+      this.collectData(productCode, productName)
     },
   }
 
@@ -56,6 +64,7 @@ class Product extends Component {
       onChange: this.paginationChange,
       onShowSizeChange: this.paginationShowSizeChange,
     }
+    this.rowSelection.selectedRowKeys = this.props.productSelectedKeys
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
@@ -89,9 +98,18 @@ class Product extends Component {
             }}
             columns={columns}
             dataSource={productList}
-            rowKey={(record, index) => index}
+            rowKey={record => record.productCode}
             pagination={pagination}
             size="small"
+            onRow={record => {
+              return {
+                onClick: () => {
+                  const { productCode, productName } = record
+                  this.collectData(productCode, productName)
+                  this.props.changeProductSelectedKeys([productCode])
+                }
+              };
+            }}
           />
         </Spin>
       </div>
@@ -103,11 +121,16 @@ const mapState = state => ({
   productList: state.chargeConfig.productList,
   productPagination: state.chargeConfig.productPagination,
   spinning: state.chargeConfig.spinning,
+  productSelectedKeys: state.chargeConfig.productSelectedKeys,
 })
 
 const mapDispatch = dispatch => ({
   queryProductList: req => {
     const action = creators.queryProductListAction(req);
+    dispatch(action);
+  },
+  changeProductSelectedKeys: req => {
+    const action = creators.changeProductSelectedKeysAction(req);
     dispatch(action);
   },
 })

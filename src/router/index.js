@@ -51,11 +51,16 @@ const TokenRoleList = lazy(() => import('pages/tokenRole'));
 const TokenRoleAdd = lazy(() => import('pages/tokenRole/components/Add'));
 const TokenConfigRole = lazy(() => import('pages/tokenRole/components/ConfigRole'));
 const VerifyServerLogList = lazy(() => import('pages/verifyServer'));
+const VerifyServerDetail = lazy(() => import('pages/verifyServer/components/Detail'));
 const ChargeConfigList = lazy(() => import('pages/chargeConfig'));
 const ChargeConfigAdd = lazy(() => import('pages/chargeConfig/components/Add'));
 const ChargeConfigPreferential = lazy(() => import('pages/chargeConfig/components/Preferential'));
 const ChargeConfigBilling = lazy(() => import('pages/chargeConfig/components/Billing'));
 const ChargeConfigProduct = lazy(() => import('pages/chargeConfig/components/Product'));
+const AdminLogsList = lazy(() => import('pages/adminLogs'));
+const adminLogsDetail = lazy(() => import('pages/adminLogs/components/Detail'));
+const SafeStrategyList = lazy(() => import('pages/safeStrategy'));
+const OApiTypesList = lazy(() => import('pages/oApiTypes'));
 
 const routes = [
   {
@@ -267,6 +272,10 @@ const routes = [
     component: VerifyServerLogList
   },
   {
+    path: "/verifyServer/detail",
+    component: VerifyServerDetail
+  },
+  {
     path: "/chargeConfig/list",
     component: ChargeConfigList
   },
@@ -286,5 +295,22 @@ const routes = [
     path: "/chargeConfig/product",
     component: ChargeConfigProduct
   },
+  {
+    path: "/adminLogs/list",
+    component: AdminLogsList
+  },
+  {
+    path: "/adminLogs/detail",
+    component: adminLogsDetail
+  },
+  {
+    path: "/safeStrategy/list",
+    component: SafeStrategyList
+  },
+  {
+    path: "/oApiTypes/list",
+    component: OApiTypesList
+  },
+
 ];
 export default routes;

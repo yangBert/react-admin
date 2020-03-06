@@ -20,6 +20,10 @@ const defaultState = {
   billingCode: "",
   productName: "",
   productCode: "",
+  record: null,
+  productSelectedKeys: [],
+  billingSelectedKeys: [],
+  preferentialSelectedKeys: []
 };
 
 export default (state = defaultState, action) => {
@@ -72,7 +76,18 @@ export default (state = defaultState, action) => {
     case types.CHANGE_CONFIG_PRODUCT_CODE:
       newState.productCode = action.productCode
       break;
-
+    case types.CHANGE_PRODUCT_SELECTED_KEYS:
+      newState.productSelectedKeys = action.productSelectedKeys
+      break;
+    case types.CHANGE_BILLING_SELECTED_KEYS:
+      newState.billingSelectedKeys = action.billingSelectedKeys
+      break;
+    case types.CHANGE_PREFERENTIAL_SELECTED_KEYS:
+      newState.preferentialSelectedKeys = action.preferentialSelectedKeys
+      break;
+    case types.CHANGE_RECORD:
+      newState.record = action.record
+      break;
     default:
       break;
   }

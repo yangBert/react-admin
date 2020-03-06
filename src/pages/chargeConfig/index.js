@@ -9,9 +9,9 @@ import $$ from 'static/js/base';
 
 const columns = [
   { title: '应用编码', dataIndex: 'appCode', key: 'appCode', align: 'center' },
-  { title: '产品编码', dataIndex: 'productCode', key: 'productCode', align: 'center' },
-  { title: '计费策略', dataIndex: 'ruleCode', key: 'ruleCode', align: 'center' },
-  { title: '优惠策略', dataIndex: 'preferentialCode', key: 'preferentialCode', align: 'center' },
+  { title: '产品名称', dataIndex: 'productName', key: 'productName', align: 'center' },
+  { title: '计费策略', dataIndex: 'ruleName', key: 'ruleName', align: 'center' },
+  { title: '优惠策略', dataIndex: 'perfertialName', key: 'perfertialName', align: 'center' },
   {
     title: '创建时间', dataIndex: 'createAt', key: 'createAt', align: 'center',
     render: createTime => (

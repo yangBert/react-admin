@@ -57,9 +57,9 @@ const querylistAction = req => {
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
-          console.log(res)
-          // const action = initListAction(data, createPagination(data))
-          // dispatch(action)
+          console.log("目录列表", res)
+          const action = initListAction(data.results, createPagination(data))
+          dispatch(action)
         } else {
           notification('error', message)
         }

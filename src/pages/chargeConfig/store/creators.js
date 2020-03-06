@@ -59,6 +59,26 @@ const changeConfigProductCodeAction = (productCode) => ({
   productCode
 })
 
+const changeProductSelectedKeysAction = (productSelectedKeys) => ({
+  type: types.CHANGE_PRODUCT_SELECTED_KEYS,
+  productSelectedKeys
+})
+
+const changeBillingSelectedKeysAction = (billingSelectedKeys) => ({
+  type: types.CHANGE_BILLING_SELECTED_KEYS,
+  billingSelectedKeys
+})
+
+const changePreferentialSelectedKeysAction = (preferentialSelectedKeys) => ({
+  type: types.CHANGE_PREFERENTIAL_SELECTED_KEYS,
+  preferentialSelectedKeys
+})
+
+const changeConfigRecordAction = (record) => ({
+  type: types.CHANGE_RECORD,
+  record
+})
+
 
 //查询
 const queryListAction = req => {
@@ -66,6 +86,7 @@ const queryListAction = req => {
     dispatch(spinningAction(true))
     request.json(requestURL.chargeAppQueryByPage, req.data, res => {
       dispatch(spinningAction(false))
+      console.log("resres", res.data)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
@@ -137,7 +158,6 @@ const queryBillingListAction = req => {
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data
-        console.log("resres", res.data)
         if (success) {
           const action = initListBillingListAction(data.results, createPagination(data))
           dispatch(action)
@@ -175,7 +195,8 @@ const queryProductListAction = req => {
 const saveAction = req => {
   return (dispatch, getState) => {
     dispatch(spinningAction(true))
-    const url = requestURL.chargeAppAdd
+    const url = req.data.id ? requestURL.chargePreferentialUpdate : requestURL.chargeAppAdd
+    console.log("url", url, req)
     request.json(url, req.data, res => {
       dispatch(spinningAction(false))
       console.log("res", res)
@@ -228,5 +249,9 @@ export {
   changeConfigBillingCodeAction,
   changeConfigProductNameAction,
   changeConfigProductCodeAction,
+  changeProductSelectedKeysAction,
+  changeBillingSelectedKeysAction,
+  changePreferentialSelectedKeysAction,
+  changeConfigRecordAction,
   saveAction,
 }

@@ -56,6 +56,16 @@ function getJson(requestURL, requestData, callback) {
   })
 }
 
+function get(requestURL, requestData, callback) {
+  axios.get(requestURL, {
+    params: requestData
+  }).then(function (res) {
+    callback(res);
+  }).catch(function (error) {
+    callback(error);
+  });
+}
+
 function jsonArr(requestURL, requestData, callback) {
   let config = {
     url: requestURL,
@@ -92,9 +102,6 @@ function formData(requestURL, requestData, callback) {
       'Content-Type': 'multipart/form-data',
       'AuthToken': $$.token.get()
     },
-    // transformRequest: [function (data) {
-    //   return qs.stringify(data);
-    // }],
   }).then(res => {
     if (res.data && !res.data.success && res.data.errCode === '400') {
       authRedirect(res.data.message)
@@ -102,7 +109,6 @@ function formData(requestURL, requestData, callback) {
       callback(res)
     }
   }).catch((err) => {
-    console.log(err);
     callback(errorMsg);
   })
 }
@@ -119,9 +125,8 @@ function urlToBlob(requestURL, callback) {
       callback(res)
     }
   }).catch((err) => {
-    console.log(err);
     callback(errorMsg);
   })
 }
 
-export { json, jsonArr, formData, urlToBlob, getJson }
+export { json, jsonArr, formData, urlToBlob, getJson, get }

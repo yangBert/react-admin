@@ -103,6 +103,26 @@ const deleteAction = req => {
   }
 }
 
+const updatePowerAction = req => {
+  return (dispatch) => {
+    dispatch(spinningAction(true))
+    const url = requestURL.uamBaseTokenPowerUpdateRoleCacheSet
+    request.json(url, req.data, res => {
+      dispatch(spinningAction(false))
+      if (res.data) {
+        const { success, message } = res.data
+        if (success) {
+          notification('success', message)
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
 //查询携带参数
 const createChangeParamsAction = params => ({
   type: types.CHANGE_SEARCH_PARAMS,
@@ -117,4 +137,5 @@ export {
   deleteAction,
   onChangeSaveLoadingAction,
   createChangeParamsAction,
+  updatePowerAction
 }

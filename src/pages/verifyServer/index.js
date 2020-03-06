@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
-import { Table, Spin, Button, Icon } from 'antd';
+import { Table, Spin } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from './store/creators';
 import styles from './css/UserList.module.css';
-import { Link } from 'react-router-dom';
 import $$ from 'static/js/base';
+import Oper from './components/Operation';
+import SearchForm from './components/SearchForm'
 
 const columns = [
-  { title: '标题', dataIndex: 'title', key: 'title' },
-  { title: '创建人', dataIndex: 'createdBy', key: 'createdBy', align: 'center' },
+  { title: '操作人', dataIndex: 'user', key: 'user' },
+  { title: '操作描述', dataIndex: 'methodName', key: 'methodName' },
   {
-    title: '创建时间', dataIndex: 'createdAt', key: 'createdAt', align: 'center',
-    render: createdAt => (
-      <span>{createdAt && $$.getHours(createdAt)}</span>
+    title: '创建时间', dataIndex: 'methodTime', key: 'methodTime',
+    render: methodTime => (
+      <span>{methodTime && $$.getHours(methodTime)}</span>
     )
   },
-
+  {
+    title: '', dataIndex: 'operation', key: 'operation',
+    render: (text, record) => <Oper text={text} record={record} />,
+  },
 ];
 
 class List extends Component {
@@ -48,14 +52,7 @@ class List extends Component {
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
-          <div className={styles.buttonForm}>
-            <Link to="/question/add">
-              <Button
-                type="primary"
-                className={styles.addButton}
-              ><Icon type="plus" />新增</Button>
-            </Link>
-          </div>
+          <SearchForm />
           <Table
             bordered
             columns={columns}
@@ -72,10 +69,10 @@ class List extends Component {
 }
 
 const mapState = state => ({
-  list: state.question.list,
-  pagination: state.question.pagination,
-  spinning: state.question.spinning,
-  params: state.question.params,
+  list: state.verifyServer.list,
+  pagination: state.verifyServer.pagination,
+  spinning: state.verifyServer.spinning,
+  params: state.verifyServer.params,
 })
 
 const mapDispatch = dispatch => ({

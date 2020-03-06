@@ -68,6 +68,7 @@ export const plateSettingSelectCA = "/api/v1/uamManager/plateSetting/SelectCA";
 
 //文件上传
 export const uploadUploadApplyFile = "/api/v1/upload/uploadApplyFile";
+export const uploadDeleteFile = "/api/v1/upload/deleteFile";
 
 //机构管理
 export const orgQueryByPage = "/api/v1/manager/org/queryByPage";
@@ -171,22 +172,44 @@ export const webManagerUserDetail = "/web/manager/user/detail";
 export const webManagerUserChangeUserStatus = "/web/manager/user/changeUserStatus";
 
 //接口管理
-export const tokenPowerSelectInterList = "/api/v1/uamBase/tokenPower/selectInterList";
-export const uamBaseTokenPowerNewInter = "/api/v1/uamBase/tokenPower/newInter";
-export const uamBaseTokenPowerUpdateInter = "/api/v1/uamBase/tokenPower/updateInter";
-export const uamBaseTokenPowerDeleteInter = "/api/v1/uamBase/tokenPower/deleteInter";
-export const siteNoticeIndexSysList = "/web/site/notice/indexSysList";
+export const tokenPowerSelectInterList = "/api/v1/manager/tokenPower/selectInterList";
+export const uamBaseTokenPowerNewInter = "/api/v1/manager/tokenPower/newInter";
+export const uamBaseTokenPowerUpdateInter = "/api/v1/manager/tokenPower/updateInter";
+export const uamBaseTokenPowerDeleteInter = "/api/v1/manager/tokenPower/deleteInter";
+//export const siteNoticeIndexSysList = "/web/site/notice/indexSysList";
 
 //token角色
-export const uamBaseTokenPowerNewTokenRole = "/api/v1/uamBase/tokenPower/newTokenRole";
-export const uamBaseTokenPowerSelectTokenRoleList = "/api/v1/uamBase/tokenPower/selectTokenRoleList";
-export const uamBaseTokenPowerDeleteTokenRole = "/api/v1/uamBase/tokenPower/deleteTokenRole";
-export const uamBaseTokenPowerUpdateTokenRole = "/api/v1/uamBase/tokenPower/updateTokenRole";
-export const uamBaseTokenPowerNewTokenInterRole = "/api/v1/uamBase/tokenPower/newTokenInterRole";
-export const uamBaseTokenPowerSelectTokenInterRoleList = "/api/v1/uamBase/tokenPower/selectTokenInterRoleList";
+export const uamBaseTokenPowerNewTokenRole = "/api/v1/manager/tokenPower/newTokenRole";
+export const uamBaseTokenPowerSelectTokenRoleList = "/api/v1/manager/tokenPower/selectTokenRoleList";
+export const uamBaseTokenPowerDeleteTokenRole = "/api/v1/manager/tokenPower/deleteTokenRole";
+export const uamBaseTokenPowerUpdateTokenRole = "/api/v1/manager/tokenPower/updateTokenRole";
+export const uamBaseTokenPowerNewTokenInterRole = "/api/v1/manager/tokenPower/newTokenInterRole";
+export const uamBaseTokenPowerSelectTokenInterRoleList = "/api/v1/manager/tokenPower/selectTokenInterRoleList";
+export const uamBaseTokenPowerUpdateRoleCacheSet = "/api/v1/manager/tokenPower/updateRoleCacheSet";
 
-//签名验签服务器
+//签名验签服务器日志
 export const verifySelectLog = "/api/v1/verify/selectLog";
+
+//管理员日志
+export const logManageSelectAdminLogs = "/api/v1/uamBase/logManage/selectAdminLogs";
+
+//应用日志
+export const logManageSelectAppLogs = "/api/v1/uamBase/manager/logManage/selectAppLogs";
+
+//用户日志
+export const logManageSelectUserLogs = "/api/v1/uamBase/manager/logManage/selectUserLogs";
+
+//安全策略
+export const safeStrategyAddSafeStrategy = "/api/v1/safeStrategy/safeStrategy/addSafeStrategy";
+export const safeStrategySelectAll = "/api/v1/safeStrategy/safeStrategy/selectAll";
+export const updateSafeStrategy = "/api/v1/safeStrategy/safeStrategy/updateSafeStrategy";
+export const delSafeStrategy = "/api/v1/safeStrategy/safeStrategy/delSafeStrategy";
+
+//API接口类型
+export const webSiteSelectAPITypes = "/api/v1/manager/oApi/selectAllTypes";
+export const managerOApiInsertType = "/api/v1/manager/oApi/insertType";
+export const managerOApiUpdateType = "/api/v1/manager/oApi/updateType";
+
 
 
 

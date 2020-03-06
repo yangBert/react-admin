@@ -3,8 +3,6 @@ import { Spin, Input, Button, message, Card, Form } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/add.module.css';
-import $$ from 'static/js/base';
-import * as config from '../config';
 import { Link } from 'react-router-dom';
 
 const { Search } = Input;
@@ -13,11 +11,14 @@ class Add extends Component {
 
   componentDidMount() {
     if (this.props.location.state.record) {
-      console.log("props===", this.props.location.state.record)
-      // const { title, url, imgUrl } = this.props.location.state.record
-      // this.props.onChangeEditTitle(title)
-      // this.props.onChangeEditURL(url)
-      // this.props.onChangeEditImageURL(imgUrl)
+      const { productName, perfertialName, ruleName, productCode, ruleCode, preferentialCode } = this.props.location.state.record
+      this.props.changeConfigStrategyCode(preferentialCode)
+      this.props.changeConfigBillingCode(ruleCode)
+      this.props.changeConfigProductCode(productCode)
+      this.props.changeConfigStrategyName(perfertialName)
+      this.props.changeConfigProductName(productName)
+      this.props.changeConfigBillingName(ruleName)
+      this.props.changeConfigRecord(this.props.location.state.record)
     }
     if (this.props.location.state.preferential) {
       const { strategyCode, strategyName } = this.props.location.state.preferential
@@ -58,18 +59,19 @@ class Add extends Component {
         preferentialCode: strategyCode,
       }
     }
-
-    //const editId = this.props.location.state && this.props.location.state.record.id
-    // if (editId) {
-    //   req.data.id = editId
-    // }
+    if (this.props.record) {
+      req.data.id = this.props.record.id
+    }
     this.props.save(req)
   }
 
-  selectList(pathname) {
+  selectList(pathname, params) {
     const o = {
       pathname,
-      state: { appCode: this.props.location.state.appCode }
+      state: {
+        appCode: this.props.location.state.appCode,
+        params,
+      }
     }
     this.props.history.push(o)
   }
@@ -85,7 +87,7 @@ class Add extends Component {
                   <div className={`${styles.inline} pullLeft`}>
                     <Search
                       placeholder="请选择产品"
-                      onSearch={() => this.selectList("/chargeConfig/product")}
+                      onSearch={() => this.selectList("/chargeConfig/product", this.props.productCode)}
                       onChange={e => null}
                       enterButton="选择"
                       value={this.props.productName}
@@ -96,7 +98,7 @@ class Add extends Component {
                   <div className={`${styles.inline} pullLeft`}>
                     <Search
                       placeholder="请选择计费策略"
-                      onSearch={() => this.selectList("/chargeConfig/billing")}
+                      onSearch={() => this.selectList("/chargeConfig/billing", this.props.billingCode)}
                       onChange={e => null}
                       enterButton="选择"
                       value={this.props.billingName}
@@ -107,7 +109,7 @@ class Add extends Component {
                   <div className={`${styles.inline} pullLeft`}>
                     <Search
                       placeholder="请选择优惠策略"
-                      onSearch={() => this.selectList("/chargeConfig/creferential")}
+                      onSearch={() => this.selectList("/chargeConfig/creferential", this.props.strategyCode)}
                       onChange={e => null}
                       enterButton="选择"
                       value={this.props.strategyName}
@@ -157,6 +159,7 @@ const mapState = state => ({
   productCode: state.chargeConfig.productCode,
   status: state.chargeConfig.editStatus,
   saveLoading: state.chargeConfig.saveLoading,
+  record: state.chargeConfig.record,
 })
 
 const mapDispatch = dispatch => ({
@@ -186,6 +189,10 @@ const mapDispatch = dispatch => ({
   },
   changeConfigProductCode: value => {
     const action = creators.changeConfigProductCodeAction(value);
+    dispatch(action);
+  },
+  changeConfigRecord: value => {
+    const action = creators.changeConfigRecordAction(value);
     dispatch(action);
   },
 })

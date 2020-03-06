@@ -9,8 +9,9 @@ const defaultState = {
   params: {},
   editTitle: "",
   editURL: "",
-  editImageURL:"",
-  editStatus:"",
+  showImage: false,
+  editImageURL: "",
+  editStatus: "",
   detailInfo: null,
 };
 
@@ -29,6 +30,9 @@ export default (state = defaultState, action) => {
       break;
     case types.CHANGE_EDIT_TITLE:
       newState.editTitle = action.editTitle
+      break;
+    case types.CHANGE_SHOW_IMAGE:
+      newState.showImage = action.showImage
       break;
     case types.CHANGE_EDIT_URL:
       newState.editURL = action.editURL

@@ -34,6 +34,16 @@ function Oper(props) {
           ghost
         >配置</Button>
       </Link>
+      <Button
+        style={fontSmall}
+        type="primary"
+        size="small"
+        ghost
+        onClick={() => {
+          const data = "roleName=" + props.record.name
+          props.updatePower({ props, data })
+        }}
+      >立即更新权限</Button>
       <Popconfirm
         placement="left"
         title="确定删除吗?"
@@ -45,7 +55,8 @@ function Oper(props) {
         icon={<Icon type="question-circle" />}
         cancelText="取消">
         <Button style={fontSmall} type="danger" size="small" ghost>删除</Button>
-      </Popconfirm>&nbsp;&nbsp;
+      </Popconfirm>
+
     </div >
   )
 }
@@ -53,6 +64,10 @@ function Oper(props) {
 const mapDispatch = dispatch => ({
   delete: req => {
     const action = creators.deleteAction(req);
+    dispatch(action);
+  },
+  updatePower: req => {
+    const action = creators.updatePowerAction(req);
     dispatch(action);
   },
 })

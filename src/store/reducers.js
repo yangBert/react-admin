@@ -29,7 +29,10 @@ import clientUserReducer from 'pages/clientUser/store/reducer';
 import tokenPowerReducer from 'pages/tokenPower/store/reducer';
 import tokenRoleReducer from 'pages/tokenRole/store/reducer';
 import chargeConfigReducer from 'pages/chargeConfig/store/reducer';
-
+import adminLogsReducer from 'pages/adminLogs/store/reducer';
+import safeStrategyReducer from 'pages/safeStrategy/store/reducer';
+import verifyServerReducer from 'pages/verifyServer/store/reducer';
+import oApiTypesReducer from 'pages/oApiTypes/store/reducer';
 
 export default {
   login: loginReducer,
@@ -63,4 +66,8 @@ export default {
   tokenPower: tokenPowerReducer,
   tokenRole: tokenRoleReducer,
   chargeConfig: chargeConfigReducer,
+  adminLogs: adminLogsReducer,
+  verifyServer: verifyServerReducer,
+  safeStrategy: safeStrategyReducer,
+  oApiTypes: oApiTypesReducer,
 };

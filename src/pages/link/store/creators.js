@@ -42,12 +42,20 @@ const onChangeSaveLoadingAction = saveLoading => ({
   saveLoading
 })
 
+const changeShowImageAction = showImage => ({
+  type: types.CHANGE_SHOW_IMAGE,
+  showImage
+})
+
+
 //保存和修改
 const saveAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
     const url = req.data.id ? requestURL.webManagerLinkUpdate : requestURL.webManagerLinkAdd
-    request.json(url, req.data, res => {
+    console.log(url, req.data)
+    request.formData(url, req.data, res => {
+      console.log("res", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
@@ -75,7 +83,7 @@ const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
     console.log("req", req.data)
-    request.json(requestURL.siteNoticeIndexSysList, req.data, res => {
+    request.json(requestURL.linkQueryLinksByPage, req.data, res => {
       console.log("res", res)
       dispatch(spinningAction(false))
       if (res.data) {
@@ -136,6 +144,6 @@ export {
   saveAction,
   onChangeSaveLoadingAction,
   createChangeParamsAction,
-  updateStateAction
-
+  updateStateAction,
+  changeShowImageAction
 }

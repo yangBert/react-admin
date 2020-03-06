@@ -23,17 +23,25 @@ class Billing extends Component {
   }
   componentDidMount() {
     this.sendFn(1, 10)
+    if (this.props.location.state.params) {
+      this.props.changeBillingSelectedKeys([this.props.location.state.params])
+    }
+  }
+
+  collectData(billingCode, billingName) {
+    this.props.changeBillingSelectedKeys([billingCode])
+    this.setState({
+      billing: {
+        billingCode,
+        billingName,
+      }
+    })
   }
 
   rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       const { code, title } = selectedRows[0]
-      this.setState({
-        billing: {
-          billingCode: code,
-          billingName: title,
-        }
-      })
+      this.collectData(code, title)
     },
   }
 
@@ -56,6 +64,7 @@ class Billing extends Component {
       onChange: this.paginationChange,
       onShowSizeChange: this.paginationShowSizeChange,
     }
+    this.rowSelection.selectedRowKeys = this.props.billingSelectedKeys
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
@@ -88,9 +97,18 @@ class Billing extends Component {
             }}
             columns={columns}
             dataSource={billingList}
-            rowKey={(record, index) => index}
+            rowKey={record => record.code}
             pagination={pagination}
             size="small"
+            onRow={record => {
+              return {
+                onClick: () => {
+                  const { code, title } = record
+                  this.collectData(code, title)
+                  this.props.changeBillingSelectedKeys([code])
+                }
+              }
+            }}
           />
         </Spin>
       </div>
@@ -102,11 +120,16 @@ const mapState = state => ({
   billingList: state.chargeConfig.billingList,
   billingListPagination: state.chargeConfig.billingListPagination,
   spinning: state.chargeConfig.spinning,
+  billingSelectedKeys: state.chargeConfig.billingSelectedKeys,
 })
 
 const mapDispatch = dispatch => ({
   queryBillingList: req => {
     const action = creators.queryBillingListAction(req);
+    dispatch(action);
+  },
+  changeBillingSelectedKeys: req => {
+    const action = creators.changeBillingSelectedKeysAction(req);
     dispatch(action);
   },
 })
