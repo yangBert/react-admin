@@ -57,9 +57,11 @@ function getJson(requestURL, requestData, callback) {
 }
 
 function get(requestURL, requestData, callback) {
-  axios.get(requestURL, {
-    params: requestData
-  }).then(function (res) {
+  const config = {
+    headers: {'AuthToken': $$.token.get()},
+    params: requestData,
+  }
+  axios.get(requestURL,config).then(function (res) {
     callback(res);
   }).catch(function (error) {
     callback(error);

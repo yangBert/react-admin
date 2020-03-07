@@ -1,28 +1,11 @@
 import React from 'react';
 import { Button } from 'antd';
-import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 
 function Oper(props) {
   const fontSmall = { fontSize: "12px", marginLeft: "5px" };
   return (
     <div>
-      <Link
-        to={{
-          pathname: "/account/add",
-          state: {
-            editRecord: props.record,
-            editOrgList: props.editOrgList,
-          }
-        }}
-      >
-        <Button
-          style={fontSmall}
-          type="primary"
-          size="small"
-          ghost
-        >修改</Button>
-      </Link>
       <Link
         to={{
           pathname: "/applyOrder/detail",
@@ -40,15 +23,5 @@ function Oper(props) {
   )
 }
 
-const mapState = state => ({
-  editOrgList: state.account.editOrgList,
-})
 
-const mapDispatch = dispatch => ({
-  // updateState: req => {
-  //   const action = creators.updateStateAction(req);
-  //   dispatch(action);
-  // },
-})
-
-export default withRouter(connect(mapState, mapDispatch)(Oper));
+export default withRouter(Oper);

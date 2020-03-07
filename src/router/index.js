@@ -1,66 +1,97 @@
-import { lazy } from 'react';
-const Home = lazy(() => import('pages/home'));
-const ErrorResult = lazy(() => import('pages/common/error/ErrorResult'));
-const AdminList = lazy(() => import('pages/admin/AdminList'));
-const MenuList = lazy(() => import('pages/menu/MenuList'));
-const RoleList = lazy(() => import('pages/role/RoleList'));
-const UserList = lazy(() => import('pages/user/UserList'));
-const CertList = lazy(() => import('pages/cert/CertList'));
-const CertDetail = lazy(() => import('pages/cert/components/CertDetail'));
-const AppList = lazy(() => import('pages/app/AppList'));
-const AppAdd = lazy(() => import('pages/app/components/AppAdd'));
-const AppChargeApp = lazy(() => import('pages/app/components/chargeApp'));
-const AppAuthList = lazy(() => import('pages/app/components/AppAuthList'));
-const AppDetail = lazy(() => import('pages/app/components/Detail'));
-const DictTypeList = lazy(() => import('pages/dictType/DictTypeList'));
-const DictDataList = lazy(() => import('pages/dictData'));
-const OrgList = lazy(() => import('pages/org/OrgList'));
-const OrgAdd = lazy(() => import('pages/org/components/OrgAdd'));
-const NoticeList = lazy(() => import('pages/notice/NoticeList'));
-const NoticeAdd = lazy(() => import('pages/notice/components/NoticeAdd'));
-const ProductList = lazy(() => import('pages/product'));
-const CertificationList = lazy(() => import('pages/certification'));
-const CertificationAdd = lazy(() => import('pages/certification/components/CertificationAdd'));
-const DocCatalogList = lazy(() => import('pages/docCatalog'));
-const DocCatalogAdd = lazy(() => import('pages/docCatalog/components/Add'));
-const DocList = lazy(() => import('pages/doc'));
-const DocAdd = lazy(() => import('pages/doc/components/Add'));
-const PlatSettingList = lazy(() => import('pages/platSetting'));
-const PlatSettingAdd = lazy(() => import('pages/platSetting/components/Add'));
-const BillingList = lazy(() => import('pages/billing'));
-const BillingAdd = lazy(() => import('pages/billing/components/Add'));
-const ProductTypeList = lazy(() => import('pages/productType'));
-const PreferentialList = lazy(() => import('pages/preferential'));
-const PreferentialAdd = lazy(() => import('pages/preferential/components/Add'));
-const AccountList = lazy(() => import('pages/account'));
-const AccountAdd = lazy(() => import('pages/account/components/Add'));
-const AccountDetail = lazy(() => import('pages/account/components/Detail'));
-const ChargeConsumeList = lazy(() => import('pages/chargeConsume'));
-const ChargeRechargeList = lazy(() => import('pages/chargeRecharge'));
-const ApplyOrderList = lazy(() => import('pages/applyOrder'));
-const ApplyOrderDetail = lazy(() => import('pages/applyOrder/components/Detail'));
-const LinkList = lazy(() => import('pages/link'));
-const LinkAdd = lazy(() => import('pages/link/components/Add'));
-const QuestionList = lazy(() => import('pages/question'));
-const QuestionAdd = lazy(() => import('pages/question/components/Add'));
-const ClientUserList = lazy(() => import('pages/clientUser'));
-const ClientUserDetail = lazy(() => import('pages/clientUser/components/Detail'));
-const TokenPowerList = lazy(() => import('pages/tokenPower'));
-const TokenPowerAdd = lazy(() => import('pages/tokenPower/components/Add'));
-const TokenRoleList = lazy(() => import('pages/tokenRole'));
-const TokenRoleAdd = lazy(() => import('pages/tokenRole/components/Add'));
-const TokenConfigRole = lazy(() => import('pages/tokenRole/components/ConfigRole'));
-const VerifyServerLogList = lazy(() => import('pages/verifyServer'));
-const VerifyServerDetail = lazy(() => import('pages/verifyServer/components/Detail'));
-const ChargeConfigList = lazy(() => import('pages/chargeConfig'));
-const ChargeConfigAdd = lazy(() => import('pages/chargeConfig/components/Add'));
-const ChargeConfigPreferential = lazy(() => import('pages/chargeConfig/components/Preferential'));
-const ChargeConfigBilling = lazy(() => import('pages/chargeConfig/components/Billing'));
-const ChargeConfigProduct = lazy(() => import('pages/chargeConfig/components/Product'));
-const AdminLogsList = lazy(() => import('pages/adminLogs'));
-const adminLogsDetail = lazy(() => import('pages/adminLogs/components/Detail'));
-const SafeStrategyList = lazy(() => import('pages/safeStrategy'));
-const OApiTypesList = lazy(() => import('pages/oApiTypes'));
+import { lazy } from "react";
+const Home = lazy(() => import("pages/home"));
+const ErrorResult = lazy(() => import("pages/common/error/ErrorResult"));
+const AdminList = lazy(() => import("pages/admin/AdminList"));
+const MenuList = lazy(() => import("pages/menu/MenuList"));
+const RoleList = lazy(() => import("pages/role/RoleList"));
+const UserList = lazy(() => import("pages/user/UserList"));
+const CertList = lazy(() => import("pages/cert/CertList"));
+const CertDetail = lazy(() => import("pages/cert/components/CertDetail"));
+const AppList = lazy(() => import("pages/app/AppList"));
+const AppAdd = lazy(() => import("pages/app/components/AppAdd"));
+const AppChargeApp = lazy(() => import("pages/app/components/chargeApp"));
+const AppAuthList = lazy(() => import("pages/app/components/AppAuthList"));
+const AppDetail = lazy(() => import("pages/app/components/Detail"));
+const DictTypeList = lazy(() => import("pages/dictType/DictTypeList"));
+const DictDataList = lazy(() => import("pages/dictData"));
+const OrgList = lazy(() => import("pages/org/OrgList"));
+const OrgAdd = lazy(() => import("pages/org/components/OrgAdd"));
+const NoticeList = lazy(() => import("pages/notice/NoticeList"));
+const NoticeAdd = lazy(() => import("pages/notice/components/NoticeAdd"));
+const ProductList = lazy(() => import("pages/product"));
+const CertificationList = lazy(() => import("pages/certification"));
+const CertificationAdd = lazy(() =>
+  import("pages/certification/components/CertificationAdd")
+);
+const DocCatalogList = lazy(() => import("pages/docCatalog"));
+const DocCatalogAdd = lazy(() => import("pages/docCatalog/components/Add"));
+const DocList = lazy(() => import("pages/doc"));
+const DocAdd = lazy(() => import("pages/doc/components/Add"));
+const PlatSettingList = lazy(() => import("pages/platSetting"));
+const PlatSettingAdd = lazy(() => import("pages/platSetting/components/Add"));
+const BillingList = lazy(() => import("pages/billing"));
+const BillingAdd = lazy(() => import("pages/billing/components/Add"));
+const ProductTypeList = lazy(() => import("pages/productType"));
+const PreferentialList = lazy(() => import("pages/preferential"));
+const PreferentialAdd = lazy(() => import("pages/preferential/components/Add"));
+const AccountList = lazy(() => import("pages/account"));
+const AccountAdd = lazy(() => import("pages/account/components/Add"));
+const AccountDetail = lazy(() => import("pages/account/components/Detail"));
+const ChargeConsumeList = lazy(() => import("pages/chargeConsume"));
+const ChargeRechargeList = lazy(() => import("pages/chargeRecharge"));
+const ApplyOrderList = lazy(() => import("pages/applyOrder"));
+const ApplyOrderDetail = lazy(() =>
+  import("pages/applyOrder/components/Detail")
+);
+const LinkList = lazy(() => import("pages/link"));
+const LinkAdd = lazy(() => import("pages/link/components/Add"));
+const QuestionList = lazy(() => import("pages/question"));
+const QuestionAdd = lazy(() => import("pages/question/components/Add"));
+const ClientUserList = lazy(() => import("pages/clientUser"));
+const ClientUserDetail = lazy(() =>
+  import("pages/clientUser/components/Detail")
+);
+const TokenPowerList = lazy(() => import("pages/tokenPower"));
+const TokenPowerAdd = lazy(() => import("pages/tokenPower/components/Add"));
+const TokenRoleList = lazy(() => import("pages/tokenRole"));
+const TokenRoleAdd = lazy(() => import("pages/tokenRole/components/Add"));
+const TokenConfigRole = lazy(() =>
+  import("pages/tokenRole/components/ConfigRole")
+);
+const VerifyServerLogList = lazy(() => import("pages/verifyServer"));
+const VerifyServerDetail = lazy(() =>
+  import("pages/verifyServer/components/Detail")
+);
+const ChargeConfigList = lazy(() => import("pages/chargeConfig"));
+const ChargeConfigAdd = lazy(() => import("pages/chargeConfig/components/Add"));
+const ChargeConfigPreferential = lazy(() =>
+  import("pages/chargeConfig/components/Preferential")
+);
+const ChargeConfigBilling = lazy(() =>
+  import("pages/chargeConfig/components/Billing")
+);
+const ChargeConfigProduct = lazy(() =>
+  import("pages/chargeConfig/components/Product")
+);
+const AdminLogsList = lazy(() => import("pages/adminLogs"));
+const adminLogsDetail = lazy(() => import("pages/adminLogs/components/Detail"));
+const SafeStrategyList = lazy(() => import("pages/safeStrategy"));
+const OApiTypesList = lazy(() => import("pages/oApiTypes"));
+const ApplyOrderAuditList = lazy(() =>
+  import("pages/applyOrder/components/auditList")
+);
+const ApplyOrderApplicationAudit = lazy(() =>
+  import("pages/applyOrder/components/ApplicationAudit")
+);
+const ApplyOrderCaAudit = lazy(() =>
+  import("pages/applyOrder/components/CaAudit")
+);
+const ApplyOrderInterfaceAudit = lazy(() =>
+  import("pages/applyOrder/components/InterfaceAudit")
+);
+const ApplyOrderOrgAudit = lazy(() =>
+  import("pages/applyOrder/components/OrgAudit")
+);
 
 const routes = [
   {
@@ -224,6 +255,26 @@ const routes = [
     component: ApplyOrderDetail
   },
   {
+    path: "/applyOrder/auditList",
+    component: ApplyOrderAuditList
+  },
+  {
+    path: "/applyOrder/application/audit",
+    component: ApplyOrderApplicationAudit
+  },
+  {
+    path: "/applyOrder/ca/audit",
+    component: ApplyOrderCaAudit
+  },
+  {
+    path: "/applyOrder/interface/audit",
+    component: ApplyOrderInterfaceAudit
+  },
+  {
+    path: "/applyOrder/org/audit",
+    component: ApplyOrderOrgAudit
+  },
+  {
     path: "/link/list",
     component: LinkList
   },
@@ -310,7 +361,6 @@ const routes = [
   {
     path: "/oApiTypes/list",
     component: OApiTypesList
-  },
-
+  }
 ];
 export default routes;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Select, Icon } from 'antd';
+import { Button, Select, Icon,DatePicker,Input  } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/SearchForm.module.css';
@@ -10,90 +10,78 @@ moment.locale('zh-cn');
 
 const { Option } = Select;
 
-
+const { RangePicker } = DatePicker;
 
 function SearchForm(props) {
+  const [instanceCode, setInstanceCode] = useState("")
   const [instanceType, setInstanceType] = useState("")
   const [accountCode, setAccountCode] = useState("")
   const [status, setStatus] = useState("")
-  const [createStartTimeString, setCreateStartTimeString] = useState(null)
-  const [createEndTimeString, setCreateEndTimeString] = useState(null)
+  const [startTime, setStartTime] = useState(null)
+  const [endTime, setEndTime] = useState(null)
 
   const { changeSearchParams } = props;
   useEffect(() => {
     changeSearchParams({
+      instanceCode,
       instanceType,
       accountCode,
       status,
-      createStartTimeString,
-      createEndTimeString,
+      startTime,
+      endTime,
     })
   }, [
+    instanceCode,
     instanceType,
     accountCode,
     status,
-    createStartTimeString,
-    createEndTimeString,
-    changeSearchParams
+    startTime,
+    endTime
   ]);
 
 
   function search() {
     const {
+      instanceCode,
       instanceType,
       accountCode,
       status,
+      startTime,
+      endTime
     } = props.params
 
-    let start2 = props.params.createStartTimeString
-    let end2 = props.params.createEndTimeString
 
-
-    start2 = createStartTimeString && createStartTimeString.format('YYYY-MM-DD HH:mm:ss')
-    end2 = createEndTimeString && createEndTimeString.format('YYYY-MM-DD HH:mm:ss')
     const data = {
       pageSize: 10,
       pageNo: 1,
-    }
-
-
-    if (instanceType) {
-      data.instanceType = instanceType
-    }
-
-    if (accountCode) {
-      data.accountCode = accountCode
-    }
-
-    if (status !== "") {
-      data.status = status
-    }
-
-    if (createStartTimeString) {
-      data.createStartTimeString = start2
-    }
-    if (createEndTimeString) {
-      data.createEndTimeString = end2
+      instanceCode,
+      instanceType,
+      accountCode,
+      status,
+      startTime,
+      endTime
     }
     console.log("data", data)
     props.querylist({ props, data });
   }
 
   function reset() {
+    setInstanceCode("")
     setInstanceType("");
     setAccountCode("");
     setStatus("");
-    setTime2("", "")
+    setStartTime(null)
+    setEndTime(null)
     const data = { pageNo: 1, pageSize: 10 }
     props.querylist({ props, data });
   }
 
 
-
-  function setTime2(t1, t2) {
-    setCreateStartTimeString(t1)
-    setCreateEndTimeString(t2)
+  function onChangeRangePicker(date, dateString) {
+    setStartTime(dateString[0])
+    setEndTime(dateString[1])
   }
+
 
   function mapConfig(key) {
     let arr = [];
@@ -109,18 +97,13 @@ function SearchForm(props) {
       <div className={`${styles.form}`}>
         <div className="clearfix">
           <div className={`${styles.formLine} pullLeft`}>
-            <label className="pullLeft">受理单状态:</label>
+            <label className="pullLeft">订单号:</label>
             <div className={`${styles.inline} pullLeft`}>
-              <Select value={status} style={{ width: "100%" }} onChange={value => setStatus(value)}>
-                <Option value="">请选择</Option>
-                {
-
-                  mapConfig("status").map(item => {
-                    return <Option value={item.k} key={item.k}>{item.v}</Option>
-                  })
-
-                }
-              </Select>
+              <Input
+                allowClear
+                onChange={e => setInstanceCode(e.target.value)}
+                value={instanceCode}
+              />
             </div>
           </div>
           <div className={`${styles.formLine} pullLeft`}>
@@ -138,6 +121,36 @@ function SearchForm(props) {
               </Select>
             </div>
           </div>
+        </div>
+        
+        <div className="clearfix">
+          <div className={`${styles.formLine} pullLeft`}>
+            <label className="pullLeft">订单状态:</label>
+            <div className={`${styles.inline} pullLeft`}>
+              <Select value={status} style={{ width: "100%" }} onChange={value => setStatus(value)}>
+                <Option value="">请选择</Option>
+                {
+
+                  mapConfig("status").map(item => {
+                    return <Option value={item.k} key={item.k}>{item.v}</Option>
+                  })
+
+                }
+              </Select>
+            </div>
+          </div>
+          <div className={`${styles.formLine} pullLeft`}>
+            <label className="pullLeft">起始日期:</label>
+            <div className={`${styles.inline} pullLeft`}>
+              <RangePicker
+                style={{ "width": "100%" }}
+                //showTime
+                onChange={onChangeRangePicker}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="clearfix">
           <div className={`${styles.formLine} pullLeft`}>
             <label className="pullLeft">&nbsp;</label>
             <Button onClick={() => search()} type="primary">

@@ -18,9 +18,9 @@ const columns = [
 
 
   {
-    title: '支付时间', dataIndex: 'payTime', key: 'payTime', align: 'center',
-    render: payTime => (
-      <span>{payTime && $$.getHours(payTime)}</span>
+    title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center',
+    render: createTime => (
+      <span>{createTime && $$.getHours(createTime)}</span>
     )
   },
   {
@@ -92,7 +92,6 @@ const mapState = state => ({
   pagination: state.applyOrder.pagination,
   spinning: state.applyOrder.spinning,
   params: state.applyOrder.params,
-  editOrgList: state.applyOrder.editOrgList,
 })
 
 const mapDispatch = dispatch => ({

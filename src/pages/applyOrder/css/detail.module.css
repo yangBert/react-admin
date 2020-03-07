@@ -1,22 +1,31 @@
-.pageContet{
+.pageContet {
   padding-bottom: 240px;
 }
-.info{
-  padding:30px;
+.info {
+  padding: 30px;
 }
-.signcert{
-  width:100%;
-}
-
-.textarea{
-  width:100%;
+.signcert {
+  width: 100%;
 }
 
-.back{
-  width:300px;
+.textarea {
+  width: 100%;
 }
 
-.bottom{
-  text-align:center;
+.back {
+  width: 300px;
+}
+
+.bottom {
+  text-align: center;
   margin-top: 30px;
+}
+.button {
+  margin-left: 12px;
+}
+
+.listImg {
+  width: 10%;
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
