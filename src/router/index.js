@@ -76,7 +76,7 @@ const ChargeConfigProduct = lazy(() =>
 const AdminLogsList = lazy(() => import("pages/adminLogs"));
 const adminLogsDetail = lazy(() => import("pages/adminLogs/components/Detail"));
 const SafeStrategyList = lazy(() => import("pages/safeStrategy"));
-const OApiTypesList = lazy(() => import("pages/oApiTypes"));
+
 const ApplyOrderAuditList = lazy(() =>
   import("pages/applyOrder/components/auditList")
 );
@@ -92,6 +92,12 @@ const ApplyOrderInterfaceAudit = lazy(() =>
 const ApplyOrderOrgAudit = lazy(() =>
   import("pages/applyOrder/components/OrgAudit")
 );
+const OApiTypesList = lazy(() => import("pages/oApiTypes"));
+const OAPIList = lazy(() => import("pages/oApi"));
+const OAPIAdd = lazy(() => import("pages/oApi/components/Add"));
+
+const OApiParamsList = lazy(() => import("pages/oApiParams"));
+const OApiParamsAdd = lazy(() => import("pages/oApiParams/components/Add"));
 
 const routes = [
   {
@@ -361,6 +367,22 @@ const routes = [
   {
     path: "/oApiTypes/list",
     component: OApiTypesList
+  },
+  {
+    path: "/oApi/list",
+    component: OAPIList
+  },
+  {
+    path: "/oApi/add",
+    component: OAPIAdd
+  },
+  {
+    path: "/oApiParams/list",
+    component: OApiParamsList
+  },
+  {
+    path: "/oApiParams/add",
+    component: OApiParamsAdd
   }
 ];
 export default routes;

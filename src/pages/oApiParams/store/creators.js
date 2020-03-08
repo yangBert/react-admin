@@ -15,46 +15,36 @@ const saveLoadingAction = saveLoading => ({
   saveLoading
 });
 
-const changeModalVisibleAction = (modalVisible, edit, record) => ({
-  type: types.CHANGE_MODAL_VISIBLE,
-  modalVisible,
-  edit,
-  record
+const setParamNameAction = paramName => ({
+  type: types.SET_PARAM_NAME,
+  paramName
 });
 
-const changeTypeNameAction = typeName => ({
-  type: types.CHANGE_TYPE_NAME,
-  typeName
+const setParamTypeAction = paramType => ({
+  type: types.SET_PARAM_TYPE,
+  paramType
 });
 
-const changeTypeRemarksAction = typeRemarks => ({
-  type: types.CHANGE_TYPE_REMARKS,
-  typeRemarks
+const setIsNessAction = isNess => ({
+  type: types.SET_IS_NESS,
+  isNess
 });
 
-const changeStrategyStatusAction = strategyStatus => ({
-  type: types.CHANGE_STRATEGY_STATUS,
-  strategyStatus
-});
-
-const changeConfirmLoadingAction = confirmLoading => ({
-  type: types.CHANGE_CONFIRM_LOADING,
-  confirmLoading
+const setParamRemarksAction = paramRemarks => ({
+  type: types.SET_PARAM_REMARKS,
+  paramRemarks
 });
 
 const saveAction = req => {
   return dispatch => {
-    dispatch(changeConfirmLoadingAction(true));
     const url = req.data.typeId
       ? requestURL.managerOApiUpdateType
       : requestURL.managerOApiInsertType;
     request.json(url, req.data, res => {
-      dispatch(changeConfirmLoadingAction(false));
       if (res.data) {
         const { success, message } = res.data && res.data;
         if (success) {
           notification("success", message);
-          dispatch(changeModalVisibleAction(false, false, config.record));
           dispatch(queryListAction({ props: req.props, data: {} }));
         } else {
           notification("error", message);
@@ -69,8 +59,9 @@ const saveAction = req => {
 const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true));
-    request.get(requestURL.webSiteSelectAPITypes, req.data, res => {
+    request.get(requestURL.managerOApiSelectAllParamByApiId, req.data, res => {
       dispatch(spinningAction(false));
+      console.log("res", res);
       if (res.data) {
         const { success, message, data } = res.data && res.data;
         if (success) {
@@ -90,9 +81,8 @@ export {
   queryListAction,
   saveAction,
   saveLoadingAction,
-  changeModalVisibleAction,
-  changeTypeNameAction,
-  changeTypeRemarksAction,
-  changeStrategyStatusAction,
-  changeConfirmLoadingAction
+  setParamNameAction,
+  setParamTypeAction,
+  setIsNessAction,
+  setParamRemarksAction
 };

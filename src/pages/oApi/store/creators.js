@@ -12,54 +12,48 @@ const initListAction = (list, pagination) => ({
   pagination
 });
 
-//改变editTitle
-const onChangeEditTitleAction = editTitle => ({
-  type: types.CHANGE_EDIT_TITLE,
-  editTitle
+const setApiNameAction = apiName => ({
+  type: types.SET_API_NAME,
+  apiName
 });
 
-//改变editURL
-const onChangeEditURLAction = editURL => ({
-  type: types.CHANGE_EDIT_URL,
-  editURL
+const initTypeListAction = typeList => ({
+  type: types.INIT_TYPE_LIST,
+  typeList
 });
 
-//改变editImageURL
-const onChangeEditImageURLAction = editImageURL => ({
-  type: types.CHANGE_EDIT_IMAGE_URL,
-  editImageURL
+const setTypeIdAction = typeId => ({
+  type: types.SET_TYPE_ID,
+  typeId
 });
 
-const onChangeEditStatusAction = editStatus => ({
-  type: types.CHANGE_EDIT_STATUS,
-  editStatus
+const setApiReqTypeAction = apiReqType => ({
+  type: types.SET_API_REQ_TYPE,
+  apiReqType
 });
 
-//改变保存loading
-const onChangeSaveLoadingAction = saveLoading => ({
-  type: types.CHANGE_SAVE_LOADING,
-  saveLoading
+const setApiUrlAction = apiUrl => ({
+  type: types.SET_API_URL,
+  apiUrl
 });
 
-const changeShowImageAction = showImage => ({
-  type: types.CHANGE_SHOW_IMAGE,
-  showImage
+const setApiParamTypeAction = apiParamType => ({
+  type: types.SET_API_PARAM_TYPE,
+  apiParamType
 });
 
-//保存和修改
-const saveAction = req => {
+const setApiRemarksAction = apiRemarks => ({
+  type: types.SET_API_REMARKS,
+  apiRemarks
+});
+
+const createSaveAction = req => {
   return dispatch => {
     dispatch(spinningAction(true));
-    console.log(url, req);
-    let url;
-    if (req.props.location.state) {
-      url = requestURL.webManagerLinkUpdate;
-    } else {
-      url = requestURL.webManagerLinkAdd;
-    }
-
-    request.formData(url, req.data, res => {
-      console.log("res", res);
+    const url = req.props.location.state
+      ? requestURL.managerOApiUpdateOpenApi
+      : requestURL.managerOApiInsertOpenApi;
+    request.json(url, req.data, res => {
       dispatch(spinningAction(false));
       if (res.data) {
         const { success, message } = res.data && res.data;
@@ -82,16 +76,15 @@ const saveAction = req => {
   };
 };
 
-//查询
 const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true));
-    console.log("req", req.data);
-    request.json(requestURL.linkQueryLinksByPage, req.data, res => {
-      console.log("res", res);
+    console.log("req.data", req.data);
+    request.json(requestURL.managerOApiSelectPageOApi, req.data, res => {
       dispatch(spinningAction(false));
       if (res.data) {
         const { success, message, data } = res.data && res.data;
+        console.log("res", res);
         if (success) {
           const action = initListAction(data.results, createPagination(data));
           dispatch(action);
@@ -105,23 +98,34 @@ const queryListAction = req => {
   };
 };
 
-//修改状态
-const updateStateAction = req => {
-  return (dispatch, getState) => {
+const queryDetailAction = req => {
+  return dispatch => {
     dispatch(spinningAction(true));
-    const url = requestURL.webManagerLinkChangeStatus;
-    request.json(url, req.data, res => {
+    request.json(requestURL.webManagerQuestionDetail, req.data, res => {
       dispatch(spinningAction(false));
       if (res.data) {
-        const { success, message } = res.data && res.data;
+        const { success, message, data } = res.data && res.data;
         if (success) {
-          const pagination = getState().link.pagination;
-          const params = {
-            ...getState().link.params,
-            pageNo: pagination.current,
-            pageSize: pagination.pageSize
-          };
-          dispatch(queryListAction({ props: req.props, data: params }));
+        } else {
+          notification("error", message);
+        }
+      } else {
+        req.props.history.push("/500");
+      }
+    });
+  };
+};
+
+const queryTypeListAction = req => {
+  return dispatch => {
+    dispatch(spinningAction(true));
+    request.get(requestURL.webSiteSelectAPITypes, req.data, res => {
+      dispatch(spinningAction(false));
+      if (res.data) {
+        const { success, message, data } = res.data && res.data;
+        if (success) {
+          const action = initTypeListAction(data);
+          dispatch(action);
         } else {
           notification("error", message);
         }
@@ -140,13 +144,14 @@ const createChangeParamsAction = params => ({
 
 export {
   queryListAction,
-  onChangeEditTitleAction,
-  onChangeEditURLAction,
-  onChangeEditImageURLAction,
-  onChangeEditStatusAction,
-  saveAction,
-  onChangeSaveLoadingAction,
+  setApiNameAction,
+  setTypeIdAction,
+  queryTypeListAction,
   createChangeParamsAction,
-  updateStateAction,
-  changeShowImageAction
+  createSaveAction,
+  queryDetailAction,
+  setApiReqTypeAction,
+  setApiUrlAction,
+  setApiParamTypeAction,
+  setApiRemarksAction
 };

@@ -22,10 +22,16 @@
 }
 .button {
   margin-left: 12px;
+  width: 200px;
 }
 
 .listImg {
   width: 10%;
   margin-left: 20px;
   margin-bottom: 20px;
+}
+
+.logo {
+  width: 88px;
+  height: 88px;
 }

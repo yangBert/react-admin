@@ -8,28 +8,13 @@ function Oper(props) {
   const fontSmall = { fontSize: "12px", marginLeft: "5px" };
   return (
     <div>
-      <Button
-        style={fontSmall}
-        type="primary"
-        size="small"
-        ghost
-        onClick={() => props.changeModalVisible(true, true, props.record)}
-      >
+      <Button style={fontSmall} type="primary" size="small" ghost>
         修改
       </Button>
     </div>
   );
 }
 
-const mapDispatch = dispatch => ({
-  changeModalVisible: (modalVisible, edit, record) => {
-    const action = creators.changeModalVisibleAction(
-      modalVisible,
-      edit,
-      record
-    );
-    dispatch(action);
-  }
-});
+const mapDispatch = dispatch => ({});
 
 export default withRouter(connect(null, mapDispatch)(Oper));

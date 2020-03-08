@@ -5,9 +5,10 @@ const defaultState = {
   list: [],
   spinning: false,
   saveLoading: false,
-  modalVisible: false,
-  edit: false,
-  record: {}
+  paramName: "",
+  paramType: "",
+  isNess: "",
+  paramRemarks: ""
 };
 
 export default (state = defaultState, action) => {
@@ -22,22 +23,17 @@ export default (state = defaultState, action) => {
     case types.SAVE_LOADING:
       newState.saveLoading = action.saveLoading;
       break;
-    case types.CHANGE_MODAL_VISIBLE:
-      newState.modalVisible = action.modalVisible;
-      newState.edit = action.edit;
-      newState.record = action.record;
+    case types.SET_PARAM_NAME:
+      newState.paramName = action.paramName;
       break;
-    case types.CHANGE_TYPE_NAME:
-      newState.record.typeName = action.typeName;
+    case types.SET_PARAM_TYPE:
+      newState.paramType = action.paramType;
       break;
-    case types.CHANGE_TYPE_REMARKS:
-      newState.record.typeRemarks = action.typeRemarks;
+    case types.SET_IS_NESS:
+      newState.isNess = action.isNess;
       break;
-    case types.CHANGE_STRATEGY_STATUS:
-      newState.record.state = action.strategyStatus;
-      break;
-    case types.CHANGE_CONFIRM_LOADING:
-      newState.confirmLoading = action.confirmLoading;
+    case types.SET_PARAM_REMARKS:
+      newState.paramRemarks = action.paramRemarks;
       break;
     default:
       break;

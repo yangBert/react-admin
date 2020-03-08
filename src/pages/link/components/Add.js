@@ -1,50 +1,56 @@
-import React, { Component } from 'react';
-import { Spin, Input, Button, message, Card, Form } from 'antd';
-import { connect } from 'react-redux';
-import * as creators from '../store/creators';
-import styles from '../css/add.module.css';
-import $$ from 'static/js/base';
+import React, { Component } from "react";
+import { Spin, Input, Button, message, Card, Form } from "antd";
+import { connect } from "react-redux";
+import * as creators from "../store/creators";
+import styles from "../css/add.module.css";
+import $$ from "static/js/base";
 
-let imageFile = null
+let imageFile = null;
 class Add extends Component {
   state = {
-    loading: false,
+    loading: false
   };
 
   componentDidMount() {
     if (this.props.location.state && this.props.location.state.editRecord) {
-      const { title, url, imgUrl } = this.props.location.state.editRecord
-      this.props.onChangeEditTitle(title)
-      this.props.onChangeEditURL(url)
-      this.props.onChangeEditImageURL(imgUrl)
-      this.props.changeShowImage(true)
+      const { title, url, imgUrl } = this.props.location.state.editRecord;
+      this.props.onChangeEditTitle(title);
+      this.props.onChangeEditURL(url);
+      this.props.onChangeEditImageURL(imgUrl);
+      this.props.changeShowImage(true);
     }
   }
 
   save() {
     const { editTitle, editURL } = this.props;
     if ($$.trim(editTitle) === "") {
-      message.error('请上填写链接标题');
-      return
+      message.error("请上填写链接标题");
+      return;
     } else if ($$.trim(editURL) === "") {
-      message.error('请上填写链接URL');
-      return
+      message.error("请上填写链接URL");
+      return;
     } else if (!imageFile) {
-      message.error('请上传图片');
-      return
+      message.error("请上传图片");
+      return;
     }
-    const userNo = $$.localStorage.get("adminId")
+    const userNo = $$.localStorage.get("adminId");
     var formDatas = new FormData();
     formDatas.append("file", imageFile);
     formDatas.append("userNo", userNo);
     formDatas.append("title", editTitle);
     formDatas.append("url", editURL);
 
-    const editId = this.props.location.state && this.props.location.state.editRecord.id
+    const editId =
+      this.props.location.state && this.props.location.state.editRecord.id;
     if (editId) {
       formDatas.append("id", editId);
     }
-    this.props.save({ props: this.props, data: formDatas })
+    console.log(imageFile);
+    console.log(userNo);
+    console.log(editTitle);
+    console.log(editURL);
+    console.log(editId);
+    this.props.save({ props: this.props, data: formDatas });
   }
 
   clickFile() {
@@ -52,13 +58,13 @@ class Add extends Component {
   }
 
   fileChange(ele) {
-    imageFile = ele.files[0]
+    imageFile = ele.files[0];
     var reader = new FileReader();
     reader.readAsDataURL(imageFile);
     reader.onload = () => {
-      this.refs.img.src = reader.result
-      this.props.changeShowImage(true)
-    }
+      this.refs.img.src = reader.result;
+      this.props.changeShowImage(true);
+    };
   }
 
   render() {
@@ -68,17 +74,21 @@ class Add extends Component {
           <div className="pageContentColor">
             <Card title="链接信息" bordered={false}>
               <Form className={`${styles.form} clearfix`}>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">链接标题：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className="pullLeft">链接标题：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
                       placeholder="链接标题"
-                      onChange={e => this.props.onChangeEditTitle(e.target.value)}
+                      onChange={e =>
+                        this.props.onChangeEditTitle(e.target.value)
+                      }
                       value={this.props.editTitle}
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">链接URL：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className="pullLeft">链接URL：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
@@ -88,14 +98,18 @@ class Add extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">上传图片：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className="pullLeft">上传图片：</label>
                   <div className={`${styles.inline} pullLeft`}>
-
                     <div className={styles.uploadImg}>
                       <img
                         src={this.props.editImageURL}
                         ref="img"
-                        className={this.props.showImage ? styles.showimg : styles.hiddenimg}
+                        className={
+                          this.props.showImage
+                            ? styles.showimg
+                            : styles.hiddenimg
+                        }
                         alt="上传"
                       />
                     </div>
@@ -106,13 +120,17 @@ class Add extends Component {
                     >
                       选择文件
                     </Button>
-                    <input onChange={e => this.fileChange(e.target)} type="file" style={{ display: "none" }} ref="myFile" />
+                    <input
+                      onChange={e => this.fileChange(e.target)}
+                      type="file"
+                      style={{ display: "none" }}
+                      ref="myFile"
+                    />
                   </div>
                 </div>
-
               </Form>
             </Card>
-          </div >
+          </div>
 
           <div className={styles.formButton}>
             <Button
@@ -121,17 +139,21 @@ class Add extends Component {
               className={styles.formbtn}
               onClick={() => this.save()}
               loading={this.props.saveLoading}
-            >保存</Button>
+            >
+              保存
+            </Button>
             <Button
               size="large"
               type="primary"
               className={styles.formbtn}
               onClick={() => this.props.history.goBack()}
-            >返回列表</Button>
+            >
+              返回列表
+            </Button>
           </div>
         </Spin>
-      </div >
-    )
+      </div>
+    );
   }
 }
 
@@ -142,8 +164,8 @@ const mapState = state => ({
   showImage: state.link.showImage,
   editImageURL: state.link.editImageURL,
   status: state.link.editStatus,
-  saveLoading: state.link.saveLoading,
-})
+  saveLoading: state.link.saveLoading
+});
 
 const mapDispatch = dispatch => ({
   save: req => {
@@ -165,7 +187,7 @@ const mapDispatch = dispatch => ({
   changeShowImage: value => {
     const action = creators.changeShowImageAction(value);
     dispatch(action);
-  },
-})
+  }
+});
 
 export default connect(mapState, mapDispatch)(Add);

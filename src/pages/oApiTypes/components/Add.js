@@ -1,55 +1,53 @@
-import React from 'react';
-import { Modal, Input, Form, Select } from 'antd';
-import styles from '../css/add.module.css';
-import { connect } from 'react-redux';
-import * as creators from '../store/creators';
-import * as config from '../config';
-import $$ from 'static/js/base';
+import React from "react";
+import { Modal, Input, Form, Select } from "antd";
+import styles from "../css/add.module.css";
+import { connect } from "react-redux";
+import * as creators from "../store/creators";
+import * as config from "../config";
+import $$ from "static/js/base";
 
 const { TextArea } = Input;
 const { Option } = Select;
 
 function Add(props) {
-
   function collectData() {
-    let { typeName, typeRemarks, state } = props.record
-    typeName = $$.trim(typeName)
-    typeRemarks = $$.trim(typeRemarks)
-    if (typeName === '') {
+    let { typeName, typeRemarks, state } = props.record;
+    typeName = $$.trim(typeName);
+    typeRemarks = $$.trim(typeRemarks);
+    if (typeName === "") {
       Modal.error({
-        title: '类型名称',
+        title: "类型名称",
         content: "不能为空",
-        okText: '确认',
+        okText: "确认"
       });
-      return
-    } else if (typeRemarks === '') {
+      return;
+    } else if (typeRemarks === "") {
       Modal.error({
-        title: '类型备注',
+        title: "类型备注",
         content: "不能为空",
-        okText: '确认',
+        okText: "确认"
       });
-      return
+      return;
     }
     let data = {
       typeName,
-      typeRemarks,
-    }
+      typeRemarks
+    };
     if (props.edit) {
-      data.id = props.record.id
-      data.state = state
+      data.typeId = props.record.typeId;
+      data.state = state;
     }
-    const req = { props, data }
-    props.save(req)
+    const req = { props, data };
+    props.save(req);
   }
 
   function mapStatus() {
     let statusArr = [];
     Object.keys(config.status).forEach(k => {
-      statusArr.push({ k, v: config.status[k] })
-    })
+      statusArr.push({ k, v: config.status[k] });
+    });
     return statusArr;
   }
-
 
   return (
     <div className={styles.tableForm}>
@@ -65,15 +63,18 @@ function Add(props) {
         onCancel={() => props.changeModalVisible(false, false, config.record)}
       >
         <Form>
-          <div className={`${styles.formLine} clearfix`}><label className="pullLeft">类型名称：</label>
+          <div className={`${styles.formLine} clearfix`}>
+            <label className="pullLeft">类型名称：</label>
             <div className={`${styles.inline} pullLeft`}>
               <Input
                 allowClear
                 onChange={e => props.changeTypeName(e.target.value)}
-                value={props.record.typeName} />
+                value={props.record.typeName}
+              />
             </div>
           </div>
-          <div className={`${styles.formLine} clearfix`}><label className="pullLeft">类型备注：</label>
+          <div className={`${styles.formLine} clearfix`}>
+            <label className="pullLeft">类型备注：</label>
             <div className={`${styles.inline} pullLeft`}>
               <TextArea
                 rows={4}
@@ -83,29 +84,33 @@ function Add(props) {
             </div>
           </div>
 
-          {
-            props.edit ?
-              <div className={`${styles.formLine} clearfix`}>
-                <label className="pullLeft">安全策略状态：</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Select
-                    value={props.record.strategyStatus}
-                    style={{ width: "100%" }}
-                    onChange={value => props.changeStrategyStatus(value)}>
-                    <Option value="">请选择</Option>
-                    {
-                      mapStatus().map(item => {
-                        return <Option value={item.k} key={item.k}>{item.v}</Option>
-                      })
-                    }
-                  </Select>
-                </div>
-              </div> : ""
-          }
+          {props.edit ? (
+            <div className={`${styles.formLine} clearfix`}>
+              <label className="pullLeft">安全策略状态：</label>
+              <div className={`${styles.inline} pullLeft`}>
+                <Select
+                  value={props.record.state}
+                  style={{ width: "100%" }}
+                  onChange={value => props.changeStrategyStatus(value)}
+                >
+                  <Option value="">请选择</Option>
+                  {mapStatus().map(item => {
+                    return (
+                      <Option value={item.k} key={item.k}>
+                        {item.v}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
         </Form>
       </Modal>
-    </div >
-  )
+    </div>
+  );
 }
 
 const mapState = state => ({
@@ -113,12 +118,16 @@ const mapState = state => ({
   record: state.oApiTypes.record,
   spinning: state.oApiTypes.spinning,
   confirmLoading: state.oApiTypes.confirmLoading,
-  edit: state.oApiTypes.edit,
-})
+  edit: state.oApiTypes.edit
+});
 
 const mapDispatch = dispatch => ({
   changeModalVisible: (modalVisible, edit, record) => {
-    const action = creators.changeModalVisibleAction(modalVisible, edit, record);
+    const action = creators.changeModalVisibleAction(
+      modalVisible,
+      edit,
+      record
+    );
     dispatch(action);
   },
   changeTypeName: value => {
@@ -137,6 +146,6 @@ const mapDispatch = dispatch => ({
     const action = creators.saveAction(req);
     dispatch(action);
   }
-})
+});
 
 export default connect(mapState, mapDispatch)(Add);

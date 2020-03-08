@@ -10,28 +10,28 @@ import Oper from "./components/Operation";
 import * as config from "./config";
 
 const columns = [
-  { title: "链接标题", dataIndex: "title", key: "title", align: "center" },
-  { title: "链接URL", dataIndex: "url", key: "url", align: "center" },
+  { title: "接口名称", dataIndex: "apiName", key: "apiName" },
   {
-    title: "创建时间",
-    dataIndex: "createdAt",
-    key: "createdAt",
-    align: "center",
-    render: createdAt => <span>{createdAt && $$.getHours(createdAt)}</span>
+    title: "接口",
+    dataIndex: "apiUrl",
+    key: "apiUrl"
   },
   {
-    title: "创建人",
-    dataIndex: "createdBy",
-    key: "createdBy",
-    align: "center"
+    title: "请求方法",
+    dataIndex: "apiReqType",
+    key: "apiReqType"
+  },
+  {
+    title: "Content-Type",
+    dataIndex: "apiParamType",
+    key: "apiParamType"
   },
   {
     title: "状态",
-    dataIndex: "status",
-    key: "status",
-    align: "center",
-    render: status => (
-      <span>{config.status[status] ? config.status[status] : "--"}</span>
+    dataIndex: "state",
+    key: "state",
+    render: state => (
+      <span>{config.state[state] ? config.state[state] : "--"}</span>
     )
   },
   {
@@ -45,10 +45,6 @@ const columns = [
 class List extends Component {
   componentDidMount() {
     this.sendFn(1, 10);
-    this.props.onChangeEditTitle("");
-    this.props.onChangeEditURL("");
-    this.props.onChangeEditImageURL("");
-    this.props.changeShowImage(false);
   }
 
   paginationChange = (pageNo, pageSize) => {
@@ -62,7 +58,7 @@ class List extends Component {
   sendFn(pageNo, pageSize) {
     //const params = this.props.params
     const data = { pageNo, pageSize };
-    this.props.querylist({ props: this.props, data });
+    this.props.queryList({ props: this.props, data });
   }
 
   render() {
@@ -78,7 +74,7 @@ class List extends Component {
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <SearchForm />
           <div className={styles.buttonForm}>
-            <Link to="/link/add">
+            <Link to="/oApi/add">
               <Button type="primary" className={styles.addButton}>
                 <Icon type="plus" />
                 新增
@@ -101,31 +97,15 @@ class List extends Component {
 }
 
 const mapState = state => ({
-  list: state.link.list,
-  pagination: state.link.pagination,
-  spinning: state.link.spinning,
-  params: state.link.params
+  list: state.oApi.list,
+  pagination: state.oApi.pagination,
+  spinning: state.oApi.spinning,
+  params: state.oApi.params
 });
 
 const mapDispatch = dispatch => ({
-  querylist: req => {
+  queryList: req => {
     const action = creators.queryListAction(req);
-    dispatch(action);
-  },
-  onChangeEditTitle: value => {
-    const action = creators.onChangeEditTitleAction(value);
-    dispatch(action);
-  },
-  onChangeEditURL: value => {
-    const action = creators.onChangeEditURLAction(value);
-    dispatch(action);
-  },
-  onChangeEditImageURL: value => {
-    const action = creators.onChangeEditImageURLAction(value);
-    dispatch(action);
-  },
-  changeShowImage: value => {
-    const action = creators.changeShowImageAction(value);
     dispatch(action);
   }
 });

@@ -1,0 +1,30 @@
+.tableForm {
+  padding-bottom: 12px;
+}
+.operButton {
+  font-size: 11px;
+}
+
+.formLine {
+  margin-bottom: 20px;
+}
+
+.formLine label {
+  width: 130px;
+  text-align: right;
+  padding-right: 10px;
+  line-height: 2;
+}
+
+.inline {
+  width: 350px;
+}
+.button {
+  margin-left: 10px;
+  width: 150px;
+}
+
+.bottom {
+  text-align: center;
+  margin-top: 40px;
+}

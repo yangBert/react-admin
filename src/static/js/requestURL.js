@@ -259,3 +259,14 @@ export const delSafeStrategy =
 export const webSiteSelectAPITypes = "/api/v1/manager/oApi/selectAllTypes";
 export const managerOApiInsertType = "/api/v1/manager/oApi/insertType";
 export const managerOApiUpdateType = "/api/v1/manager/oApi/updateType";
+
+//共有API接口
+export const managerOApiInsertOpenApi = "/api/v1/manager/oApi/insertOpenApi";
+export const managerOApiSelectPageOApi = "/api/v1/manager/oApi/selectPageOApi";
+export const managerOApiUpdateOpenApi = "/api/v1/manager/oApi/updateOpenApi";
+
+//API参数列表
+export const managerOApiInsertParam = "/api/v1/manager/oApi/insertParam";
+export const managerOApiSelectAllParamByApiId =
+  "/api/v1/manager/oApi/selectAllParamByApiId";
+export const managerOApiUpdateParam = "/api/v1/manager/oApi/updateParam";
