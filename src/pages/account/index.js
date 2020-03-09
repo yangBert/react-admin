@@ -7,6 +7,7 @@ import styles from './css/UserList.module.css';
 import { Link } from 'react-router-dom';
 import $$ from 'static/js/base';
 import Oper from './components/Operation';
+import * as config from "./config";
 
 const columns = [
   { title: '账户编码', dataIndex: 'accountCode', key: 'accountCode', align: 'center' },
@@ -14,19 +15,19 @@ const columns = [
   {
     title: '账户类型', dataIndex: 'accountType', key: 'accountType', align: 'center',
     render: accountType => (
-      <span>{accountType === '01' ? '个人账户' : accountType === '02' ? '企业账户' : "未定义"}</span>
+      <span>{config.accountType[accountType] ? config.accountType[accountType] : "--"}</span>
     )
   },
   {
     title: '充值总金额（元）', dataIndex: 'totalMoney', key: 'totalMoney', align: 'center',
     render: totalMoney => (
-      <span>{totalMoney === null ? "0.00" : Number(totalMoney.toFixed(2))}</span>
+      <span>{!totalMoney ? "0.00" : Number(totalMoney.toFixed(2))}</span>
     )
   },
   {
     title: '可用余额（元）', dataIndex: 'balanceMoney', key: 'balanceMoney', align: 'center',
     render: balanceMoney => (
-      <span>{balanceMoney === null ? "0.00" : balanceMoney.toFixed(2)}</span>
+      <span>{!balanceMoney ? "0.00" : balanceMoney.toFixed(2)}</span>
     )
   },
   {
@@ -34,7 +35,9 @@ const columns = [
   },
   {
     title: '账户状态', dataIndex: 'status', key: 'status', align: 'center',
-    render: status => <span>{status === "0" ? <Tag color="green">已启用</Tag> : <Tag color="red">已禁用</Tag>}</span>,
+    render: status => (
+      <span>{config.status[status] ? config.status[status] : "--"}</span>
+    )
   },
   {
     title: '最后更新时间', dataIndex: 'lastUpdatedTime', key: 'lastUpdatedTime', align: 'center',

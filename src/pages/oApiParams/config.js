@@ -1,3 +1,3 @@
-const paramType = ["string", "json", "int"];
+const paramType = ["String", "Integer"];
 
 export { paramType };

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/add.module.css';
 import $$ from 'static/js/base';
-
+import * as config from "../config";
 const { Option } = Select;
 
 class Add extends Component {
@@ -87,6 +87,14 @@ class Add extends Component {
     return arr;
   }
 
+  mapAccountType() {
+    let statusArr = [];
+    Object.keys(config.accountType).forEach(k => {
+      statusArr.push({ k, v: config.accountType[k] })
+    })
+    return statusArr;
+  }
+
   render() {
     return (
       <div className={styles.pageContet}>
@@ -111,8 +119,13 @@ class Add extends Component {
                       onChange={value => this.props.setEditAccountType(value)}
                     >
                       <Option value="">请选择</Option>
-                      <Option value="01">个人账户</Option>
-                      <Option value="02">企业账户</Option>
+                      {this.mapAccountType().map(item => {
+                        return (
+                          <Option value={item.k} key={item.k}>
+                            {item.v}
+                          </Option>
+                        );
+                      })}
                     </Select>
                   </div>
                 </div>
