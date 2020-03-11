@@ -1,42 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Icon, Input, TreeSelect } from 'antd';
-import { connect } from 'react-redux';
-import * as creators from '../store/creators';
-import styles from '../css/SearchForm.module.css';
+import React, { useState, useEffect } from "react";
+import { Button, Icon, Input, TreeSelect } from "antd";
+import { connect } from "react-redux";
+import * as creators from "../store/creators";
+import styles from "../css/SearchForm.module.css";
 
 //const { Option } = Select;
 
 function SearchForm(props) {
-  const [productName, setProductName] = useState("")
-  const [productTypeCode, setProductTypeCode] = useState("")
+  const [productName, setProductName] = useState("");
+  const [productTypeCode, setProductTypeCode] = useState("");
   const { changeSearchParams } = props;
   useEffect(() => {
-    changeSearchParams({ productName })
+    changeSearchParams({ productName });
   }, [productName, changeSearchParams]);
 
   function search() {
-    const { productName } = props.params
+    const { productName } = props.params;
     const data = {
       pageSize: 10,
       pageNo: 1,
       productName,
       productTypeCode
-    }
+    };
     props.queryList({ props, data });
   }
 
   function reset() {
     setProductName("");
-    const data = { pageNo: 1, pageSize: 10 }
+    const data = { pageNo: 1, pageSize: 10 };
     props.queryList({ props, data });
   }
 
   function recursiveFn(arr) {
     for (var i = 0; i < arr.length; i++) {
-      arr[i].title = arr[i].productTypeName
-      arr[i].value = arr[i].productTypeCode
+      arr[i].title = arr[i].productTypeName;
+      arr[i].value = arr[i].productTypeCode;
       if (arr[i].children && arr[i].children.length > 0) {
-        recursiveFn(arr[i].children)
+        recursiveFn(arr[i].children);
       }
     }
     return arr;
@@ -49,9 +49,9 @@ function SearchForm(props) {
           <label className="pullLeft">产品类型:</label>
           <div className={`${styles.inline} pullLeft`}>
             <TreeSelect
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
               value={productTypeCode}
-              dropdownStyle={{ maxHeight: 250, overflow: 'auto' }}
+              dropdownStyle={{ maxHeight: 250, overflow: "auto" }}
               treeData={recursiveFn(props.allProductType)}
               placeholder="请选择"
               //treeDefaultExpandAll
@@ -72,24 +72,26 @@ function SearchForm(props) {
         </div>
         <div className="pullLeft">
           <Button onClick={() => search()} type="primary">
-            <Icon type="search" />查询
-          </Button>&nbsp;&nbsp;
+            <Icon type="search" />
+            查询
+          </Button>
+          &nbsp;&nbsp;
           <Button onClick={() => reset()} type="primary" ghost>
-            <Icon type="undo" />重置
+            <Icon type="undo" />
+            重置
           </Button>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 const mapState = state => ({
   params: state.product.params,
-  allProductType: state.product.allProductType,
-})
+  allProductType: state.product.allProductType
+});
 
 const mapDispatch = dispatch => ({
-
   queryList: req => {
     const action = creators.queryListAction(req);
     dispatch(action);
@@ -97,7 +99,7 @@ const mapDispatch = dispatch => ({
   changeSearchParams: params => {
     const action = creators.createChangeParamsAction(params);
     dispatch(action);
-  },
-})
+  }
+});
 
 export default connect(mapState, mapDispatch)(SearchForm);

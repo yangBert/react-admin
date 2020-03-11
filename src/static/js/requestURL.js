@@ -52,7 +52,6 @@ export const plateSettingAppDetail =
 export const plateSettingAppAudit = "/api/v1/uamManager/plateSetting/appAudit";
 export const plateSettingUpdateAppWithOutFile =
   "/api/v1/uamManager/plateSetting/UpdateAppWithOutFile";
-
 //计费优惠策略管理
 export const chargeAppDetail = "/api/v1/manager/chargeApp/detail";
 export const chargeAppAdd = "/api/v1/manager/chargeApp/add";

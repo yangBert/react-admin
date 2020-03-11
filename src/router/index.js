@@ -19,6 +19,8 @@ const OrgAdd = lazy(() => import("pages/org/components/OrgAdd"));
 const NoticeList = lazy(() => import("pages/notice/NoticeList"));
 const NoticeAdd = lazy(() => import("pages/notice/components/NoticeAdd"));
 const ProductList = lazy(() => import("pages/product"));
+const ProductAdd = lazy(() => import("pages/product/components/Add"));
+const ProductTypeList = lazy(() => import("pages/productType"));
 const CertificationList = lazy(() => import("pages/certification"));
 const CertificationAdd = lazy(() =>
   import("pages/certification/components/CertificationAdd")
@@ -31,7 +33,6 @@ const PlatSettingList = lazy(() => import("pages/platSetting"));
 const PlatSettingAdd = lazy(() => import("pages/platSetting/components/Add"));
 const BillingList = lazy(() => import("pages/billing"));
 const BillingAdd = lazy(() => import("pages/billing/components/Add"));
-const ProductTypeList = lazy(() => import("pages/productType"));
 const PreferentialList = lazy(() => import("pages/preferential"));
 const PreferentialAdd = lazy(() => import("pages/preferential/components/Add"));
 const AccountList = lazy(() => import("pages/account"));
@@ -98,6 +99,7 @@ const OAPIAdd = lazy(() => import("pages/oApi/components/Add"));
 
 const OApiParamsList = lazy(() => import("pages/oApiParams"));
 const OApiParamsAdd = lazy(() => import("pages/oApiParams/components/Add"));
+const AccountRecharge = lazy(() => import("pages/account/components/Recharge"));
 
 const routes = [
   {
@@ -179,6 +181,10 @@ const routes = [
   {
     path: "/product/productList",
     component: ProductList
+  },
+  {
+    path: "/product/add",
+    component: ProductAdd
   },
   {
     path: "/certification/list",
@@ -383,6 +389,10 @@ const routes = [
   {
     path: "/oApiParams/add",
     component: OApiParamsAdd
+  },
+  {
+    path: "/account/recharge",
+    component: AccountRecharge
   }
 ];
 export default routes;

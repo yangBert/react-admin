@@ -1,14 +1,22 @@
-import React, { Component } from 'react';
-import { Spin, Input, Button, message, Card, Form, TreeSelect, Select } from 'antd';
-import { connect } from 'react-redux';
-import * as creators from '../store/creators';
-import styles from '../css/add.module.css';
-import $$ from 'static/js/base';
+import React, { Component } from "react";
+import {
+  Spin,
+  Input,
+  Button,
+  message,
+  Card,
+  Form,
+  TreeSelect,
+  Select
+} from "antd";
+import { connect } from "react-redux";
+import * as creators from "../store/creators";
+import styles from "../css/add.module.css";
+import $$ from "static/js/base";
 import * as config from "../config";
 const { Option } = Select;
 
 class Add extends Component {
-
   componentDidMount() {
     if (this.props.location.state && this.props.location.state.editRecord) {
       const {
@@ -17,12 +25,12 @@ class Add extends Component {
         orgCode,
         parentAccount,
         accessScrect
-      } = this.props.location.state.editRecord
-      this.props.setAccountName(accountName)
-      this.props.setEditAccountType(accountType)
-      this.props.setEditOrgCode(orgCode)
-      this.props.setEditParentAccount(parentAccount)
-      this.props.setEditAccessScrect(accessScrect)
+      } = this.props.location.state.editRecord;
+      this.props.setAccountName(accountName);
+      this.props.setEditAccountType(accountType);
+      this.props.setEditOrgCode(orgCode);
+      this.props.setEditParentAccount(parentAccount);
+      this.props.setEditAccessScrect(accessScrect);
     }
   }
 
@@ -35,22 +43,22 @@ class Add extends Component {
       editAccessScrect
     } = this.props;
     if ($$.trim(editAccountName) === "") {
-      message.error('请填写优惠策略');
-      return
+      message.error("请填写优惠策略");
+      return;
     } else if (editAccountType === "") {
-      message.error('请选择账户类型');
-      return
+      message.error("请选择账户类型");
+      return;
     } else if (editOrgCode === "") {
-      message.error('请选择机构单位');
-      return
+      message.error("请选择机构单位");
+      return;
     } else if ($$.trim(editParentAccount) === "") {
-      message.error('请填写父账户');
-      return
+      message.error("请填写父账户");
+      return;
     } else if ($$.trim(editAccessScrect) === "") {
-      message.error('请填写账户访问密钥');
-      return
+      message.error("请填写账户访问密钥");
+      return;
     }
-    const creater = $$.localStorage.get("adminId")
+    const creater = $$.localStorage.get("adminId");
     //const createrName = $$.localStorage.get("adminName")
     const req = {
       props: this.props,
@@ -60,28 +68,30 @@ class Add extends Component {
         orgCode: editOrgCode,
         parentAccount: $$.trim(editParentAccount),
         accessScrect: $$.trim(editAccessScrect),
-        createdBy: creater,
+        createdBy: creater
       }
-    }
+    };
 
-    const editId = this.props.location.state.editRecord && this.props.location.state.editRecord.id
+    const editId =
+      this.props.location.state.editRecord &&
+      this.props.location.state.editRecord.id;
     if (editId) {
-      req.data.id = editId
-      req.data.userNo = creater
-      req.data.accountCode = this.props.location.state.editRecord.accountCode
-      delete req.data.createdBy
+      req.data.id = editId;
+      req.data.userNo = creater;
+      req.data.accountCode = this.props.location.state.editRecord.accountCode;
+      delete req.data.createdBy;
     }
-    console.log("idsdfsdfsdf", req)
-    this.props.save(req)
+    console.log("idsdfsdfsdf", req);
+    this.props.save(req);
   }
 
   //递归
   recursiveFn(arr) {
     for (var i = 0; i < arr.length; i++) {
-      arr[i].title = arr[i].orgName
-      arr[i].value = arr[i].orgCode
+      arr[i].title = arr[i].orgName;
+      arr[i].value = arr[i].orgCode;
       if (arr[i].children && arr[i].children.length > 0) {
-        this.recursiveFn(arr[i].children)
+        this.recursiveFn(arr[i].children);
       }
     }
     return arr;
@@ -90,8 +100,8 @@ class Add extends Component {
   mapAccountType() {
     let statusArr = [];
     Object.keys(config.accountType).forEach(k => {
-      statusArr.push({ k, v: config.accountType[k] })
-    })
+      statusArr.push({ k, v: config.accountType[k] });
+    });
     return statusArr;
   }
 
@@ -102,7 +112,8 @@ class Add extends Component {
           <div className="pageContentColor">
             <Card title="基本信息" bordered={false}>
               <Form className={`${styles.form} clearfix`}>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">账户名称：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className="pullLeft">账户名称：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
@@ -112,7 +123,8 @@ class Add extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">账户类型：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className="pullLeft">账户类型：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Select
                       value={this.props.editAccountType}
@@ -129,43 +141,51 @@ class Add extends Component {
                     </Select>
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">所属于单位：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className="pullLeft">所属于单位：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <TreeSelect
-                      style={{ width: '100%' }}
+                      style={{ width: "100%" }}
                       value={this.props.editOrgCode}
-                      dropdownStyle={{ maxHeight: 250, overflow: 'auto' }}
-                      treeData={this.recursiveFn(this.props.location.state.editOrgList)}
+                      dropdownStyle={{ maxHeight: 250, overflow: "auto" }}
+                      treeData={this.recursiveFn(
+                        this.props.location.state.editOrgList
+                      )}
                       placeholder="请选择"
                       treeDefaultExpandAll
                       onChange={this.props.setEditOrgCode}
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">父账户：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className="pullLeft">父账户：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
                       placeholder="请输入父账户"
-                      onChange={e => this.props.setEditParentAccount(e.target.value)}
+                      onChange={e =>
+                        this.props.setEditParentAccount(e.target.value)
+                      }
                       value={this.props.editParentAccount}
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">账户访问：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className="pullLeft">账户访问：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
                       placeholder="请输入账户访问"
-                      onChange={e => this.props.setEditAccessScrect(e.target.value)}
+                      onChange={e =>
+                        this.props.setEditAccessScrect(e.target.value)
+                      }
                       value={this.props.editAccessScrect}
                     />
                   </div>
                 </div>
-
               </Form>
             </Card>
-          </div >
+          </div>
 
           <div className={styles.formButton}>
             <Button
@@ -174,17 +194,21 @@ class Add extends Component {
               className={styles.formbtn}
               onClick={() => this.save()}
               loading={this.props.saveLoading}
-            >保存</Button>
+            >
+              保存
+            </Button>
             <Button
               size="large"
               type="primary"
               className={styles.formbtn}
               onClick={() => this.props.history.goBack()}
-            >返回列表</Button>
+            >
+              返回列表
+            </Button>
           </div>
         </Spin>
       </div>
-    )
+    );
   }
 }
 
@@ -195,8 +219,8 @@ const mapState = state => ({
   editAccountType: state.account.editAccountType,
   editOrgCode: state.account.editOrgCode,
   editParentAccount: state.account.editParentAccount,
-  editAccessScrect: state.account.editAccessScrect,
-})
+  editAccessScrect: state.account.editAccessScrect
+});
 
 const mapDispatch = dispatch => ({
   save: req => {
@@ -222,7 +246,7 @@ const mapDispatch = dispatch => ({
   setEditAccessScrect: value => {
     const action = creators.setEditAccessScrectAction(value);
     dispatch(action);
-  },
-})
+  }
+});
 
 export default connect(mapState, mapDispatch)(Add);

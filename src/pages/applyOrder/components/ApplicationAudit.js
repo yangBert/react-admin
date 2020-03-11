@@ -229,7 +229,7 @@ class Detail extends React.Component {
                     <Descriptions.Item label="登录方式">
                       <Radio.Group value={feeCode} disabled={true}>
                         <Radio value={"1"}>一次性收费</Radio>
-                        <Radio value={"0"}>时实收费</Radio>
+                        <Radio value={"0"}>实时收费</Radio>
                       </Radio.Group>
                     </Descriptions.Item>
                     <Descriptions.Item label="支持CA">

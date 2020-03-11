@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Card,
   Form,
@@ -10,19 +10,19 @@ import {
   Checkbox,
   Button,
   Spin,
-  TreeSelect,
-} from 'antd';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import styles from '../css/add.module.css';
-import * as creators from '../store/creators';
-import $$ from 'static/js/base';
+  TreeSelect
+} from "antd";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import styles from "../css/add.module.css";
+import * as creators from "../store/creators";
+import $$ from "static/js/base";
 
 const { Option } = Select;
 
 function getBase64(img, callback) {
   const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
+  reader.addEventListener("load", () => callback(reader.result));
   reader.readAsDataURL(img);
 }
 
@@ -38,9 +38,7 @@ function getBase64(img, callback) {
 //   return isJpgOrPng && isLt2M;
 // }
 
-
 class AppAdd extends Component {
-
   state = {
     loading: false,
     refappName: null,
@@ -48,60 +46,66 @@ class AppAdd extends Component {
     refdescribes: null,
     refredirectUrl: null,
     refappType: null,
-    refauditMode: null,
+    refauditMode: null
   };
 
   componentDidMount() {
     //查询机构
-    this.props.queryOrgList({ props: this.props, data: { pageNo: 1, pageSize: 10 } });
+    this.props.queryOrgList({
+      props: this.props,
+      data: { pageNo: 1, pageSize: 10 }
+    });
     //查询应用所有信息
     if (this.props.location.state && this.props.location.state.editAppId) {
-      this.props.queryEditAppInfor({ com: this, data: { id: this.props.location.state.editAppId } })
+      this.props.queryEditAppInfor({
+        com: this,
+        data: { id: this.props.location.state.editAppId }
+      });
     } else {
-      this.props.emptyValue()
+      this.props.emptyValue();
     }
   }
 
   handleChange = info => {
-    if (info.file.status === 'uploading') {
+    if (info.file.status === "uploading") {
       this.setState({ loading: true });
       return;
     }
-    if (info.file.status === 'done') {
+    if (info.file.status === "done") {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, icon =>
         this.setState({
           icon,
-          loading: false,
-        }),
+          loading: false
+        })
       );
     }
   };
 
   beforeUpload = file => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
-      message.error('请上传 JPG/PNG 文件!');
+      message.error("请上传 JPG/PNG 文件!");
     }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
-      message.error('图片必须小于 2M!');
+      message.error("图片必须小于 2M!");
     }
     var reader = new FileReader();
     reader.readAsDataURL(file);
     var self = this;
-    reader.onload = function () {
-      self.props.setIconBase64(this.result)
+    reader.onload = function() {
+      self.props.setIconBase64(this.result);
       //self.props.onChangeIcon(file)
-      self.setState({ icon: file })
-    }
+      self.setState({ icon: file });
+    };
     return isJpgOrPng && isLt2M;
-  }
+  };
 
   collectFormData() {
-    const data = this.props.form
-    const imgURL = this.props.iconBase64 || this.props.icon
-    const file = this.state.icon
+    const data = this.props.form;
+    const imgURL = this.props.iconBase64 || this.props.icon;
+    const file = this.state.icon;
     let {
       appName,
       url,
@@ -113,47 +117,45 @@ class AppAdd extends Component {
       supportCAs,
       orgCode,
       tag
-    } = data
-    appName = $$.trim(appName)
-    url = $$.trim(url)
-    describes = $$.trim(describes)
-    redirectUrl = $$.trim(redirectUrl)
-    tag = $$.trim(tag)
+    } = data;
+    appName = $$.trim(appName);
+    url = $$.trim(url);
+    describes = $$.trim(describes);
+    redirectUrl = $$.trim(redirectUrl);
+    tag = $$.trim(tag);
 
     if (appName === "") {
-      message.error("应用名称不能为空")
+      message.error("应用名称不能为空");
       return;
     } else if (url === "") {
-      message.error("应用访问地址不能为空")
+      message.error("应用访问地址不能为空");
       return;
     } else if (describes === "") {
-      message.error("应用描述不能为空")
+      message.error("应用描述不能为空");
       return;
-    }
-    else if (redirectUrl === "") {
-      message.error("推送URL不能为空")
+    } else if (redirectUrl === "") {
+      message.error("推送URL不能为空");
       return;
     } else if (orgCode === "") {
-      message.error("请选择机构")
+      message.error("请选择机构");
       return;
-    }
-    else if (!imgURL) {
-      message.error("请上传应用LOGO")
+    } else if (!imgURL) {
+      message.error("请上传应用LOGO");
       return;
     } else if (appType === "") {
-      message.error("请选择应用类型")
+      message.error("请选择应用类型");
       return;
     } else if (auditMode === "") {
-      message.error("请选择审核模式")
+      message.error("请选择审核模式");
       return;
     } else if (tag === "") {
-      message.error("请输入标签")
+      message.error("请输入标签");
       return;
     } else if (landingModes.length === 0) {
-      message.error("请选择登陆认证方式")
+      message.error("请选择登陆认证方式");
       return;
     } else if (supportCAs.length === 0) {
-      message.error("请选择支持CA机构")
+      message.error("请选择支持CA机构");
       return;
     }
 
@@ -172,22 +174,22 @@ class AppAdd extends Component {
     if (this.props.location.state && this.props.location.state.editAppId) {
       formDatas.append("id", this.props.location.state.editAppId);
     }
-    console.log("data,", tag)
-    console.log("orgCode,", orgCode)
-    this.props.saveAppForm({ props: this.props, data: formDatas })
+    console.log("data,", tag);
+    console.log("orgCode,", orgCode);
+    this.props.saveAppForm({ props: this.props, data: formDatas });
   }
 
   backButton() {
-    this.props.history.goBack()
+    this.props.history.goBack();
   }
 
   //递归
   recursiveFn(arr) {
     for (var i = 0; i < arr.length; i++) {
-      arr[i].title = arr[i].menuName
-      arr[i].value = arr[i].menuId
+      arr[i].title = arr[i].menuName;
+      arr[i].value = arr[i].menuId;
       if (arr[i].children && arr[i].children.length > 0) {
-        this.recursiveFn(arr[i].children)
+        this.recursiveFn(arr[i].children);
       }
     }
     return arr;
@@ -196,19 +198,26 @@ class AppAdd extends Component {
   render() {
     const uploadButton = (
       <div>
-        <Icon type={this.state.loading ? 'loading' : 'plus'} />
+        <Icon type={this.state.loading ? "loading" : "plus"} />
         <div className="ant-upload-text">上传</div>
       </div>
     );
-    const imgURL = this.props.iconBase64 || this.props.icon
-    const { allLandingModes, allSupportCAs, allAppTypes } = this.props.location.state
+    const imgURL = this.props.iconBase64 || this.props.icon;
+    const {
+      allLandingModes,
+      allSupportCAs,
+      allAppTypes
+    } = this.props.location.state;
     return (
       <div className={styles.pageContet}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <div className="pageContentColor">
             <Card title="基本信息" bordered={false}>
               <Form className={`${styles.form} clearfix`}>
-                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用名称：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    应用名称：
+                  </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
@@ -219,7 +228,10 @@ class AppAdd extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用访问地址：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    应用访问地址：
+                  </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
@@ -230,36 +242,49 @@ class AppAdd extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用描述：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    应用描述：
+                  </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
                       placeholder="请输入应用描述"
                       //ref={refdescribes => this.setState({refdescribes})}
-                      onChange={e => this.props.onChangeDescribes(e.target.value)}
+                      onChange={e =>
+                        this.props.onChangeDescribes(e.target.value)
+                      }
                       value={this.props.describes}
                     />
                   </div>
                 </div>
 
-                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>推送URL：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    推送URL：
+                  </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
                       placeholder="请输入推送URL"
                       //ref={refredirectUrl => this.setState({refredirectUrl})}
-                      onChange={e => this.props.onChangeRedirectUrl(e.target.value)}
+                      onChange={e =>
+                        this.props.onChangeRedirectUrl(e.target.value)
+                      }
                       value={this.props.redirectUrl}
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>请选择机构：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    请选择机构：
+                  </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <TreeSelect
                       className={styles.text}
-                      style={{ width: '100%' }}
+                      style={{ width: "100%" }}
                       value={this.props.orgCode}
-                      dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                      dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
                       treeData={this.props.orgList}
                       placeholder="请选择"
                       treeDefaultExpandAll
@@ -267,7 +292,10 @@ class AppAdd extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formBlock} pullLeft`}><label className={`${styles.label} pullLeft`}>上传应用LOGO：</label>
+                <div className={`${styles.formBlock} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    上传应用LOGO：
+                  </label>
                   <Upload
                     name="avatar"
                     listType="picture-card"
@@ -275,41 +303,54 @@ class AppAdd extends Component {
                     showUploadList={false}
                     //action={requestURL.uploadUploadApplyFile}
                     beforeUpload={this.beforeUpload}
-                  //onChange={this.props.onChangeIcon}
+                    //onChange={this.props.onChangeIcon}
                   >
-                    {
-                      imgURL ?
-                        <img src={imgURL} alt="avatar" style={{ width: '100%' }} /> :
-                        uploadButton
-                    }
+                    {imgURL ? (
+                      <img
+                        src={imgURL}
+                        alt="avatar"
+                        style={{ width: "100%" }}
+                      />
+                    ) : (
+                      uploadButton
+                    )}
                   </Upload>
                 </div>
-
               </Form>
             </Card>
-          </div >
+          </div>
 
           <div className="pageContentColor">
             <Card title="扩展信息" bordered={false}>
               <Form className={`${styles.form} clearfix`}>
-                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用类型：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    应用类型：
+                  </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Select
                       value={this.props.appType ? this.props.appType : ""}
                       onChange={value => this.props.onChangeAppType(value)}
                     >
                       <Option value="">请选择</Option>
-                      {
-                        allAppTypes.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>)
-                      }
+                      {allAppTypes.map(item => (
+                        <Option key={item.value} value={item.value}>
+                          {item.label}
+                        </Option>
+                      ))}
                     </Select>
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>审核模式：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    审核模式：
+                  </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Select
                       //ref={refauditMode => this.setState({refauditMode})}
-                      value={this.props.auditMode === "" ? "" : this.props.auditMode}
+                      value={
+                        this.props.auditMode === "" ? "" : this.props.auditMode
+                      }
                       onChange={value => this.props.onChangeAuditMode(value)}
                     >
                       <Option value="">请选择</Option>
@@ -318,7 +359,10 @@ class AppAdd extends Component {
                     </Select>
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用标签：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    应用标签：
+                  </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
                       className={styles.text}
@@ -329,17 +373,22 @@ class AppAdd extends Component {
                   </div>
                 </div>
 
-                <div className={`${styles.formBlock} clearfix`}><label className={`${styles.label} pullLeft`}>登陆认证方式：</label>
+                <div className={`${styles.formBlock} clearfix`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    登陆认证方式：
+                  </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Checkbox.Group
-
                       options={allLandingModes}
                       value={this.props.landingModes}
                       onChange={this.props.changeLandingModes}
                     />
                   </div>
                 </div>
-                <div className={`${styles.formBlock} clearfix`}><label className={`${styles.label} pullLeft`}>支持CA机构：</label>
+                <div className={`${styles.formBlock} clearfix`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    支持CA机构：
+                  </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Checkbox.Group
                       options={allSupportCAs}
@@ -350,27 +399,33 @@ class AppAdd extends Component {
                 </div>
               </Form>
             </Card>
-          </div >
+          </div>
           <div className={styles.formButton}>
-            {this.props.editAppId ? "" :
+            {this.props.editAppId ? (
+              ""
+            ) : (
               <Button
                 type="primary"
                 size="large"
                 className={styles.formbtn}
                 onClick={() => this.collectFormData()}
                 loading={this.props.saveLoading}
-              >保存</Button>
-            }
+              >
+                保存
+              </Button>
+            )}
             <Button
               size="large"
               type="primary"
               className={styles.formbtn}
               onClick={() => this.backButton()}
-            >返回列表</Button>
+            >
+              返回列表
+            </Button>
           </div>
         </Spin>
       </div>
-    )
+    );
   }
 }
 
@@ -391,8 +446,8 @@ const mapState = state => ({
   spinning: state.app.spinning,
   orgList: state.app.orgList,
   orgCode: state.app.form.orgCode,
-  tag: state.app.form.tag,
-})
+  tag: state.app.form.tag
+});
 
 const mapDispatch = dispatch => ({
   onChangeAppName: value => {
@@ -459,7 +514,7 @@ const mapDispatch = dispatch => ({
   onChangeTag: req => {
     const action = creators.onChangeTagAction(req);
     dispatch(action);
-  },
-})
+  }
+});
 
 export default withRouter(connect(mapState, mapDispatch)(AppAdd));

@@ -1,5 +1,5 @@
-import * as types from './actionTypes';
-import spinningTypes from 'pages/common/layer/spinning/spinningTypes';
+import * as types from "./actionTypes";
+import spinningTypes from "pages/common/layer/spinning/spinningTypes";
 
 const defaultState = {
   list: [],
@@ -12,45 +12,53 @@ const defaultState = {
   editOrgCode: "",
   editParentAccount: "",
   editAccessScrect: "",
-  editOrgList: []
+  editOrgList: [],
+  rechargeType: "",
+  rechargeMoney: 0
 };
 
 export default (state = defaultState, action) => {
-  let newState = JSON.parse(JSON.stringify(state))
+  let newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case spinningTypes:
-      newState.spinning = action.spinning
+      newState.spinning = action.spinning;
       break;
     case types.QUERY_LIST:
-      newState.list = action.list
-      newState.pagination = action.pagination
+      newState.list = action.list;
+      newState.pagination = action.pagination;
       break;
     case types.CHANGE_SEARCH_PARAMS:
-      newState.params = action.params
+      newState.params = action.params;
       break;
     case types.CHANGE_SAVE_LOADING:
-      newState.saveLoading = action.saveLoading
+      newState.saveLoading = action.saveLoading;
       break;
     case types.SET_EDIT_ACCOUNT_NAME:
-      newState.editAccountName = action.editAccountName
+      newState.editAccountName = action.editAccountName;
       break;
     case types.SET_EDIT_ACCOUNT_TYPE:
-      newState.editAccountType = action.editAccountType
+      newState.editAccountType = action.editAccountType;
       break;
     case types.SET_EDIT_ORG_CODE:
-      newState.editOrgCode = action.editOrgCode
+      newState.editOrgCode = action.editOrgCode;
       break;
     case types.INIT_EDIT_ORG_LIST:
-      newState.editOrgList = action.editOrgList
+      newState.editOrgList = action.editOrgList;
       break;
     case types.SET_EDIT_PARENT_ACCOUNT:
-      newState.editParentAccount = action.editParentAccount
+      newState.editParentAccount = action.editParentAccount;
       break;
     case types.SET_EDIT_ACCESS_SCRECT:
-      newState.editAccessScrect = action.editAccessScrect
+      newState.editAccessScrect = action.editAccessScrect;
+      break;
+    case types.SET_RE_CHARGE_TYPE:
+      newState.rechargeType = action.rechargeType;
+      break;
+    case types.SET_RE_CHARGE_MONEY:
+      newState.rechargeMoney = action.rechargeMoney;
       break;
     default:
       break;
   }
-  return newState
-}
+  return newState;
+};
