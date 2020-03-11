@@ -35,8 +35,12 @@ import verifyServerReducer from "pages/verifyServer/store/reducer";
 import oApiTypesReducer from "pages/oApiTypes/store/reducer";
 import oApiReducer from "pages/oApi/store/reducer";
 import oApiParamsReducer from "pages/oApiParams/store/reducer";
+import userLogsReducer from "pages/userLogs/store/reducer";
+import appLogsReducer from "pages/appLogs/store/reducer";
 
 export default {
+  appLogs: appLogsReducer,
+  userLogs: userLogsReducer,
   login: loginReducer,
   slider: sliderReducer,
   header: headReducer,

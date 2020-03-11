@@ -45,6 +45,7 @@ const columns = [
 class List extends Component {
   componentDidMount() {
     this.sendFn(1, 10);
+    this.props.queryTypeList({ props: this.props, data: {} });
   }
 
   paginationChange = (pageNo, pageSize) => {
@@ -106,6 +107,10 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   queryList: req => {
     const action = creators.queryListAction(req);
+    dispatch(action);
+  },
+  queryTypeList: req => {
+    const action = creators.queryTypeListAction(req);
     dispatch(action);
   }
 });

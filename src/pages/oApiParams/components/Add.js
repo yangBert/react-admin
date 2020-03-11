@@ -1,33 +1,29 @@
 import React, { Component } from "react";
-import { Spin, Input, Button, message, Select, Card } from "antd";
+import { Spin, Input, Button, message, Select, Card, Icon } from "antd";
 import { connect } from "react-redux";
 import * as creators from "../store/creators";
 import styles from "../css/add.module.css";
 import $$ from "static/js/base";
 import * as config from "../config";
+import { withRouter } from "react-router-dom";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
 class Add extends Component {
   componentDidMount() {
-    // this.props.queryTypeList({ props: this.props, data: {} });
-    // if (this.props.location.state) {
-    //   const {
-    //     apiName,
-    //     typeId,
-    //     apiReqType,
-    //     apiUrl,
-    //     apiParamType,
-    //     apiRemarks
-    //   } = this.props.location.state.record;
-    //   this.props.setApiName(apiName);
-    //   this.props.setTypeId(typeId);
-    //   this.props.setApiReqType(apiReqType);
-    //   this.props.setApiParamType(apiParamType);
-    //   this.props.setApiRemarks(apiRemarks);
-    //   this.props.setApiUrl(apiUrl);
-    // }
+    if (this.props.location.state.record) {
+      const {
+        isNess,
+        paramName,
+        paramRemarks,
+        paramType
+      } = this.props.location.state.record;
+      this.props.setParamName(paramName);
+      this.props.setParamType(paramType);
+      this.props.setIsNess(isNess);
+      this.props.setParamRemarks(paramRemarks);
+    }
   }
 
   save() {
@@ -81,7 +77,7 @@ class Add extends Component {
                 </div>
               </div>
               <div className={`${styles.formLine} pullLeft`}>
-                <label className="pullLeft">接口类型:</label>
+                <label className="pullLeft">参数类型:</label>
                 <div className={`${styles.inline} pullLeft`}>
                   <Select
                     value={this.props.paramType}
@@ -108,13 +104,13 @@ class Add extends Component {
                     onChange={value => this.props.setIsNess(value)}
                   >
                     <Option value="">请选择</Option>
-                    <Option value="1">是</Option>
-                    <Option value="2">否</Option>
+                    <Option value="true">是</Option>
+                    <Option value="false">否</Option>
                   </Select>
                 </div>
               </div>
               <div className={`${styles.formLine} pullLeft`}>
-                <label className="pullLeft">接口备注:</label>
+                <label className="pullLeft">参数描述:</label>
                 <div className={`${styles.inline} pullLeft`}>
                   <TextArea
                     rows={4}
@@ -138,6 +134,7 @@ class Add extends Component {
                 onClick={() => this.props.history.goBack()}
                 size="large"
               >
+                <Icon type="rollback" />
                 返回
               </Button>
             </div>
@@ -179,4 +176,4 @@ const mapDispatch = dispatch => ({
   }
 });
 
-export default connect(mapState, mapDispatch)(Add);
+export default withRouter(connect(mapState, mapDispatch)(Add));

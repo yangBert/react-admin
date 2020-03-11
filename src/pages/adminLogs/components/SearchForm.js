@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Icon, DatePicker } from 'antd';
-import { connect } from 'react-redux';
-import * as creators from '../store/creators';
-import styles from '../css/SearchForm.module.css';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-moment.locale('zh-cn');
-
+import React from "react";
+import { Button, Icon, DatePicker } from "antd";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import * as creators from "../store/creators";
+import styles from "../css/SearchForm.module.css";
+import moment from "moment";
+import "moment/locale/zh-cn";
+moment.locale("zh-cn");
 
 const { RangePicker } = DatePicker;
 
 function SearchForm(props) {
-
   function onChangeDatePicker(dates, dateStrings) {
-    let params = props.params
-    params.logTimeStart = dateStrings[0]
-    params.logTimeEnd = dateStrings[1]
-    props.changeSearchParams(params)
+    let params = props.params;
+    params.logTimeStart = dateStrings[0];
+    params.logTimeEnd = dateStrings[1];
+    props.changeSearchParams(params);
   }
 
   function search() {
@@ -24,15 +23,15 @@ function SearchForm(props) {
       pageSize: 10,
       pageNo: 1,
       ...props.params
-    }
+    };
 
-    console.log("data", data)
+    console.log("data", data);
     props.querylist({ props, data });
   }
 
   function reset() {
-    props.changeSearchParams({})
-    const data = { pageNo: 1, pageSize: 10 }
+    props.changeSearchParams({});
+    const data = { pageNo: 1, pageSize: 10 };
     props.querylist({ props, data });
   }
 
@@ -46,7 +45,10 @@ function SearchForm(props) {
               <RangePicker
                 ranges={{
                   Today: [moment(), moment()],
-                  'This Month': [moment().startOf('month'), moment().endOf('month')],
+                  "This Month": [
+                    moment().startOf("month"),
+                    moment().endOf("month")
+                  ]
                 }}
                 showTime
                 format="YYYY-MM-DD HH:mm:ss"
@@ -57,50 +59,25 @@ function SearchForm(props) {
           <div className={`${styles.formLine} pullLeft`}>
             &nbsp;&nbsp;
             <Button onClick={() => search()} type="primary">
-              <Icon type="search" />查询
-            </Button>&nbsp;&nbsp;
+              <Icon type="search" />
+              查询
+            </Button>
+            &nbsp;&nbsp;
             <Button onClick={() => reset()} type="primary" ghost>
-              <Icon type="undo" />重置
+              <Icon type="undo" />
+              重置
             </Button>
           </div>
-
         </div>
-        {/* <div className="clearfix">
-
-          <div className={`${styles.formLine} pullLeft`}>
-            <label className="pullLeft">创建时间:</label>
-            <div className={`${styles.inline} pullLeft`}>
-              <RangePicker
-                style={{ "width": "100%" }}
-                showTime
-                value={[createStartTimeString, createEndTimeString]}
-                ranges={{
-                  Today: [moment(), moment()],
-                  'This Month': [moment().startOf('month'), moment().endOf('month')],
-                }}
-                onChange={onChangePicker2}
-              />
-            </div>
-          </div>
-        </div>
-        <div className={`${styles.formLine} pullLeft`}>
-          <label className="pullLeft">&nbsp;</label>
-          <Button onClick={() => search()} type="primary">
-            <Icon type="search" />查询
-          </Button>&nbsp;&nbsp;
-          <Button onClick={() => reset()} type="primary" ghost>
-            <Icon type="undo" />重置
-          </Button>
-        </div> */}
       </div>
-    </div >
-  )
+    </div>
+  );
 }
 
 const mapState = state => ({
-  params: state.link.params,
-  spinning: state.link.spinning,
-})
+  params: state.adminLogs.params,
+  spinning: state.adminLogs.spinning
+});
 
 const mapDispatch = dispatch => ({
   querylist: req => {
@@ -111,6 +88,6 @@ const mapDispatch = dispatch => ({
     const action = creators.createChangeParamsAction(params);
     dispatch(action);
   }
-})
+});
 
-export default connect(mapState, mapDispatch)(SearchForm);
+export default withRouter(connect(mapState, mapDispatch)(SearchForm));

@@ -5,7 +5,6 @@ import * as creators from "./store/creators";
 import SearchForm from "./components/SearchForm";
 import styles from "./css/UserList.module.css";
 import { Link } from "react-router-dom";
-import $$ from "static/js/base";
 import Oper from "./components/Operation";
 import * as config from "./config";
 

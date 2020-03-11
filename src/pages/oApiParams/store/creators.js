@@ -37,15 +37,15 @@ const setParamRemarksAction = paramRemarks => ({
 
 const saveAction = req => {
   return dispatch => {
-    const url = req.data.typeId
-      ? requestURL.managerOApiUpdateType
-      : requestURL.managerOApiInsertType;
+    const url = req.data.paramId
+      ? requestURL.managerOApiUpdateParam
+      : requestURL.managerOApiInsertParam;
     request.json(url, req.data, res => {
       if (res.data) {
         const { success, message } = res.data && res.data;
         if (success) {
           notification("success", message);
-          dispatch(queryListAction({ props: req.props, data: {} }));
+          req.props.history.goBack();
         } else {
           notification("error", message);
         }

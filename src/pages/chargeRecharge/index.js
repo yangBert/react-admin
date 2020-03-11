@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { Table, Spin, Button, Icon, Tag } from "antd";
+import { Table, Spin, Tag } from "antd";
 import { connect } from "react-redux";
 import * as creators from "./store/creators";
 import SearchForm from "./components/SearchForm";
 import styles from "./css/UserList.module.css";
-import { Link } from "react-router-dom";
 import $$ from "static/js/base";
 import Oper from "./components/Operation";
+import * as config from "./config";
 
 const columns = [
   {
@@ -16,57 +16,35 @@ const columns = [
     align: "center"
   },
   {
-    title: "账户名",
-    dataIndex: "accountName",
-    key: "accountName",
-    align: "center"
-  },
-  {
     title: "账户类型",
     dataIndex: "accountType",
     key: "accountType",
-    align: "center"
-  },
-  {
-    title: "充值总金额",
-    dataIndex: "totalMoney",
-    key: "totalMoney",
-    align: "center"
-  },
-  {
-    title: "可用余额",
-    dataIndex: "balanceMoney",
-    key: "balanceMoney",
-    align: "center"
-  },
-  {
-    title: "创建人",
-    dataIndex: "createdBy",
-    key: "createdBy",
-    align: "center"
-  },
-  {
-    title: "账户状态",
-    dataIndex: "status",
-    key: "status",
     align: "center",
-    render: status => (
+    render: accountType => (
       <span>
-        {status === "0" ? (
-          <Tag color="green">已启用</Tag>
-        ) : (
-          <Tag color="red">已禁用</Tag>
-        )}
+        {config.accountType[accountType]
+          ? config.accountType[accountType]
+          : "--"}
       </span>
     )
   },
   {
-    title: "最后更新时间",
-    dataIndex: "lastUpdatedTime",
-    key: "lastUpdatedTime",
+    title: "充值金额",
+    dataIndex: "rechargeMoney",
+    key: "rechargeMoney",
     align: "center",
-    render: lastUpdatedTime => (
-      <span>{lastUpdatedTime && $$.getHours(lastUpdatedTime)}</span>
+    render: rechargeMoney => (
+      <span>{!rechargeMoney ? "0.00" : rechargeMoney.toFixed(2)}</span>
+    )
+  },
+
+  {
+    title: "充值时间",
+    dataIndex: "rechargeTime",
+    key: "rechargeTime",
+    align: "center",
+    render: rechargeTime => (
+      <span>{rechargeTime && $$.getHours(rechargeTime)}</span>
     )
   },
   {
@@ -128,8 +106,7 @@ const mapState = state => ({
   list: state.chargeRecharge.list,
   pagination: state.chargeRecharge.pagination,
   spinning: state.chargeRecharge.spinning,
-  params: state.chargeRecharge.params,
-  editOrgList: state.chargeRecharge.editOrgList
+  params: state.chargeRecharge.params
 });
 
 const mapDispatch = dispatch => ({

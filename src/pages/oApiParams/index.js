@@ -4,22 +4,29 @@ import { connect } from "react-redux";
 import * as creators from "./store/creators";
 import styles from "./css/UserList.module.css";
 import Oper from "./components/Operation";
-import * as config from "./config";
 import { Link } from "react-router-dom";
 
 const columns = [
-  { title: "类型编码", dataIndex: "typeId", key: "typeId", align: "center" },
+  { title: "参数编码", dataIndex: "paramId", key: "paramId", align: "center" },
   {
-    title: "类型名称",
-    dataIndex: "typeName",
-    key: "typeName",
+    title: "参数名称",
+    dataIndex: "paramName",
+    key: "paramName",
     align: "center"
   },
   {
-    title: "备注",
-    dataIndex: "typeRemarks",
-    key: "typeRemarks",
+    title: "参数类型",
+    dataIndex: "paramType",
+    key: "paramType",
     align: "center"
+  },
+
+  {
+    title: "是否必传",
+    dataIndex: "isNess",
+    key: "isNess",
+    align: "center",
+    render: isNess => <span>{isNess === "true" ? "是" : "否"}</span>
   },
   {
     title: "操作",
@@ -50,6 +57,16 @@ class List extends Component {
               <Button type="primary" className={styles.addButton}>
                 <Icon type="plus" />
                 新增
+              </Button>
+            </Link>
+            <Link
+              to={{
+                pathname: "/oApi/list"
+              }}
+            >
+              <Button type="primary" className={styles.addButton}>
+                <Icon type="rollback" />
+                返回
               </Button>
             </Link>
           </div>

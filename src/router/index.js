@@ -40,6 +40,9 @@ const AccountAdd = lazy(() => import("pages/account/components/Add"));
 const AccountDetail = lazy(() => import("pages/account/components/Detail"));
 const ChargeConsumeList = lazy(() => import("pages/chargeConsume"));
 const ChargeRechargeList = lazy(() => import("pages/chargeRecharge"));
+const ChargeRechargeDetail = lazy(() =>
+  import("pages/chargeRecharge/components/Detail")
+);
 const ApplyOrderList = lazy(() => import("pages/applyOrder"));
 const ApplyOrderDetail = lazy(() =>
   import("pages/applyOrder/components/Detail")
@@ -96,12 +99,37 @@ const ApplyOrderOrgAudit = lazy(() =>
 const OApiTypesList = lazy(() => import("pages/oApiTypes"));
 const OAPIList = lazy(() => import("pages/oApi"));
 const OAPIAdd = lazy(() => import("pages/oApi/components/Add"));
-
 const OApiParamsList = lazy(() => import("pages/oApiParams"));
 const OApiParamsAdd = lazy(() => import("pages/oApiParams/components/Add"));
+const OApiParamsDetail = lazy(() =>
+  import("pages/oApiParams/components/Detail")
+);
 const AccountRecharge = lazy(() => import("pages/account/components/Recharge"));
+const UserLogsList = lazy(() => import("pages/userLogs"));
+const UserLogsDetail = lazy(() => import("pages/userLogs/components/Detail"));
+const AppLogsList = lazy(() => import("pages/appLogs"));
+const AppLogsDetail = lazy(() => import("pages/appLogs/components/Detail"));
+const ChargeConsumeDetail = lazy(() =>
+  import("pages/chargeConsume/components/Detail")
+);
 
 const routes = [
+  {
+    path: "/appLogs/list",
+    component: AppLogsList
+  },
+  {
+    path: "/appLogs/detail",
+    component: AppLogsDetail
+  },
+  {
+    path: "/userLogs/list",
+    component: UserLogsList
+  },
+  {
+    path: "/userLogs/detail",
+    component: UserLogsDetail
+  },
   {
     path: "/home",
     component: Home
@@ -255,9 +283,18 @@ const routes = [
     component: ChargeConsumeList
   },
   {
+    path: "/chargeConsume/detail",
+    component: ChargeConsumeDetail
+  },
+  {
     path: "/chargeRecharge/list",
     component: ChargeRechargeList
   },
+  {
+    path: "/chargeRecharge/detail",
+    component: ChargeRechargeDetail
+  },
+
   {
     path: "/applyOrder/list",
     component: ApplyOrderList
@@ -389,6 +426,10 @@ const routes = [
   {
     path: "/oApiParams/add",
     component: OApiParamsAdd
+  },
+  {
+    path: "/oApiParams/detail",
+    component: OApiParamsDetail
   },
   {
     path: "/account/recharge",

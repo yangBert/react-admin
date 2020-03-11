@@ -39,6 +39,13 @@ const columns = [
     )
   },
   {
+    title: "产品标签",
+    dataIndex: "tag",
+    key: "tag",
+    align: "center"
+  },
+
+  {
     title: "产品状态",
     dataIndex: "status",
     key: "status",

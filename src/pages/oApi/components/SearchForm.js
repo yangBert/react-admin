@@ -5,116 +5,57 @@ import * as creators from "../store/creators";
 import styles from "../css/SearchForm.module.css";
 import moment from "moment";
 import "moment/locale/zh-cn";
+import * as config from "../config";
 moment.locale("zh-cn");
 
-const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 function SearchForm(props) {
-  const [title, setTitle] = useState("");
+  const [apiName, setApiName] = useState("");
   const [state, setState] = useState("");
-  const [publishStartTimeString, setPublishStartTimeString] = useState(null);
-  const [publishEndTimeString, setPublishEndTimeString] = useState(null);
-  const [createStartTimeString, setCreateStartTimeString] = useState(null);
-  const [createEndTimeString, setCreateEndTimeString] = useState(null);
+  const [apiReqType, setApiReqType] = useState("");
+  const [typeId, setTypeId] = useState("");
 
   const { changeSearchParams } = props;
   useEffect(() => {
     changeSearchParams({
-      title,
+      apiName,
       state,
-      publishStartTimeString,
-      publishEndTimeString,
-      createStartTimeString,
-      createEndTimeString
+      typeId,
+      apiReqType
     });
-  }, [
-    title,
-    state,
-    publishStartTimeString,
-    publishEndTimeString,
-    createStartTimeString,
-    createEndTimeString,
-    changeSearchParams
-  ]);
+  }, [apiName, state, typeId, apiReqType, changeSearchParams]);
 
   function search() {
-    const { title, state } = props.params;
-    let start1 = props.params.publishStartTimeString;
-    let end1 = props.params.publishEndTimeString;
-    let start2 = props.params.createStartTimeString;
-    let end2 = props.params.createEndTimeString;
+    const { apiName, state, typeId, apiReqType } = props.params;
 
-    start1 =
-      publishStartTimeString &&
-      publishStartTimeString.format("YYYY-MM-DD HH:mm:ss");
-    end1 =
-      publishEndTimeString &&
-      publishEndTimeString.format("YYYY-MM-DD HH:mm:ss");
-    start2 =
-      createStartTimeString &&
-      createStartTimeString.format("YYYY-MM-DD HH:mm:ss");
-    end2 =
-      createEndTimeString && createEndTimeString.format("YYYY-MM-DD HH:mm:ss");
     const data = {
       pageSize: 10,
-      pageNo: 1
+      pageNo: 1,
+      apiName,
+      state,
+      typeId,
+      apiReqType
     };
-
-    if (state) {
-      data.state = state;
-    }
-    if (title) {
-      data.title = title;
-    }
-    if (publishStartTimeString) {
-      data.publishStartTimeString = start1;
-    }
-    if (publishEndTimeString) {
-      data.publishEndTimeString = end1;
-    }
-    if (createStartTimeString) {
-      data.createStartTimeString = start2;
-    }
-    if (createEndTimeString) {
-      data.createEndTimeString = end2;
-    }
 
     props.querylist({ props, data });
   }
 
   function reset() {
-    setTitle("");
-    setPublishStartTimeString(null);
-    setPublishEndTimeString(null);
+    setApiName("");
+    setState("");
+    setTypeId("");
+    setApiReqType("");
     const data = { pageNo: 1, pageSize: 10 };
-    props.queryCertlist({ props, data });
+    props.querylist({ props, data });
   }
 
-  function setTime1(t1, t2) {
-    setPublishStartTimeString(t1);
-    setPublishEndTimeString(t2);
-  }
-
-  function setTime2(t1, t2) {
-    setCreateStartTimeString(t1);
-    setCreateEndTimeString(t2);
-  }
-
-  function onChangePicker1(dates, dateStrings) {
-    if (dateStrings[0]) {
-      setTime1(moment(dateStrings[0]), moment(dateStrings[1]));
-    } else {
-      setTime1(null, null);
-    }
-  }
-
-  function onChangePicker2(dates, dateStrings) {
-    if (dateStrings[0]) {
-      setTime2(moment(dateStrings[0]), moment(dateStrings[1]));
-    } else {
-      setTime2(null, null);
-    }
+  function mapArr() {
+    let arr = [];
+    Object.keys(config.state).forEach(k => {
+      arr.push({ k, v: config.state[k] });
+    });
+    return arr;
   }
 
   return (
@@ -126,8 +67,8 @@ function SearchForm(props) {
             <div className={`${styles.inline} pullLeft`}>
               <Input
                 allowClear
-                onChange={e => setTitle(e.target.value)}
-                value={title}
+                onChange={e => setApiName(e.target.value)}
+                value={apiName}
               />
             </div>
           </div>
@@ -135,13 +76,16 @@ function SearchForm(props) {
             <label className="pullLeft">接口类型:</label>
             <div className={`${styles.inline} pullLeft`}>
               <Select
-                value={state}
+                value={typeId}
                 style={{ width: "100%" }}
-                onChange={value => setState(value)}
+                onChange={value => setTypeId(value)}
               >
                 <Option value="">请选择</Option>
-                <Option value={4}>已发布</Option>
-                <Option value={1}>未发布</Option>
+                {props.typeList.map(item => (
+                  <Option value={item.typeId} key={item.typeName}>
+                    {item.typeName}
+                  </Option>
+                ))}
               </Select>
             </div>
           </div>
@@ -157,8 +101,11 @@ function SearchForm(props) {
                 onChange={value => setState(value)}
               >
                 <Option value="">请选择</Option>
-                <Option value={4}>已发布</Option>
-                <Option value={1}>未发布</Option>
+                {mapArr().map(item => (
+                  <Option value={item.k} key={item.k}>
+                    {item.v}
+                  </Option>
+                ))}
               </Select>
             </div>
           </div>
@@ -166,13 +113,16 @@ function SearchForm(props) {
             <label className="pullLeft">请求方法:</label>
             <div className={`${styles.inline} pullLeft`}>
               <Select
-                value={state}
+                value={apiReqType}
                 style={{ width: "100%" }}
-                onChange={value => setState(value)}
+                onChange={value => setApiReqType(value)}
               >
                 <Option value="">请选择</Option>
-                <Option value={4}>已发布</Option>
-                <Option value={1}>未发布</Option>
+                {config.apiReqType.map(item => (
+                  <Option value={item} key={item}>
+                    {item}
+                  </Option>
+                ))}
               </Select>
             </div>
           </div>
@@ -195,7 +145,8 @@ function SearchForm(props) {
 }
 
 const mapState = state => ({
-  params: state.notice.params
+  params: state.oApi.params,
+  typeList: state.oApi.typeList
 });
 
 const mapDispatch = dispatch => ({
