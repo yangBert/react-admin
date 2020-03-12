@@ -56,7 +56,7 @@ class Add extends Component {
     } else if (productPaying === "") {
       message.error("请选择支付方式");
       return;
-    } else if (productPrice == 0) {
+    } else if (productPrice === 0) {
       message.error("请填写产品价格");
       return;
     } else if ($$.trim(tag) === "") {

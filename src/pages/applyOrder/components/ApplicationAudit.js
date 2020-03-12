@@ -96,7 +96,6 @@ class Detail extends React.Component {
         lastUpdateTime,
         contactPhone,
         contactName,
-        code,
         remark
       } = this.props.detail;
       var {

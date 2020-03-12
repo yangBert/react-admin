@@ -3,7 +3,6 @@ import * as requestURL from "static/js/requestURL";
 import * as request from "static/js/request";
 import spinningAction from "pages/common/layer/spinning";
 import notification from "pages/common/layer/notification";
-import * as config from "../config";
 
 const initListAction = list => ({
   type: types.QUERY_LIST,

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Popconfirm, Icon } from "antd";
+import { Button } from "antd";
 import { connect } from "react-redux";
 import * as creators from "../store/creators";
 import { withRouter } from "react-router-dom";

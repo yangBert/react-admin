@@ -50,7 +50,6 @@ const changeShowImageAction = showImage => ({
 const saveAction = req => {
   return dispatch => {
     dispatch(spinningAction(true));
-    console.log(url, req);
     let url;
     if (req.props.location.state) {
       url = requestURL.webManagerLinkUpdate;

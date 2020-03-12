@@ -98,6 +98,7 @@ const ApplyOrderOrgAudit = lazy(() =>
 );
 const OApiTypesList = lazy(() => import("pages/oApiTypes"));
 const OAPIList = lazy(() => import("pages/oApi"));
+const OAPIDetail = lazy(() => import("pages/oApi/components/Detail"));
 const OAPIAdd = lazy(() => import("pages/oApi/components/Add"));
 const OApiParamsList = lazy(() => import("pages/oApiParams"));
 const OApiParamsAdd = lazy(() => import("pages/oApiParams/components/Add"));
@@ -114,6 +115,10 @@ const ChargeConsumeDetail = lazy(() =>
 );
 
 const routes = [
+  {
+    path: "/oApi/detail",
+    component: OAPIDetail
+  },
   {
     path: "/appLogs/list",
     component: AppLogsList

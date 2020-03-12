@@ -28,6 +28,8 @@ function AuditOper(props) {
       case "ORG":
         link("/applyOrder/org/audit");
         break;
+      default:
+        break;
     }
   }
 

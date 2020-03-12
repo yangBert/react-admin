@@ -1,70 +1,83 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Table, Divider, Spin, Button } from 'antd';
-import styles from '../css/UserList.module.css';
-import { connect } from 'react-redux';
-import * as creators from '../store/creators';
-import $$ from 'static/js/base';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { Table, Spin, Button } from "antd";
+import styles from "../css/UserList.module.css";
+import { connect } from "react-redux";
+import * as creators from "../store/creators";
+import $$ from "static/js/base";
 
 const columns = [
-  { title: '产品编码', dataIndex: 'productCode', key: 'productCode', align: 'center' },
-  { title: '产品名称', dataIndex: 'productName', key: 'productName', align: 'center' },
   {
-    title: '上架时间', dataIndex: 'publishAt', key: 'publishAt', align: 'center',
+    title: "产品编码",
+    dataIndex: "productCode",
+    key: "productCode",
+    align: "center"
+  },
+  {
+    title: "产品名称",
+    dataIndex: "productName",
+    key: "productName",
+    align: "center"
+  },
+  {
+    title: "上架时间",
+    dataIndex: "publishAt",
+    key: "publishAt",
+    align: "center",
     render: publishAt => (
       <span>{publishAt ? $$.getHours(publishAt) : "--"}</span>
     )
-  },
+  }
 ];
 
 class Product extends Component {
   state = {
     product: null
-  }
+  };
   componentDidMount() {
-    this.sendFn(1, 10)
+    this.sendFn(1, 10);
     if (this.props.location.state.params) {
-      this.props.changeProductSelectedKeys([this.props.location.state.params])
+      this.props.changeProductSelectedKeys([this.props.location.state.params]);
     }
   }
 
   collectData(productCode, productName) {
-    this.props.changeProductSelectedKeys([productCode])
+    this.props.changeProductSelectedKeys([productCode]);
     this.setState({
       product: {
         productCode,
-        productName,
+        productName
       }
-    })
+    });
   }
 
   rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      const { productCode, productName } = selectedRows[0]
-      this.collectData(productCode, productName)
-    },
-  }
+      const { productCode, productName } = selectedRows[0];
+      this.collectData(productCode, productName);
+    }
+  };
 
   paginationChange = (pageNo, pageSize) => {
-    this.sendFn(pageNo, pageSize)
-  }
+    this.sendFn(pageNo, pageSize);
+  };
 
   paginationShowSizeChange = (pageNo, pageSize) => {
-    this.sendFn(pageNo, pageSize)
-  }
+    this.sendFn(pageNo, pageSize);
+  };
 
   sendFn(pageNo, pageSize) {
-    let data = { pageNo, pageSize }
+    let data = { pageNo, pageSize };
     this.props.queryProductList({ props: this.props, data });
   }
   render() {
-    const productList = this.props.productList
+    const productList = this.props.productList;
     const pagination = {
       ...this.props.productPagination,
       onChange: this.paginationChange,
-      onShowSizeChange: this.paginationShowSizeChange,
-    }
-    this.rowSelection.selectedRowKeys = this.props.productSelectedKeys
+      onShowSizeChange: this.paginationShowSizeChange
+    };
+    this.rowSelection.selectedRowKeys = this.props.productSelectedKeys;
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
@@ -75,26 +88,27 @@ class Product extends Component {
                 pathname: "/chargeConfig/add",
                 state: {
                   product: this.state.product,
-                  appCode: this.props.location.state.appCode,
+                  appCode: this.props.location.state.appCode
                 }
               }}
             >
-              <Button
-                type="primary"
-                className={styles.back}
-              >确定</Button>
+              <Button type="primary" className={styles.back}>
+                确定
+              </Button>
             </Link>
             &nbsp;&nbsp;
             <Button
               type="primary"
               className={styles.back}
               onClick={() => this.props.history.goBack()}
-            >返回</Button>
+            >
+              返回
+            </Button>
           </div>
           <Table
             rowSelection={{
-              type: 'radio',
-              ...this.rowSelection,
+              type: "radio",
+              ...this.rowSelection
             }}
             columns={columns}
             dataSource={productList}
@@ -104,16 +118,16 @@ class Product extends Component {
             onRow={record => {
               return {
                 onClick: () => {
-                  const { productCode, productName } = record
-                  this.collectData(productCode, productName)
-                  this.props.changeProductSelectedKeys([productCode])
+                  const { productCode, productName } = record;
+                  this.collectData(productCode, productName);
+                  this.props.changeProductSelectedKeys([productCode]);
                 }
               };
             }}
           />
         </Spin>
       </div>
-    )
+    );
   }
 }
 
@@ -121,8 +135,8 @@ const mapState = state => ({
   productList: state.chargeConfig.productList,
   productPagination: state.chargeConfig.productPagination,
   spinning: state.chargeConfig.spinning,
-  productSelectedKeys: state.chargeConfig.productSelectedKeys,
-})
+  productSelectedKeys: state.chargeConfig.productSelectedKeys
+});
 
 const mapDispatch = dispatch => ({
   queryProductList: req => {
@@ -132,7 +146,7 @@ const mapDispatch = dispatch => ({
   changeProductSelectedKeys: req => {
     const action = creators.changeProductSelectedKeysAction(req);
     dispatch(action);
-  },
-})
+  }
+});
 
 export default connect(mapState, mapDispatch)(Product);

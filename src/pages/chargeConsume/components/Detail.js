@@ -3,7 +3,6 @@ import { Card, Descriptions, Button } from "antd";
 import styles from "../css/detail.module.css";
 import * as creators from "../store/creators";
 import { connect } from "react-redux";
-import * as config from "../config";
 import $$ from "static/js/base";
 
 class Detail extends React.Component {
@@ -21,7 +20,6 @@ class Detail extends React.Component {
         productCode,
         preferentialMoney,
         consumeMoney,
-        preferentialMoney,
         total,
         consumeTime,
         consumeDesc,

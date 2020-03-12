@@ -38,11 +38,10 @@ const columns = [
     render: createTime => <span>{createTime && $$.getHours(createTime)}</span>
   },
   {
-    title: "收费编码",
-    dataIndex: "paySum",
-    key: "paySum",
-    align: "center",
-    render: paySum => <span>{paySum}</span>
+    title: "用户编码",
+    dataIndex: "userNo",
+    key: "userNo",
+    align: "center"
   },
   {
     title: "当前状态",

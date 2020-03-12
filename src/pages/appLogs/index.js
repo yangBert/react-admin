@@ -9,7 +9,7 @@ import Oper from "./components/Operation";
 import * as config from "./config";
 
 const columns = [
-  { title: "操作人", dataIndex: "adminId", key: "adminId", align: "center" },
+  { title: "应用编码", dataIndex: "appId", key: "appId", align: "center" },
   {
     title: "操作编码",
     dataIndex: "operateType",

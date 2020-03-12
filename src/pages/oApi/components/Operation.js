@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import * as creators from "../store/creators";
 
 function Oper(props) {
   const fontSmall = { fontSize: "12px", marginRight: "5px" };
@@ -30,7 +29,7 @@ function Oper(props) {
       </Link>
       <Link
         to={{
-          pathname: "/question/add",
+          pathname: "/oApi/detail",
           state: { record: props.record }
         }}
       >

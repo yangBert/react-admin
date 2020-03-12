@@ -47,6 +47,11 @@ const setApiRemarksAction = apiRemarks => ({
   apiRemarks
 });
 
+const setParamsDetailAction = paramsDetail => ({
+  type: types.SET_API_PARAMS_DETAIL,
+  paramsDetail
+});
+
 const createSaveAction = req => {
   return dispatch => {
     dispatch(spinningAction(true));
@@ -79,12 +84,11 @@ const createSaveAction = req => {
 const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true));
-    console.log("req.data", req.data);
     request.json(requestURL.managerOApiSelectPageOApi, req.data, res => {
       dispatch(spinningAction(false));
       if (res.data) {
-        const { success, message, data } = res.data && res.data;
-        console.log("res", res);
+        const { success, message, data } = res.data;
+
         if (success) {
           const action = initListAction(data.results, createPagination(data));
           dispatch(action);
@@ -98,14 +102,16 @@ const queryListAction = req => {
   };
 };
 
-const queryDetailAction = req => {
+const qeruyParamsDetailAction = req => {
   return dispatch => {
     dispatch(spinningAction(true));
-    request.json(requestURL.webManagerQuestionDetail, req.data, res => {
+    request.get(requestURL.managerOApiSelectAllParamByApiId, req.data, res => {
       dispatch(spinningAction(false));
       if (res.data) {
-        const { success, message, data } = res.data && res.data;
+        const { success, message, data } = res.data;
         if (success) {
+          const action = setParamsDetailAction(data);
+          dispatch(action);
         } else {
           notification("error", message);
         }
@@ -149,9 +155,10 @@ export {
   queryTypeListAction,
   createChangeParamsAction,
   createSaveAction,
-  queryDetailAction,
+  qeruyParamsDetailAction,
   setApiReqTypeAction,
   setApiUrlAction,
   setApiParamTypeAction,
-  setApiRemarksAction
+  setApiRemarksAction,
+  setParamsDetailAction
 };

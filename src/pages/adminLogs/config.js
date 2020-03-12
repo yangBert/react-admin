@@ -18,9 +18,7 @@ const method = {
   deleteSetting: "删除首页配置",
   register: "新增管理员",
   deleteAdmin: "删除管理员",
-  register: "新增管理员",
   updateAdminInfo: "修改管理员",
-  register: "新增管理员",
   login: "管理员登陆"
 };
 

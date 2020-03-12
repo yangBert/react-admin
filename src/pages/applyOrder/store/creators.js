@@ -73,6 +73,7 @@ const queryListAction = req => {
     request.json(requestURL.webManagerQueryApplyPages, req.data, res => {
       dispatch(spinningAction(false));
       if (res.data) {
+        console.log("data", res);
         const { success, message, data } = res.data;
         if (success) {
           const action = initListAction(data.results, createPagination(data));

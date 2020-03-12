@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Spin, Button, Icon, Tag } from "antd";
+import { Table, Spin, Button, Icon } from "antd";
 import { connect } from "react-redux";
 import * as creators from "./store/creators";
 import SearchForm from "./components/SearchForm";

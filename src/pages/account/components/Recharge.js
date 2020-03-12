@@ -1,18 +1,8 @@
 import React, { Component } from "react";
-import {
-  Spin,
-  Input,
-  Button,
-  message,
-  Select,
-  Card,
-  Form,
-  InputNumber
-} from "antd";
+import { Input, Button, message, Select, Card, Form, InputNumber } from "antd";
 import { connect } from "react-redux";
 import * as creators from "../store/creators";
 import styles from "../css/add.module.css";
-import $$ from "static/js/base";
 import * as config from "../config";
 
 const { Option } = Select;

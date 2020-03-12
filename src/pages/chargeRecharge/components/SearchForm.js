@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Input, Icon, DatePicker, Select } from "antd";
+import { Button, Input, Icon, DatePicker } from "antd";
 import { connect } from "react-redux";
 import * as creators from "../store/creators";
 import styles from "../css/SearchForm.module.css";
@@ -8,7 +8,6 @@ import "moment/locale/zh-cn";
 moment.locale("zh-cn");
 
 const { RangePicker } = DatePicker;
-const { Option } = Select;
 
 function SearchForm(props) {
   const [accountName, setAccountName] = useState("");

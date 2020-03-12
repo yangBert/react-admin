@@ -65,10 +65,6 @@ const mapDispatch = dispatch => ({
   changeConfirmVisible: value => {
     const action = creators.changeConfirmVisibleAction(value);
     dispatch(action);
-  },
-  changeConfirmVisible: value => {
-    const action = creators.changeConfirmVisibleAction(value);
-    dispatch(action);
   }
 });
 

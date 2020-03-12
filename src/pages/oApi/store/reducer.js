@@ -4,6 +4,7 @@ import spinningTypes from "pages/common/layer/spinning/spinningTypes";
 const defaultState = {
   list: [],
   typeList: [],
+  paramsDetail: [],
   pagination: {},
   spinning: false,
   params: {},
@@ -48,6 +49,9 @@ export default (state = defaultState, action) => {
       break;
     case types.SET_API_REMARKS:
       newState.apiRemarks = action.apiRemarks;
+      break;
+    case types.SET_API_PARAMS_DETAIL:
+      newState.paramsDetail = action.paramsDetail;
       break;
     default:
       break;

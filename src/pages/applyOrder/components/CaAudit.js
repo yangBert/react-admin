@@ -1,14 +1,5 @@
 import React, { Fragment } from "react";
-import {
-  Card,
-  Descriptions,
-  Button,
-  Select,
-  Checkbox,
-  Radio,
-  Divider,
-  Spin
-} from "antd";
+import { Card, Descriptions, Button, Checkbox, Divider, Spin } from "antd";
 import styles from "../css/detail.module.css";
 import $$ from "static/js/base";
 import * as creators from "../store/creators";
@@ -18,15 +9,6 @@ import * as config from "../config";
 import { PhotoProvider, PhotoConsumer } from "react-photo-view";
 import "react-photo-view/dist/index.css";
 import ModalConfirm from "./ModalConfirm";
-
-const { Option } = Select;
-function stringTorNumber(arr) {
-  let a = [];
-  for (let i = 0; i < arr.length; i++) {
-    a.push(Number(arr[i]));
-  }
-  return a;
-}
 
 class Detail extends React.Component {
   componentDidMount() {
@@ -96,15 +78,12 @@ class Detail extends React.Component {
         lastUpdateTime,
         contactPhone,
         contactName,
-        code,
         remark
       } = this.props.detail;
       var {
         allowTypes,
         orgCode,
         authImage1,
-        caImage2,
-        orgImage1,
         legalPhone,
         legalName,
         caCode,

@@ -1,7 +1,6 @@
-import React from 'react';
-import { Button } from 'antd';
-import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import React from "react";
+import { Button } from "antd";
+import { withRouter, Link } from "react-router-dom";
 
 function Oper(props) {
   const fontSmall = { fontSize: "12px", marginLeft: "5px" };
@@ -9,21 +8,19 @@ function Oper(props) {
     <div>
       <Link
         to={{
-          pathname: '/chargeConfig/add',
+          pathname: "/chargeConfig/add",
           state: {
             appCode: props.location.state.appCode,
-            record: props.record,
+            record: props.record
           }
-        }}>
-        <Button
-          style={fontSmall}
-          type="primary"
-          size="small"
-          ghost
-        >修改</Button>
+        }}
+      >
+        <Button style={fontSmall} type="primary" size="small" ghost>
+          修改
+        </Button>
       </Link>
-    </div >
-  )
+    </div>
+  );
 }
 
 export default withRouter(Oper);
