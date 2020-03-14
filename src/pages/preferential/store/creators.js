@@ -24,6 +24,17 @@ const onChangeStrategyDescAction = editStrategyDesc => ({
   editStrategyDesc
 })
 
+const onChangeEditTypeAction = editType => ({
+  type: types.CHANGE_EDIT_TYPE,
+  editType
+})
+
+const onChangeEditStrategyRuleAction = editStrategyRule => ({
+  type: types.CHANGE_EDIT_STRATEGY_RULE,
+  editStrategyRule
+})
+
+
 //改变保存loading
 const onChangeSaveLoadingAction = saveLoading => ({
   type: types.CHANGE_SAVE_LOADING,
@@ -110,10 +121,11 @@ const createChangeParamsAction = params => ({
 export {
   queryListAction,
   onChangeEditStrategyNameAction,
+  onChangeEditTypeAction,
+  onChangeEditStrategyRuleAction,
   onChangeStrategyDescAction,
   saveAction,
   onChangeSaveLoadingAction,
   createChangeParamsAction,
-  updateStateAction
-
+  updateStateAction,
 }

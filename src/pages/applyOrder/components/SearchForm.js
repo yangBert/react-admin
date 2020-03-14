@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Select, Icon,DatePicker,Input  } from 'antd';
+import { Button, Select, Icon, DatePicker, Input } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/SearchForm.module.css';
 import * as config from '../config';
+import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
@@ -122,7 +123,7 @@ function SearchForm(props) {
             </div>
           </div>
         </div>
-        
+
         <div className="clearfix">
           <div className={`${styles.formLine} pullLeft`}>
             <label className="pullLeft">订单状态:</label>
@@ -131,8 +132,11 @@ function SearchForm(props) {
                 <Option value="">请选择</Option>
                 {
 
-                  mapConfig("status").map(item => {
-                    return <Option value={item.k} key={item.k}>{item.v}</Option>
+                  mapConfig(props.allStatus ? "allStatus" : "status").map(item => {
+                    if (item.k !== 'get') {
+                      return <Option value={item.k} key={item.k}>{props.allStatus ? config.allStatus.get(item.k) : config.status.get(item.k)}</Option>
+                    }
+
                   })
 
                 }
@@ -183,4 +187,4 @@ const mapDispatch = dispatch => ({
   }
 })
 
-export default connect(mapState, mapDispatch)(SearchForm);
+export default withRouter(connect(mapState, mapDispatch)(SearchForm));

@@ -105,7 +105,7 @@ class Detail extends React.Component {
                       {instanceCode}
                     </Descriptions.Item>
                     <Descriptions.Item label="订单状态">
-                      {config.status[status] ? config.status[status] : "--"}
+                      {config.status.get(status)}
                     </Descriptions.Item>
                     <Descriptions.Item label="订单提交日期">
                       {createTime ? $$.getHours(createTime) : "--"}
@@ -219,19 +219,16 @@ class Detail extends React.Component {
                       </div>
                     </div>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                 </Card>
               </div>
             ) : (
-              ""
-            )}
+                ""
+              )}
             <div className={styles.bottom}>
               <ModalConfirm />
-              {this.props.location.state.record.status ===
-              ("PRE_PARENT_AUDIT" ||
-                "PRE_BUSSINESS_AUDIT" ||
-                "PRE_SYS_AUDIT") ? (
+              {!this.props.location.state.allStatus && status === config.status.PRE_BUSSINESS_AUDIT ? (
                 <Fragment>
                   <Button
                     type="primary"
@@ -251,8 +248,8 @@ class Detail extends React.Component {
                   </Button>
                 </Fragment>
               ) : (
-                ""
-              )}
+                  ""
+                )}
               <Button
                 type="primary"
                 onClick={() => this.props.history.goBack()}

@@ -6,17 +6,6 @@ import SearchForm from './components/SearchForm';
 import $$ from 'static/js/base';
 import styles from './css/UserList.module.css';
 
-// createTime: "2019-12-11T12:15:02.000+0000"
-// id: 26
-// idCard: "MTIzMTM="
-// idCardHash: "633928E344711BDAEB1834B078B0089B6D4D671F767101ECB840BBB52FFC03C1"
-// lastUpdateTime: "2019-12-11T12:15:02.000+0000"
-// name: null
-// password: null
-// realName: "dasdasdas"
-// sourceId: 0
-// state: "1"
-
 const columns = [
   { title: '用户名称', dataIndex: 'realName', key: 'realName' },
   { title: '身份证号', dataIndex: 'idCard', key: 'idCard' },

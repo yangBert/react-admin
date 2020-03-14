@@ -8,7 +8,7 @@ function AuditOper(props) {
   function link(pathname) {
     const o = {
       pathname,
-      state: { record: props.record }
+      state: { record: props.record, allStatus: false }
     };
     props.history.push(o);
   }

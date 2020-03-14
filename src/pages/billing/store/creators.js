@@ -36,6 +36,11 @@ const onChangeSaveLoadingAction = saveLoading => ({
   saveLoading
 })
 
+const onChangeEditMaxLimitAction = editMaxLimit => ({
+  type: types.CHANGE_EDIT_MAX_LIMIT,
+  editMaxLimit
+})
+
 //保存和修改
 const saveAction = req => {
   return dispatch => {
@@ -121,6 +126,7 @@ export {
   saveAction,
   onChangeSaveLoadingAction,
   createChangeParamsAction,
-  updateStateAction
+  updateStateAction,
+  onChangeEditMaxLimitAction
 
 }

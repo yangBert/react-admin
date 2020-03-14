@@ -33,6 +33,16 @@ const changeConfirmLoadingAction = confirmLoading => ({
   confirmLoading
 });
 
+const initCatalogAction = catalog => ({
+  type: types.INIT_CATALOG,
+  catalog
+});
+
+const initProductList = productList => ({
+  type: types.INIT_PRODUCT_LIST,
+  productList
+});
+
 //审核
 const auditAction = req => {
   return dispatch => {
@@ -73,11 +83,53 @@ const queryListAction = req => {
     request.json(requestURL.webManagerQueryApplyPages, req.data, res => {
       dispatch(spinningAction(false));
       if (res.data) {
-        console.log("data", res);
+
         const { success, message, data } = res.data;
         if (success) {
           const action = initListAction(data.results, createPagination(data));
           dispatch(action);
+        } else {
+          notification("error", message);
+        }
+      } else {
+        req.props.history.push("/500");
+      }
+    });
+  };
+};
+
+const queryProductAction = req => {
+  return dispatch => {
+    dispatch(spinningAction(true));
+    request.json(requestURL.webSiteProductList, req.data, res => {
+      dispatch(spinningAction(false));
+      if (res.data) {
+        const { success, message, data } = res.data;
+        if (success) {
+          dispatch(initProductList(data))
+        } else {
+          notification("error", message);
+        }
+      } else {
+        req.props.history.push("/500");
+      }
+    });
+  };
+};
+
+const getCatalogAction = req => {
+  return dispatch => {
+    dispatch(spinningAction(true));
+    request.json(requestURL.webSiteProductCatalog, req.data, res => {
+      dispatch(spinningAction(false));
+      if (res.data) {
+        const { success, message, data } = res.data;
+        console.log("Catalog===>", data)
+        if (success) {
+          dispatch(initCatalogAction(data));
+          for (let i = 0; i < data.length; i++) {
+            dispatch(queryProductAction({ props: req.props, data: { pid: data[i].productTypeCode } }))
+          }
         } else {
           notification("error", message);
         }
@@ -96,9 +148,12 @@ const getDetailAction = req => {
       if (res.data) {
         const { success, message, data } = res.data;
         if (success) {
-          console.log("data", data);
-          const action = initDetailAction(data);
-          dispatch(action);
+          dispatch(initDetailAction(data));
+          if (data.applyDetailRes.companyCode) {
+            const action = getCatalogAction({ props: req.props, data: { companyCode: data.applyDetailRes.companyCode } });
+            dispatch(action);
+          }
+
         } else {
           notification("error", message);
         }

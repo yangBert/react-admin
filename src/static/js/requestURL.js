@@ -181,6 +181,8 @@ export const webManagerQueryApplyPages = "/web/manager/apply/queryApplyPages";
 export const webManagerGetApplyDetail = "/web/manager/apply/getApplyDetail";
 export const webManagerAuditApply = "/web/manager/apply/auditApply";
 export const webApplyGetFileList = "/web/apply/getFileList";
+export const webSiteProductCatalog = "/web/site/product/catalog";
+export const webSiteProductList = "/web/site/product/list";
 
 //友情链接管理
 export const linkQueryLinksByPage = "/web/manager/link/queryLinksByPage";

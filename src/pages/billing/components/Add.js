@@ -19,15 +19,16 @@ const { Option } = Select;
 class Add extends Component {
   componentDidMount() {
     if (this.props.location.state && this.props.location.state.record) {
-      const { title, amount, type } = this.props.location.state.record;
+      const { title, amount, type, maxLimit } = this.props.location.state.record;
       this.props.onChangeEditTitle(title);
       this.props.onChangeEditAmount(amount);
       this.props.onChangeEditType(type);
+      this.props.onChangeEditMaxLimit(maxLimit)
     }
   }
 
   save() {
-    const { editTitle, editAmount, editType } = this.props;
+    const { editTitle, editAmount, editType, editMaxLimit } = this.props;
     if ($$.trim(editTitle) === "") {
       message.error("请填写计费策略");
       return;
@@ -46,6 +47,7 @@ class Add extends Component {
         title: editTitle,
         amount: Number(editAmount.toFixed(2)),
         type: editType,
+        maxLimit: editMaxLimit,
         createdBy: creater
       }
     };
@@ -61,7 +63,7 @@ class Add extends Component {
       <div className={styles.pageContet}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <div className="pageContentColor">
-            <Card title="基本信息" bordered={false}>
+            <Card title="计费策略" bordered={false}>
               <Form className={`${styles.form} clearfix`}>
                 <div className={`${styles.formLine} pullLeft`}>
                   <label className="pullLeft">计费策略：</label>
@@ -102,6 +104,19 @@ class Add extends Component {
                     </Select>
                   </div>
                 </div>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className="pullLeft">最大次数：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <InputNumber
+                      style={{ width: "100%" }}
+                      min={0}
+                      precision={0}
+                      step={5}
+                      value={this.props.editMaxLimit}
+                      onChange={value => this.props.onChangeEditMaxLimit(value)}
+                    />
+                  </div>
+                </div>
               </Form>
             </Card>
           </div>
@@ -136,7 +151,8 @@ const mapState = state => ({
   editTitle: state.billing.editTitle,
   editAmount: state.billing.editAmount,
   editType: state.billing.editType,
-  saveLoading: state.billing.saveLoading
+  saveLoading: state.billing.saveLoading,
+  editMaxLimit: state.billing.editMaxLimit,
 });
 
 const mapDispatch = dispatch => ({
@@ -155,7 +171,11 @@ const mapDispatch = dispatch => ({
   onChangeEditType: value => {
     const action = creators.onChangeEditTypeAction(value);
     dispatch(action);
-  }
+  },
+  onChangeEditMaxLimit: value => {
+    const action = creators.onChangeEditMaxLimitAction(value);
+    dispatch(action);
+  },
 });
 
 export default connect(mapState, mapDispatch)(Add);

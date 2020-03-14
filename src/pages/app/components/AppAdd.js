@@ -94,7 +94,7 @@ class AppAdd extends Component {
     var reader = new FileReader();
     reader.readAsDataURL(file);
     var self = this;
-    reader.onload = function() {
+    reader.onload = function () {
       self.props.setIconBase64(this.result);
       //self.props.onChangeIcon(file)
       self.setState({ icon: file });
@@ -303,7 +303,7 @@ class AppAdd extends Component {
                     showUploadList={false}
                     //action={requestURL.uploadUploadApplyFile}
                     beforeUpload={this.beforeUpload}
-                    //onChange={this.props.onChangeIcon}
+                  //onChange={this.props.onChangeIcon}
                   >
                     {imgURL ? (
                       <img
@@ -312,8 +312,8 @@ class AppAdd extends Component {
                         style={{ width: "100%" }}
                       />
                     ) : (
-                      uploadButton
-                    )}
+                        uploadButton
+                      )}
                   </Upload>
                 </div>
               </Form>
@@ -404,16 +404,16 @@ class AppAdd extends Component {
             {this.props.editAppId ? (
               ""
             ) : (
-              <Button
-                type="primary"
-                size="large"
-                className={styles.formbtn}
-                onClick={() => this.collectFormData()}
-                loading={this.props.saveLoading}
-              >
-                保存
+                <Button
+                  type="primary"
+                  size="large"
+                  className={styles.formbtn}
+                  onClick={() => this.collectFormData()}
+                  loading={this.props.saveLoading}
+                >
+                  保存
               </Button>
-            )}
+              )}
             <Button
               size="large"
               type="primary"

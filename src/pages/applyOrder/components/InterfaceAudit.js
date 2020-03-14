@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Card, Descriptions, Button, Select, Checkbox, Radio } from "antd";
 import styles from "../css/detail.module.css";
 import $$ from "static/js/base";
@@ -6,17 +6,8 @@ import * as creators from "../store/creators";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import * as config from "../config";
-import { PhotoProvider, PhotoConsumer } from "react-photo-view";
 import "react-photo-view/dist/index.css";
-
-const { Option } = Select;
-function stringTorNumber(arr) {
-  let a = [];
-  for (let i = 0; i < arr.length; i++) {
-    a.push(Number(arr[i]));
-  }
-  return a;
-}
+import ModalConfirm from "./ModalConfirm";
 
 class Detail extends React.Component {
   componentDidMount() {
@@ -70,6 +61,17 @@ class Detail extends React.Component {
     return false;
   }
 
+  mapProductList(a) {
+    let r = [];
+    for (let i = 0; i < a.length; i++) {
+      r.push({
+        label: a[i].productName,
+        value: a[i].productCode
+      })
+    }
+    return r;
+  }
+
   render() {
     if (this.props.detail) {
       var {
@@ -86,23 +88,18 @@ class Detail extends React.Component {
         contactPhone,
         contactName,
         code,
-        remark
+        remark,
       } = this.props.detail;
       var {
-        appType,
-        landingModes,
-        feeCode,
-        supportCAs,
-        appName,
-        url,
-        redirectUrl,
-        describes
+        ifcCode
       } = this.props.detail.applyDetailRes;
-      landingModes = landingModes.substring(0, landingModes.length - 1);
-      landingModes = stringTorNumber(landingModes.split(","));
-      supportCAs = supportCAs.substring(0, supportCAs.length - 1);
-      supportCAs = stringTorNumber(supportCAs.split(","));
+      if (ifcCode) {
+        ifcCode = ifcCode.substring(0, ifcCode.length - 1);
+        ifcCode = ifcCode.split(";");
+      }
+
     }
+    const { catalog } = this.props;
     return (
       <div>
         <div className={styles.pageContet}>
@@ -114,7 +111,7 @@ class Detail extends React.Component {
                     {instanceCode}
                   </Descriptions.Item>
                   <Descriptions.Item label="订单状态">
-                    {config.status[status] ? config.status[status] : "--"}
+                    {config.status.get(status)}
                   </Descriptions.Item>
                   <Descriptions.Item label="订单提交日期">
                     {createTime ? $$.getHours(createTime) : "--"}
@@ -154,160 +151,52 @@ class Detail extends React.Component {
                   <Descriptions.Item label="备注">{remark}</Descriptions.Item>
                 </Descriptions>
                 <br />
-                <Descriptions>
-                  <Descriptions.Item label="应用名称">
-                    {appName}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="应用访问URL">
-                    {url}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="推送URL">
-                    {redirectUrl}
-                  </Descriptions.Item>
-                </Descriptions>
-                {this.getNumbers(config.image.LOGO.code) ? (
-                  <div>
-                    <p>应用LOGO：</p>
-                    <PhotoProvider>
-                      <PhotoConsumer
-                        src={this.getImageURL(config.image.LOGO.code)}
-                        intro={appName}
-                      >
-                        <img
-                          src={this.getImageURL(config.image.LOGO.code)}
-                          alt="应用LOGO"
-                          style={{ marginLeft: "30px" }}
-                        />
-                      </PhotoConsumer>
-                    </PhotoProvider>
-                  </div>
-                ) : (
-                  ""
-                )}
-
-                <br />
-                <div>
-                  <p>应用描述：</p>
-                  <div>{describes}</div>
-                </div>
               </Card>
               <Card title="扩展信息" bordered={false}>
-                <Descriptions>
-                  <Descriptions.Item label="应用类型">
-                    <Select disabled={true} value={appType ? appType : ""}>
-                      <Option value="">未定义</Option>
-                      {this.props.allAppTypes.map(item => (
-                        <Option key={item.value} value={item.value}>
-                          {item.label}
-                        </Option>
-                      ))}
-                    </Select>
-                  </Descriptions.Item>
-
-                  <Descriptions.Item label="登录方式">
-                    <Checkbox.Group
-                      disabled={true}
-                      options={this.props.allLandingModes}
-                      value={landingModes}
-                    />
-                  </Descriptions.Item>
-                </Descriptions>
-
-                <Descriptions>
-                  <Descriptions.Item label="登录方式">
-                    <Radio.Group value={feeCode} disabled={true}>
-                      <Radio value={"1"}>一次性收费</Radio>
-                      <Radio value={"0"}>时实收费</Radio>
-                    </Radio.Group>
-                  </Descriptions.Item>
-                  <Descriptions.Item label="支持CA">
-                    <Checkbox.Group
-                      disabled={true}
-                      options={this.props.allSupportCAs}
-                      value={supportCAs}
-                    />
-                  </Descriptions.Item>
-                </Descriptions>
-              </Card>
-              <Card title="证明材料" bordered={false}>
-                {this.getNumbers(config.image.BL.code) ? (
-                  <div>
-                    <p>{config.image.BL.name}</p>
-                    <div>
-                      <PhotoProvider>
-                        {this.props.applyGetFileList.map(item => {
-                          if (item.bussinessType === config.image.BL.code) {
-                            return (
-                              <PhotoConsumer
-                                key={item.fileCode}
-                                src={this.getImageURL(config.image.BL.code)}
-                                intro={config.image.BL.name}
-                              >
-                                <img
-                                  src={this.getImageURL(config.image.BL.code)}
-                                  alt={config.image.BL.name}
-                                  className={styles.listImg}
-                                />
-                              </PhotoConsumer>
-                            );
-                          }
-                        })}
-                      </PhotoProvider>
+                {catalog.map(item => {
+                  let options;
+                  if (item.productList) {
+                    options = this.mapProductList(item.productList)
+                  }
+                  return (
+                    <div key={item.productTypeCode}>
+                      <p className={styles.productTypeName}>{item.productTypeName}</p>
+                      <div>
+                        <Checkbox.Group style={{ lineHeight: 2.5 }} onChange={null} options={options} value={ifcCode} />
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  ""
-                )}
-                {this.getNumbers(config.image.SYS.code) ? (
-                  <div>
-                    <p>{config.image.SYS.name}</p>
-                    <div>
-                      <PhotoProvider>
-                        {this.props.applyGetFileList.map(item => {
-                          if (item.bussinessType === config.image.SYS.code) {
-                            return (
-                              <PhotoConsumer
-                                key={item.fileCode}
-                                src={this.getImageURL(config.image.SYS.code)}
-                                intro={config.image.SYS.name}
-                              >
-                                <img
-                                  src={this.getImageURL(config.image.SYS.code)}
-                                  alt={config.image.SYS.name}
-                                  className={styles.listImg}
-                                />
-                              </PhotoConsumer>
-                            );
-                          }
-                        })}
-                      </PhotoProvider>
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
+                  )
+                })}
               </Card>
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
           <div className={styles.bottom}>
-            <Button
-              type="primary"
-              onClick={() => this.audit("true")}
-              size="large"
-              className={styles.button}
-            >
-              审核通过
-            </Button>
-            <Button
-              type="primary"
-              onClick={() => this.audit("false")}
-              size="large"
-              className={styles.button}
-            >
-              审核不通过
-            </Button>
+            <ModalConfirm />
+            {!this.props.location.state.allStatus && status === config.status.PRE_BUSSINESS_AUDIT
+              ? (
+                <Fragment>
+                  <Button
+                    type="primary"
+                    onClick={() => this.audit("true")}
+                    size="large"
+                    className={styles.button}
+                  >
+                    审核通过
+                  </Button>
+                  <Button
+                    type="primary"
+                    onClick={() => this.audit("false")}
+                    size="large"
+                    className={styles.button}
+                  >
+                    审核不通过
+                  </Button>
+                </Fragment>
+              ) : (
+                ""
+              )}
             <Button
               type="primary"
               onClick={() => this.props.history.goBack()}
@@ -315,7 +204,7 @@ class Detail extends React.Component {
               className={styles.button}
             >
               返回
-            </Button>
+              </Button>
           </div>
         </div>
       </div>
@@ -329,7 +218,8 @@ const mapState = state => ({
   allAppTypes: state.applyOrder.allAppTypes,
   allLandingModes: state.applyOrder.allLandingModes,
   allSupportCAs: state.applyOrder.allSupportCAs,
-  applyGetFileList: state.applyOrder.applyGetFileList
+  applyGetFileList: state.applyOrder.applyGetFileList,
+  catalog: state.applyOrder.catalog,
 });
 
 const mapDispatch = dispatch => ({

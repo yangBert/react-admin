@@ -89,7 +89,7 @@ class Detail extends React.Component {
         caCode,
         caName
       } = this.props.detail.applyDetailRes;
-      allowTypes = allowTypes.substring(0, allowTypes.length - 1);
+      allowTypes = [allowTypes.substring(0, allowTypes.length - 1)];
     }
     return (
       <div>
@@ -103,7 +103,7 @@ class Detail extends React.Component {
                       {instanceCode}
                     </Descriptions.Item>
                     <Descriptions.Item label="订单状态">
-                      {config.status[status] ? config.status[status] : "--"}
+                      {config.status.get(status)}
                     </Descriptions.Item>
                     <Descriptions.Item label="订单提交日期">
                       {createTime ? $$.getHours(createTime) : "--"}
@@ -162,8 +162,8 @@ class Detail extends React.Component {
                     <Descriptions.Item label="接入产品">
                       <Checkbox.Group
                         options={config.allowTypesConfig}
-                        disabled
-                        defaultValue={allowTypes}
+                        onChange={null}
+                        value={allowTypes}
                       />
                     </Descriptions.Item>
                   </Descriptions>
@@ -196,8 +196,8 @@ class Detail extends React.Component {
                         </div>
                       </div>
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     {this.getNumbers(config.image.SYS.code) ? (
                       <div>
                         <p>CA资质</p>
@@ -230,20 +230,17 @@ class Detail extends React.Component {
                         </div>
                       </div>
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                   </div>
                 </Card>
               </div>
             ) : (
-              ""
-            )}
+                ""
+              )}
             <div className={styles.bottom}>
               <ModalConfirm />
-              {this.props.location.state.record.status ===
-              ("PRE_PARENT_AUDIT" ||
-                "PRE_BUSSINESS_AUDIT" ||
-                "PRE_SYS_AUDIT") ? (
+              {!this.props.location.state.allStatus && status === config.status.PRE_BUSSINESS_AUDIT ? (
                 <Fragment>
                   <Button
                     type="primary"
@@ -263,8 +260,8 @@ class Detail extends React.Component {
                   </Button>
                 </Fragment>
               ) : (
-                ""
-              )}
+                  ""
+                )}
               <Button
                 type="primary"
                 onClick={() => this.props.history.goBack()}

@@ -9,11 +9,8 @@ import { Link } from 'react-router-dom';
 import $$ from 'static/js/base';
 
 class NoticeAdd extends Component {
-  state = {
-    editorState: BraftEditor.createEditorState('<p>Hello <b>World!</b></p>')
-  }
   componentDidMount() {
-    this.props.handleEditorChange(BraftEditor.createEditorState('<p>Hello <b>World!</b></p>'))//初始化富文本编辑器
+    this.props.handleEditorChange(BraftEditor.createEditorState('<p>请编辑内容!</b></p>'))//初始化富文本编辑器
     if (this.props.location.state && this.props.location.state.editId) {
       this.props.queryNoticeDetail({ props: this.props, data: { id: this.props.location.state.editId } })
     }

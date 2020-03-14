@@ -9,8 +9,8 @@ const defaultState = {
   params: {},
   editStrategyName: "",
   editStrategyDesc: "",
-  editState: "",
-  detailInfo: null,
+  editType: "",
+  editStrategyRule: "",
 };
 
 export default (state = defaultState, action) => {
@@ -35,14 +35,11 @@ export default (state = defaultState, action) => {
     case types.CHANGE_SAVE_LOADING:
       newState.saveLoading = action.saveLoading
       break;
-    case types.CHANGE_EDIT_CONTENT:
-      newState.editContent = action.editContent
+    case types.CHANGE_EDIT_TYPE:
+      newState.editType = action.editType
       break;
-    case types.INIT_NOTICE_DETAIL:
-      newState.detailInfo = action.detailInfo
-      break;
-    case types.CHANGE_EDIT_STATE:
-      newState.editState = action.editState
+    case types.CHANGE_EDIT_STRATEGY_RULE:
+      newState.editStrategyRule = action.editStrategyRule
       break;
     default:
       break;

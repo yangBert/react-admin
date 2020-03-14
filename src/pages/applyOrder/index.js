@@ -49,7 +49,7 @@ const columns = [
     key: "status",
     align: "center",
     render: status => (
-      <span>{config.status[status] ? config.status[status] : "--"}</span>
+      <span>{config.allStatus.get(status)}</span>
     )
   },
   {
@@ -63,6 +63,7 @@ const columns = [
 class List extends Component {
   componentDidMount() {
     this.sendFn(1, 10);
+    this.props.initDetail(null);
   }
 
   paginationChange = (pageNo, pageSize) => {
@@ -90,7 +91,7 @@ class List extends Component {
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
-          <SearchForm />
+          <SearchForm allStatus={true} />
           <Table
             bordered
             columns={columns}
@@ -116,6 +117,10 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   querylist: req => {
     const action = creators.queryListAction(req);
+    dispatch(action);
+  },
+  initDetail: value => {
+    const action = creators.initDetailAction(value);
     dispatch(action);
   }
 });

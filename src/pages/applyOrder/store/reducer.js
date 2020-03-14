@@ -1,6 +1,14 @@
 import * as types from "./actionTypes";
 import spinningTypes from "pages/common/layer/spinning/spinningTypes";
 
+function mapArr(catalog, product) {
+  for (let i = 0; i < catalog.length; i++) {
+    if (catalog[i].productTypeCode === product[0].productTypeCode) {
+      catalog[i].productList = product
+    }
+  }
+}
+
 const defaultState = {
   list: [],
   pagination: {},
@@ -13,7 +21,8 @@ const defaultState = {
   allSupportCAs: [],
   applyGetFileList: [],
   confirmVisible: false,
-  confirmLoading: false
+  confirmLoading: false,
+  catalog: []
 };
 
 export default (state = defaultState, action) => {
@@ -52,6 +61,12 @@ export default (state = defaultState, action) => {
       break;
     case types.CHANGE_CONFIRM_LOADING:
       newState.confirmLoading = action.confirmLoading;
+      break;
+    case types.INIT_CATALOG:
+      newState.catalog = action.catalog;
+      break;
+    case types.INIT_PRODUCT_LIST:
+      mapArr(newState.catalog, action.productList)
       break;
     default:
       break;

@@ -8,9 +8,19 @@ function Oper(props) {
 
   return (
     <div>
-      <Link to={{ pathname: '/app/detail', state: { editAppId: props.record.id, rowauditStatus: props.record.auditStatus } }}>
+      <Link
+        to={{
+          pathname: '/app/detail',
+          state: {
+            editAppId: props.record.id,
+            rowauditStatus: props.record.auditStatus,
+            allLandingModes: props.allLandingModes,
+            allSupportCAs: props.allSupportCAs,
+            allAppTypes: props.allAppTypes,
+            allAuthLevel: props.allAuthLevel
+          }
+        }}>
         <Button
-          // onClick={() => props.detailApp({ props, data: props.record })}
           style={{ fontSize: "12px" }}
           type="primary"
           size="small"
@@ -23,6 +33,11 @@ function Oper(props) {
 
 const mapState = state => ({
   params: state.app.params,
+  allLandingModes: state.app.form.allLandingModes,
+  allSupportCAs: state.app.form.allSupportCAs,
+  allAppTypes: state.app.form.allAppTypes,
+  allAuthLevel: state.app.form.allAuthLevel,
+  allProductType: state.app.allProductType
 })
 
 const mapDispatch = dispatch => ({

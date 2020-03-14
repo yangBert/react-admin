@@ -109,9 +109,9 @@ class Detail extends React.Component {
         describes
       } = this.props.detail.applyDetailRes;
       landingModes = landingModes.substring(0, landingModes.length - 1);
-      landingModes = stringTorNumber(landingModes.split(","));
+      landingModes = stringTorNumber(landingModes.split(";"));
       supportCAs = supportCAs.substring(0, supportCAs.length - 1);
-      supportCAs = stringTorNumber(supportCAs.split(","));
+      supportCAs = stringTorNumber(supportCAs.split(";"));
     }
     return (
       <div>
@@ -125,7 +125,7 @@ class Detail extends React.Component {
                       {instanceCode}
                     </Descriptions.Item>
                     <Descriptions.Item label="订单状态">
-                      {config.status[status] ? config.status[status] : "--"}
+                      {config.status.get(status)}
                     </Descriptions.Item>
                     <Descriptions.Item label="订单提交日期">
                       {createTime ? $$.getHours(createTime) : "--"}
@@ -193,8 +193,8 @@ class Detail extends React.Component {
                       </PhotoProvider>
                     </div>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
 
                   <br />
                   <div>
@@ -205,7 +205,7 @@ class Detail extends React.Component {
                 <Card title="扩展信息" bordered={false}>
                   <Descriptions>
                     <Descriptions.Item label="应用类型">
-                      <Select disabled={true} value={appType ? appType : ""}>
+                      <Select onChange={null} value={appType}>
                         <Option value="">未定义</Option>
                         {this.props.allAppTypes.map(item => (
                           <Option key={item.value} value={item.value}>
@@ -217,8 +217,8 @@ class Detail extends React.Component {
 
                     <Descriptions.Item label="登录方式">
                       <Checkbox.Group
-                        disabled={true}
                         options={this.props.allLandingModes}
+                        onChange={null}
                         value={landingModes}
                       />
                     </Descriptions.Item>
@@ -226,14 +226,14 @@ class Detail extends React.Component {
 
                   <Descriptions>
                     <Descriptions.Item label="登录方式">
-                      <Radio.Group value={feeCode} disabled={true}>
+                      <Radio.Group value={feeCode} onChange={null}>
                         <Radio value={"1"}>一次性收费</Radio>
                         <Radio value={"0"}>实时收费</Radio>
                       </Radio.Group>
                     </Descriptions.Item>
                     <Descriptions.Item label="支持CA">
                       <Checkbox.Group
-                        disabled={true}
+                        onChange={null}
                         options={this.props.allSupportCAs}
                         value={supportCAs}
                       />
@@ -267,8 +267,8 @@ class Detail extends React.Component {
                       </div>
                     </div>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                   {this.getNumbers(config.image.SYS.code) ? (
                     <div>
                       <p>{config.image.SYS.name}</p>
@@ -297,40 +297,38 @@ class Detail extends React.Component {
                       </div>
                     </div>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                 </Card>
               </div>
             ) : (
-              ""
-            )}
-            <div className={styles.bottom}>
-              <ModalConfirm />
-              {this.props.location.state.record.status ===
-              ("PRE_PARENT_AUDIT" ||
-                "PRE_BUSSINESS_AUDIT" ||
-                "PRE_SYS_AUDIT") ? (
-                <Fragment>
-                  <Button
-                    type="primary"
-                    onClick={() => this.audit("true")}
-                    size="large"
-                    className={styles.button}
-                  >
-                    审核通过
-                  </Button>
-                  <Button
-                    type="primary"
-                    onClick={() => this.audit("false")}
-                    size="large"
-                    className={styles.button}
-                  >
-                    审核不通过
-                  </Button>
-                </Fragment>
-              ) : (
                 ""
               )}
+            <div className={styles.bottom}>
+              <ModalConfirm />
+              {!this.props.location.state.allStatus && status === config.status.PRE_BUSSINESS_AUDIT
+                ? (
+                  <Fragment>
+                    <Button
+                      type="primary"
+                      onClick={() => this.audit("true")}
+                      size="large"
+                      className={styles.button}
+                    >
+                      审核通过
+                  </Button>
+                    <Button
+                      type="primary"
+                      onClick={() => this.audit("false")}
+                      size="large"
+                      className={styles.button}
+                    >
+                      审核不通过
+                  </Button>
+                  </Fragment>
+                ) : (
+                  ""
+                )}
               <Button
                 type="primary"
                 onClick={() => this.props.history.goBack()}

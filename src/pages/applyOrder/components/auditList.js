@@ -49,7 +49,7 @@ const columns = [
     key: "status",
     align: "center",
     render: status => (
-      <span>{config.status[status] ? config.status[status] : "--"}</span>
+      <span>{config.status.get(status)}</span>
     )
   },
   {

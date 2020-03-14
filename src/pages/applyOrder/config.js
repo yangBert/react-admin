@@ -1,14 +1,38 @@
 const status = {
-  SUBMIT: "暂存",
-  PRE_PAY: "待支付",
-  PRE_PARENT_AUDIT: "待上级审核",
-  PRE_BUSSINESS_AUDIT: "待运营管理员审核",
-  PRE_SYS_AUDIT: "待系统管理员审核",
-  AUDIT_TRUE: "审核通过",
-  AUDIT_FALSE: "审核不通过",
-  FINISH: "完成",
-  CANCLE: "取消",
-  DEL: "删除"
+  PRE_BUSSINESS_AUDIT: "PRE_BUSSINESS_AUDIT",
+  AUDIT_TRUE: "AUDIT_TRUE",
+  AUDIT_FALSE: "AUDIT_FALSE",
+  get: s => {
+    return s === "PRE_BUSSINESS_AUDIT" ? "待运营管理员审核" :
+      s === "AUDIT_TRUE" ? "审核通过" :
+        s === "AUDIT_FALSE" ? "审核不通过" :
+          "--";
+  }
+};
+
+const allStatus = {
+  SUBMIT: "SUBMIT",
+  PRE_PAY: "PRE_PAY",
+  PRE_PARENT_AUDIT: "PRE_PARENT_AUDIT",
+  PRE_BUSSINESS_AUDIT: "PRE_BUSSINESS_AUDIT",
+  PRE_SYS_AUDIT: "PRE_SYS_AUDIT",
+  AUDIT_TRUE: "AUDIT_TRUE",
+  AUDIT_FALSE: "AUDIT_FALSE",
+  FINISH: "FINISH",
+  CANCLE: "CANCLE",
+  DEL: "DEL",
+  get: s => {
+    return s === "SUBMIT" ? "暂存" :
+      s === "PRE_PAY" ? "待支付" :
+        s === "PRE_PARENT_AUDIT" ? "待上级审核" :
+          s === "PRE_BUSSINESS_AUDIT" ? "待运营管理员审核" :
+            s === "PRE_SYS_AUDIT" ? "待系统管理员审核" :
+              s === "AUDIT_TRUE" ? "审核通过" :
+                s === "AUDIT_FALSE" ? "审核不通过" :
+                  s === "FINISH" ? "完成" :
+                    s === "CANCLE" ? "取消" :
+                      s === "DEL" ? "删除" : "--";
+  }
 };
 
 const instanceType = {
@@ -34,4 +58,4 @@ const allowTypesConfig = [
   { label: "手机盾", value: "mobileShield" }
 ];
 
-export { status, instanceType, image, allowTypesConfig };
+export { status, allStatus, instanceType, image, allowTypesConfig };

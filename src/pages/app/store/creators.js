@@ -68,7 +68,6 @@ const queryEditAppAction = req => {
       if (res.data) {
         const { success, message, data } = res.data && res.data;
         if (success) {
-          console.log("修改查询信息data", data);
           dispatch(onChangeAppNameAction(data.appName));
           dispatch(onChangeUrlAction(data.url));
           dispatch(onChangeDescribesAction(data.describes));
@@ -81,10 +80,12 @@ const queryEditAppAction = req => {
           dispatch(onChangeEditAppIdAction(data.id));
           dispatch(onChangeOrgTreeSelectAction(data.orgCode));
           dispatch(onChangeTagAction(data.tag));
+          if (data.icon) {
+            const iconArr = data.icon.split("gzdata.com.cn");
+            const iconRUL = iconArr[iconArr.length - 1];
+            implementURLtoBlob(req.com, iconRUL);
+          }
 
-          const iconArr = data.icon.split("gzdata.com.cn");
-          const iconRUL = iconArr[iconArr.length - 1];
-          implementURLtoBlob(req.com, iconRUL);
         } else {
           notification("error", message);
         }
@@ -98,7 +99,7 @@ const queryEditAppAction = req => {
 //根据图url获取file blob
 function implementURLtoBlob(com, url) {
   request.urlToBlob(url, res => {
-    blobToDataURI(res.data, function(base64) {
+    blobToDataURI(res.data, function (base64) {
       const file = dataURLtoFile(base64, "icon.jpg");
       com.setState({ icon: file });
     });
@@ -109,7 +110,7 @@ function blobToDataURI(blob, callback) {
   if (typeof blob !== "undefined") {
     var reader = new FileReader();
     reader.readAsDataURL(blob);
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       callback(e.target.result);
     };
   }
@@ -210,8 +211,8 @@ const showSecretAction = req => {
           confirm({
             title: "应用授权密钥",
             content: appSecret,
-            onOk() {},
-            onCancel() {}
+            onOk() { },
+            onCancel() { }
           });
         } else {
           notification("error", message);

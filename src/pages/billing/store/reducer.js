@@ -10,8 +10,7 @@ const defaultState = {
   editTitle: "",
   editAmount: "",
   editType: "",
-  editState: "",
-  detailInfo: null,
+  editMaxLimit: 0
 };
 
 export default (state = defaultState, action) => {
@@ -39,14 +38,8 @@ export default (state = defaultState, action) => {
     case types.CHANGE_SAVE_LOADING:
       newState.saveLoading = action.saveLoading
       break;
-    case types.CHANGE_EDIT_CONTENT:
-      newState.editContent = action.editContent
-      break;
-    case types.INIT_NOTICE_DETAIL:
-      newState.detailInfo = action.detailInfo
-      break;
-    case types.CHANGE_EDIT_STATE:
-      newState.editState = action.editState
+    case types.CHANGE_EDIT_MAX_LIMIT:
+      newState.editMaxLimit = action.editMaxLimit
       break;
     default:
       break;

@@ -35,3 +35,12 @@
   width: 88px;
   height: 88px;
 }
+
+.checkboxGroup{
+  margin-bottom:10px;
+}
+
+.productTypeName{
+  margin:20px 0 10px 0;
+  font-weight:bold;
+}

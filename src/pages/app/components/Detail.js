@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import { Modal, Card, Form, Input, Upload, Icon, message, Select, Checkbox, Button } from 'antd';
+import { Modal, Card, Form, Input, Upload, Icon, message, Select, Checkbox, Button, Spin } from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import styles from '../css/add.module.css';
+import styles from "../css/add.module.css";
 import * as creators from '../store/creators';
 import $$ from 'static/js/base';
 //import * as requestURL from 'static/js/requestURL';
@@ -139,185 +139,177 @@ class AppDetail extends Component {
     );
     const imgURL = this.props.iconBase64 || this.props.icon
     const rowauditStatus = this.props.location.state.rowauditStatus
+    const {
+      allLandingModes,
+      allSupportCAs,
+      allAppTypes
+    } = this.props.location.state;
+    console.log("allLandingModes", this.props.location.state)
     return (
       <div className={styles.pageContet}>
-        {/* <h3 className={styles.childTitle}>新增</h3> */}
-        <Modal
-          title="审核意见"
-          visible={this.state.visibleModal}
-          onOk={() => this.handleOk()}
-          onCancel={() => this.setState({ visibleModal: false })}
-        >
-          <div>
-            <TextArea onChange={e => this.setState({ task: e.target.value })} value={this.state.task} rows={4} />
-          </div>
-        </Modal>
-        <div className="pageContentColor">
-          <Card title="基本信息" bordered={false}>
-            <Form className={`${styles.form} clearfix`}>
-              <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">应用名称：</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Input
-                    disabled
-                    placeholder="请输入应用名称"
-                    //ref={refappName => this.setState({refappName})}
-                    onChange={e => this.props.onChangeAppName(e.target.value)}
-                    value={this.props.appName}
-                  />
+        <Spin tip="Loading..." spinning={this.props.spinning}>
+          <div className="pageContentColor">
+            <Modal
+              title="审核意见"
+              visible={this.state.visibleModal}
+              onOk={() => this.handleOk()}
+              onCancel={() => this.setState({ visibleModal: false })}
+            >
+              <div>
+                <TextArea onChange={e => this.setState({ task: e.target.value })} value={this.state.task} rows={4} />
+              </div>
+            </Modal>
+            <Card title="基本信息" bordered={false}>
+              <Form className={`${styles.form} clearfix`}>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>应用名称：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Input
+                      placeholder="请输入应用名称"
+                      onChange={null}
+                      value={this.props.appName}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">应用访问地址：</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Input
-                    disabled
-                    placeholder="请输入应用访问地址"
-                    //ref={refurl => this.setState({ refurl })}
-                    onChange={e => this.props.onChangeUrl(e.target.value)}
-                    value={this.props.url}
-                  />
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用访问地址：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Input
+                      placeholder="请输入应用访问地址"
+                      onChange={null}
+                      value={this.props.url}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">应用描述：</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Input
-                    disabled
-                    placeholder="请输入应用描述"
-                    //ref={refdescribes => this.setState({refdescribes})}
-                    onChange={e => this.props.onChangeDescribes(e.target.value)}
-                    value={this.props.describes}
-                  />
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用描述：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Input
+                      placeholder="请输入应用描述"
+                      onChange={null}
+                      value={this.props.describes}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">推送URL：</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Input
-                    disabled
-                    placeholder="请输入推送URL"
-                    //ref={refredirectUrl => this.setState({refredirectUrl})}
-                    onChange={e => this.props.onChangeRedirectUrl(e.target.value)}
-                    value={this.props.redirectUrl}
-                  />
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>推送URL：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Input
+                      placeholder="请输入推送URL"
+                      onChange={null}
+                      value={this.props.redirectUrl}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">上传应用LOGO：</label>
-                <Upload
-                  disabled
-                  name="avatar"
-                  listType="picture-card"
-                  className="avatar-uploader"
-                  showUploadList={false}
-                  //action={requestURL.uploadUploadApplyFile}
-                  beforeUpload={this.beforeUpload}
-                //onChange={this.props.onChangeIcon}
-                >
-                  {
-                    imgURL ?
-                      <img src={imgURL} alt="avatar" style={{ width: '100%' }} /> :
-                      uploadButton
-                  }
-                </Upload>
-              </div>
-            </Form>
-          </Card>
-        </div >
-
-        <div className="pageContentColor">
-          <Card title="扩展信息" bordered={false}>
-            <Form className={`${styles.form} clearfix`}>
-              <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">应用类型：</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Select
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>上传应用LOGO：</label>
+                  <Upload
                     disabled
-                    //ref={refappType => this.setState({refappType})}
-                    value={this.props.appType ? this.props.appType : ""}
-                    onChange={value => this.props.onChangeAppType(value)}
+                    name="avatar"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    beforeUpload={this.beforeUpload}
                   >
-                    <Option value="">请选择</Option>
                     {
-                      this.props.allAppTypes && this.props.allAppTypes.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>)
+                      imgURL ?
+                        <img src={imgURL} alt="avatar" style={{ width: '100%' }} /> :
+                        uploadButton
                     }
-                  </Select>
+                  </Upload>
                 </div>
-              </div>
-              <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">审核模式：</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Select
-                    disabled
-                    //ref={refauditMode => this.setState({refauditMode})}
-                    value={this.props.auditMode === "" ? "" : this.props.auditMode}
-                    onChange={value => this.props.onChangeAuditMode(value)}
-                  >
-                    <Option value="">请选择</Option>
-                    <Option value={0}>接入应用自主审核</Option>
-                    <Option value={1}>自动审核通过</Option>
-                  </Select>
+              </Form>
+            </Card>
+          </div >
+
+          <div className="pageContentColor">
+            <Card title="扩展信息" bordered={false}>
+              <Form className={`${styles.form} clearfix`}>
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用类型：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Select
+                      value={this.props.appType ? this.props.appType : ""}
+                      onChange={null}
+                    >
+                      <Option value="">请选择</Option>
+                      {
+                        allAppTypes && allAppTypes.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>)
+                      }
+                    </Select>
+                  </div>
                 </div>
-              </div>
-              <div className={`${styles.formLine} clearfix`}><label className="pullLeft">登陆认证方式：</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Checkbox.Group
-                    disabled
-                    options={this.props.allLandingModes}
-                    value={this.props.landingModes}
-                    onChange={this.props.changeLandingModes}
-                  />
+                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>审核模式：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Select
+                      value={this.props.auditMode === "" ? "" : this.props.auditMode}
+                      onChange={null}
+                    >
+                      <Option value="">请选择</Option>
+                      <Option value={0}>接入应用自主审核</Option>
+                      <Option value={1}>自动审核通过</Option>
+                    </Select>
+                  </div>
                 </div>
-              </div>
-              <div className={`${styles.formLine} clearfix`}><label className="pullLeft">支持CA机构：</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Checkbox.Group
-                    disabled
-                    options={this.props.allSupportCAs}
-                    value={this.props.supportCAs}
-                    onChange={this.props.onChangeSupportCAs}
-                  />
+                <div className={`${styles.formBlock} clearfix`}><label className={`${styles.label} pullLeft`}>登陆认证方式：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Checkbox.Group
+                      options={allLandingModes}
+                      value={this.props.landingModes}
+                      onChange={null}
+                    />
+                  </div>
                 </div>
-              </div>
-            </Form>
-          </Card>
-        </div >
-        <div className={styles.formButton}>
-          {rowauditStatus === 2 ?
-            <Fragment>
+                <div className={`${styles.formBlock} clearfix`}><label className={`${styles.label} pullLeft`}>支持CA机构：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Checkbox.Group
+                      options={allSupportCAs}
+                      value={this.props.supportCAs}
+                      onChange={null}
+                    />
+                  </div>
+                </div>
+              </Form>
+            </Card>
+          </div >
+          <div className={styles.formButton}>
+            {rowauditStatus === 2 ?
+              <Fragment>
+                <Button
+                  type="primary"
+                  size="large"
+                  className={styles.formbtn}
+                  onClick={() => this.auditPass()}
+                >审核通过</Button>
+                <Button
+                  size="large"
+                  type="primary"
+                  className={styles.formbtn}
+                  onClick={() => this.setState({ visibleModal: true })}
+                >审核不通过</Button>
+              </Fragment>
+              : ""
+            }
+            {rowauditStatus === 0 ?
               <Button
                 type="primary"
                 size="large"
                 className={styles.formbtn}
                 onClick={() => this.auditPass()}
-              >审核通过</Button>
+              >审核通过</Button> : ""
+            }
+            {rowauditStatus === 1 ?
               <Button
                 size="large"
                 type="primary"
                 className={styles.formbtn}
                 onClick={() => this.setState({ visibleModal: true })}
               >审核不通过</Button>
-            </Fragment>
-            : ""
-          }
-          {rowauditStatus === 0 ?
-            <Button
-              type="primary"
-              size="large"
-              className={styles.formbtn}
-              onClick={() => this.auditPass()}
-            >审核通过</Button> : ""
-          }
-          {rowauditStatus === 1 ?
+              : ""
+            }
             <Button
               size="large"
               type="primary"
               className={styles.formbtn}
-              onClick={() => this.setState({ visibleModal: true })}
-            >审核不通过</Button>
-            : ""
-          }
-          <Button
-            size="large"
-            type="primary"
-            className={styles.formbtn}
-            onClick={() => this.backButton()}
-          >返回列表</Button>
-        </div>
+              onClick={() => this.backButton()}
+            >返回列表</Button>
+          </div>
+        </Spin>
       </div>
     )
   }
@@ -340,6 +332,7 @@ const mapState = state => ({
   form: state.app.form,
   saveLoading: state.app.saveLoading,
   editAppId: state.app.editAppId,
+  spinning: state.app.spinning,
 })
 
 const mapDispatch = dispatch => ({
