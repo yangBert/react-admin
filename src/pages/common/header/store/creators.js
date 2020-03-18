@@ -18,7 +18,6 @@ const initAdminInfoAction = adminInfo => ({
 const getAdminInfoAction = req => {
   return (dispatch) => {
     request.getJson(requestURL.managerSelectLoginAdminInfo, {}, res => {
-      console.log("res",res)
       if (res.data) {
         const { success, data } = res.data && res.data
         if (success) {

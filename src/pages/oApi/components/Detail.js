@@ -20,7 +20,6 @@ class Detail extends React.Component {
   }
 
   callback = activeKey => {
-    console.log(activeKey);
     this.setState({ activeKey });
   };
 

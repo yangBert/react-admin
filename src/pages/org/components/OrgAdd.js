@@ -24,13 +24,16 @@ class OrgAdd extends Component {
   }
   submit() {
     const { editOrgName, editOrgCode, editOrgDesc } = this.props;
-    if ($$.trim(editOrgName) === "") {
+    const orgName = $$.trim(editOrgName);
+    const orgCode = $$.trim(editOrgCode);
+    const orgDesc = $$.trim(editOrgDesc);
+    if (orgName === "") {
       message.error("请填写机构名称");
       return;
-    } else if ($$.trim(editOrgCode) === "") {
-      message.error("请填机构编码");
+    } else if (/^[0-9a-zA-Z]{5, }$/g.test(orgCode)) {
+      message.error("请填机构编码，英文或数字5位以上");
       return;
-    } else if ($$.trim(editOrgDesc) === "") {
+    } else if (orgDesc === "") {
       message.error("请填机构描述");
       return;
     }
@@ -38,9 +41,9 @@ class OrgAdd extends Component {
     const req = {
       props: this.props,
       data: {
-        orgName: $$.trim(editOrgName),
-        orgCode: $$.trim(editOrgCode),
-        orgDesc: $$.trim(editOrgDesc),
+        orgName,
+        orgCode,
+        orgDesc,
         userNo,
         porgCode: this.props.editPorgCode,
         pid: this.props.editPid
@@ -93,10 +96,10 @@ class OrgAdd extends Component {
                   <label className="pullLeft">机构编码：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
-                      placeholder="请输入机构编码"
-                      //ref={refurl => this.setState({ refurl })}
+                      placeholder="请输入机构编码（数字或英文5位以上）"
                       onChange={e => this.props.setOrgCode(e.target.value)}
                       value={this.props.editOrgCode}
+                      disabled={this.props.editOrgCode ? true : false}
                     />
                   </div>
                 </div>
@@ -119,16 +122,16 @@ class OrgAdd extends Component {
             {this.props.editAppId ? (
               ""
             ) : (
-              <Button
-                type="primary"
-                size="large"
-                className={styles.formbtn}
-                onClick={() => this.submit()}
-                loading={this.props.saveLoading}
-              >
-                保存
+                <Button
+                  type="primary"
+                  size="large"
+                  className={styles.formbtn}
+                  onClick={() => this.submit()}
+                  loading={this.props.saveLoading}
+                >
+                  保存
               </Button>
-            )}
+              )}
             <Button
               size="large"
               type="primary"

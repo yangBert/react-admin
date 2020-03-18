@@ -62,7 +62,6 @@ const reChargeAction = req => {
   return dispatch => {
     const url = requestURL.chargeRecharge;
     request.json(url, req.data, res => {
-      console.log("res", res);
       if (res.data) {
         const { success, message } = res.data;
         if (success) {
@@ -90,9 +89,7 @@ const saveAction = req => {
     const url = req.data.id
       ? requestURL.accountUpdateAccount
       : requestURL.accountAddCount;
-    console.log("req", req, url);
     request.json(url, req.data, res => {
-      console.log("res", res);
       dispatch(spinningAction(false));
       if (res.data) {
         const { success, message } = res.data && res.data;
@@ -120,7 +117,6 @@ const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true));
     request.json(requestURL.accountQueryByPage, req.data, res => {
-      console.log("res", res);
       if (res.data) {
         const { success, message, data } = res.data && res.data;
         if (success) {

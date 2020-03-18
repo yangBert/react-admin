@@ -55,7 +55,6 @@ class Add extends Component {
     if (this.props.location.state && this.props.location.state.record) {
       req.data.paramId = this.props.location.state.record.paramId;
     }
-    console.log("req", req);
     this.props.save(req);
   }
 

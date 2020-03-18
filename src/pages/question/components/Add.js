@@ -1,63 +1,78 @@
 import React, { Component } from 'react';
-import { Spin, Input, Button, message,Select } from 'antd';
+import { Spin, Input, Button, message, Select } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/add.module.css';
-import BraftEditor from 'braft-editor';
-import 'braft-editor/dist/index.css';
+import BraftEditor from "braft-editor";
+import "braft-editor/dist/index.css";
 import $$ from 'static/js/base';
 import * as config from '../config';
 
 const { Option } = Select;
 
 class Add extends Component {
+  state = {
+    title: "",
+    type: "",
+    id: "",
+    editorState: null
+  }
   componentDidMount() {
-    this.props.handleEditorChange(BraftEditor.createEditorState('<p>请描述常见问题...</p>'))//初始化富文本编辑器
     if (this.props.location.state && this.props.location.state.record) {
-      const {title,type,id} = this.props.location.state.record
-      this.props.queryDetail({ props: this.props, data: { id} })
-      this.props.changeEditTitle(title)
-      this.props.setEditType(type)
+      const { title, type, id, content } = this.props.location.state.record;
+      this.setState({
+        title,
+        type,
+        id,
+        editorState: BraftEditor.createEditorState(content)
+      })
+    } else {
+      this.setState({
+        editorState: BraftEditor.createEditorState('<p>请描述常见问题...</p>')
+      })
     }
   }
 
   save() {
-    const { editTitle, editContent, editType } = this.props;
-    if ($$.trim(editTitle) === "") {
+    const { editorState, title, id, type } = this.state;
+    if ($$.trim(title) === "") {
       message.error('请填写公告标题');
       return
-    } else if (editContent === "") {
+    } else if (editorState === null) {
       message.error('请填公告内容');
       return
     }
     const createdBy = $$.localStorage.get("adminId")
-    const req = {
+    let req = {
       props: this.props,
       data: {
-        title: editTitle,
-        content: editContent.toHTML(),
+        title,
+        content: editorState.toHTML(),
         createdBy,
-        type: editType,
+        type,
       }
     }
 
-    const editId = this.props.location.state && this.props.location.state.editId
-    if (editId) {
-      req.data.id = editId
+    if (id) {
+      req.data.id = id;
     }
-
     this.props.save(req)
   }
 
   mapArr() {
     let arr = [];
     Object.keys(config.type).forEach(k => {
-      arr.push({k,v:config.type[k]})
+      arr.push({ k, v: config.type[k] })
     })
     return arr;
   }
 
+  handleEditorChange = (editorState) => {
+    this.setState({ editorState })
+  }
+
   render() {
+    const { editorState } = this.state;
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
@@ -69,22 +84,26 @@ class Add extends Component {
                   <Input
                     placeholder="常见问题"
                     allowClear
-                    onChange={e => this.props.changeEditTitle(e.target.value)}
-                    value={this.props.editTitle}
+                    onChange={e => this.setState({ title: e.target.value })}
+                    value={this.state.title}
                   />
                 </div>
               </div>
               <div className={`${styles.formLine} pullLeft`}>
                 <label className="pullLeft">类型:</label>
                 <div className={`${styles.inline} pullLeft`}>
-                <Select value={this.props.editType} style={{ width: "100%" }} onChange={value => this.props.setEditType(value)}>
-                <Option value="">请选择</Option>
-                {
-                  this.mapArr().map(item => {
-                   return <Option value={item.k} key={item.k}>{item.v}</Option>
-                  })
-                }
-              </Select>
+                  <Select
+                    value={this.state.type}
+                    style={{ width: "100%" }}
+                    onChange={value => this.setState({ type: value })}
+                  >
+                    <Option value="">请选择</Option>
+                    {
+                      this.mapArr().map(item => {
+                        return <Option value={item.k} key={item.k}>{item.v}</Option>
+                      })
+                    }
+                  </Select>
                 </div>
               </div>
             </div>
@@ -100,8 +119,8 @@ class Add extends Component {
           </div>
           <div className={`${styles.editContent} my-component`}>
             <BraftEditor
-              value={this.props.editContent}
-              onChange={this.props.handleEditorChange}
+              value={editorState}
+              onChange={this.handleEditorChange}
             />
           </div>
         </Spin>
@@ -113,7 +132,7 @@ class Add extends Component {
 const mapState = state => ({
   spinning: state.question.spinning,
   editTitle: state.question.editTitle,
-  editType:state.question.editType,
+  editType: state.question.editType,
   editContent: state.question.editContent,
   editState: state.question.editState,
 })
@@ -129,10 +148,6 @@ const mapDispatch = dispatch => ({
   },
   setEditType: req => {
     const action = creators.setEditTypeAction(req);
-    dispatch(action);
-  },
-  handleEditorChange: editorState => {
-    const action = creators.changeEditorContentAction(editorState);
     dispatch(action);
   },
   queryDetail: id => {

@@ -58,7 +58,6 @@ const saveAction = req => {
     }
 
     request.formData(url, req.data, res => {
-      console.log("res", res);
       dispatch(spinningAction(false));
       if (res.data) {
         const { success, message } = res.data && res.data;
@@ -85,9 +84,7 @@ const saveAction = req => {
 const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true));
-    console.log("req", req.data);
     request.json(requestURL.linkQueryLinksByPage, req.data, res => {
-      console.log("res", res);
       dispatch(spinningAction(false));
       if (res.data) {
         const { success, message, data } = res.data && res.data;

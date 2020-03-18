@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Card, Descriptions, Button, Select, Checkbox, Radio } from "antd";
+import { Card, Descriptions, Button, Checkbox } from "antd";
 import styles from "../css/detail.module.css";
 import $$ from "static/js/base";
 import * as creators from "../store/creators";
@@ -39,15 +39,6 @@ class Detail extends React.Component {
           userNo
         }
       });
-    }
-  }
-
-  getImageURL(type) {
-    const list = this.props.applyGetFileList;
-    for (let i = 0; i < list.length; i++) {
-      if (type === list[i].bussinessType) {
-        return list[i].fileUrl;
-      }
     }
   }
 

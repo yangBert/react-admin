@@ -81,7 +81,6 @@ class Add extends Component {
       req.data.accountCode = this.props.location.state.editRecord.accountCode;
       delete req.data.createdBy;
     }
-    console.log("idsdfsdfsdf", req);
     this.props.save(req);
   }
 

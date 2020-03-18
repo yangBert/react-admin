@@ -88,7 +88,6 @@ const queryListAction = req => {
       dispatch(spinningAction(false));
       if (res.data) {
         const { success, message, data } = res.data;
-
         if (success) {
           const action = initListAction(data.results, createPagination(data));
           dispatch(action);

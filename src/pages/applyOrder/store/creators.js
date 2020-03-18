@@ -49,12 +49,10 @@ const auditAction = req => {
     dispatch(spinningAction(true));
     dispatch(changeConfirmLoadingAction(true));
     const url = requestURL.webManagerAuditApply;
-    console.log("审核 req==>", req.data);
     request.json(url, req.data, res => {
       dispatch(spinningAction(false));
       dispatch(changeConfirmLoadingAction(false));
       dispatch(changeConfirmVisibleAction(false));
-      console.log("审核 res==>", res);
       if (res.data) {
         const { success, message } = res.data && res.data;
         if (success) {
@@ -83,7 +81,6 @@ const queryListAction = req => {
     request.json(requestURL.webManagerQueryApplyPages, req.data, res => {
       dispatch(spinningAction(false));
       if (res.data) {
-
         const { success, message, data } = res.data;
         if (success) {
           const action = initListAction(data.results, createPagination(data));
@@ -124,7 +121,6 @@ const getCatalogAction = req => {
       dispatch(spinningAction(false));
       if (res.data) {
         const { success, message, data } = res.data;
-        console.log("Catalog===>", data)
         if (success) {
           dispatch(initCatalogAction(data));
           for (let i = 0; i < data.length; i++) {
@@ -257,7 +253,6 @@ const applyGetFileListAction = req => {
       if (res.data) {
         const { success, message, data } = res.data && res.data;
         if (success) {
-          console.log("res", res);
           const action = initapplyGetFileListAction(data);
           dispatch(action);
         } else {

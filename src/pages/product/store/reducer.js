@@ -4,16 +4,18 @@ import spinningTypes from "pages/common/layer/spinning/spinningTypes";
 const defaultState = {
   list: [],
   allProductType: [],
+  verifyApiList: [],
   pagination: {},
   spinning: false,
   params: {},
   productName: "",
   productPrice: 0,
-  editContent: "",
   productPaying: "",
   productTypeCode: "",
   productRemark: "",
   tag: "",
+  APIName: "",
+  orderWord: "",
   record: {}
 };
 
@@ -39,9 +41,6 @@ export default (state = defaultState, action) => {
     case types.SET_PRODUCT_NAME:
       newState.productName = action.productName;
       break;
-    case types.SET_EDIT_CONTENT:
-      newState.editContent = action.editContent;
-      break;
     case types.SET_PRODUCT_PRICE:
       newState.productPrice = action.productPrice;
       break;
@@ -56,6 +55,15 @@ export default (state = defaultState, action) => {
       break;
     case types.SET_PRODUCT_TAG:
       newState.tag = action.tag;
+      break;
+    case types.INIT_VERIFY_API_LIST:
+      newState.verifyApiList = action.verifyApiList;
+      break;
+    case types.SET_API_NAME:
+      newState.APIName = action.APIName;
+      break;
+    case types.SET_ORDER_WORD:
+      newState.orderWord = action.orderWord;
       break;
     default:
       break;

@@ -1,28 +1,29 @@
 import axios from 'axios';
 import * as types from './actionTypes';
 
-const initUserList = list => ({
+const initData = list => ({
   type: types.QUERY_USER_LIST,
   list
 })
 
-const getUserList = () => {
+const getData = req => {
   return dispatch => {
-    axios.get('/api/user/userList.json')
-      .then(function (res) {
-        // handle success
-        console.log(res);
-        if (res.data.list.length > 0) {
-          const action = initUserList(res.data.list);
+    dispatch(spinningAction(true));
+    request.get(requestURL.managerOApiSelectAllParamByApiId, req.data, res => {
+      dispatch(spinningAction(false));
+      if (res.data) {
+        const { success, message, data } = res.data;
+        if (success) {
+          const action = initData(data);
           dispatch(action);
+        } else {
+          notification("error", message);
         }
+      } else {
+        req.props.history.push("/500");
+      }
+    });
+  };
+};
 
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-  }
-}
-
-export { getUserList }
+export { getData }

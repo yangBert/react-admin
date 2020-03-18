@@ -45,11 +45,6 @@ class Add extends Component {
     if (editId) {
       formDatas.append("id", editId);
     }
-    console.log(imageFile);
-    console.log(userNo);
-    console.log(editTitle);
-    console.log(editURL);
-    console.log(editId);
     this.props.save({ props: this.props, data: formDatas });
   }
 

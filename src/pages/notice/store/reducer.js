@@ -10,6 +10,7 @@ const defaultState = {
   editContent: "",
   editState: "",
   detailInfo: null,
+  editNoticeType: ""
 };
 
 export default (state = defaultState, action) => {
@@ -36,6 +37,9 @@ export default (state = defaultState, action) => {
       break;
     case types.CHANGE_EDIT_STATE:
       newState.editState = action.editState
+      break;
+    case types.CHANGE_EDIT_NOTICE_TYPE:
+      newState.editNoticeType = action.editNoticeType
       break;
     default:
       break;

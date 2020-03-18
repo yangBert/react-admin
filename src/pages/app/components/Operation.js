@@ -35,19 +35,19 @@ function Oper(props) {
           data.append("id", props.record.id);
           props.changeAppStatus({ props, data });
         }}
-      />
-      &nbsp;&nbsp;
-      <Button
-        onClick={() =>
-          props.showSecret({ props, data: "appID=" + props.record.id })
-        }
-        style={{ fontSize: "12px" }}
-        type="primary"
-        size="small"
-        ghost
-      >
-        密钥
-      </Button>
+      />&nbsp;&nbsp;
+      {
+        props.record.auditStatus === 1 ?
+          <Button
+            onClick={() =>
+              props.showSecret({ props, data: "appID=" + props.record.id })
+            }
+            style={{ fontSize: "12px" }}
+            type="primary"
+            size="small"
+            ghost
+          >密钥</Button> : ""
+      }
       &nbsp;&nbsp;
       <Link
         to={{
@@ -62,7 +62,7 @@ function Oper(props) {
         </Button>
         &nbsp;&nbsp;
       </Link>
-    </div>
+    </div >
   );
 }
 

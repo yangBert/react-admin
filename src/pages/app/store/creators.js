@@ -200,20 +200,39 @@ const queryOrgListAction = req => {
   };
 };
 
-//查询应用授权密钥
-const showSecretAction = req => {
+const createSecretAction = req => {
   return () => {
+    request.json(requestURL.plateSettingGenerateKeyPair, req.data, res => {
+      if (res.data) {
+        const { success, message } = res.data;
+        if (success) {
+          notification("success", message);
+        } else {
+          notification("error", message);
+        }
+      } else {
+        req.props.history.push("/500");
+      }
+    });
+  };
+};
+
+const showSecretAction = req => {
+  return (dispatch) => {
     request.json(requestURL.plateSettingSelectAppAuthSecret, req.data, res => {
       if (res.data) {
-        const { success, message, data } = res.data && res.data;
+        const { success, message, data } = res.data;
         if (success) {
-          const appSecret = JSON.parse(data).appSecret;
-          confirm({
-            title: "应用授权密钥",
-            content: appSecret,
-            onOk() { },
-            onCancel() { }
-          });
+          if (data) {
+            confirm({
+              title: "应用授权公钥已存在，若重新生成将会覆盖已存在的公钥，是否重新生成？",
+              onOk() {
+                dispatch(createSecretAction({ props: req.props, data: req.data }))
+              }
+            });
+          } else {
+            dispatch(createSecretAction({ props: req.props, data: req.data }))
+          }
         } else {
           notification("error", message);
         }
@@ -519,7 +538,7 @@ const saveAppFormAction = req => {
     dispatch(changeSaveLoading(true));
     let url;
     if (req.props.location.state && req.props.location.state.editAppId) {
-      url = requestURL.plateSettingUpdateAppWithOutFile;
+      url = requestURL.plateSettingUpdateApp;
     } else {
       url = requestURL.plateSettingAddAppData;
     }

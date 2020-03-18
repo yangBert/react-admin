@@ -7,8 +7,6 @@ import styles from "./css/UserList.module.css";
 import Oper from "./components/Operation";
 import SearchForm from "./components/SearchForm";
 import * as config from "./config";
-import BraftEditor from "braft-editor";
-import "braft-editor/dist/index.css";
 
 const columns = [
   {
@@ -25,8 +23,8 @@ const columns = [
   },
   {
     title: "产品类型",
-    dataIndex: "productTypeCode",
-    key: "productDesc",
+    dataIndex: "productTypeName",
+    key: "productTypeName",
     align: "center"
   },
   {
@@ -57,8 +55,8 @@ const columns = [
           status === config.status.NORMAL
             ? "green"
             : status === config.status.INVILD
-            ? "#ccc"
-            : ""
+              ? "#ccc"
+              : ""
         }
       >
         {config.status.get(status)}
@@ -83,9 +81,11 @@ class ProductList extends Component {
     this.props.setProductPrice(0);
     this.props.setProductPaying("");
     this.props.setProductTypeCode("");
-    this.props.setEditContent(BraftEditor.createEditorState(""));
+
     this.props.setProductRemark("");
     this.props.setTag("");
+    this.props.setOrderWord("");
+    this.props.setAPIName("");
   }
 
   paginationChange = (pageNo, pageSize) => {
@@ -97,9 +97,7 @@ class ProductList extends Component {
   };
 
   sendFn(pageNo, pageSize) {
-    //const params = this.props.params
     const data = { pageNo, pageSize };
-    //this.props.queryDictlist({ props: this.props, data });
     this.props.queryList({ props: this.props, data });
   }
 
@@ -163,10 +161,6 @@ const mapDispatch = dispatch => ({
     const action = creators.setProductNameAction(req);
     dispatch(action);
   },
-  setEditContent: req => {
-    const action = creators.setEditContentAction(req);
-    dispatch(action);
-  },
   setProductPrice: req => {
     const action = creators.setProductPriceAction(req);
     dispatch(action);
@@ -186,7 +180,15 @@ const mapDispatch = dispatch => ({
   setTag: req => {
     const action = creators.setTagAction(req);
     dispatch(action);
-  }
+  },
+  setOrderWord: req => {
+    const action = creators.setOrderWordAction(req);
+    dispatch(action);
+  },
+  setAPIName: req => {
+    const action = creators.setAPINameAction(req);
+    dispatch(action);
+  },
 });
 
 export default withRouter(connect(mapState, mapDispatch)(ProductList));

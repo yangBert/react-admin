@@ -86,7 +86,6 @@ const queryListAction = req => {
     dispatch(spinningAction(true))
     request.json(requestURL.chargeAppQueryByPage, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("resres", res.data)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
@@ -178,7 +177,6 @@ const queryProductListAction = req => {
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data
-        console.log("resres", res.data)
         if (success) {
           const action = initProductListAction(data.results, createPagination(data))
           dispatch(action)
@@ -196,10 +194,8 @@ const saveAction = req => {
   return (dispatch, getState) => {
     dispatch(spinningAction(true))
     const url = req.data.id ? requestURL.chargePreferentialUpdate : requestURL.chargeAppAdd
-    console.log("url", url, req)
     request.json(url, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("res", res)
       if (res.data) {
         const { success, message } = res.data
         if (success) {

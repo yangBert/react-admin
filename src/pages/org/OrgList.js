@@ -35,6 +35,7 @@ const columns = [
 class OrgList extends Component {
   componentDidMount() {
     this.sendFn(1, 10);
+    this.props.initValues(null);
   }
 
   paginationChange = (pageNo, pageSize) => {
@@ -90,6 +91,10 @@ const mapDispatch = dispatch => ({
   queryOrgList: req => {
     const action = creators.queryOrgListAction(req);
     dispatch(action);
-  }
+  },
+  initValues: req => {
+    const action = creators.initValuesAction(req);
+    dispatch(action);
+  },
 });
 export default connect(mapState, mapDispatch)(OrgList);

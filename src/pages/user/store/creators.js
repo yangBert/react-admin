@@ -22,7 +22,6 @@ const createQueryUserAction = req => {
     dispatch(spinningAction(true))
     request.json(requestURL.userSelectUsers, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("res", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {

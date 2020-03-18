@@ -32,9 +32,7 @@ const createAddOrgAction = req => {
       url = requestURL.orgAddOrg;
     }
     dispatch(changeSaveLoadingAction(true));
-    console.log("req", req);
     request.json(url, req.data, res => {
-      console.log("res", res);
       dispatch(changeSaveLoadingAction(false));
       if (res.data) {
         const { success, message } = res.data && res.data;
@@ -84,7 +82,6 @@ const queryOrgListAction = req => {
       if (res.data) {
         const { success, message, data } = res.data && res.data;
         if (success) {
-          console.log("results", data);
           const action = initOrgAction(implementMenusData(data));
           const treeAction = initOrgTreeAction(
             implementTreeData(implementTreeData(data))

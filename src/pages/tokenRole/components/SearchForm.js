@@ -28,7 +28,6 @@ function SearchForm(props) {
     if (name) {
       data.name = name;
     }
-    console.log("data", data);
     props.querylist({ props, data });
   }
 

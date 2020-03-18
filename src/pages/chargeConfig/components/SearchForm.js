@@ -9,7 +9,6 @@ import "moment/locale/zh-cn";
 moment.locale("zh-cn");
 
 function SearchForm(props) {
-  console.log("props", props);
   const [idCard, setIdCard] = useState("");
   const [userRealname, setUserRealname] = useState("");
   const [status, setStatus] = useState("");

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Button, Icon, DatePicker } from "antd";
 import { connect } from "react-redux";
 import * as creators from "../store/creators";
@@ -24,7 +24,6 @@ function SearchForm(props) {
       ...props.params
     };
 
-    console.log("data", data);
     props.querylist({ props, data });
   }
 

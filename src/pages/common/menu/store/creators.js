@@ -15,16 +15,13 @@ const getMenus = req => {
   return dispatch => {
     axios.get('/menu.json')
       .then(function (res) {
-        // handle success
         if (res.data.menus.length > 0) {
-
           const action = initMenuAction(res.data.menus);
           dispatch(action);
         }
       })
       .catch(function (error) {
-        // handle error
-        console.log(error);
+        notification('error', error)
       })
   }
 }

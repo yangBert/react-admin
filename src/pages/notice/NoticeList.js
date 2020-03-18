@@ -11,11 +11,16 @@ import Oper from './components/Operation';
 const columns = [
   { title: '标题', dataIndex: 'title', key: 'title' },
   { title: '创建人', dataIndex: 'createrName', key: 'createrName', align: 'center' },
-  { title: '发布人', dataIndex: 'publisherName', key: 'publisherName', align: 'center' },
+  {
+    title: '发布人', dataIndex: 'publisherName', key: 'publisherName', align: 'center',
+    render: publisherName => (
+      <span>{publisherName ? publisherName : "--"}</span>
+    )
+  },
   {
     title: '发布时间', dataIndex: 'publishTime', key: 'publishTime', align: 'center',
     render: publishTime => (
-      <span>{publishTime && $$.getHours(publishTime)}</span>
+      <span>{publishTime ? $$.getHours(publishTime) : "--"}</span>
     )
   },
   {
@@ -35,6 +40,8 @@ const columns = [
 class NoticeList extends Component {
   componentDidMount() {
     this.sendFn(1, 10)
+    this.props.changeEditTitle("");
+    this.props.changeEditNoticeType("");
   }
 
   paginationChange = (pageNo, pageSize) => {
@@ -96,6 +103,14 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   queryNoticelist: req => {
     const action = creators.queryNoticelistAction(req);
+    dispatch(action);
+  },
+  changeEditTitle: req => {
+    const action = creators.changeEditTitleAction(req);
+    dispatch(action);
+  },
+  changeEditNoticeType: req => {
+    const action = creators.changeEditNoticeTypeAction(req);
     dispatch(action);
   },
 })

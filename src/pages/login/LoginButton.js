@@ -24,7 +24,6 @@ function LoginButton(props) {
     const CertType = 1;
     GZCA.GZCA_GetCertList(true, CertType, function (res) {
       if (res.success) {
-        console.log(res)
         getCert(res.ContainerName, CertType)
       } else {
         notification('error', res.msg)

@@ -44,12 +44,10 @@ const createSaveAction = req => {
 const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("req.data", req.data)
     request.json(requestURL.questionQueryQuestionByPage, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
-        console.log("res", res)
         if (success) {
           const action = initNoticeListAction(data.results, createPagination(data))
           dispatch(action)

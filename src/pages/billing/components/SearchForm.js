@@ -73,7 +73,6 @@ function SearchForm(props) {
     if (createEndTimeString) {
       data.createEndTimeString = end2
     }
-    console.log("data", data)
     props.querylist({ props, data });
   }
 

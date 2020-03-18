@@ -11,7 +11,6 @@ import Oper from './components/Operation';
 const columns = [
   { title: '应用编码', dataIndex: 'appCode', key: 'appCode', align: 'center' },
   { title: '应用名称', dataIndex: 'appName', key: 'appName', align: 'center' },
-  // { title: '应用描述', dataIndex: 'describes', key: 'describes' },
   {
     title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center',
     render: createTime => (
@@ -52,6 +51,8 @@ class AppList extends Component {
 
     //查询所有产品类型
     this.props.getProductType({ props: this.props, data: {} })
+
+    this.props.emptyValue();
 
     this.sendFn(1, 10)
   }
@@ -126,6 +127,10 @@ const mapDispatch = dispatch => ({
   },
   getProductType: req => {
     const action = creators.getProductTypeAction(req);
+    dispatch(action);
+  },
+  emptyValue: () => {
+    const action = creators.emptyAddValueAction();
     dispatch(action);
   },
 })

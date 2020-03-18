@@ -55,7 +55,6 @@ function SearchForm(props) {
       createEndTimeString
     };
 
-    console.log("data", data);
     props.querylist({ props, data });
   }
 

@@ -29,12 +29,21 @@ export default (state = defaultState, action) => {
       newState.editOrgDesc = action.editOrgDesc
       break;
     case types.INIT_FORM_VALUES:
-      newState.editOrgName = action.record.orgName
-      newState.editOrgCode = action.record.orgCode
-      newState.editOrgDesc = action.record.orgDesc
-      newState.editId = action.record.id
-      newState.editPid = action.record.pid
-      newState.editPorgCode = action.record.porgCode
+      if (action.record) {
+        newState.editOrgName = action.record.orgName
+        newState.editOrgCode = action.record.orgCode
+        newState.editOrgDesc = action.record.orgDesc
+        newState.editId = action.record.id
+        newState.editPid = action.record.pid
+        newState.editPorgCode = action.record.porgCode
+      } else {
+        newState.editOrgName = ""
+        newState.editOrgCode = ""
+        newState.editOrgDesc = ""
+        newState.editId = ""
+        newState.editPid = ""
+        newState.editPorgCode = ""
+      }
       break;
     case types.INIT_ORG_TREE_DATA:
       newState.treeList = action.treeList

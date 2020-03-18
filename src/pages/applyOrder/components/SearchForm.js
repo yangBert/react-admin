@@ -37,7 +37,8 @@ function SearchForm(props) {
     accountCode,
     status,
     startTime,
-    endTime
+    endTime,
+    changeSearchParams
   ]);
 
 
@@ -62,7 +63,6 @@ function SearchForm(props) {
       startTime,
       endTime
     }
-    console.log("data", data)
     props.querylist({ props, data });
   }
 
@@ -131,14 +131,9 @@ function SearchForm(props) {
               <Select value={status} style={{ width: "100%" }} onChange={value => setStatus(value)}>
                 <Option value="">请选择</Option>
                 {
-
                   mapConfig(props.allStatus ? "allStatus" : "status").map(item => {
-                    if (item.k !== 'get') {
-                      return <Option value={item.k} key={item.k}>{props.allStatus ? config.allStatus.get(item.k) : config.status.get(item.k)}</Option>
-                    }
-
+                    return (item.k !== 'get') && <Option value={item.k} key={item.k}>{props.allStatus ? config.allStatus.get(item.k) : config.status.get(item.k)}</Option>
                   })
-
                 }
               </Select>
             </div>

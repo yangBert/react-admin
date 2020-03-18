@@ -35,8 +35,6 @@ function SearchForm(props) {
     if (url !== "") {
       data.url = url;
     }
-
-    console.log("data", data);
     props.querylist({ props, data });
   }
 

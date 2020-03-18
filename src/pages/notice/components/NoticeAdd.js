@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Spin, Input, Button, message } from 'antd';
+import { Spin, Input, Button, message, Select } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/add.module.css';
@@ -7,21 +7,36 @@ import BraftEditor from 'braft-editor';
 import 'braft-editor/dist/index.css';
 import { Link } from 'react-router-dom';
 import $$ from 'static/js/base';
+import config from '../config';
+
+const { Option } = Select;
 
 class NoticeAdd extends Component {
+  state = {
+    editorState: null
+  }
   componentDidMount() {
-    this.props.handleEditorChange(BraftEditor.createEditorState('<p>请编辑内容!</b></p>'))//初始化富文本编辑器
+
     if (this.props.location.state && this.props.location.state.editId) {
-      this.props.queryNoticeDetail({ props: this.props, data: { id: this.props.location.state.editId } })
+      this.props.queryNoticeDetail({ _this: this, data: { id: this.props.location.state.editId } })
+    } else {
+      //初始化富文本编辑器
+      this.setState({
+        editorState: BraftEditor.createEditorState("<p>请输入内容...</b></p>")
+      })
     }
   }
 
   save() {
-    const { editTitle, editContent, editState } = this.props;
+    const { editTitle, editState, editNoticeType } = this.props;
+    const { editorState } = this.state;
     if ($$.trim(editTitle) === "") {
       message.error('请填写公告标题');
       return
-    } else if (editContent === "") {
+    } else if (editNoticeType === "") {
+      message.error('请选择公告类型');
+      return
+    } else if (editorState === null) {
       message.error('请填公告内容');
       return
     }
@@ -31,7 +46,8 @@ class NoticeAdd extends Component {
       props: this.props,
       data: {
         title: editTitle,
-        content: editContent.toHTML(),
+        noticeType: editNoticeType,
+        content: editorState.toHTML(),
         creater,
         createrName,
         state: editState,
@@ -53,6 +69,7 @@ class NoticeAdd extends Component {
   }
 
   render() {
+    const { editorState } = this.state
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
@@ -69,6 +86,23 @@ class NoticeAdd extends Component {
                   />
                 </div>
               </div>
+              <div className={`${styles.formLine} pullLeft`}>
+                <label className="pullLeft">公告类型:</label>
+                <div className={`${styles.inline} pullLeft`}>
+                  <Select
+                    style={{ width: "100%" }}
+                    onChange={value => this.props.changeEditNoticeType(value)}
+                    value={this.props.editNoticeType}
+                  >
+                    <Option value="">请选择</Option>
+                    {
+                      config.noticeType.map(item => (
+                        <Option value={item.value} key={item.value}>{item.name}</Option>
+                      ))
+                    }
+                  </Select>
+                </div>
+              </div>
             </div>
             <div className="pullRight">
               <Button type="primary" className={`${styles.button}`}
@@ -82,9 +116,8 @@ class NoticeAdd extends Component {
           </div>
           <div className={`${styles.editContent} my-component`}>
             <BraftEditor
-              placeholder="请输入正文内容"
-              value={this.props.editContent}
-              onChange={this.props.handleEditorChange}
+              value={editorState}
+              onChange={this.handleEditorChange}
             />
           </div>
         </Spin>
@@ -96,8 +129,8 @@ class NoticeAdd extends Component {
 const mapState = state => ({
   spinning: state.notice.spinning,
   editTitle: state.notice.editTitle,
-  editContent: state.notice.editContent,
   editState: state.notice.editState,
+  editNoticeType: state.notice.editNoticeType,
 })
 
 const mapDispatch = dispatch => ({
@@ -109,14 +142,15 @@ const mapDispatch = dispatch => ({
     const action = creators.changeEditTitleAction(req);
     dispatch(action);
   },
-  handleEditorChange: editorState => {
-    const action = creators.changeEditorContentAction(editorState);
+  changeEditNoticeType: req => {
+    const action = creators.changeEditNoticeTypeAction(req);
     dispatch(action);
   },
   queryNoticeDetail: req => {
     const action = creators.queryNoticeDetailAction(req);
     dispatch(action);
   },
+
 })
 
 export default connect(mapState, mapDispatch)(NoticeAdd);

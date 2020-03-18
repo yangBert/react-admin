@@ -174,8 +174,6 @@ class AppAdd extends Component {
     if (this.props.location.state && this.props.location.state.editAppId) {
       formDatas.append("id", this.props.location.state.editAppId);
     }
-    console.log("data,", tag);
-    console.log("orgCode,", orgCode);
     this.props.saveAppForm({ props: this.props, data: formDatas });
   }
 

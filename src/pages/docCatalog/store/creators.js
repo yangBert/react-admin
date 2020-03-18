@@ -23,7 +23,6 @@ const saveFormAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
     const url = req.data.id ? requestURL.docUpdateDocCatalog : requestURL.docAddDocCatalog
-    console.log("修改", req.data)
     request.json(url, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
@@ -51,13 +50,11 @@ const saveFormAction = req => {
 const querylistAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("req", req.data)
     request.json(requestURL.docQueryCatalogPages, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
-          console.log("目录列表", res)
           const action = initListAction(data.results, createPagination(data))
           dispatch(action)
         } else {

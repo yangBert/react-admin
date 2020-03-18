@@ -22,11 +22,6 @@ const setProductNameAction = productName => ({
   productName
 });
 
-const setEditContentAction = editContent => ({
-  type: types.SET_EDIT_CONTENT,
-  editContent
-});
-
 const setProductPriceAction = productPrice => ({
   type: types.SET_PRODUCT_PRICE,
   productPrice
@@ -50,6 +45,21 @@ const setProductRemarkAction = productRemark => ({
 const setTagAction = tag => ({
   type: types.SET_PRODUCT_TAG,
   tag
+});
+
+const initVerifyApiListAction = verifyApiList => ({
+  type: types.INIT_VERIFY_API_LIST,
+  verifyApiList
+});
+
+const setAPINameAction = APIName => ({
+  type: types.SET_API_NAME,
+  APIName
+});
+
+const setOrderWordAction = orderWord => ({
+  type: types.SET_ORDER_WORD,
+  orderWord
 });
 
 //查询所有的产品类型
@@ -76,7 +86,6 @@ const queryListAction = req => {
     dispatch(spinningAction(true));
     request.json(requestURL.productSelectByPage, req.data, res => {
       dispatch(spinningAction(false));
-      console.log("res", res);
       if (res.data) {
         const { success, message, data } = res.data && res.data;
         if (success) {
@@ -100,10 +109,8 @@ const saveAction = req => {
     const url = req.data.productCode
       ? requestURL.productUpdateProduct
       : requestURL.productAddProduct;
-    console.log("req", req);
     request.json(url, req.data, res => {
       if (res.data) {
-        console.log("res", res);
         const { success, message } = res.data && res.data;
         if (success) {
           Modal.success({
@@ -152,7 +159,6 @@ const setStatusAction = req => {
 const deleteRowAction = req => {
   return (dispatch, getState) => {
     const url = requestURL.productDelProduct;
-
     request.json(url, req.data, res => {
       if (res.data) {
         const { success, message } = res.data && res.data;
@@ -164,6 +170,28 @@ const deleteRowAction = req => {
             pageSize: 10
           };
           dispatch(queryListAction({ props: req.props, data: params }));
+        } else {
+          notification("error", message);
+        }
+      } else {
+        req.props.history.push("/500");
+      }
+    });
+  };
+};
+
+const verifyApiListAction = req => {
+  return (dispatch) => {
+    const url = requestURL.verifyApiAuthCondition;
+    request.json(url, req.data, res => {
+      if (res.data) {
+        const { success, message, data } = res.data;
+        if (success) {
+          dispatch(initVerifyApiListAction(data));
+          if (req.props.location.state.record) {
+            console.log("apiName", req.props.location.state)
+            dispatch(setAPINameAction(req.props.location.state.record.apiName));
+          }
         } else {
           notification("error", message);
         }
@@ -187,11 +215,13 @@ export {
   deleteRowAction,
   getProductTypeAction,
   setProductNameAction,
-  setEditContentAction,
   setProductPriceAction,
   setProductPayingAction,
   setProductTypeCodeAction,
   setStatusAction,
   setProductRemarkAction,
-  setTagAction
+  setTagAction,
+  verifyApiListAction,
+  setAPINameAction,
+  setOrderWordAction
 };

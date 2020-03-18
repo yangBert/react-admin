@@ -47,7 +47,6 @@ function SearchForm(props) {
       data.status = status
     }
 
-    console.log("data", data)
     props.querylist({ props, data });
   }
 

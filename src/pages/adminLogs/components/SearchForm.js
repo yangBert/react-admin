@@ -25,7 +25,6 @@ function SearchForm(props) {
       ...props.params
     };
 
-    console.log("data", data);
     props.querylist({ props, data });
   }
 

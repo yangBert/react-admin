@@ -37,7 +37,6 @@ function json(requestURL, requestData, callback) {
       callback(res)
     }
   }).catch((err) => {
-    console.log(err);
     callback(errorMsg);
   })
 }
@@ -51,17 +50,16 @@ function getJson(requestURL, requestData, callback) {
       callback(res)
     }
   }).catch(err => {
-    console.log(err);
     callback(errorMsg);
   })
 }
 
 function get(requestURL, requestData, callback) {
   const config = {
-    headers: {'AuthToken': $$.token.get()},
+    headers: { 'AuthToken': $$.token.get() },
     params: requestData,
   }
-  axios.get(requestURL,config).then(function (res) {
+  axios.get(requestURL, config).then(function (res) {
     callback(res);
   }).catch(function (error) {
     callback(error);
@@ -89,8 +87,7 @@ function jsonArr(requestURL, requestData, callback) {
       callback(res)
     }
   }).catch((err) => {
-    console.log(err);
-    callback(errorMsg);
+    callback(err);
   })
 }
 

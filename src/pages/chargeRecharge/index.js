@@ -17,13 +17,13 @@ const columns = [
   },
   {
     title: "账户类型",
-    dataIndex: "accountType",
-    key: "accountType",
+    dataIndex: "rechargeType",
+    key: "rechargeType",
     align: "center",
-    render: accountType => (
+    render: rechargeType => (
       <span>
-        {config.accountType[accountType]
-          ? config.accountType[accountType]
+        {config.accountType[rechargeType]
+          ? config.accountType[rechargeType]
           : "--"}
       </span>
     )

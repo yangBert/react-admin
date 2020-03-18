@@ -81,6 +81,24 @@ class Detail extends React.Component {
     return false;
   }
 
+  getFileList(item, code, name) {
+    if (item.bussinessType === code) {
+      return (
+        <PhotoConsumer
+          key={item.fileCode}
+          src={item.fileUrl}
+          intro={name}
+        >
+          <img
+            src={item.fileUrl}
+            alt={name}
+            className={styles.listImg}
+          />
+        </PhotoConsumer>
+      );
+    }
+  }
+
   render() {
     if (this.props.detail) {
       var {
@@ -246,23 +264,9 @@ class Detail extends React.Component {
                       <p>{config.image.BL.name}</p>
                       <div>
                         <PhotoProvider>
-                          {this.props.applyGetFileList.map(item => {
-                            if (item.bussinessType === config.image.BL.code) {
-                              return (
-                                <PhotoConsumer
-                                  key={item.fileCode}
-                                  src={this.getImageURL(config.image.BL.code)}
-                                  intro={config.image.BL.name}
-                                >
-                                  <img
-                                    src={this.getImageURL(config.image.BL.code)}
-                                    alt={config.image.BL.name}
-                                    className={styles.listImg}
-                                  />
-                                </PhotoConsumer>
-                              );
-                            }
-                          })}
+                          {this.props.applyGetFileList.map(item => (
+                            this.getFileList(item, config.image.BL.code, config.image.BL.name)
+                          ))}
                         </PhotoProvider>
                       </div>
                     </div>
@@ -274,25 +278,9 @@ class Detail extends React.Component {
                       <p>{config.image.SYS.name}</p>
                       <div>
                         <PhotoProvider>
-                          {this.props.applyGetFileList.map(item => {
-                            if (item.bussinessType === config.image.SYS.code) {
-                              return (
-                                <PhotoConsumer
-                                  key={item.fileCode}
-                                  src={this.getImageURL(config.image.SYS.code)}
-                                  intro={config.image.SYS.name}
-                                >
-                                  <img
-                                    src={this.getImageURL(
-                                      config.image.SYS.code
-                                    )}
-                                    alt={config.image.SYS.name}
-                                    className={styles.listImg}
-                                  />
-                                </PhotoConsumer>
-                              );
-                            }
-                          })}
+                          {this.props.applyGetFileList.map(item => (
+                            this.getFileList(item, config.image.SYS.code, config.image.SYS.name)
+                          ))}
                         </PhotoProvider>
                       </div>
                     </div>

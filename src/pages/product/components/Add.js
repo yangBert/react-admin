@@ -10,9 +10,12 @@ import * as config from "../config";
 const { Option } = Select;
 const { TextArea } = Input;
 class Add extends Component {
+  state = {
+    editorState: null
+  }
   componentDidMount() {
+    this.props.queryVerifyApiList({ props: this.props, data: {} })
     if (this.props.location.state && this.props.location.state.record) {
-      console.log("record", this.props.location.state.record);
       const {
         productDesc,
         productName,
@@ -20,7 +23,8 @@ class Add extends Component {
         productPaying,
         productTypeCode,
         productRemark,
-        tag
+        tag,
+        orderWord,
       } = this.props.location.state.record;
       this.props.setProductName(productName);
       this.props.setProductPrice(productPrice);
@@ -28,25 +32,30 @@ class Add extends Component {
       this.props.setProductTypeCode(productTypeCode);
       this.props.setProductRemark(productRemark);
       this.props.setTag(tag);
-      this.props.setEditContent(BraftEditor.createEditorState(productDesc));
+      this.props.setOrderWord(orderWord);
+      this.setState({
+        editorState: BraftEditor.createEditorState(productDesc)
+      })
     } else {
       //初始化富文本编辑器
-      this.props.setEditContent(
-        BraftEditor.createEditorState("<p>请输入产品描述信息!</b></p>")
-      );
+      this.setState({
+        editorState: BraftEditor.createEditorState("<p>请输入产品描述信息...</b></p>")
+      })
     }
   }
 
   save() {
     const {
       productName,
-      editContent,
       productPrice,
       productPaying,
       productTypeCode,
       productRemark,
-      tag
+      tag,
+      APIName,
+      orderWord
     } = this.props;
+    const { editorState } = this.state;
     if ($$.trim(productName) === "") {
       message.error("请填写产品名称");
       return;
@@ -55,6 +64,9 @@ class Add extends Component {
       return;
     } else if (productPaying === "") {
       message.error("请选择支付方式");
+      return;
+    } else if (APIName === "") {
+      message.error("请选择对应接口");
       return;
     } else if (productPrice === 0) {
       message.error("请填写产品价格");
@@ -65,7 +77,11 @@ class Add extends Component {
     } else if ($$.trim(productRemark) === "") {
       message.error("请填写产品备注信息");
       return;
-    } else if (editContent.toHTML() === "") {
+    } else if (orderWord === "") {
+      message.error("请填写产品备注信息");
+      return;
+    }
+    else if (editorState === null) {
       message.error("请填写产品描述信息");
       return;
     }
@@ -74,8 +90,10 @@ class Add extends Component {
       props: this.props,
       data: {
         productName: $$.trim(productName),
-        productDesc: editContent.toHTML(),
+        productDesc: editorState.toHTML(),
         creater,
+        apiName: APIName,
+        orderWord,
         productPrice: productPrice + "",
         productPaying,
         productTypeCode,
@@ -87,134 +105,162 @@ class Add extends Component {
     if (this.props.location.state && this.props.location.state.record) {
       req.data.productCode = this.props.location.state.record.productCode;
     }
-
     this.props.save(req);
   }
 
-  handleEditorChange = editorState => {
-    this.setState({
-      editorState: editorState
-    });
-  };
+  handleEditorChange = (editorState) => {
+    this.setState({ editorState })
+  }
 
   render() {
     const { allProductType } = this.props.location.state;
+    const { editorState } = this.state
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
-          <div className="clearfix">
-            <div className={`${styles.form} pullLeft`}>
-              <div className={`${styles.formLine} pullLeft`}>
-                <label className="pullLeft">产品名称:</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Input
-                    placeholder="请输入产品名称"
-                    allowClear
-                    onChange={e => this.props.setProductName(e.target.value)}
-                    value={this.props.productName}
-                  />
-                </div>
-              </div>
-              <div className={`${styles.formLine} pullLeft`}>
-                <label className="pullLeft">产品类型:</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Select
-                    value={this.props.productTypeCode}
-                    style={{ width: "100%" }}
-                    onChange={value => this.props.setProductTypeCode(value)}
-                  >
-                    <Option value="">请选择</Option>
-                    {allProductType.map(item => {
-                      return (
-                        <Option
-                          value={item.productTypeCode}
-                          key={item.productTypeCode}
-                        >
-                          {item.productTypeName}
-                        </Option>
-                      );
-                    })}
-                  </Select>
-                </div>
-              </div>
-              <div className={`${styles.formLine} pullLeft`}>
-                <label className="pullLeft">支付方式:</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Select
-                    value={this.props.productPaying}
-                    style={{ width: "100%" }}
-                    onChange={value => this.props.setProductPaying(value)}
-                  >
-                    <Option value="">请选择</Option>
-                    {config.productPaying.map(item => {
-                      return (
-                        <Option value={item.value} key={item.value}>
-                          {item.name}
-                        </Option>
-                      );
-                    })}
-                  </Select>
-                </div>
-              </div>
-              <div className={`${styles.formLine} pullLeft`}>
-                <label className="pullLeft">产品价格:</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <InputNumber
-                    style={{ width: "100%" }}
-                    min={0}
-                    precision={2}
-                    step={10}
-                    value={this.props.productPrice}
-                    onChange={value => this.props.setProductPrice(value)}
-                  />
-                </div>
-              </div>
-              <div className={`${styles.formLine} pullLeft`}>
-                <label className="pullLeft">产品标签:</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <Input
-                    placeholder="（产品标签以&#34; ；&#34;号隔开）"
-                    allowClear
-                    onChange={e => this.props.setTag(e.target.value)}
-                    value={this.props.tag}
-                  />
-                </div>
-              </div>
-              <div className={`${styles.formLine} pullLeft`}>
-                <label className="pullLeft">产品备注:</label>
-                <div className={`${styles.inline} pullLeft`}>
-                  <TextArea
-                    placeholder="产品备注信息"
-                    rows={4}
-                    onChange={e => this.props.setProductRemark(e.target.value)}
-                    value={this.props.productRemark}
-                  />
-                </div>
+          <div className={`${styles.form} clearfix`}>
+            <div className={`${styles.formLine} pullLeft`}>
+              <label className="pullLeft">产品名称:</label>
+              <div className={`${styles.inline} pullLeft`}>
+                <Input
+                  placeholder="请输入产品名称"
+                  allowClear
+                  onChange={e => this.props.setProductName(e.target.value)}
+                  value={this.props.productName}
+                />
               </div>
             </div>
-
-            <div className="pullRight">
-              <Button
-                type="primary"
-                className={`${styles.button}`}
-                onClick={() => this.save()}
-              >
-                保存信息
-              </Button>
-              <Button
-                onClick={() => this.props.history.goBack()}
-                className={`${styles.button}`}
-              >
-                返回列表
-              </Button>
+            <div className={`${styles.formLine} pullLeft`}>
+              <label className="pullLeft">产品类型:</label>
+              <div className={`${styles.inline} pullLeft`}>
+                <Select
+                  value={this.props.productTypeCode}
+                  style={{ width: "100%" }}
+                  onChange={value => this.props.setProductTypeCode(value)}
+                >
+                  <Option value="">请选择</Option>
+                  {allProductType.map(item => {
+                    return (
+                      <Option
+                        value={item.productTypeCode}
+                        key={item.productTypeCode}
+                      >
+                        {item.productTypeName}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              </div>
+            </div>
+            <div className={`${styles.formLine} pullLeft`}>
+              <label className="pullLeft">对应接口:</label>
+              <div className={`${styles.inline} pullLeft`}>
+                <Select
+                  value={this.props.APIName}
+                  style={{ width: "100%" }}
+                  onChange={value => this.props.setAPIName(value)}
+                >
+                  <Option value="">请选择</Option>
+                  {this.props.verifyApiList.map(item => {
+                    return (
+                      <Option value={item.apiCode} key={item.apiCode}>
+                        {item.apiName}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              </div>
+            </div>
+            <div className={`${styles.formLine} pullLeft`}>
+              <label className="pullLeft">支付方式:</label>
+              <div className={`${styles.inline} pullLeft`}>
+                <Select
+                  value={this.props.productPaying}
+                  style={{ width: "100%" }}
+                  onChange={value => this.props.setProductPaying(value)}
+                >
+                  <Option value="">请选择</Option>
+                  {config.productPaying.map(item => {
+                    return (
+                      <Option value={item.value} key={item.value}>
+                        {item.name}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              </div>
+            </div>
+            <div className={`${styles.formLine} pullLeft`}>
+              <label className="pullLeft">产品价格:</label>
+              <div className={`${styles.inline} pullLeft`}>
+                <InputNumber
+                  style={{ width: "100%" }}
+                  min={0}
+                  precision={2}
+                  step={10}
+                  value={this.props.productPrice}
+                  onChange={value => this.props.setProductPrice(value)}
+                />
+              </div>
+            </div>
+            <div className={`${styles.formLine} pullLeft`}>
+              <label className="pullLeft">产品标签:</label>
+              <div className={`${styles.inline} pullLeft`}>
+                <Input
+                  placeholder="（产品标签以&#34; ；&#34;号隔开）"
+                  allowClear
+                  onChange={e => this.props.setTag(e.target.value)}
+                  value={this.props.tag}
+                />
+              </div>
+            </div>
+            <div className={`${styles.formLine} pullLeft`}>
+              <label className="pullLeft">产品排序:</label>
+              <div className={`${styles.inline} pullLeft`}>
+                <InputNumber
+                  style={{ width: "100%" }}
+                  min={0}
+                  step={1}
+                  value={this.props.orderWord}
+                  onChange={value => this.props.setOrderWord(value)}
+                />
+              </div>
+            </div>
+            <div className={`${styles.formLine} pullLeft`}>
+              <label className="pullLeft">产品备注:</label>
+              <div className={`${styles.inline} pullLeft`}>
+                <TextArea
+                  placeholder="产品备注信息"
+                  rows={4}
+                  onChange={e => this.props.setProductRemark(e.target.value)}
+                  value={this.props.productRemark}
+                />
+              </div>
             </div>
           </div>
           <div className={`${styles.editContent} my-component`}>
             <BraftEditor
               placeholder="请输入正文内容"
-              value={this.props.editContent}
-              onChange={this.props.setEditContent}
+              value={editorState}
+              onChange={this.handleEditorChange}
             />
+          </div>
+          <div className={styles.buttonRow}>
+            <Button
+              type="primary"
+              size="large"
+              className={`${styles.button}`}
+              onClick={() => this.save()}
+            >
+              保存信息
+              </Button>
+            <Button
+              size="large"
+              onClick={() => this.props.history.goBack()}
+              className={`${styles.button}`}
+            >
+              返回列表
+              </Button>
           </div>
         </Spin>
       </div>
@@ -225,22 +271,20 @@ class Add extends Component {
 const mapState = state => ({
   spinning: state.product.spinning,
   productName: state.product.productName,
-  editContent: state.product.editContent,
   allProductType: state.product.allProductType,
   productPrice: state.product.productPrice,
   productPaying: state.product.productPaying,
   productTypeCode: state.product.productTypeCode,
   productRemark: state.product.productRemark,
-  tag: state.product.tag
+  tag: state.product.tag,
+  verifyApiList: state.product.verifyApiList,
+  APIName: state.product.APIName,
+  orderWord: state.product.orderWord,
 });
 
 const mapDispatch = dispatch => ({
   setProductName: req => {
     const action = creators.setProductNameAction(req);
-    dispatch(action);
-  },
-  setEditContent: req => {
-    const action = creators.setEditContentAction(req);
     dispatch(action);
   },
   setProductPrice: req => {
@@ -266,7 +310,19 @@ const mapDispatch = dispatch => ({
   save: req => {
     const action = creators.saveAction(req);
     dispatch(action);
-  }
+  },
+  queryVerifyApiList: req => {
+    const action = creators.verifyApiListAction(req);
+    dispatch(action);
+  },
+  setAPIName: req => {
+    const action = creators.setAPINameAction(req);
+    dispatch(action);
+  },
+  setOrderWord: req => {
+    const action = creators.setOrderWordAction(req);
+    dispatch(action);
+  },
 });
 
 export default connect(mapState, mapDispatch)(Add);

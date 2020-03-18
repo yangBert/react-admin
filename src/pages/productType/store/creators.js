@@ -74,9 +74,7 @@ const addAction = req => {
 const editAction = req => {
   return dispatch => {
     dispatch(changeEditConfirmLoadingAction(true))
-    console.log("修改", req.data)
     request.json(requestURL.productTypeUpdateProductType, req.data, res => {
-      console.log("res", res)
       dispatch(changeEditConfirmLoadingAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
@@ -119,9 +117,7 @@ const deleteAction = req => {
 const queryMenuAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("req", req.data)
     request.json(requestURL.productTypeSelectAll, req.data, res => {
-      console.log("res", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message, data } = res.data && res.data

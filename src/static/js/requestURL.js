@@ -43,8 +43,6 @@ export const plateSettingSelectAppData =
   "/api/v1/uamManager/plateSetting/SelectAppData";
 export const plateSettingAddAppData =
   "/api/v1/uamManager/plateSetting/AddAppData";
-export const plateSettingSelectAppAuthSecret =
-  "/api/v1/uamManager/plateSetting/SelectAppAuthSecret";
 export const plateSettingUpdateApp =
   "/api/v1/uamManager/plateSetting/UpdateApp";
 export const plateSettingAppDetail =
@@ -52,6 +50,11 @@ export const plateSettingAppDetail =
 export const plateSettingAppAudit = "/api/v1/uamManager/plateSetting/appAudit";
 export const plateSettingUpdateAppWithOutFile =
   "/api/v1/uamManager/plateSetting/UpdateAppWithOutFile";
+export const plateSettingSelectAppAuthSecret =
+  "/api/v1/uamManager/plateSetting/SelectAppAuthSecret";
+export const plateSettingGenerateKeyPair =
+  "/api/v1/uamManager/plateSetting/generateKeyPair";
+
 //计费优惠策略管理
 export const chargeAppDetail = "/api/v1/manager/chargeApp/detail";
 export const chargeAppAdd = "/api/v1/manager/chargeApp/add";
@@ -120,6 +123,7 @@ export const productAddProduct = "/api/v1/manager/product/addProduct";
 export const productUpdateProduct = "/api/v1/manager/product/updateProduct";
 export const productDelProduct = "/api/v1/manager/product/delProduct";
 export const productAuthCondition = "/api/v1/manager/product/authCondition";
+export const verifyApiAuthCondition = "/api/v1/manager/verifyApi/authCondition";
 
 //认证源管理
 export const authSelectByPage = "/api/v1/manager/auth/selectByPage";

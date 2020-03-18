@@ -87,10 +87,8 @@ const queryDocCatalogListAction = req => {
 const querylistAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("res", req.data)
     request.json(requestURL.docQueryContentPages, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("res", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {

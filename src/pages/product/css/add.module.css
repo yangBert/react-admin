@@ -1,7 +1,6 @@
 .formLine {
   display: flex;
-  width: 100%;
-  max-width: 600px;
+  width: 48%;
   margin-right: 10px;
   margin-bottom: 20px;
 }
@@ -17,7 +16,6 @@
 
 .form {
   margin-bottom: 20px;
-  width: 70%;
 }
 
 .pageContet {
@@ -30,4 +28,9 @@
 
 .button {
   margin-left: 10px;
+}
+
+.buttonRow{
+  text-align:center;
+  margin-top:20px;
 }

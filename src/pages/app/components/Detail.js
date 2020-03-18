@@ -144,7 +144,6 @@ class AppDetail extends Component {
       allSupportCAs,
       allAppTypes
     } = this.props.location.state;
-    console.log("allLandingModes", this.props.location.state)
     return (
       <div className={styles.pageContet}>
         <Spin tip="Loading..." spinning={this.props.spinning}>

@@ -14,13 +14,10 @@ const initListAction = (list, pagination) => ({
 const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("req.data", req.data)
     request.json(requestURL.logManageSelectAdminLogs, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("res============", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
-        console.log("res", res)
         if (success) {
           const action = initListAction(data.results, createPagination(data))
           dispatch(action)

@@ -46,9 +46,7 @@ const saveAction = req => {
   return dispatch => {
     dispatch(changeConfirmLoadingAction(true))
     const url = req.data.id ? requestURL.updateSafeStrategy : requestURL.safeStrategyAddSafeStrategy
-    console.log("req update", req)
     request.json(url, req.data, res => {
-      console.log("res update", res)
       dispatch(changeConfirmLoadingAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
@@ -70,9 +68,7 @@ const delAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
     const url = requestURL.delSafeStrategy
-    console.log("del", req)
     request.json(url, req.data, res => {
-      console.log("del res", res)
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message } = res.data
@@ -92,10 +88,8 @@ const delAction = req => {
 const queryListAction = req => {
   return dispatch => {
     dispatch(spinningAction(true))
-    console.log("queryListAction req===>", req)
     request.json(requestURL.safeStrategySelectAll, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("queryListAction===>", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {

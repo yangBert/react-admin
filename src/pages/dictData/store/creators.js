@@ -36,7 +36,6 @@ const queryDictDataListAction = req => {
     dispatch(spinningAction(true))
     request.json(requestURL.plateSettingSelectDictionaryApp, req.data, res => {
       dispatch(spinningAction(false))
-      console.log("data", res)
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {

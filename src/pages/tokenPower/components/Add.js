@@ -50,7 +50,6 @@ class Add extends Component {
     if (editId) {
       req.data.id = editId
     }
-    console.log("data", req)
     this.props.save(req)
   }
 

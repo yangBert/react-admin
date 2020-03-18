@@ -21,7 +21,7 @@ function Oper(props) {
         placement="left"
         title="确定删除吗?"
         onConfirm={() => {
-          const data = "authCode=" + props.record.authCode
+          const data = { authCode: props.record.authCode }
           props.deleteRow({ props, data })
         }}
         okText="确定"
