@@ -10,7 +10,11 @@ module.exports = function (app) {
     //     changeOrigin: true,
     // }))
     app.use(proxy("/api", {
-        target: "http://58.16.67.132:8884", //配置你要请求的服务器地址
+        target: "http://58.16.67.132:8884",
+        changeOrigin: true,
+    }))
+    app.use(proxy("/kmc", {
+        target: "http://58.16.67.132:8880",
         changeOrigin: true,
     }))
     app.use(proxy("/web", {

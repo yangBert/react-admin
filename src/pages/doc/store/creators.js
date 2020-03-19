@@ -71,6 +71,7 @@ const queryDocCatalogListAction = req => {
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
+          console.log("res", res)
           dispatch(initDocCatalogListAction(data.results))
           dispatch(setCatalogCodeAction(""))
         } else {

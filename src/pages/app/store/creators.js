@@ -80,6 +80,9 @@ const queryEditAppAction = req => {
           dispatch(onChangeEditAppIdAction(data.id));
           dispatch(onChangeOrgTreeSelectAction(data.orgCode));
           dispatch(onChangeTagAction(data.tag));
+          console.log("detail", data)
+          req.com.setState({ feeCode: data.feeCode });
+          req.com.setState({ feeMoney: data.feeMoney });
           if (data.icon) {
             const iconArr = data.icon.split("gzdata.com.cn");
             const iconRUL = iconArr[iconArr.length - 1];

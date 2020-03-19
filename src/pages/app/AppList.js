@@ -11,12 +11,12 @@ import Oper from './components/Operation';
 const columns = [
   { title: '应用编码', dataIndex: 'appCode', key: 'appCode', align: 'center' },
   { title: '应用名称', dataIndex: 'appName', key: 'appName', align: 'center' },
-  {
-    title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center',
-    render: createTime => (
-      <span>{$$.getHours(createTime)}</span>
-    )
-  },
+  // {
+  //   title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center',
+  //   render: createTime => (
+  //     <span>{$$.getHours(createTime)}</span>
+  //   )
+  // },
   {
     title: '应用状态', dataIndex: 'appStatus', key: 'appStatus', align: 'center',
     render: text => <span>

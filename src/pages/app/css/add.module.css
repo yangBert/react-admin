@@ -38,9 +38,14 @@
 }
 
 .formLine .label,.formBlock .label{
-  width: 150px;
+  width: 180px;
   text-align: right;
   line-height: 2;
+}
+
+.formBlock .logoUpload{
+  position:relative;
+  right:-19px;
 }
 
 .inline{

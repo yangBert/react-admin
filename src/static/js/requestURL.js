@@ -171,6 +171,8 @@ export const accountQueryByPage = "/api/v1/account/queryByPage";
 export const accountAddCount = "/api/v1/account/addCount";
 export const accountDetail = "/api/v1/account/detail";
 export const accountUpdateAccount = "/api/v1/account/updateAccount";
+export const accountGetbindAppAccount = "/api/v1/account/getbindAppAccount";
+export const accountBindAppAccount = "/api/v1/account/bindAppAccount";
 
 //计费相关
 export const chargeConsume = "/api/v1/charge/consume";

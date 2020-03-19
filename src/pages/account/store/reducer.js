@@ -4,6 +4,8 @@ import spinningTypes from "pages/common/layer/spinning/spinningTypes";
 const defaultState = {
   list: [],
   pagination: {},
+  appList: [],
+  appListPagination: {},
   spinning: false,
   saveLoading: false,
   params: {},
@@ -14,7 +16,8 @@ const defaultState = {
   editAccessScrect: "",
   editOrgList: [],
   rechargeType: "",
-  rechargeMoney: 0
+  rechargeMoney: 0,
+  appSelectedKeys: []
 };
 
 export default (state = defaultState, action) => {
@@ -26,6 +29,10 @@ export default (state = defaultState, action) => {
     case types.QUERY_LIST:
       newState.list = action.list;
       newState.pagination = action.pagination;
+      break;
+    case types.QUERY_APP_LIST:
+      newState.appList = action.appList;
+      newState.appListPagination = action.appListPagination;
       break;
     case types.CHANGE_SEARCH_PARAMS:
       newState.params = action.params;
@@ -56,6 +63,9 @@ export default (state = defaultState, action) => {
       break;
     case types.SET_RE_CHARGE_MONEY:
       newState.rechargeMoney = action.rechargeMoney;
+      break;
+    case types.CHANGE_APP_SELECTED_KEYS:
+      newState.appSelectedKeys = action.appSelectedKeys;
       break;
     default:
       break;

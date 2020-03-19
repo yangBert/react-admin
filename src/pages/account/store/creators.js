@@ -58,6 +58,11 @@ const setRechargeMoneyAction = rechargeMoney => ({
   rechargeMoney
 });
 
+const changeBillingSelectedKeysAction = (appSelectedKeys) => ({
+  type: types.CHANGE_APP_SELECTED_KEYS,
+  appSelectedKeys
+})
+
 const reChargeAction = req => {
   return dispatch => {
     const url = requestURL.chargeRecharge;
@@ -164,11 +169,88 @@ const queryOrgListAction = req => {
   };
 };
 
+const queryAppListAction = (appList, appListPagination) => ({
+  type: types.QUERY_APP_LIST,
+  appList,
+  appListPagination
+});
+
+const createQueryAppListAction = req => {
+  return dispatch => {
+    dispatch(spinningAction(true));
+    request.json(requestURL.accountQueryByPage, req.data, res => {
+      dispatch(spinningAction(false));
+      if (res.data) {
+        const { success, message, data } = res.data && res.data;
+        if (success) {
+          const action = queryAppListAction(
+            data.results,
+            createPagination(data)
+          );
+          dispatch(action);
+        } else {
+          notification("error", message);
+        }
+      } else {
+        req.props.history.push("/500");
+      }
+    });
+  };
+};
+
+const bindSaveAction = req => {
+  return dispatch => {
+    dispatch(spinningAction(true));
+    request.json(requestURL.accountBindAppAccount, req.data, res => {
+      dispatch(spinningAction(false));
+      if (res.data) {
+        const { success, message } = res.data;
+        console.log("res", res)
+        if (success) {
+          Modal.success({
+            title: "系统提示",
+            content: message,
+            okText: "确认",
+            onOk: () => {
+              req.props.history.goBack();
+            }
+          });
+        } else {
+          notification("error", message);
+        }
+      } else {
+        req.props.history.push("/500");
+      }
+    });
+  };
+};
+
+const getbindAppAccountAction = req => {
+  return dispatch => {
+    dispatch(spinningAction(true));
+    request.get(requestURL.accountGetbindAppAccount, req.data, res => {
+      dispatch(spinningAction(false));
+      if (res.data) {
+        const { success, message, data } = res.data;
+        if (success) {
+          dispatch(changeBillingSelectedKeysAction([data[0].accountCode]))
+        } else {
+          notification("error", message);
+        }
+      } else {
+        req.props.history.push("/500");
+      }
+    });
+  };
+};
+
 //查询携带参数
 const createChangeParamsAction = params => ({
   type: types.CHANGE_SEARCH_PARAMS,
   params
 });
+
+
 
 export {
   queryListAction,
@@ -183,5 +265,9 @@ export {
   setEditAccessScrectAction,
   setRechargeTypeAction,
   setRechargeMoneyAction,
-  reChargeAction
+  reChargeAction,
+  createQueryAppListAction,
+  changeBillingSelectedKeysAction,
+  bindSaveAction,
+  getbindAppAccountAction
 };

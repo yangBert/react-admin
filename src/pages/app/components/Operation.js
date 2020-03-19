@@ -22,7 +22,7 @@ function Oper(props) {
         <Button style={{ fontSize: "12px" }} type="primary" size="small" ghost>
           修改
         </Button>
-        &nbsp;&nbsp;
+        &nbsp;
       </Link>
       <Switch
         checkedChildren="上线"
@@ -35,20 +35,8 @@ function Oper(props) {
           data.append("id", props.record.id);
           props.changeAppStatus({ props, data });
         }}
-      />&nbsp;&nbsp;
-      {
-        props.record.auditStatus === 1 ?
-          <Button
-            onClick={() =>
-              props.showSecret({ props, data: "appID=" + props.record.id })
-            }
-            style={{ fontSize: "12px" }}
-            type="primary"
-            size="small"
-            ghost
-          >密钥</Button> : ""
-      }
-      &nbsp;&nbsp;
+      />&nbsp;
+
       <Link
         to={{
           pathname: "/chargeConfig/list",
@@ -60,8 +48,33 @@ function Oper(props) {
         <Button style={{ fontSize: "12px" }} type="primary" size="small" ghost>
           配置
         </Button>
-        &nbsp;&nbsp;
+        &nbsp;
       </Link>
+      <Link
+        to={{
+          pathname: "/account/bind",
+          state: {
+            appCode: props.record.appCode
+          }
+        }}
+      >
+        <Button type="primary" size="small" ghost>
+          绑定
+        </Button>
+      </Link>&nbsp;
+      {
+        props.record.auditStatus === 1 ?
+          <Button
+            onClick={() =>
+              props.showSecret({ props, data: "appID=" + props.record.id })
+            }
+            style={{ fontSize: "12px" }}
+            type="primary"
+            size="small"
+            ghost
+          >生成密钥</Button> : ""
+      }
+
     </div >
   );
 }

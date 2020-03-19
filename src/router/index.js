@@ -113,8 +113,32 @@ const AppLogsDetail = lazy(() => import("pages/appLogs/components/Detail"));
 const ChargeConsumeDetail = lazy(() =>
   import("pages/chargeConsume/components/Detail")
 );
+const AppStatisticalList = lazy(() =>
+  import("pages/appStatistical")
+);
+const AccountStatisticalList = lazy(() =>
+  import("pages/accountStatistical")
+);
+const FlatStatisticalList = lazy(() =>
+  import("pages/flatStatistical")
+);
+const AccountBind = lazy(() =>
+  import("pages/account/components/Bind")
+);
 
 const routes = [
+  {
+    path: "/flatStatistical/list",
+    component: FlatStatisticalList
+  },
+  {
+    path: "/accountStatistical/list",
+    component: AccountStatisticalList
+  },
+  {
+    path: "/statisticalList/list",
+    component: AppStatisticalList
+  },
   {
     path: "/oApi/detail",
     component: OAPIDetail
@@ -274,6 +298,10 @@ const routes = [
   {
     path: "/account/detail",
     component: AccountDetail
+  },
+  {
+    path: "/account/bind",
+    component: AccountBind
   },
   {
     path: "/preferential/list",

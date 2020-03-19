@@ -85,14 +85,6 @@ class AppList extends Component {
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <SearchForm />
-          {/* <div className={styles.buttonForm}>
-            <Link to="/app/add">
-              <Button
-                type="primary"
-                className={styles.addButton}
-              ><Icon type="plus" />新增</Button>
-            </Link>
-          </div> */}
           <Table
             bordered
             columns={columns}

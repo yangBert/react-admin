@@ -99,7 +99,7 @@ class OrgAdd extends Component {
                       placeholder="请输入机构编码（数字或英文5位以上）"
                       onChange={e => this.props.setOrgCode(e.target.value)}
                       value={this.props.editOrgCode}
-                      disabled={this.props.editOrgCode ? true : false}
+                      disabled={this.props.editId ? true : false}
                     />
                   </div>
                 </div>

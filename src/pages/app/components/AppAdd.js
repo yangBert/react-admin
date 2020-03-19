@@ -10,13 +10,16 @@ import {
   Checkbox,
   Button,
   Spin,
-  TreeSelect
+  Radio,
+  TreeSelect,
+  InputNumber
 } from "antd";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import styles from "../css/add.module.css";
 import * as creators from "../store/creators";
 import $$ from "static/js/base";
+import * as productPayingConfig from 'pages/product/config';
 
 const { Option } = Select;
 
@@ -46,7 +49,9 @@ class AppAdd extends Component {
     refdescribes: null,
     refredirectUrl: null,
     refappType: null,
-    refauditMode: null
+    refauditMode: null,
+    feeCode: "",
+    feeMoney: ""
   };
 
   componentDidMount() {
@@ -124,6 +129,8 @@ class AppAdd extends Component {
     redirectUrl = $$.trim(redirectUrl);
     tag = $$.trim(tag);
 
+    const { feeCode, feeMoney } = this.state;
+
     if (appName === "") {
       message.error("应用名称不能为空");
       return;
@@ -157,6 +164,12 @@ class AppAdd extends Component {
     } else if (supportCAs.length === 0) {
       message.error("请选择支持CA机构");
       return;
+    } else if (feeCode === "") {
+      message.error("请选择收费类型");
+      return;
+    } else if (feeCode === "1" && feeMoney === "") {
+      message.error("请填写一次性收费金额");
+      return;
     }
 
     var formDatas = new FormData();
@@ -171,6 +184,8 @@ class AppAdd extends Component {
     formDatas.append("supportCAs", supportCAs);
     formDatas.append("orgCode", orgCode);
     formDatas.append("tag", tag);
+    formDatas.append("feeCode", feeCode);
+    formDatas.append("feeMoney", feeMoney);
     if (this.props.location.state && this.props.location.state.editAppId) {
       formDatas.append("id", this.props.location.state.editAppId);
     }
@@ -192,6 +207,19 @@ class AppAdd extends Component {
     }
     return arr;
   }
+
+  onChangeFeeCode = e => {
+    this.setState({
+      feeCode: e.target.value,
+    });
+  };
+
+  onChangeFeeMoney = value => {
+    this.setState({
+      feeMoney: value,
+    });
+  };
+
 
   render() {
     const uploadButton = (
@@ -292,12 +320,12 @@ class AppAdd extends Component {
                 </div>
                 <div className={`${styles.formBlock} pullLeft`}>
                   <label className={`${styles.label} pullLeft`}>
-                    上传应用LOGO：
+                    上传应用LOGO:
                   </label>
                   <Upload
                     name="avatar"
                     listType="picture-card"
-                    className="avatar-uploader"
+                    className={`avatar-uploader ${styles.logoUpload}`}
                     showUploadList={false}
                     //action={requestURL.uploadUploadApplyFile}
                     beforeUpload={this.beforeUpload}
@@ -345,7 +373,6 @@ class AppAdd extends Component {
                   </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Select
-                      //ref={refauditMode => this.setState({refauditMode})}
                       value={
                         this.props.auditMode === "" ? "" : this.props.auditMode
                       }
@@ -395,6 +422,39 @@ class AppAdd extends Component {
                     />
                   </div>
                 </div>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    收费类型：
+                  </label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Radio.Group
+                      onChange={this.onChangeFeeCode}
+                      value={this.state.feeCode}>
+                      {
+                        productPayingConfig.productPaying.map(item => (
+                          <Radio value={item.value} key={item.value}>{item.name}</Radio>
+                        ))
+                      }
+                    </Radio.Group>
+                  </div>
+                </div>
+                {
+                  this.state.feeCode === '1' ?
+                    <div className={`${styles.formLine} pullLeft`}>
+                      <label className={`${styles.label} pullLeft`}>一次性收费金额（元）：</label>
+                      <div className={`${styles.inline} pullLeft`}>
+                        <InputNumber
+                          style={{ width: "100%" }}
+                          min={0}
+                          precision={2}
+                          step={10}
+                          value={this.state.feeMoney}
+                          onChange={value => this.onChangeFeeMoney(value)}
+                        />
+                      </div>
+                    </div> : ""
+                }
+
               </Form>
             </Card>
           </div>

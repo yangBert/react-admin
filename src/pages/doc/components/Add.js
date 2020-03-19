@@ -11,20 +11,28 @@ import $$ from 'static/js/base';
 const { Option } = Select;
 
 class Add extends Component {
+  state = {
+    productCode: "",
+    editContent: null
+  }
   componentDidMount() {
     if (this.props.location.state && this.props.location.state.record) {
       const { title, content, catalogCode, productCode } = this.props.location.state.record
+      this.setState({
+        productCode,
+        editContent: BraftEditor.createEditorState(content)
+      });
       this.changeProduct(productCode)
       this.props.setCatalogCode(catalogCode)
       this.props.changeEditTitle(title)
-      this.props.handleEditorChange(BraftEditor.createEditorState(content))
     } else {
       this.props.handleEditorChange(BraftEditor.createEditorState('<p>请输入文档内容!</b></p>'))//初始化富文本编辑器
     }
   }
 
   save() {
-    const { editTitle, editCatalogCode, editContent } = this.props;
+    const { editTitle, editCatalogCode } = this.props;
+    const { editContent } = this.state;
     if (editCatalogCode === "") {
       message.error('请选择文档分类');
       return
@@ -40,22 +48,22 @@ class Add extends Component {
       props: this.props,
       data: {
         title: editTitle,
-        content: editContent,
+        content: editContent.toHTML(),
         catalogCode: editCatalogCode,
         userNo,
       }
     }
 
-    const editId = this.props.location.state && this.props.location.state.editId
-    if (editId) {
-      req.data.id = editId
+    const record = this.props.location.state && this.props.location.state.record
+    if (record) {
+      req.data.id = record.id
     }
     this.props.save(req)
   }
 
-  handleEditorChange = (editorState) => {
+  handleEditorChange = (editContent) => {
     this.setState({
-      editorState: editorState,
+      editContent,
     })
   }
 
@@ -65,14 +73,11 @@ class Add extends Component {
     ))
   }
 
-  initDocCatalogList(list) {
-    return list.map(item => (
-      <Option key={item.id} value={item.code}>{item.name}</Option>
-    ))
-  }
-
   changeProduct(productCode) {
-    const userNo = $$.localStorage.get("adminId")
+    this.setState({
+      productCode
+    });
+    const userNo = $$.localStorage.get("adminId");
     this.props.changeProduct({
       props: this.props,
       data: {
@@ -81,14 +86,12 @@ class Add extends Component {
         pageSize: 1000,
         pageNo: 1,
       }
-    })
+    });
   }
 
   render() {
     const editContent = this.props.editContent
-    if (this.props.location.state.record) {
-      var { productCode } = this.props.location.state.record
-    }
+    var { productCode } = this.state
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
@@ -115,7 +118,11 @@ class Add extends Component {
                   onChange={value => this.props.setCatalogCode(value)}
                 >
                   <Option value="">请选择</Option>
-                  {this.initDocCatalogList(this.props.docCatalogList)}
+                  {
+                    this.props.docCatalogList.map(item => (
+                      <Option key={item.id} value={item.code}>{item.name}</Option>
+                    ))
+                  }
                 </Select>
               </div>
             </div>
@@ -123,6 +130,7 @@ class Add extends Component {
               <label className="pullLeft">文档标题:</label>
               <div className={`${styles.inline} pullLeft`}>
                 <Input
+                  value={this.props.editTitle}
                   placeholder="请输入文档标题"
                   allowClear
                   onChange={e => this.props.changeEditTitle(e.target.value)}
@@ -142,8 +150,8 @@ class Add extends Component {
           <div className={`${styles.editContent} my-component`}>
             <BraftEditor
               placeholder="请输入正文内容"
-              value={editContent}
-              onChange={this.props.handleEditorChange}
+              value={this.state.editContent}
+              onChange={this.handleEditorChange}
             />
           </div>
         </Spin>
@@ -156,7 +164,6 @@ const mapState = state => ({
   spinning: state.doc.spinning,
   docCatalogList: state.doc.docCatalogList,
   editCatalogCode: state.doc.editCatalogCode,
-
   editTitle: state.doc.editTitle,
   editContent: state.doc.editContent,
   editState: state.doc.editState,

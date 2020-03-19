@@ -41,6 +41,7 @@ class DocList extends Component {
   componentDidMount() {
     this.props.queryProductlist({ props: this.props, data: { pageNo: 1, pageSize: 1000 } });
     this.sendFn(1, 10)
+    this.props.changeEditTitle("")
   }
 
   paginationChange = (pageNo, pageSize) => {
@@ -112,6 +113,10 @@ const mapDispatch = dispatch => ({
   },
   queryProductlist: req => {
     const action = creators.queryProductlistAction(req);
+    dispatch(action);
+  },
+  changeEditTitle: req => {
+    const action = creators.changeEditTitleAction(req);
     dispatch(action);
   },
 })
