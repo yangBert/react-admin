@@ -18,13 +18,12 @@ class Add extends Component {
   componentDidMount() {
     if (this.props.location.state && this.props.location.state.record) {
       const { title, content, catalogCode, productCode } = this.props.location.state.record
+      this.changeProduct(productCode, catalogCode)
+      this.props.changeEditTitle(title)
       this.setState({
         productCode,
         editContent: BraftEditor.createEditorState(content)
       });
-      this.changeProduct(productCode)
-      this.props.setCatalogCode(catalogCode)
-      this.props.changeEditTitle(title)
     } else {
       this.props.handleEditorChange(BraftEditor.createEditorState('<p>请输入文档内容!</b></p>'))//初始化富文本编辑器
     }
@@ -73,13 +72,14 @@ class Add extends Component {
     ))
   }
 
-  changeProduct(productCode) {
+  changeProduct(productCode, catalogCode) {
     this.setState({
       productCode
     });
     const userNo = $$.localStorage.get("adminId");
     this.props.changeProduct({
       props: this.props,
+      catalogCode,
       data: {
         productCode,
         userNo,
@@ -102,7 +102,7 @@ class Add extends Component {
                 <Select
                   value={productCode}
                   style={{ width: "100%" }}
-                  onChange={value => this.changeProduct(value)}
+                  onChange={value => this.changeProduct(value, "")}
                 >
                   <Option value="">请选择</Option>
                   {this.initAllProductList(this.props.location.state.productAllList)}

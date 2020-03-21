@@ -31,7 +31,7 @@ function configFn(url, data, method) {
 function json(requestURL, requestData, callback) {
   const config = configFn(requestURL, requestData, 'post')
   axios(config).then(res => {
-    if (res.data && !res.data.success && res.data.errCode === '400') {
+    if (res.data && !res.data.success && (res.data.errCode === '400' || res.data.errCode === '403')) {
       authRedirect(res.data.message)
     } else {
       callback(res)
@@ -44,7 +44,7 @@ function json(requestURL, requestData, callback) {
 function getJson(requestURL, requestData, callback) {
   const config = configFn(requestURL, requestData, 'GET')
   axios(config).then(res => {
-    if (res.data && !res.data.success && res.data.errCode === '400') {
+    if (res.data && !res.data.success && (res.data.errCode === '400' || res.data.errCode === '403')) {
       authRedirect(res.data.message)
     } else {
       callback(res)
@@ -60,7 +60,11 @@ function get(requestURL, requestData, callback) {
     params: requestData,
   }
   axios.get(requestURL, config).then(function (res) {
-    callback(res);
+    if (res.data && !res.data.success && (res.data.errCode === '400' || res.data.errCode === '403')) {
+      authRedirect(res.data.message)
+    } else {
+      callback(res)
+    }
   }).catch(function (error) {
     callback(error);
   });
@@ -81,7 +85,7 @@ function jsonArr(requestURL, requestData, callback) {
     config.headers.AuthToken = AuthToken
   }
   axios(config).then(res => {
-    if (res.data && !res.data.success && res.data.errCode === '400') {
+    if (res.data && !res.data.success && (res.data.errCode === '400' || res.data.errCode === '403')) {
       authRedirect(res.data.message)
     } else {
       callback(res)
@@ -102,7 +106,7 @@ function formData(requestURL, requestData, callback) {
       'AuthToken': $$.token.get()
     },
   }).then(res => {
-    if (res.data && !res.data.success && res.data.errCode === '400') {
+    if (res.data && !res.data.success && (res.data.errCode === '400' || res.data.errCode === '403')) {
       authRedirect(res.data.message)
     } else {
       callback(res)
@@ -118,7 +122,7 @@ function urlToBlob(requestURL, callback) {
     method: 'get',
     responseType: 'blob'
   }).then(res => {
-    if (res.data && !res.data.success && res.data.errCode === '400') {
+    if (res.data && !res.data.success && (res.data.errCode === '400' || res.data.errCode === '403')) {
       authRedirect(res.data.message)
     } else {
       callback(res)

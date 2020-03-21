@@ -30,6 +30,7 @@ export default (state = defaultState, action) => {
       break;
     case types.QUERY_DOCCATALOG_LIST:
       newState.docCatalogList = action.docCatalogList
+      newState.editCatalogCode = action.editCatalogCode
       break;
     case types.SET_EDIT_CATALOGO_CODE:
       newState.editCatalogCode = action.editCatalogCode

@@ -19,9 +19,10 @@ const initProductListAction = productAllList => ({
 })
 
 //初始化文档分类
-const initDocCatalogListAction = (docCatalogList) => ({
+const initDocCatalogListAction = (docCatalogList, editCatalogCode) => ({
   type: types.QUERY_DOCCATALOG_LIST,
   docCatalogList,
+  editCatalogCode,
 })
 
 //change文档分类
@@ -71,9 +72,9 @@ const queryDocCatalogListAction = req => {
       if (res.data) {
         const { success, message, data } = res.data && res.data
         if (success) {
-          console.log("res", res)
-          dispatch(initDocCatalogListAction(data.results))
-          dispatch(setCatalogCodeAction(""))
+
+          dispatch(initDocCatalogListAction(data.results, req.catalogCode));
+
         } else {
           notification('error', message)
         }
