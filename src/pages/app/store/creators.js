@@ -80,7 +80,7 @@ const queryEditAppAction = req => {
           dispatch(onChangeEditAppIdAction(data.id));
           dispatch(onChangeOrgTreeSelectAction(data.orgCode));
           dispatch(onChangeTagAction(data.tag));
-          console.log("detail", data)
+          console.log("detail", data);
           req.com.setState({ feeCode: data.feeCode });
           req.com.setState({ feeMoney: data.feeMoney });
           if (data.icon) {
@@ -88,7 +88,6 @@ const queryEditAppAction = req => {
             const iconRUL = iconArr[iconArr.length - 1];
             implementURLtoBlob(req.com, iconRUL);
           }
-
         } else {
           notification("error", message);
         }
@@ -102,7 +101,7 @@ const queryEditAppAction = req => {
 //根据图url获取file blob
 function implementURLtoBlob(com, url) {
   request.urlToBlob(url, res => {
-    blobToDataURI(res.data, function (base64) {
+    blobToDataURI(res.data, function(base64) {
       const file = dataURLtoFile(base64, "icon.jpg");
       com.setState({ icon: file });
     });
@@ -113,7 +112,7 @@ function blobToDataURI(blob, callback) {
   if (typeof blob !== "undefined") {
     var reader = new FileReader();
     reader.readAsDataURL(blob);
-    reader.onload = function (e) {
+    reader.onload = function(e) {
       callback(e.target.result);
     };
   }
@@ -221,20 +220,23 @@ const createSecretAction = req => {
 };
 
 const showSecretAction = req => {
-  return (dispatch) => {
+  return dispatch => {
     request.json(requestURL.plateSettingSelectAppAuthSecret, req.data, res => {
       if (res.data) {
         const { success, message, data } = res.data;
         if (success) {
           if (data) {
             confirm({
-              title: "应用授权公钥已存在，若重新生成将会覆盖已存在的公钥，是否重新生成？",
+              title:
+                "应用授权公钥已存在，若重新生成将会覆盖已存在的公钥，是否重新生成？",
               onOk() {
-                dispatch(createSecretAction({ props: req.props, data: req.data }))
+                dispatch(
+                  createSecretAction({ props: req.props, data: req.data })
+                );
               }
             });
           } else {
-            dispatch(createSecretAction({ props: req.props, data: req.data }))
+            dispatch(createSecretAction({ props: req.props, data: req.data }));
           }
         } else {
           notification("error", message);
@@ -255,10 +257,11 @@ const createChangeAppStatusAction = req => {
       if (res.data) {
         const { success, message } = res.data && res.data;
         if (success) {
+          const pagination = getState().app.pagination;
           const params = {
             ...getState().admin.params,
-            pageNo: 1,
-            pageSize: 10
+            pageNo: pagination.current,
+            pageSize: pagination.pageSize
           };
           dispatch(
             createQueryAppListAction({ props: req.props, data: params })

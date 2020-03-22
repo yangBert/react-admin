@@ -5,6 +5,7 @@ import * as creators from "../store/creators";
 import { withRouter, Link } from "react-router-dom";
 
 function Oper(props) {
+  const status = props.record.appStatus === 1 ? true : false;
   return (
     <div>
       <Link
@@ -27,7 +28,7 @@ function Oper(props) {
       <Switch
         checkedChildren="上线"
         unCheckedChildren="下线"
-        defaultChecked={props.record.appStatus === 1 ? true : false}
+        defaultChecked={status}
         onChange={checked => {
           const appStatus = checked ? 1 : 2;
           const data = new FormData();
@@ -35,8 +36,8 @@ function Oper(props) {
           data.append("id", props.record.id);
           props.changeAppStatus({ props, data });
         }}
-      />&nbsp;
-
+      />
+      &nbsp;
       <Link
         to={{
           pathname: "/chargeConfig/list",
@@ -61,21 +62,24 @@ function Oper(props) {
         <Button type="primary" size="small" ghost>
           绑定
         </Button>
-      </Link>&nbsp;
-      {
-        props.record.auditStatus === 1 ?
-          <Button
-            onClick={() =>
-              props.showSecret({ props, data: "appID=" + props.record.id })
-            }
-            style={{ fontSize: "12px" }}
-            type="primary"
-            size="small"
-            ghost
-          >生成密钥</Button> : ""
-      }
-
-    </div >
+      </Link>
+      &nbsp;
+      {props.record.auditStatus === 1 ? (
+        <Button
+          onClick={() =>
+            props.showSecret({ props, data: "appID=" + props.record.id })
+          }
+          style={{ fontSize: "12px" }}
+          type="primary"
+          size="small"
+          ghost
+        >
+          生成密钥
+        </Button>
+      ) : (
+        ""
+      )}
+    </div>
   );
 }
 

@@ -55,8 +55,8 @@ const columns = [
           status === config.status.NORMAL
             ? "green"
             : status === config.status.INVILD
-              ? "#ccc"
-              : ""
+            ? "#ccc"
+            : ""
         }
       >
         {config.status.get(status)}
@@ -130,7 +130,7 @@ class ProductList extends Component {
             bordered
             columns={columns}
             dataSource={list}
-            rowKey={(record, index) => index}
+            rowKey={record => record.productCode}
             size="small"
             pagination={pagination}
           />
@@ -188,7 +188,7 @@ const mapDispatch = dispatch => ({
   setAPIName: req => {
     const action = creators.setAPINameAction(req);
     dispatch(action);
-  },
+  }
 });
 
 export default withRouter(connect(mapState, mapDispatch)(ProductList));

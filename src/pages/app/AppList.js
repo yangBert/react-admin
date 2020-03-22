@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
-import { Table, Spin, Tag } from 'antd';
+import React, { Component } from "react";
+import { Table, Spin, Tag } from "antd";
 
-import { connect } from 'react-redux';
-import * as creators from './store/creators';
-import SearchForm from './components/SearchForm';
-import $$ from 'static/js/base';
-import styles from './css/UserList.module.css';
-import Oper from './components/Operation';
+import { connect } from "react-redux";
+import * as creators from "./store/creators";
+import SearchForm from "./components/SearchForm";
+import styles from "./css/UserList.module.css";
+import Oper from "./components/Operation";
 
 const columns = [
-  { title: '应用编码', dataIndex: 'appCode', key: 'appCode', align: 'center' },
-  { title: '应用名称', dataIndex: 'appName', key: 'appName', align: 'center' },
+  { title: "应用编码", dataIndex: "appCode", key: "appCode", align: "center" },
+  { title: "应用名称", dataIndex: "appName", key: "appName", align: "center" },
   // {
   //   title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center',
   //   render: createTime => (
@@ -18,66 +17,73 @@ const columns = [
   //   )
   // },
   {
-    title: '应用状态', dataIndex: 'appStatus', key: 'appStatus', align: 'center',
-    render: text => <span>
-      {
-        text === 1 ?
-          <Tag color="green">已上线</Tag> :
+    title: "应用状态",
+    dataIndex: "appStatus",
+    key: "appStatus",
+    align: "center",
+    render: appStatus => (
+      <span>
+        {appStatus === 1 ? (
+          <Tag color="green">已上线</Tag>
+        ) : (
           <Tag color="#ccc">未上线</Tag>
-      }
-    </span>,
+        )}
+      </span>
+    )
   },
   {
-    title: '操作',
-    dataIndex: 'operation',
-    key: 'operation',
-    render: (text, record) => <Oper text={text} record={record} />,
-  },
+    title: "操作",
+    dataIndex: "operation",
+    key: "operation",
+    render: (text, record) => <Oper text={text} record={record} />
+  }
 ];
 
 class AppList extends Component {
   componentDidMount() {
     //查询所有登陆认证方式
-    this.props.queryLoginType({ props: this.props, data: {} })
+    this.props.queryLoginType({ props: this.props, data: {} });
 
     //查询所有支持CA机构
-    this.props.queryAllSupportCAs({ props: this.props, data: {} })
+    this.props.queryAllSupportCAs({ props: this.props, data: {} });
 
     //查询所有的应用类型
-    this.props.queryAllAppType({ props: this.props, data: {} })
+    this.props.queryAllAppType({ props: this.props, data: {} });
 
     //获取认证源等级
-    this.props.getAuthLevel({ props: this.props, data: {} })
+    this.props.getAuthLevel({ props: this.props, data: {} });
 
     //查询所有产品类型
-    this.props.getProductType({ props: this.props, data: {} })
+    this.props.getProductType({ props: this.props, data: {} });
 
     this.props.emptyValue();
 
-    this.sendFn(1, 10)
+    this.props.setIconBase64("");
+
+    this.sendFn(1, 10);
   }
 
   paginationChange = (pageNo, pageSize) => {
-    this.sendFn(pageNo, pageSize)
-  }
+    this.sendFn(pageNo, pageSize);
+  };
 
   paginationShowSizeChange = (pageNo, pageSize) => {
-    this.sendFn(pageNo, pageSize)
-  }
+    this.sendFn(pageNo, pageSize);
+  };
 
   sendFn(pageNo, pageSize) {
     //const params = this.props.params
-    const data = { pageNo, pageSize }
+    const data = { pageNo, pageSize };
     this.props.queryApplist({ props: this.props, data });
   }
 
   render() {
-    const list = this.props.list
+    const list = this.props.list;
     const pagination = {
       ...this.props.pagination,
       onChange: this.paginationChange,
-      onShowSizeChange: this.paginationShowSizeChange,
-    }
+      onShowSizeChange: this.paginationShowSizeChange
+    };
 
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
@@ -87,13 +93,13 @@ class AppList extends Component {
             bordered
             columns={columns}
             dataSource={list}
-            rowKey={(record, index) => index}
+            rowKey={record => record.appCode}
             size="small"
             pagination={pagination}
           />
         </Spin>
-      </div >
-    )
+      </div>
+    );
   }
 }
 
@@ -101,8 +107,8 @@ const mapState = state => ({
   list: state.app.list,
   pagination: state.app.pagination,
   spinning: state.app.spinning,
-  params: state.app.params,
-})
+  params: state.app.params
+});
 
 const mapDispatch = dispatch => ({
   queryApplist: req => {
@@ -133,6 +139,10 @@ const mapDispatch = dispatch => ({
     const action = creators.emptyAddValueAction();
     dispatch(action);
   },
-})
+  setIconBase64: value => {
+    const action = creators.setIconBase64Action(value);
+    dispatch(action);
+  }
+});
 
 export default connect(mapState, mapDispatch)(AppList);

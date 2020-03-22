@@ -98,17 +98,19 @@ const queryListAction = req => {
 const queryProductAction = req => {
   return dispatch => {
     dispatch(spinningAction(true));
+    console.log("请求=>", req);
     request.json(requestURL.webSiteProductList, req.data, res => {
       dispatch(spinningAction(false));
+      console.log("响应=>", res);
       if (res.data) {
         const { success, message, data } = res.data;
         if (success) {
-          dispatch(initProductList(data))
+          dispatch(initProductList(data));
         } else {
           notification("error", message);
         }
       } else {
-        req.props.history.push("/500");
+        //req.props.history.push("/500");
       }
     });
   };
@@ -124,7 +126,12 @@ const getCatalogAction = req => {
         if (success) {
           dispatch(initCatalogAction(data));
           for (let i = 0; i < data.length; i++) {
-            dispatch(queryProductAction({ props: req.props, data: { pid: data[i].productTypeCode } }))
+            dispatch(
+              queryProductAction({
+                props: req.props,
+                data: { pid: data[i].productTypeCode }
+              })
+            );
           }
         } else {
           notification("error", message);
@@ -146,10 +153,12 @@ const getDetailAction = req => {
         if (success) {
           dispatch(initDetailAction(data));
           if (data.applyDetailRes.companyCode) {
-            const action = getCatalogAction({ props: req.props, data: { companyCode: data.applyDetailRes.companyCode } });
+            const action = getCatalogAction({
+              props: req.props,
+              data: { companyCode: data.applyDetailRes.companyCode }
+            });
             dispatch(action);
           }
-
         } else {
           notification("error", message);
         }
