@@ -59,9 +59,10 @@ class Add extends Component {
       }
     }
 
-    const id = this.props.location.state.editRecord && this.props.location.state.editRecord.id
-    if (id) {
+    if (this.props.location.state.editRecord) {
+      const { id, code } = this.props.location.state.editRecord
       req.data.id = id
+      req.data.code = code
     }
 
     this.props.saveForm(req)
@@ -128,13 +129,12 @@ class Add extends Component {
               className={styles.button}
               onClick={() => this.save()}
             >保存</Button>
-            <Link to="/docCatalog/list">
-              <Button
-                size="large"
-                type="primary"
-                className={styles.button}
-              >返回列表</Button>
-            </Link>
+            <Button
+              size="large"
+              type="primary"
+              className={styles.button}
+              onClick={() => this.props.history.goBack()}
+            >返回列表</Button>
 
           </div>
         </Spin>

@@ -76,7 +76,7 @@ class BillingList extends Component {
             bordered
             columns={columns}
             dataSource={list}
-            rowKey={(record, index) => index}
+            rowKey={record => record.code}
             size="small"
             pagination={pagination}
             rowClassName={styles.table}

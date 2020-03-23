@@ -53,7 +53,7 @@ const querylistAction = req => {
     request.json(requestURL.docQueryCatalogPages, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
-        const { success, message, data } = res.data && res.data
+        const { success, message, data } = res.data
         if (success) {
           const action = initListAction(data.results, createPagination(data))
           dispatch(action)

@@ -76,7 +76,7 @@ class CertList extends Component {
             bordered
             columns={columns}
             dataSource={list}
-            rowKey={(record, index) => index}
+            rowKey={record => record.certSerNum}
             size="small"
             pagination={pagination}
           />

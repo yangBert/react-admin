@@ -62,6 +62,11 @@ const setOrderWordAction = orderWord => ({
   orderWord
 });
 
+const changeSaveLoadingAction = saveLoading => ({
+  type: types.CHANGE_SAVE_LOADING,
+  saveLoading
+});
+
 //查询所有的产品类型
 const getProductTypeAction = req => {
   return dispatch => {
@@ -105,11 +110,13 @@ const queryListAction = req => {
 };
 
 const saveAction = req => {
-  return () => {
+  return (dispatch) => {
     const url = req.data.productCode
       ? requestURL.productUpdateProduct
       : requestURL.productAddProduct;
+    dispatch(changeSaveLoadingAction(true));
     request.json(url, req.data, res => {
+      dispatch(changeSaveLoadingAction(false));
       if (res.data) {
         const { success, message } = res.data && res.data;
         if (success) {
@@ -223,5 +230,6 @@ export {
   setTagAction,
   verifyApiListAction,
   setAPINameAction,
-  setOrderWordAction
+  setOrderWordAction,
+  changeSaveLoadingAction
 };

@@ -16,7 +16,8 @@ const defaultState = {
   tag: "",
   APIName: "",
   orderWord: "",
-  record: {}
+  record: {},
+  saveLoading: false
 };
 
 export default (state = defaultState, action) => {
@@ -64,6 +65,9 @@ export default (state = defaultState, action) => {
       break;
     case types.SET_ORDER_WORD:
       newState.orderWord = action.orderWord;
+      break;
+    case types.CHANGE_SAVE_LOADING:
+      newState.saveLoading = action.saveLoading;
       break;
     default:
       break;

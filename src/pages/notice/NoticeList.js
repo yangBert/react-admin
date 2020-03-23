@@ -7,6 +7,7 @@ import styles from './css/UserList.module.css';
 import { Link } from 'react-router-dom';
 import $$ from 'static/js/base';
 import Oper from './components/Operation';
+import config from './config';
 
 const columns = [
   { title: '标题', dataIndex: 'title', key: 'title' },
@@ -26,7 +27,7 @@ const columns = [
   {
     title: '发布状态', dataIndex: 'state', key: 'state', align: 'center',
     render: state => (
-      <span>{state === 4 ? "已发布" : "未发布"}</span>
+      <span>{state && config.state.get(state)}</span>
     )
   },
   {

@@ -26,8 +26,8 @@ const columns = [
         {appStatus === 1 ? (
           <Tag color="green">已上线</Tag>
         ) : (
-          <Tag color="#ccc">未上线</Tag>
-        )}
+            <Tag color="#ccc">未上线</Tag>
+          )}
       </span>
     )
   },

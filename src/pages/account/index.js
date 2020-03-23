@@ -128,7 +128,7 @@ class AccountList extends Component {
             bordered
             columns={columns}
             dataSource={list}
-            rowKey={(record, index) => index}
+            rowKey={record => record.accountCode}
             size="small"
             pagination={pagination}
             rowClassName={styles.table}

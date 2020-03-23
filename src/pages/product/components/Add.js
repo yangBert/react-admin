@@ -78,7 +78,7 @@ class Add extends Component {
       message.error("请填写产品备注信息");
       return;
     } else if (orderWord === "") {
-      message.error("请填写产品备注信息");
+      message.error("请填写产品产品排序");
       return;
     }
     else if (editorState === null) {
@@ -250,6 +250,7 @@ class Add extends Component {
               type="primary"
               size="large"
               className={`${styles.button}`}
+              loading={this.props.saveLoading}
               onClick={() => this.save()}
             >
               保存信息
@@ -280,6 +281,7 @@ const mapState = state => ({
   verifyApiList: state.product.verifyApiList,
   APIName: state.product.APIName,
   orderWord: state.product.orderWord,
+  saveLoading: state.product.saveLoading,
 });
 
 const mapDispatch = dispatch => ({

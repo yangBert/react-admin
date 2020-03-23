@@ -12,10 +12,10 @@ const getAuditStatus = s => {
   return s === 2
     ? "待审核"
     : s === 0
-    ? "审核未通过"
-    : s === 1
-    ? "审核已通过"
-    : "未定义";
+      ? "审核未通过"
+      : s === 1
+        ? "审核已通过"
+        : "未定义";
 };
 
 const columns = [
@@ -46,8 +46,8 @@ const columns = [
         {text === 1 ? (
           <Tag color="green">已上线</Tag>
         ) : (
-          <Tag color="#ccc">未上线</Tag>
-        )}
+            <Tag color="#ccc">未上线</Tag>
+          )}
       </span>
     )
   },
@@ -102,7 +102,7 @@ class AppList extends Component {
             bordered
             columns={columns}
             dataSource={list}
-            rowKey={(record, index) => index}
+            rowKey={record => record.appCode}
             size="small"
             pagination={pagination}
           />

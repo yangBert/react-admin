@@ -96,7 +96,7 @@ class List extends Component {
             bordered
             columns={columns}
             dataSource={list}
-            rowKey={(record, index) => index}
+            rowKey={record => record.instanceCode}
             size="small"
             pagination={pagination}
             rowClassName={styles.table}
