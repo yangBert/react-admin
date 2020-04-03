@@ -1,78 +1,8 @@
 import React, { Component } from "react";
-import { Line, StepLine, Radar, Funnel } from "@antv/g2plot";
-
+import { Radar, Funnel } from "@antv/g2plot";
 import styles from "./style.module.css";
-
-function plot1() {
-  const data = [
-    { year: "第一季度", value: 8908 },
-    { year: "第二季度", value: 12088 },
-    { year: "第三季度", value: 50896 },
-    { year: "第四季度", value: 103541 }
-  ];
-
-  const linePlot = new Line(document.getElementById("plot1"), {
-    title: {
-      visible: true,
-      text: "应用登录走势图"
-    },
-    description: {
-      visible: true,
-      text: "授权登录统计"
-    },
-    forceFit: true,
-    padding: "auto",
-    data,
-    theme: "dark",
-    xField: "year",
-    yField: "value",
-    point: {
-      visible: true
-    },
-    label: {
-      visible: true,
-      type: "point"
-    }
-  });
-
-  linePlot.render();
-}
-
-function plot2() {
-  const data = [
-    { year: "第一季度", value: 100000 },
-    { year: "第二季度", value: 123456 },
-    { year: "第三季度", value: 454221 },
-    { year: "第四季度", value: 523244 }
-  ];
-
-  const step = new StepLine(document.getElementById("plot2"), {
-    title: {
-      visible: true,
-      text: "用户登录统计"
-    },
-    description: {
-      visible: true,
-      text: "用户登录次数"
-    },
-    forceFit: true,
-    padding: "auto",
-    data,
-    theme: "dark",
-    xField: "year",
-    yField: "value",
-    step: "hvh", // 可以选择 hv, vh, hvh, vhv
-    point: {
-      visible: true
-    },
-    label: {
-      visible: true,
-      type: "point"
-    }
-  });
-
-  step.render();
-}
+import Plot1 from './components/Plot1'
+import Plot2 from './components/Plot2'
 
 function plot3() {
   const data = [
@@ -161,8 +91,6 @@ function plot4() {
 
 class Home extends Component {
   componentDidMount() {
-    plot1();
-    plot2();
     plot3();
     plot4();
   }
@@ -170,12 +98,8 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div className={`${styles.item} pullLeft`}>
-          <div id="plot1"></div>
-        </div>
-        <div className={`${styles.item} pullLeft`}>
-          <div id="plot2"></div>
-        </div>
+        <Plot1 />
+        <Plot2 />
         <div className={`${styles.item} pullLeft`}>
           <div id="plot3"></div>
         </div>

@@ -6,6 +6,7 @@ import { withRouter, Link } from "react-router-dom";
 
 function Oper(props) {
   const status = props.record.appStatus === 1 ? true : false;
+  const fontSmall = { fontSize: "12px", marginLeft: "5px", marginBottom: "5px" };
   return (
     <div>
       <Link
@@ -20,12 +21,13 @@ function Oper(props) {
           }
         }}
       >
-        <Button style={{ fontSize: "12px" }} type="primary" size="small" ghost>
+        <Button style={fontSmall} type="primary" size="small" ghost>
           修改
         </Button>
         &nbsp;
       </Link>
       <Switch
+        style={fontSmall}
         checkedChildren="上线"
         unCheckedChildren="下线"
         defaultChecked={status}
@@ -46,7 +48,7 @@ function Oper(props) {
           }
         }}
       >
-        <Button style={{ fontSize: "12px" }} type="primary" size="small" ghost>
+        <Button style={fontSmall} type="primary" size="small" ghost>
           配置
         </Button>
         &nbsp;
@@ -59,7 +61,7 @@ function Oper(props) {
           }
         }}
       >
-        <Button type="primary" size="small" ghost>
+        <Button style={fontSmall} type="primary" size="small" ghost>
           绑定
         </Button>
       </Link>
@@ -69,7 +71,7 @@ function Oper(props) {
           onClick={() =>
             props.showSecret({ props, data: "appID=" + props.record.id })
           }
-          style={{ fontSize: "12px" }}
+          style={fontSmall}
           type="primary"
           size="small"
           ghost
@@ -77,8 +79,8 @@ function Oper(props) {
           生成密钥
         </Button>
       ) : (
-        ""
-      )}
+          ""
+        )}
     </div>
   );
 }

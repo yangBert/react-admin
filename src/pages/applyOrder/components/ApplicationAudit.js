@@ -116,20 +116,23 @@ class Detail extends React.Component {
         contactName,
         remark
       } = this.props.detail;
-      var {
-        appType,
-        landingModes,
-        feeCode,
-        supportCAs,
-        appName,
-        url,
-        redirectUrl,
-        describes
-      } = this.props.detail.applyDetailRes;
-      landingModes = landingModes.substring(0, landingModes.length - 1);
-      landingModes = stringTorNumber(landingModes.split(";"));
-      supportCAs = supportCAs.substring(0, supportCAs.length - 1);
-      supportCAs = stringTorNumber(supportCAs.split(";"));
+      if (this.props.detail.applyDetailRes) {
+        var {
+          appType,
+          landingModes,
+          feeCode,
+          supportCAs,
+          appName,
+          url,
+          redirectUrl,
+          describes
+        } = this.props.detail.applyDetailRes;
+        landingModes = landingModes.substring(0, landingModes.length - 1);
+        landingModes = stringTorNumber(landingModes.split(";"));
+        supportCAs = supportCAs.substring(0, supportCAs.length - 1);
+        supportCAs = stringTorNumber(supportCAs.split(";"));
+      }
+
     }
     return (
       <div>

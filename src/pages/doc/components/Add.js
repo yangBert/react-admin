@@ -90,7 +90,6 @@ class Add extends Component {
   }
 
   render() {
-    const editContent = this.props.editContent
     var { productCode } = this.state
     return (
       <div className={`${styles.pageContet} pageContentColor`}>

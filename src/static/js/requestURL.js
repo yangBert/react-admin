@@ -173,6 +173,9 @@ export const accountDetail = "/api/v1/account/detail";
 export const accountUpdateAccount = "/api/v1/account/updateAccount";
 export const accountGetbindAppAccount = "/api/v1/account/getbindAppAccount";
 export const accountBindAppAccount = "/api/v1/account/bindAppAccount";
+export const accountGetBindRechargeRule = "/api/v1/account/getBindRechargeRule";
+export const accountBindRechargeRule = "/api/v1/account/bindRechargeRule";
+export const accountUnbindRechargeRule = "/api/v1/account/unbindRechargeRule";
 
 //计费相关
 export const chargeConsume = "/api/v1/charge/consume";
@@ -277,3 +280,11 @@ export const managerOApiInsertParam = "/api/v1/manager/oApi/insertParam";
 export const managerOApiSelectAllParamByApiId =
   "/api/v1/manager/oApi/selectAllParamByApiId";
 export const managerOApiUpdateParam = "/api/v1/manager/oApi/updateParam";
+
+//统计
+export const logManageSelectLoginTypeCount = "/api/v1/uamBase/manager/logManage/selectLoginTypeCount";
+export const logManageSelectUserLoginTypeCount = "/api/v1/uamBase/manager/logManage/selectUserLoginTypeCount";
+
+//用户机构
+export const managerSelectOrgManagerList = "/api/v1/manager/selectOrgManagerList";
+export const managerAuditOrgManager = "/api/v1/manager/auditOrgManager";

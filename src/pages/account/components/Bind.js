@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Spin, Button, Tag } from "antd";
+import { Table, Spin, Button } from "antd";
 import styles from "../css/UserList.module.css";
 import { connect } from "react-redux";
 import * as creators from "../store/creators";

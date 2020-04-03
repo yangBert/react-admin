@@ -89,15 +89,17 @@ class Detail extends React.Component {
         contactName,
         remark
       } = this.props.detail;
-      var {
-        allowTypes,
-        orgCode,
-        legalPhone,
-        legalName,
-        caCode,
-        caName
-      } = this.props.detail.applyDetailRes;
-      allowTypes = [allowTypes.substring(0, allowTypes.length - 1)];
+      if (this.props.detail.applyDetailRes) {
+        var {
+          allowTypes,
+          orgCode,
+          legalPhone,
+          legalName,
+          caCode,
+          caName
+        } = this.props.detail.applyDetailRes;
+        allowTypes = [allowTypes.substring(0, allowTypes.length - 1)];
+      }
     }
     return (
       <div>

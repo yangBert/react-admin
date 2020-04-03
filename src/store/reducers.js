@@ -37,6 +37,8 @@ import oApiReducer from "pages/oApi/store/reducer";
 import oApiParamsReducer from "pages/oApiParams/store/reducer";
 import userLogsReducer from "pages/userLogs/store/reducer";
 import appLogsReducer from "pages/appLogs/store/reducer";
+import userOrgReducer from "pages/userOrg/store/reducer";
+import rechargeRuleListReducer from "pages/rechargeRuleList/store/reducer";
 
 export default {
   appLogs: appLogsReducer,
@@ -77,5 +79,7 @@ export default {
   safeStrategy: safeStrategyReducer,
   oApiTypes: oApiTypesReducer,
   oApi: oApiReducer,
-  oApiParams: oApiParamsReducer
+  oApiParams: oApiParamsReducer,
+  userOrg: userOrgReducer,
+  rechargeRuleList: rechargeRuleListReducer,
 };

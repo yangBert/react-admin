@@ -106,25 +106,19 @@ const queryNoticeDetailAction = req => {
 const publishNoticeAction = req => {
   return (dispatch, getState) => {
     dispatch(spinningAction(true))
-    request.json(requestURL.noticePublishNotice, req.data, res => {
+    request.json(requestURL.noticeUpdateNotice, req.data, res => {
       dispatch(spinningAction(false))
       if (res.data) {
         const { success, message } = res.data && res.data
         if (success) {
-          Modal.success({
-            title: '系统提示',
-            content: message,
-            okText: '确认',
-            onOk: () => {
-              const pagination = getState().notice.pagination
-              const params = {
-                ...getState().notice.params,
-                pageNo: pagination.current,
-                pageSize: pagination.pageSize,
-              }
-              dispatch(queryNoticelistAction({ props: req.props, data: params }));
-            }
-          });
+          notification('success', message)
+          const pagination = getState().notice.pagination
+          const params = {
+            ...getState().notice.params,
+            pageNo: pagination.current,
+            pageSize: pagination.pageSize,
+          }
+          dispatch(queryNoticelistAction({ props: req.props, data: params }));
         } else {
           notification('error', message)
         }

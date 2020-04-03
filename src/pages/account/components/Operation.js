@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
 function Oper(props) {
-  const fontSmall = { fontSize: "12px", marginLeft: "5px" };
+  const fontSmall = { fontSize: "12px", marginLeft: "5px", marginBottom: "5px" };
   return (
     <div>
       <Link
@@ -30,6 +30,28 @@ function Oper(props) {
       >
         <Button style={fontSmall} type="primary" size="small" ghost>
           充值
+        </Button>
+      </Link>
+      <Link
+        to={{
+          pathname: "/account/detail",
+          state: { record: props.record }
+        }}
+      >
+        <Button style={fontSmall} type="primary" size="small" ghost>
+          详情
+        </Button>
+      </Link>
+      <Link
+        to={{
+          pathname: "/rechargeRule/list",
+          state: {
+            accountCode: props.record.accountCode
+          }
+        }}
+      >
+        <Button style={fontSmall} type="primary" size="small" ghost>
+          配置
         </Button>
       </Link>
       <Link

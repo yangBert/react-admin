@@ -27,7 +27,7 @@ const columns = [
   {
     title: '发布状态', dataIndex: 'state', key: 'state', align: 'center',
     render: state => (
-      <span>{state && config.state.get(state)}</span>
+      <span>{config.state.get(state)}</span>
     )
   },
   {
@@ -54,7 +54,6 @@ class NoticeList extends Component {
   }
 
   sendFn(pageNo, pageSize) {
-    //const params = this.props.params
     const data = { pageNo, pageSize }
     this.props.queryNoticelist({ props: this.props, data });
   }
@@ -83,7 +82,7 @@ class NoticeList extends Component {
             bordered
             columns={columns}
             dataSource={list}
-            rowKey={(record, index) => index}
+            rowKey={record => record.id}
             size="small"
             pagination={pagination}
             rowClassName={styles.table}

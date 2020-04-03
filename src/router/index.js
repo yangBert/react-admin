@@ -125,8 +125,62 @@ const FlatStatisticalList = lazy(() =>
 const AccountBind = lazy(() =>
   import("pages/account/components/Bind")
 );
+const UserOrgList = lazy(() =>
+  import("pages/userOrg")
+);
+const UserOrgDetail = lazy(() =>
+  import("pages/userOrg/components/Detail")
+);
+
+const RechargeRuleList = lazy(() =>
+  import("pages/rechargeRuleList")
+);
+
+const RechargeRuleAdd = lazy(() =>
+  import("pages/rechargeRuleList/components/Add")
+);
+
+const RechargeRulePreferential = lazy(() =>
+  import("pages/rechargeRuleList/components/Preferential")
+);
+
+const RechargeRuleBilling = lazy(() =>
+  import("pages/rechargeRuleList/components/Billing")
+);
+
+const RechargeRuleProduct = lazy(() =>
+  import("pages/rechargeRuleList/components/Product")
+);
 
 const routes = [
+  {
+    path: "/rechargeRule/preferential",
+    component: RechargeRulePreferential
+  },
+  {
+    path: "/rechargeRule/billing",
+    component: RechargeRuleBilling
+  },
+  {
+    path: "/rechargeRule/product",
+    component: RechargeRuleProduct
+  },
+  {
+    path: "/rechargeRule/add",
+    component: RechargeRuleAdd
+  },
+  {
+    path: "/rechargeRule/list",
+    component: RechargeRuleList
+  },
+  {
+    path: "/userOrg/detail",
+    component: UserOrgDetail
+  },
+  {
+    path: "/userOrg/list",
+    component: UserOrgList
+  },
   {
     path: "/flatStatistical/list",
     component: FlatStatisticalList

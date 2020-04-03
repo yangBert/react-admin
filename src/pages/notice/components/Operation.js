@@ -1,15 +1,19 @@
-import React from 'react';
-import { Button } from 'antd';
+import React, { useState } from 'react';
+import { Button, Switch } from 'antd';
 import { Link } from 'react-router-dom';
 import $$ from 'static/js/base';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
+import config from '../config';
 
 function Oper(props) {
+  const [state, setState] = useState(props.record.state)
   const fontSmall = { fontSize: "12px", marginLeft: "10px" };
-  function publish(id) {
+  function publish(state) {
+    const { id } = props.record;
     const data = {
       props, data: {
+        state,
         publisherName: $$.localStorage.get("adminName"),
         id,
         publisher: $$.localStorage.get("adminId")
@@ -30,16 +34,17 @@ function Oper(props) {
           size="small"
           ghost
         >修改</Button>
-      </Link>
-      {props.record.state === 1 &&
-        <Button
-          style={fontSmall}
-          type="primary"
-          size="small"
-          ghost
-          onClick={() => publish(props.record.id)}
-        >发布</Button>
-      }
+      </Link>&nbsp;
+      <Switch
+        checkedChildren="发布"
+        unCheckedChildren="禁用"
+        defaultChecked={state === config.state.arr[1].value ? false : true}
+        onChange={checked => {
+          const state = checked ? config.state.arr[4].value : config.state.arr[1].value;
+          setState(state);
+          publish(state)
+        }}
+      />
     </div >
   )
 }

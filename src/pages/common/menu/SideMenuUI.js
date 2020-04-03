@@ -33,6 +33,10 @@ class SideMenuUI extends React.Component {
     });
   };
 
+  changeLinkHistory(i) {
+    console.log(i)
+  }
+
   //递归菜单
   mapMenuList(menus) {
     return (

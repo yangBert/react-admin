@@ -90,17 +90,19 @@ class Detail extends React.Component {
         contactName,
         remark
       } = this.props.detail;
-      var {
-        accountType,
-        orgName,
-        legalPerson,
-        orgCode,
-        validateTime,
-        provice,
-        city,
-        area,
-        address
-      } = this.props.detail.applyDetailRes;
+      if (this.props.detail.applyDetailRes) {
+        var {
+          accountType,
+          orgName,
+          legalPerson,
+          orgCode,
+          validateTime,
+          provice,
+          city,
+          area,
+          address
+        } = this.props.detail.applyDetailRes;
+      }
     }
     return (
       <div>

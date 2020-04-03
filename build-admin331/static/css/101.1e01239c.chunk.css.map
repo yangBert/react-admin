@@ -1,0 +1,1 @@
+{"version":3,"sources":["UserList.module.css"],"names":[],"mappings":"AAAA,4BACE,kBACF,CAEA,2BACE,iBACF,CAEA,4BACE,sBACF","file":"101.1e01239c.chunk.css","sourcesContent":[".buttonForm{\n  margin-bottom: 12px;\n}\n\n.addButton {\n  margin-right: 12px;\n}\n\n.pageContet{\n  padding: 20px 20px 40px 20px;\n}\n\n"]}

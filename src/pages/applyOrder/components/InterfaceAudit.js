@@ -81,14 +81,15 @@ class Detail extends React.Component {
         code,
         remark,
       } = this.props.detail;
-      var {
-        ifcCode
-      } = this.props.detail.applyDetailRes;
-      if (ifcCode) {
-        ifcCode = ifcCode.substring(0, ifcCode.length - 1);
-        ifcCode = ifcCode.split(";");
+      if (this.props.detail.applyDetailRes) {
+        var {
+          ifcCode
+        } = this.props.detail.applyDetailRes;
+        if (ifcCode) {
+          ifcCode = ifcCode.substring(0, ifcCode.length - 1);
+          ifcCode = ifcCode.split(";");
+        }
       }
-
     }
     const { catalog } = this.props;
     return (

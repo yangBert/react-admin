@@ -17,7 +17,9 @@ const defaultState = {
   editOrgList: [],
   rechargeType: "",
   rechargeMoney: 0,
-  appSelectedKeys: []
+  appSelectedKeys: [],
+  rechargeRuleList: [],
+  rechargeRuleListLoading: false
 };
 
 export default (state = defaultState, action) => {
@@ -26,46 +28,52 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning;
       break;
-    case types.QUERY_LIST:
+    case types.ACCOUNT_QUERY_LIST:
       newState.list = action.list;
       newState.pagination = action.pagination;
       break;
-    case types.QUERY_APP_LIST:
+    case types.ACCOUNT_QUERY_APP_LIST:
       newState.appList = action.appList;
       newState.appListPagination = action.appListPagination;
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.ACCOUNT_CHANGE_SEARCH_PARAMS:
       newState.params = action.params;
       break;
-    case types.CHANGE_SAVE_LOADING:
+    case types.ACCOUNT_CHANGE_SAVE_LOADING:
       newState.saveLoading = action.saveLoading;
       break;
-    case types.SET_EDIT_ACCOUNT_NAME:
+    case types.ACCOUNT_SET_EDIT_ACCOUNT_NAME:
       newState.editAccountName = action.editAccountName;
       break;
-    case types.SET_EDIT_ACCOUNT_TYPE:
+    case types.ACCOUNT_SET_EDIT_ACCOUNT_TYPE:
       newState.editAccountType = action.editAccountType;
       break;
-    case types.SET_EDIT_ORG_CODE:
+    case types.ACCOUNT_SET_EDIT_ORG_CODE:
       newState.editOrgCode = action.editOrgCode;
       break;
-    case types.INIT_EDIT_ORG_LIST:
+    case types.ACCOUNT_INIT_EDIT_ORG_LIST:
       newState.editOrgList = action.editOrgList;
       break;
-    case types.SET_EDIT_PARENT_ACCOUNT:
+    case types.ACCOUNT_SET_EDIT_PARENT_ACCOUNT:
       newState.editParentAccount = action.editParentAccount;
       break;
-    case types.SET_EDIT_ACCESS_SCRECT:
+    case types.ACCOUNT_SET_EDIT_ACCESS_SCRECT:
       newState.editAccessScrect = action.editAccessScrect;
       break;
-    case types.SET_RE_CHARGE_TYPE:
+    case types.ACCOUNT_SET_RE_CHARGE_TYPE:
       newState.rechargeType = action.rechargeType;
       break;
-    case types.SET_RE_CHARGE_MONEY:
+    case types.ACCOUNT_SET_RE_CHARGE_MONEY:
       newState.rechargeMoney = action.rechargeMoney;
       break;
-    case types.CHANGE_APP_SELECTED_KEYS:
+    case types.ACCOUNT_CHANGE_APP_SELECTED_KEYS:
       newState.appSelectedKeys = action.appSelectedKeys;
+      break;
+    case types.ACCOUNT_INIT_RECHARGE_RULE_LIST:
+      newState.rechargeRuleList = action.rechargeRuleList;
+      break;
+    case types.ACCOUNT_CHANGE_RECHARGE_RULE_LIST_LOADING:
+      newState.rechargeRuleListLoading = action.rechargeRuleListLoading;
       break;
     default:
       break;

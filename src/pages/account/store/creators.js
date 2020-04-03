@@ -7,60 +7,70 @@ import createPagination from "static/js/pagination";
 import { Modal } from "antd";
 
 const initListAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.ACCOUNT_QUERY_LIST,
   list,
   pagination
 });
 
 //改变账户名称
 const setAccountNameAction = editAccountName => ({
-  type: types.SET_EDIT_ACCOUNT_NAME,
+  type: types.ACCOUNT_SET_EDIT_ACCOUNT_NAME,
   editAccountName
 });
 
 //改变账户类型
 const setEditAccountTypeAction = editAccountType => ({
-  type: types.SET_EDIT_ACCOUNT_TYPE,
+  type: types.ACCOUNT_SET_EDIT_ACCOUNT_TYPE,
   editAccountType
 });
 
 //改变机构编码
 const setEditOrgCodeAction = editOrgCode => ({
-  type: types.SET_EDIT_ORG_CODE,
+  type: types.ACCOUNT_SET_EDIT_ORG_CODE,
   editOrgCode
 });
 
 //改变父账户
 const setEditParentAccountAction = editParentAccount => ({
-  type: types.SET_EDIT_PARENT_ACCOUNT,
+  type: types.ACCOUNT_SET_EDIT_PARENT_ACCOUNT,
   editParentAccount
 });
 
 //改变账户访问
 const setEditAccessScrectAction = editAccessScrect => ({
-  type: types.SET_EDIT_ACCESS_SCRECT,
+  type: types.ACCOUNT_SET_EDIT_ACCESS_SCRECT,
   editAccessScrect
 });
 
 //改变保存loading
 const onChangeSaveLoadingAction = saveLoading => ({
-  type: types.CHANGE_SAVE_LOADING,
+  type: types.ACCOUNT_CHANGE_SAVE_LOADING,
   saveLoading
 });
 
 const setRechargeTypeAction = rechargeType => ({
-  type: types.SET_RE_CHARGE_TYPE,
+  type: types.ACCOUNT_SET_RE_CHARGE_TYPE,
   rechargeType
 });
 
 const setRechargeMoneyAction = rechargeMoney => ({
-  type: types.SET_RE_CHARGE_MONEY,
+  type: types.ACCOUNT_SET_RE_CHARGE_MONEY,
   rechargeMoney
 });
 
 const changeBillingSelectedKeysAction = (appSelectedKeys) => ({
-  type: types.CHANGE_APP_SELECTED_KEYS,
+  type: types.ACCOUNT_CHANGE_APP_SELECTED_KEYS,
   appSelectedKeys
+})
+
+const initRechargeRuleListAction = rechargeRuleList => ({
+  type: types.ACCOUNT_INIT_RECHARGE_RULE_LIST,
+  rechargeRuleList
+})
+
+const changeRechargeRuleListLoadingAction = rechargeRuleListLoading => ({
+  type: types.ACCOUNT_CHANGE_RECHARGE_RULE_LIST_LOADING,
+  rechargeRuleListLoading
 })
 
 const reChargeAction = req => {
@@ -145,7 +155,7 @@ const queryListAction = req => {
 
 //初始化机构树
 const initOrgListAction = editOrgList => ({
-  type: types.INIT_EDIT_ORG_LIST,
+  type: types.ACCOUNT_INIT_EDIT_ORG_LIST,
   editOrgList
 });
 
@@ -170,7 +180,7 @@ const queryOrgListAction = req => {
 };
 
 const queryAppListAction = (appList, appListPagination) => ({
-  type: types.QUERY_APP_LIST,
+  type: types.ACCOUNT_QUERY_APP_LIST,
   appList,
   appListPagination
 });
@@ -244,9 +254,30 @@ const getbindAppAccountAction = req => {
   };
 };
 
+
+const queryRechargeRuleListAction = req => {
+  return dispatch => {
+    dispatch(changeRechargeRuleListLoadingAction(true));
+    request.json(requestURL.accountGetBindRechargeRule, req.data, res => {
+      dispatch(changeRechargeRuleListLoadingAction(false));
+      if (res.data) {
+        const { success, message, data } = res.data;
+        if (success) {
+          const action = initRechargeRuleListAction(data.results);
+          dispatch(action);
+        } else {
+          notification("error", message);
+        }
+      } else {
+        req.props.history.push("/500");
+      }
+    });
+  };
+};
+
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.ACCOUNT_CHANGE_SEARCH_PARAMS,
   params
 });
 
@@ -269,5 +300,6 @@ export {
   createQueryAppListAction,
   changeBillingSelectedKeysAction,
   bindSaveAction,
-  getbindAppAccountAction
+  getbindAppAccountAction,
+  queryRechargeRuleListAction
 };
