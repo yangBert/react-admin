@@ -3,7 +3,6 @@ import { Radar, Funnel } from "@antv/g2plot";
 import styles from "./style.module.css";
 import Plot1 from './components/Plot1'
 import Plot2 from './components/Plot2'
-
 function plot3() {
   const data = [
     { action: "浏览网站", pv: 50000 },
@@ -15,7 +14,7 @@ function plot3() {
 
   const funnelPlot = new Funnel(document.getElementById("plot3"), {
     data: data,
-    theme: "dark",
+    //theme: "dark",
     xField: "action",
     yField: "pv"
   });
@@ -71,7 +70,7 @@ function plot4() {
       text: "产品年度统计"
     },
     data,
-    theme: "dark",
+    //theme: "dark",
     angleField: "item",
     radiusField: "score",
     radiusAxis: {
@@ -97,7 +96,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
+      <div className="clearfix">
         <Plot1 />
         <Plot2 />
         <div className={`${styles.item} pullLeft`}>

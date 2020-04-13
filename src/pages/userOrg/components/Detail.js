@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, Descriptions, Button, Input, Modal } from 'antd';
 import styles from '../css/detail.module.css';
 import $$ from 'static/js/base';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
+import { PhotoProvider, PhotoConsumer } from "react-photo-view";
+import "react-photo-view/dist/index.css";
 
 const { TextArea } = Input;
 const { confirm } = Modal;
@@ -14,7 +16,10 @@ function Detail(props) {
       applyTime,
       state,
       userId,
+      userName,
       orgCode,
+      orgName,
+      authFileViewUrl,
       id
     } = props.location.state.record;
   }
@@ -59,13 +64,22 @@ function Detail(props) {
         <div className="pageContentColor">
           <Card title="详情" bordered={false}>
             <Descriptions>
-              <Descriptions.Item label="机构名称">{orgCode}</Descriptions.Item>
+              <Descriptions.Item label="机构名称">{orgName}</Descriptions.Item>
               <Descriptions.Item label="机构统一社会信用代码">{orgCode}</Descriptions.Item>
-              <Descriptions.Item label="申请人">{userId}</Descriptions.Item>
+              <Descriptions.Item label="申请人">{userName}</Descriptions.Item>
               <Descriptions.Item label="状态">{state === '0' ? '待审核' : state === '1' ? '审核通过' : '审核未通过'}</Descriptions.Item>
-              <Descriptions.Item label="申请时间">{applyTime && $$.getHours(applyTime)}</Descriptions.Item>
+              <Descriptions.Item label="审核通过时间">{applyTime && $$.getHours(applyTime)}</Descriptions.Item>
             </Descriptions>
+            <p>机构授权书：</p>
 
+            <PhotoProvider>
+              <PhotoConsumer
+                src={authFileViewUrl}
+                intro="机构授权书"
+              >
+                <img style={{ width: "100px", height: "100px", cursor: "pointer" }} src={authFileViewUrl} alt="机构授权书" />
+              </PhotoConsumer>
+            </PhotoProvider>
           </Card>
         </div>
         <div className={styles.bottom}>

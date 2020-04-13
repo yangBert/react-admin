@@ -34,16 +34,6 @@ function Oper(props) {
       </Link>
       <Link
         to={{
-          pathname: "/account/detail",
-          state: { record: props.record }
-        }}
-      >
-        <Button style={fontSmall} type="primary" size="small" ghost>
-          详情
-        </Button>
-      </Link>
-      <Link
-        to={{
           pathname: "/rechargeRule/list",
           state: {
             accountCode: props.record.accountCode

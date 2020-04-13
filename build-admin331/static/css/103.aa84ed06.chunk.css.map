@@ -1,1 +1,0 @@
-{"version":3,"sources":["style.module.css"],"names":[],"mappings":"AAAA,mBACE,SAAU,CACV,kBAAkB,CAClB,qBAAqB,CACrB,iBACF","file":"103.aa84ed06.chunk.css","sourcesContent":[".item {\n  width: 50%;\n  padding-right:10px;\n  box-sizing:border-box;\n  margin-bottom:5px;\n}"]}

@@ -243,7 +243,9 @@ const getbindAppAccountAction = req => {
       if (res.data) {
         const { success, message, data } = res.data;
         if (success) {
-          dispatch(changeBillingSelectedKeysAction([data[0].accountCode]))
+          if (data.length > 0) {
+            dispatch(changeBillingSelectedKeysAction([data[0].accountCode]))
+          }
         } else {
           notification("error", message);
         }

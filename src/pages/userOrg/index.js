@@ -8,15 +8,15 @@ import Oper from './components/Operation';
 import $$ from 'static/js/base';
 
 const columns = [
-  { title: '被申请机构名称', dataIndex: 'userName', key: 'userName', align: 'center' },
-  { title: '被申请机构统一社会信用代码', dataIndex: 'orgId', key: 'orgId', align: 'center' },
-  {
-    title: '审核通过时间', dataIndex: 'applyTime', key: 'applyTime', align: 'center',
-    render: applyTime => (
-      <span>{applyTime ? $$.getHours(applyTime) : "--"}</span>
-    )
-  },
-  { title: '申请人', dataIndex: 'userId', key: 'userId', align: 'center' },
+  { title: '机构名称', dataIndex: 'orgName', key: 'orgName', align: 'center' },
+  { title: '统一社会信用代码', dataIndex: 'orgCode', key: 'orgCode', align: 'center' },
+  // {
+  //   title: '审核通过时间', dataIndex: 'applyTime', key: 'applyTime', align: 'center',
+  //   render: applyTime => (
+  //     <span>{applyTime ? $$.getHours(applyTime) : "--"}</span>
+  //   )
+  // },
+  { title: '申请人', dataIndex: 'userName', key: 'userName', align: 'center' },
   {
     title: '状态', dataIndex: 'state', key: 'state', align: 'center',
     render: state => <span>

@@ -39,6 +39,7 @@ import userLogsReducer from "pages/userLogs/store/reducer";
 import appLogsReducer from "pages/appLogs/store/reducer";
 import userOrgReducer from "pages/userOrg/store/reducer";
 import rechargeRuleListReducer from "pages/rechargeRuleList/store/reducer";
+import appStatisticalReducer from "pages/appStatistical/store/reducer";
 
 export default {
   appLogs: appLogsReducer,
@@ -82,4 +83,5 @@ export default {
   oApiParams: oApiParamsReducer,
   userOrg: userOrgReducer,
   rechargeRuleList: rechargeRuleListReducer,
+  appStatistical: appStatisticalReducer,
 };

@@ -3,7 +3,9 @@ import { Table, Divider, Tag } from 'antd';
 import styles from './css/UserList.module.css';
 import $$ from 'static/js/base';
 import Oper from './components/Operation';
-import SearchForm from './components/SearchForm'
+import SearchForm from './components/SearchForm';
+import { connect } from "react-redux";
+import * as creators from "./store/creators";
 
 const { Column, ColumnGroup } = Table;
 
@@ -116,25 +118,28 @@ const data = [
 ];
 
 class List extends Component {
-
+  componentDidMount() {
+    this.props.querylist({
+      props: this.props,
+      data: {}
+    })
+  }
   render() {
-
+    console.log(this.props.list)
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <SearchForm />
         <Table
-          dataSource={data}
+          dataSource={this.props.tableList}
           bordered
           pagination={false}
           rowKey={(record, index) => index}
         >
           <Column title="应用名称" dataIndex="v0" key="v0" align='center' />
           <ColumnGroup title="操作类型">
-            <Column title="人脸识别" dataIndex="type1" key="type1" />
-            <Column title="手机号" dataIndex="type2" key="type2" />
-            <Column title="手机盾" dataIndex="type3" key="type3" />
-            <Column title="usbKey" dataIndex="type4" key="type4" />
-            <Column title="微信" dataIndex="type5" key="type5" />
+            {
+              this.props.typesList.map(item => <Column title={item.operTypeName} dataIndex={item.operType} key={item.operType} />)
+            }
           </ColumnGroup>
           <Column title="合计次数" dataIndex="v1" key="v1" />
           <Column title="应激金额" dataIndex="v2" key="v2" />
@@ -158,5 +163,16 @@ class List extends Component {
   }
 }
 
+const mapState = state => ({
+  typesList: state.appStatistical.typesList,
+  tableList: state.appStatistical.tableList,
+});
 
-export default List;
+const mapDispatch = dispatch => ({
+  querylist: req => {
+    const action = creators.queryListAction(req);
+    dispatch(action);
+  },
+});
+
+export default connect(mapState, mapDispatch)(List);
