@@ -6,19 +6,19 @@ import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 
 const initDictTypeListAction = typeList => ({
-  type: types.QUERY_DICT_TYPE_LIST,
+  type: types.DICT_DATA_QUERY_DICT_TYPE_LIST,
   typeList,
 })
 
 const initDictDataListAction = (dataList, pagination) => ({
-  type: types.QUERY_DICT_DATA_LIST,
+  type: types.DICT_DATA_QUERY_DICT_DATA_LIST,
   dataList,
   pagination
 })
 
 //改变新增或修改弹出层显示或隐藏
 const changeAddModalvisibleAction = (addModalvisible, operationType, record) => ({
-  type: types.CHANGE_ADD_MODAL_VISIBLE,
+  type: types.DICT_DATA_CHANGE_ADD_MODAL_VISIBLE,
   addModalvisible,
   operationType,
   record,
@@ -26,7 +26,7 @@ const changeAddModalvisibleAction = (addModalvisible, operationType, record) => 
 
 //新增或修改提交按钮loading状态
 const changeConfirmLoadingAction = ConfirmLoading => ({
-  type: types.CHANGE_CONFIRM_LOADING,
+  type: types.DICT_DATA_CHANGE_CONFIRM_LOADING,
   ConfirmLoading,
 })
 
@@ -123,11 +123,9 @@ const queryDictTypeListAction = req => {
   }
 }
 
-
-
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.DICT_DATA_CHANGE_SEARCH_PARAMS,
   params
 })
 
@@ -138,7 +136,5 @@ export {
   changeAddModalvisibleAction,
   createAddAction,
   queryDictTypeListAction,
-
   createChangeParamsAction,
-
 }

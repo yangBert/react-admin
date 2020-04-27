@@ -7,7 +7,7 @@ import createPagination from 'static/js/pagination';
 import { Modal } from 'antd'
 
 const initListAction = (list, pagination) => ({
-  type: types.INIT_LIST,
+  type: types.CERTFICATION_INIT_LIST,
   list,
   pagination
 })
@@ -91,43 +91,43 @@ const deleteRowAction = req => {
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.CERTFICATION_CHANGE_SEARCH_PARAMS,
   params
 })
 
 //认证源名称
 const changeAuthNameAction = editAuthName => ({
-  type: types.CHANGE_EDIT_AUTH_NAME,
+  type: types.CERTFICATION_CHANGE_EDIT_AUTH_NAME,
   editAuthName
 })
 
 //认证接入URL
 const changeEditURLAction = editURL => ({
-  type: types.CHANGE_EDIT_URL,
+  type: types.CERTFICATION_CHANGE_EDIT_URL,
   editURL
 })
 
 //认证等级
 const changeAuthLevelAction = editAuthLevel => ({
-  type: types.CHANGE_AUTH_LEVE,
+  type: types.CERTFICATION_CHANGE_AUTH_LEVE,
   editAuthLevel
 })
 
 //认证源接口方式
 const changeAuthStyleAction = editAuthStyle => ({
-  type: types.CHANGE_AUTH_STYLE,
+  type: types.CERTFICATION_CHANGE_AUTH_STYLE,
   editAuthStyle
 })
 
 //认证源接状态
 const changeEditStatusAction = editStatus => ({
-  type: types.CHANGE_EDIT_STATUS,
+  type: types.CERTFICATION_CHANGE_EDIT_STATUS,
   editStatus
 })
 
 //清空表单
 const cleanFormAction = () => ({
-  type: types.CLEAN_FORM,
+  type: types.CERTFICATION_CLEAN_FORM,
 })
 
 export {

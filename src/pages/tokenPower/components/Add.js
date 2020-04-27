@@ -53,14 +53,6 @@ class Add extends Component {
     this.props.save(req)
   }
 
-  mapStatus() {
-    let statusArr = [];
-    Object.keys(config.status).forEach(k => {
-      statusArr.push({ k, v: config.status[k] })
-    })
-    return statusArr;
-  }
-
   render() {
     return (
       <div className={styles.pageContet}>

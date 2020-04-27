@@ -20,29 +20,29 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning;
       break;
-    case types.QUERY_LIST:
+    case types.LINK_QUERY_LIST:
       newState.list = action.list;
       newState.pagination = action.pagination;
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.LINK_CHANGE_SEARCH_PARAMS:
       newState.params = action.params;
       break;
-    case types.CHANGE_EDIT_TITLE:
+    case types.LINK_CHANGE_EDIT_TITLE:
       newState.editTitle = action.editTitle;
       break;
-    case types.CHANGE_SHOW_IMAGE:
+    case types.LINK_CHANGE_SHOW_IMAGE:
       newState.showImage = action.showImage;
       break;
-    case types.CHANGE_EDIT_URL:
+    case types.LINK_CHANGE_EDIT_URL:
       newState.editURL = action.editURL;
       break;
-    case types.CHANGE_EDIT_IMAGE_URL:
+    case types.LINK_CHANGE_EDIT_IMAGE_URL:
       newState.editImageURL = action.editImageURL;
       break;
-    case types.CHANGE_EDIT_STATUS:
+    case types.LINK_CHANGE_EDIT_STATUS:
       newState.editStatus = action.editStatus;
       break;
-    case types.CHANGE_SAVE_LOADING:
+    case types.LINK_CHANGE_SAVE_LOADING:
       newState.saveLoading = action.saveLoading;
       break;
     default:

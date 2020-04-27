@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from "../style.module.css";
 
-class Plot2 extends Component {
+class Plot3 extends Component {
   componentDidMount() {
-    this.props.queryPlot2({
+    this.props.queryPlot3({
       component: this,
       props: this.props,
       data: {}
@@ -15,17 +15,17 @@ class Plot2 extends Component {
   render() {
     return (
       <div className={`${styles.item} pullLeft`}>
-        <div id="plot2"></div>
+        <div id="plot3"></div>
       </div>
     )
   }
 }
 
 const mapDispatch = dispatch => ({
-  queryPlot2: req => {
-    const action = creators.queryPlot2Action(req);
+  queryPlot3: req => {
+    const action = creators.queryPlot3Action(req);
     dispatch(action);
   },
 })
 
-export default connect(null, mapDispatch)(Plot2);
+export default connect(null, mapDispatch)(Plot3);

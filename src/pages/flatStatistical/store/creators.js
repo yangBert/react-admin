@@ -6,7 +6,7 @@ import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 
 const initListAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.FLAT_STATISTICAL_QUERY_LIST,
   list,
   pagination
 })
@@ -33,7 +33,7 @@ const queryListAction = req => {
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.FLAT_STATISTICAL_CHANGE_SEARCH_PARAMS,
   params
 })
 

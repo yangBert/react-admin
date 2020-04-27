@@ -59,14 +59,6 @@ class Add extends Component {
     this.props.save(req)
   }
 
-  mapArr() {
-    let arr = [];
-    Object.keys(config.type).forEach(k => {
-      arr.push({ k, v: config.type[k] })
-    })
-    return arr;
-  }
-
   handleEditorChange = (editorState) => {
     this.setState({ editorState })
   }
@@ -99,8 +91,8 @@ class Add extends Component {
                   >
                     <Option value="">请选择</Option>
                     {
-                      this.mapArr().map(item => {
-                        return <Option value={item.k} key={item.k}>{item.v}</Option>
+                      config.typeMap.map(item => {
+                        return <Option value={item.value} key={item.value}>{item.name}</Option>
                       })
                     }
                   </Select>

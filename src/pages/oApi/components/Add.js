@@ -77,14 +77,6 @@ class Add extends Component {
     this.props.save(req);
   }
 
-  mapArr() {
-    let arr = [];
-    Object.keys(config.apiReqType).forEach(k => {
-      arr.push({ k, v: config.apiReqType[k] });
-    });
-    return arr;
-  }
-
   render() {
     return (
       <div className={`${styles.pageContet} pageContentColor`}>

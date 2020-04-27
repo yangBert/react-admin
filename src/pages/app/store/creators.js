@@ -9,31 +9,31 @@ import { Modal } from "antd";
 const { confirm } = Modal;
 
 const queryAppListAction = (list, pagination) => ({
-  type: types.QUERY_APP_LIST,
+  type: types.APP_QUERY_APP_LIST,
   list,
   pagination
 });
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.APP_CHANGE_SEARCH_PARAMS,
   params
 });
 
 //新增清空value
 const emptyAddValueAction = () => ({
-  type: types.EMPTY_ADD_VALUE
+  type: types.APP_EMPTY_ADD_VALUE
 });
 
 //初始化树
 const initOrgTreesAction = orgList => ({
-  type: types.INIT_ORG_TREES,
+  type: types.APP_INIT_ORG_TREES,
   orgList
 });
 
 //改变机构树
 const onChangeOrgTreeSelectAction = orgCode => ({
-  type: types.CHANGE_TREE_ORG_CODE,
+  type: types.APP_CHANGE_TREE_ORG_CODE,
   orgCode
 });
 
@@ -101,7 +101,7 @@ const queryEditAppAction = req => {
 //根据图url获取file blob
 function implementURLtoBlob(com, url) {
   request.urlToBlob(url, res => {
-    blobToDataURI(res.data, function(base64) {
+    blobToDataURI(res.data, function (base64) {
       const file = dataURLtoFile(base64, "icon.jpg");
       com.setState({ icon: file });
     });
@@ -112,7 +112,7 @@ function blobToDataURI(blob, callback) {
   if (typeof blob !== "undefined") {
     var reader = new FileReader();
     reader.readAsDataURL(blob);
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       callback(e.target.result);
     };
   }
@@ -277,7 +277,7 @@ const createChangeAppStatusAction = req => {
 };
 
 const initAllLandingModes = allLandingModes => ({
-  type: types.INIT_ALL_LANDING_MODES,
+  type: types.APP_INIT_ALL_LANDING_MODES,
   allLandingModes
 });
 
@@ -311,7 +311,7 @@ const queryLoginTypeAction = req => {
 };
 
 const initAllAppTypes = allAppTypes => ({
-  type: types.INIT_ALL_APP_TYPES,
+  type: types.APP_INIT_ALL_APP_TYPES,
   allAppTypes
 });
 
@@ -335,7 +335,7 @@ const queryAllAppTypeAction = req => {
 };
 
 const initAllSupportCAs = allSupportCAs => ({
-  type: types.INIT_ALL_SUPPORT_CAS,
+  type: types.APP_INIT_ALL_SUPPORT_CAS,
   allSupportCAs
 });
 
@@ -359,7 +359,7 @@ const queryAllSupportCAsAction = req => {
 };
 
 const initAllAuthLevel = allAuthLevel => ({
-  type: types.INIT_ALL_AUTH_LEVEL,
+  type: types.APP_INIT_ALL_AUTH_LEVEL,
   allAuthLevel
 });
 
@@ -382,54 +382,54 @@ const getAuthLevelAction = req => {
 };
 
 const initAllProductType = allProductType => ({
-  type: types.INIT_ALL_PRODUCT_TYPE,
+  type: types.APP_INIT_ALL_PRODUCT_TYPE,
   allProductType
 });
 
 const initProductList = productList => ({
-  type: types.INIT_PRODUCT_LIST,
+  type: types.APP_INIT_PRODUCT_LIST,
   productList
 });
 
 //初始化 计费策略列表
 const initBillingList = billingList => ({
-  type: types.INIT_BILLING_LIST,
+  type: types.APP_INIT_BILLING_LIST,
   billingList
 });
 
 //change 计费策略
 const changeBillingAction = billing => ({
-  type: types.CHANGE_BILLING,
+  type: types.APP_CHANGE_BILLING,
   billing
 });
 
 //搜索计费策略loading
 const changeBillingFetching = billingFetching => ({
-  type: types.CHANGE_BILLING_FETCHING,
+  type: types.APP_CHANGE_BILLING_FETCHING,
   billingFetching
 });
 
 //搜索优惠策略loading
 const changePreferentialFetching = preferentialFetching => ({
-  type: types.CHANGE_PREFERENTIAL_FETCHING,
+  type: types.APP_CHANGE_PREFERENTIAL_FETCHING,
   preferentialFetching
 });
 
 //初始化 优惠策略
 const initPreferentialList = preferentialList => ({
-  type: types.INIT_PREFERENTIAL_LIST,
+  type: types.APP_INIT_PREFERENTIAL_LIST,
   preferentialList
 });
 
 //change 优惠策略
 const changePreferentialAction = preferential => ({
-  type: types.CHANGE_PREFERENTIAL,
+  type: types.APP_CHANGE_PREFERENTIAL,
   preferential
 });
 
 //选择产品
 const changeProductAction = product => ({
-  type: types.CHANGE_PRODUCT,
+  type: types.APP_CHANGE_PRODUCT,
   product
 });
 
@@ -534,7 +534,7 @@ const saveFormAction = req => {
 };
 
 const changeSaveLoading = saveLoading => ({
-  type: types.CHANGE_SAVE_LOADING,
+  type: types.APP_CHANGE_SAVE_LOADING,
   saveLoading
 });
 
@@ -599,72 +599,72 @@ const saveAppFormAction = req => {
 
 //设置iconBae64
 const setIconBase64Action = iconBase64 => ({
-  type: types.SET_ICON_BASE64,
+  type: types.APP_SET_ICON_BASE64,
   iconBase64
 });
 
 //修改应用名称
 const onChangeAppNameAction = appName => ({
-  type: types.CHANGE_FORM_APP_NAME,
+  type: types.APP_CHANGE_FORM_APP_NAME,
   appName
 });
 
 //修改应用访问地址
 const onChangeUrlAction = url => ({
-  type: types.CHANGE_FORM_URL,
+  type: types.APP_CHANGE_FORM_URL,
   url
 });
 
 //修改应用描述
 const onChangeDescribesAction = describes => ({
-  type: types.CHANGE_FORM_DESCRIBES,
+  type: types.APP_CHANGE_FORM_DESCRIBES,
   describes
 });
 
 //修改应用推送URL
 const onChangeRedirectUrlAction = redirectUrl => ({
-  type: types.CHANGE_FORM_REDIRECTURL,
+  type: types.APP_CHANGE_FORM_REDIRECTURL,
   redirectUrl
 });
 
 //修改上传应用LOGO：
 const onChangeIconAction = icon => ({
-  type: types.CHANGE_FORM_ICON,
+  type: types.APP_CHANGE_FORM_ICON,
   icon
 });
 
 //修改应用类型：
 const onChangeAppTypeAction = appType => ({
-  type: types.CHANGE_FORM_APPTYPE,
+  type: types.APP_CHANGE_FORM_APPTYPE,
   appType
 });
 
 //修改审核模式：
 const onChangeAuditModeAction = auditMode => ({
-  type: types.CHANGE_FORM_AUDITMODE,
+  type: types.APP_CHANGE_FORM_AUDITMODE,
   auditMode
 });
 
 //修改登陆认证方式：
 const changeLandingModesAction = landingModes => ({
-  type: types.CHANGE_FORM_LANDINGMODES,
+  type: types.APP_CHANGE_FORM_LANDINGMODES,
   landingModes
 });
 
 //修改支持CA机构：
 const onChangeSupportCAsAction = supportCAs => ({
-  type: types.CHANGE_FORM_SUPPORTCAS,
+  type: types.APP_CHANGE_FORM_SUPPORTCAS,
   supportCAs
 });
 
 //改变编辑editAppId
 const onChangeEditAppIdAction = editAppId => ({
-  type: types.CHANGE_FORM_EDIT_APP_ID,
+  type: types.APP_CHANGE_FORM_EDIT_APP_ID,
   editAppId
 });
 
 const onChangeTagAction = tag => ({
-  type: types.CHANGE_FORM_TAG,
+  type: types.APP_CHANGE_FORM_TAG,
   tag
 });
 

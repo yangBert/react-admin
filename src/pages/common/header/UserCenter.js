@@ -38,7 +38,7 @@ function UserCenter(props) {
         </span>
 
       </div>
-    </Dropdown >
+    </Dropdown>
   )
 }
 

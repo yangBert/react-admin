@@ -14,11 +14,11 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.QUERY_LIST:
+    case types.FLAT_STATISTICAL_QUERY_LIST:
       newState.list = action.list
       newState.pagination = action.pagination
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.FLAT_STATISTICAL_CHANGE_SEARCH_PARAMS:
       newState.params = action.params
       break;
     default:

@@ -16,27 +16,27 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning;
       break;
-    case types.QUERY_LIST:
+    case types.OAPI_TYPES_QUERY_LIST:
       newState.list = action.list;
       break;
-    case types.SAVE_LOADING:
+    case types.OAPI_TYPES_SAVE_LOADING:
       newState.saveLoading = action.saveLoading;
       break;
-    case types.CHANGE_MODAL_VISIBLE:
+    case types.OAPI_TYPES_CHANGE_MODAL_VISIBLE:
       newState.modalVisible = action.modalVisible;
       newState.edit = action.edit;
       newState.record = action.record;
       break;
-    case types.CHANGE_TYPE_NAME:
+    case types.OAPI_TYPES_CHANGE_TYPE_NAME:
       newState.record.typeName = action.typeName;
       break;
-    case types.CHANGE_TYPE_REMARKS:
+    case types.OAPI_TYPES_CHANGE_TYPE_REMARKS:
       newState.record.typeRemarks = action.typeRemarks;
       break;
-    case types.CHANGE_STRATEGY_STATUS:
+    case types.OAPI_TYPES_CHANGE_STRATEGY_STATUS:
       newState.record.state = action.strategyStatus;
       break;
-    case types.CHANGE_CONFIRM_LOADING:
+    case types.OAPI_TYPES_CHANGE_CONFIRM_LOADING:
       newState.confirmLoading = action.confirmLoading;
       break;
     default:

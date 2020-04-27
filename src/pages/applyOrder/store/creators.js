@@ -7,39 +7,39 @@ import createPagination from "static/js/pagination";
 import { Modal } from "antd";
 
 const initListAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.APPLY_ORDER_QUERY_LIST,
   list,
   pagination
 });
 
 //改变保存loading
 const onChangeSaveLoadingAction = saveLoading => ({
-  type: types.CHANGE_SAVE_LOADING,
+  type: types.APPLY_ORDER_CHANGE_SAVE_LOADING,
   saveLoading
 });
 
 const initDetailAction = detail => ({
-  type: types.INIT_DETAIL,
+  type: types.APPLY_ORDER_INIT_DETAIL,
   detail
 });
 
 const changeConfirmVisibleAction = confirmVisible => ({
-  type: types.CHANGE_CONFIRM_VISIBLE,
+  type: types.APPLY_ORDER_CHANGE_CONFIRM_VISIBLE,
   confirmVisible
 });
 
 const changeConfirmLoadingAction = confirmLoading => ({
-  type: types.CHANGE_CONFIRM_LOADING,
+  type: types.APPLY_ORDER_CHANGE_CONFIRM_LOADING,
   confirmLoading
 });
 
 const initCatalogAction = catalog => ({
-  type: types.INIT_CATALOG,
+  type: types.APPLY_ORDER_INIT_CATALOG,
   catalog
 });
 
 const initProductList = productList => ({
-  type: types.INIT_PRODUCT_LIST,
+  type: types.APPLY_ORDER_INIT_PRODUCT_LIST,
   productList
 });
 
@@ -170,22 +170,22 @@ const getDetailAction = req => {
 };
 
 const initAllAppTypes = allAppTypes => ({
-  type: types.INIT_ALL_APP_TYPES,
+  type: types.APPLY_ORDER_INIT_ALL_APP_TYPES,
   allAppTypes
 });
 
 const initAllLandingModes = allLandingModes => ({
-  type: types.INIT_ALL_LANDING_MODES,
+  type: types.APPLY_ORDER_INIT_ALL_LANDING_MODES,
   allLandingModes
 });
 
 const initAllSupportCAs = allSupportCAs => ({
-  type: types.INIT_ALL_SUPPORT_CAS,
+  type: types.APPLY_ORDER_INIT_ALL_SUPPORT_CAS,
   allSupportCAs
 });
 
 const initapplyGetFileListAction = applyGetFileList => ({
-  type: types.INIT_GET_FILE_LIST,
+  type: types.APPLY_ORDER_INIT_GET_FILE_LIST,
   applyGetFileList
 });
 
@@ -276,7 +276,7 @@ const applyGetFileListAction = req => {
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.APPLY_ORDER_CHANGE_SEARCH_PARAMS,
   params
 });
 

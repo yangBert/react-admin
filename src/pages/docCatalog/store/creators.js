@@ -7,14 +7,14 @@ import createPagination from 'static/js/pagination';
 import { Modal } from 'antd'
 
 const initListAction = (list, pagination) => ({
-  type: types.INIT_LIST,
+  type: types.DOC_CATALOG_INIT_LIST,
   list,
   pagination
 })
 
 
 const initProductListAction = productList => ({
-  type: types.INIT_PRODUCT_LIST,
+  type: types.DOC_CATALOG_INIT_PRODUCT_LIST,
   productList,
 })
 
@@ -89,29 +89,27 @@ const queryProductListAction = req => {
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.DOC_CATALOG_CHANGE_SEARCH_PARAMS,
   params
 })
 
 //改变产品
 const onChangeProductCodeAction = editProductCode => ({
-  type: types.CHANGE_EDIT_PRODUCT_CODE,
+  type: types.DOC_CATALOG_CHANGE_EDIT_PRODUCT_CODE,
   editProductCode
 })
 
 //改变产品名称
 const onChangeEditNameAction = editName => ({
-  type: types.CHANGE_EDIT_NAME,
+  type: types.DOC_CATALOG_CHANGE_EDIT_NAME,
   editName
 })
 
 //排序号
 const onChangeOrdersAction = editOrders => ({
-  type: types.CHANGE_EDIT_ORDERS,
+  type: types.DOC_CATALOG_CHANGE_EDIT_ORDERS,
   editOrders
 })
-
-
 
 export {
   querylistAction,

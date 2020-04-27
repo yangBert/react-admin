@@ -6,77 +6,96 @@ import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 
 const initListAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.CHARGE_CONFIG_QUERY_LIST,
   list,
   pagination
 })
 
 const initListPreferentialListAction = (preferentialList, preferentialListPagination) => ({
-  type: types.QUERY_PREFERENTTIAL_LIST,
+  type: types.CHARGE_CONFIG_QUERY_PREFERENTTIAL_LIST,
   preferentialList,
   preferentialListPagination
 })
 
 const initListBillingListAction = (billingList, billingListPagination) => ({
-  type: types.QUERY_BILLING_LIST,
+  type: types.CHARGE_CONFIG_QUERY_BILLING_LIST,
   billingList,
   billingListPagination
 })
 
 const initProductListAction = (productList, productPagination) => ({
-  type: types.QUERY_PRODUCT_LIST,
+  type: types.CHARGE_CONFIG_QUERY_PRODUCT_LIST,
   productList,
   productPagination
 })
 
 const changeConfigStrategyNameAction = (strategyName) => ({
-  type: types.CHANGE_CONFIG_STRATEGY_NAME,
+  type: types.CHARGE_CONFIG_CHANGE_CONFIG_STRATEGY_NAME,
   strategyName
 })
 
 const changeConfigStrategyCodeAction = (strategyCode) => ({
-  type: types.CHANGE_CONFIG_STRATEGY_CODE,
+  type: types.CHARGE_CONFIG_CHANGE_CONFIG_STRATEGY_CODE,
   strategyCode
 })
 
 const changeConfigBillingNameAction = (billingName) => ({
-  type: types.CHANGE_CONFIG_BILLING_NAME,
+  type: types.CHARGE_CONFIG_CHANGE_CONFIG_BILLING_NAME,
   billingName
 })
 
 const changeConfigBillingCodeAction = (billingCode) => ({
-  type: types.CHANGE_CONFIG_BILLING_CODE,
+  type: types.CHARGE_CONFIG_CHANGE_CONFIG_BILLING_CODE,
   billingCode
 })
 
 const changeConfigProductNameAction = (productName) => ({
-  type: types.CHANGE_CONFIG_PRODUCT_NAME,
+  type: types.CHARGE_CONFIG_CHANGE_CONFIG_PRODUCT_NAME,
   productName
 })
 
 const changeConfigProductCodeAction = (productCode) => ({
-  type: types.CHANGE_CONFIG_PRODUCT_CODE,
+  type: types.CHARGE_CONFIG_CHANGE_CONFIG_PRODUCT_CODE,
   productCode
 })
 
 const changeProductSelectedKeysAction = (productSelectedKeys) => ({
-  type: types.CHANGE_PRODUCT_SELECTED_KEYS,
+  type: types.CHARGE_CONFIG_CHANGE_PRODUCT_SELECTED_KEYS,
   productSelectedKeys
 })
 
 const changeBillingSelectedKeysAction = (billingSelectedKeys) => ({
-  type: types.CHANGE_BILLING_SELECTED_KEYS,
+  type: types.CHARGE_CONFIG_CHANGE_BILLING_SELECTED_KEYS,
   billingSelectedKeys
 })
 
 const changePreferentialSelectedKeysAction = (preferentialSelectedKeys) => ({
-  type: types.CHANGE_PREFERENTIAL_SELECTED_KEYS,
+  type: types.CHARGE_CONFIG_CHANGE_PREFERENTIAL_SELECTED_KEYS,
   preferentialSelectedKeys
 })
 
 const changeConfigRecordAction = (record) => ({
-  type: types.CHANGE_RECORD,
+  type: types.CHARGE_CONFIG_CHANGE_RECORD,
   record
+})
+
+//改变弹出层显示隐藏
+const changeModalVisibleAction = (modalVisible, editStatus) => ({
+  type: types.CHARGE_CONFIG_CHANGE_MODAL_VISIBLE,
+  modalVisible,
+  editStatus
+})
+
+//改变状态
+const setStatusAction = editStatus => ({
+  type: types.CHARGE_CONFIG_CHANGE_EDIT_STATUS,
+  editStatus
+})
+
+//查询携带参数
+const createChangeParamsAction = params => ({
+  type: types.CHARGE_CONFIG_CHANGE_SEARCH_PARAMS,
+  params
 })
 
 
@@ -210,25 +229,6 @@ const saveAction = req => {
     })
   }
 }
-
-//改变弹出层显示隐藏
-const changeModalVisibleAction = (modalVisible, editStatus) => ({
-  type: types.CHANGE_MODAL_VISIBLE,
-  modalVisible,
-  editStatus
-})
-
-//改变状态
-const setStatusAction = editStatus => ({
-  type: types.CHANGE_EDIT_STATUS,
-  editStatus
-})
-
-//查询携带参数
-const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
-  params
-})
 
 export {
   queryListAction,

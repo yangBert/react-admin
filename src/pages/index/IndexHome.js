@@ -17,7 +17,6 @@ function IndexHome(props) {
       <Router>
         <PropsContext.Provider value={props}>
           {
-            //$$.token.get() ?
             <div>
               <div className={styles.sideMenu}>
                 <SideMenu />
@@ -45,7 +44,7 @@ function IndexHome(props) {
                   </Suspense>
                 </div>
               </div>
-            </div> //: "" //$$.logout(props)
+            </div>
           }
         </PropsContext.Provider>
       </Router >

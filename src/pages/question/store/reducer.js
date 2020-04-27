@@ -7,7 +7,7 @@ const defaultState = {
   spinning: false,
   params: {},
   editTitle: "",
-  editType:"",
+  editType: "",
   editContent: "",
   editState: "",
   detailInfo: null,
@@ -19,26 +19,26 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.QUERY_NOTICE_LIST:
+    case types.QUESTION_QUERY_LIST:
       newState.list = action.list
       newState.pagination = action.pagination
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.QUESTION_CHANGE_SEARCH_PARAMS:
       newState.params = action.params
       break;
-    case types.CHANGE_EDIT_TITLE:
+    case types.QUESTION_CHANGE_EDIT_TITLE:
       newState.editTitle = action.editTitle
       break;
-    case types.CHANGE_EDIT_TYPE:
+    case types.QUESTION_CHANGE_EDIT_TYPE:
       newState.editType = action.editType
       break;
-    case types.CHANGE_EDIT_CONTENT:
+    case types.QUESTION_CHANGE_EDIT_CONTENT:
       newState.editContent = action.editContent
       break;
-    case types.INIT_NOTICE_DETAIL:
+    case types.QUESTION_INIT_NOTICE_DETAIL:
       newState.detailInfo = action.detailInfo
       break;
-    case types.CHANGE_EDIT_STATE:
+    case types.QUESTION_CHANGE_EDIT_STATE:
       newState.editState = action.editState
       break;
     default:

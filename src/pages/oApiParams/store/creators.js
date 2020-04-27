@@ -5,32 +5,32 @@ import spinningAction from "pages/common/layer/spinning";
 import notification from "pages/common/layer/notification";
 
 const initListAction = list => ({
-  type: types.QUERY_LIST,
+  type: types.OAPI_PARAMS_QUERY_LIST,
   list
 });
 
 const saveLoadingAction = saveLoading => ({
-  type: types.SAVE_LOADING,
+  type: types.OAPI_PARAMS_SAVE_LOADING,
   saveLoading
 });
 
 const setParamNameAction = paramName => ({
-  type: types.SET_PARAM_NAME,
+  type: types.OAPI_PARAMS_SET_PARAM_NAME,
   paramName
 });
 
 const setParamTypeAction = paramType => ({
-  type: types.SET_PARAM_TYPE,
+  type: types.OAPI_PARAMS_SET_PARAM_TYPE,
   paramType
 });
 
 const setIsNessAction = isNess => ({
-  type: types.SET_IS_NESS,
+  type: types.OAPI_PARAMS_SET_IS_NESS,
   isNess
 });
 
 const setParamRemarksAction = paramRemarks => ({
-  type: types.SET_PARAM_REMARKS,
+  type: types.OAPI_PARAMS_SET_PARAM_REMARKS,
   paramRemarks
 });
 

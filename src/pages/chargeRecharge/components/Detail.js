@@ -34,8 +34,8 @@ class Detail extends React.Component {
                   {accountCode}
                 </Descriptions.Item>
                 <Descriptions.Item label="账户类型">
-                  {config.rechargeType[rechargeType]
-                    ? config.rechargeType[rechargeType]
+                  {config.accountType[rechargeType]
+                    ? config.accountType[rechargeType]
                     : "--"}
                 </Descriptions.Item>
                 <Descriptions.Item label="充值时间">

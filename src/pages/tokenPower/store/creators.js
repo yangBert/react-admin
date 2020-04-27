@@ -7,43 +7,43 @@ import createPagination from 'static/js/pagination';
 import { Modal } from 'antd'
 
 const initListAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.TOKEN_POWER_QUERY_LIST,
   list,
   pagination
 })
 
 const onChangeEditTitleAction = editTitle => ({
-  type: types.CHANGE_EDIT_TITLE,
+  type: types.TOKEN_POWER_CHANGE_EDIT_TITLE,
   editTitle
 })
 
 const onChangeEditURLAction = editURL => ({
-  type: types.CHANGE_EDIT_URL,
+  type: types.TOKEN_POWER_CHANGE_EDIT_URL,
   editURL
 })
 
 const onChangeEeditRemarksAction = editRemarks => ({
-  type: types.CHANGE_EDIT_REMARKS,
+  type: types.TOKEN_POWER_CHANGE_EDIT_REMARKS,
   editRemarks
 })
 
 const onChangeSaveLoadingAction = saveLoading => ({
-  type: types.CHANGE_SAVE_LOADING,
+  type: types.TOKEN_POWER_CHANGE_SAVE_LOADING,
   saveLoading
 })
 
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.TOKEN_POWER_CHANGE_SEARCH_PARAMS,
   params
 })
 
 const changeSelectedRowKeysAction = selectedRowKeys => ({
-  type: types.CHANGE_SELECTED_ROW_KEYS,
+  type: types.TOKEN_POWER_CHANGE_SELECTED_ROW_KEYS,
   selectedRowKeys
 })
 
 const initRoleIdAction = roleId => ({
-  type: types.INIT_ROLE_ID,
+  type: types.TOKEN_POWER_INIT_ROLE_ID,
   roleId
 })
 

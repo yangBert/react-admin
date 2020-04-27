@@ -6,39 +6,39 @@ import notification from 'pages/common/layer/notification';
 import * as config from '../config';
 
 const initListAction = (list) => ({
-  type: types.QUERY_LIST,
+  type: types.SAFE_STRATEGY_QUERY_LIST,
   list,
 })
 
 const saveLoadingAction = saveLoading => ({
-  type: types.SAVE_LOADING,
+  type: types.SAFE_STRATEGY_SAVE_LOADING,
   saveLoading
 })
 
 const changeModalVisibleAction = (modalVisible, edit, record) => ({
-  type: types.CHANGE_MODAL_VISIBLE,
+  type: types.SAFE_STRATEGY_CHANGE_MODAL_VISIBLE,
   modalVisible,
   edit,
   record
 })
 
 const changeStrategyNameAction = strategyName => ({
-  type: types.CHANGE_STRATEGY_NAME,
+  type: types.SAFE_STRATEGY_CHANGE_STRATEGY_NAME,
   strategyName
 })
 
 const changeStrategyCodeAction = strategyCode => ({
-  type: types.CHANGE_STRATEGY_CODE,
+  type: types.SAFE_STRATEGY_CHANGE_STRATEGY_CODE,
   strategyCode
 })
 
 const changeStrategyStatusAction = strategyStatus => ({
-  type: types.CHANGE_STRATEGY_STATUS,
+  type: types.SAFE_STRATEGY_CHANGE_STRATEGY_STATUS,
   strategyStatus
 })
 
 const changeConfirmLoadingAction = confirmLoading => ({
-  type: types.CHANGE_CONFIRM_LOADING,
+  type: types.SAFE_STRATEGY_CHANGE_CONFIRM_LOADING,
   confirmLoading
 })
 

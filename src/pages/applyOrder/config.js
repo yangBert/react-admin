@@ -10,6 +10,12 @@ const status = {
   }
 };
 
+const statusMap = [
+  { value: "PRE_BUSSINESS_AUDIT", name: "待运营管理员审核" },
+  { value: "AUDIT_TRUE", name: "审核通过" },
+  { value: "AUDIT_FALSE", name: "审核不通过" },
+]
+
 const allStatus = {
   SUBMIT: "SUBMIT",
   PRE_PAY: "PRE_PAY",
@@ -35,12 +41,32 @@ const allStatus = {
   }
 };
 
+const allStatusMap = [
+  { value: "SUBMIT", name: "暂存" },
+  { value: "PRE_PAY", name: "待支付" },
+  { value: "PRE_PARENT_AUDIT", name: "待上级审核" },
+  { value: "PRE_BUSSINESS_AUDIT", name: "待运营管理员审核" },
+  { value: "PRE_SYS_AUDIT", name: "待系统管理员审核" },
+  { value: "AUDIT_TRUE", name: "审核通过" },
+  { value: "AUDIT_FALSE", name: "审核不通过" },
+  { value: "FINISH", name: "完成" },
+  { value: "CANCLE", name: "取消" },
+  { value: "DEL", name: "删除" }
+]
+
 const instanceType = {
   APPLICATION: "应用",
   CA: "CA",
   INTERFACE: "接口",
   ORG: "机构"
 };
+
+const instanceTypeMap = [
+  { value: "APPLICATION", name: "应用" },
+  { value: "CA", name: "CA" },
+  { value: "INTERFACE", name: "接口" },
+  { value: "ORG", name: "机构" },
+];
 
 const image = {
   AUTH: { name: "授权书", code: "AUTH" },
@@ -58,4 +84,4 @@ const allowTypesConfig = [
   { label: "手机盾", value: "mobileShield" }
 ];
 
-export { status, allStatus, instanceType, image, allowTypesConfig };
+export { status, statusMap, allStatus, allStatusMap, instanceType, instanceTypeMap, image, allowTypesConfig };

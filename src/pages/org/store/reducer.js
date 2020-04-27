@@ -16,19 +16,19 @@ const defaultState = {
 export default (state = defaultState, action) => {
   let newState = JSON.parse(JSON.stringify(state))
   switch (action.type) {
-    case types.INIT_ORG_LIST:
+    case types.ORG_INIT_ORG_LIST:
       newState.list = action.list
       break;
-    case types.SET_ORG_NAME:
+    case types.ORG_SET_ORG_NAME:
       newState.editOrgName = action.editOrgName
       break;
-    case types.SET_ORG_CODE:
+    case types.ORG_SET_ORG_CODE:
       newState.editOrgCode = action.editOrgCode
       break;
-    case types.SET_ORG_DESC:
+    case types.ORG_SET_ORG_DESC:
       newState.editOrgDesc = action.editOrgDesc
       break;
-    case types.INIT_FORM_VALUES:
+    case types.ORG_INIT_FORM_VALUES:
       if (action.record) {
         newState.editOrgName = action.record.orgName
         newState.editOrgCode = action.record.orgCode
@@ -45,14 +45,14 @@ export default (state = defaultState, action) => {
         newState.editPorgCode = ""
       }
       break;
-    case types.INIT_ORG_TREE_DATA:
+    case types.ORG_INIT_ORG_TREE_DATA:
       newState.treeList = action.treeList
       break;
-    case types.SET_EDIT_TREE_VALUE:
+    case types.ORG_SET_EDIT_TREE_VALUE:
       newState.editPorgCode = action.tree.orgCode
       newState.editPid = action.tree.id
       break;
-    case types.CHANGE_SAVE_LOADING:
+    case types.ORG_CHANGE_SAVE_LOADING:
       newState.saveLoading = action.saveLoading
       break;
     default:

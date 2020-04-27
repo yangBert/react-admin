@@ -96,14 +96,6 @@ class Add extends Component {
     return arr;
   }
 
-  mapAccountType() {
-    let statusArr = [];
-    Object.keys(config.accountType).forEach(k => {
-      statusArr.push({ k, v: config.accountType[k] });
-    });
-    return statusArr;
-  }
-
   render() {
     return (
       <div className={styles.pageContet}>
@@ -130,10 +122,10 @@ class Add extends Component {
                       onChange={value => this.props.setEditAccountType(value)}
                     >
                       <Option value="">请选择</Option>
-                      {this.mapAccountType().map(item => {
+                      {config.rechargeType.map(item => {
                         return (
-                          <Option value={item.k} key={item.k}>
-                            {item.v}
+                          <Option value={item.value} key={item.value}>
+                            {item.name}
                           </Option>
                         );
                       })}

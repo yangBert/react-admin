@@ -83,15 +83,11 @@ function SearchForm(props) {
     setEndTime(dateString[1])
   }
 
-
-  function mapConfig(key) {
-    let arr = [];
-    Object.keys(config[key]).forEach(k => {
-      arr.push({ k, v: config[key][k] })
-    })
-    return arr;
+  function mapOptions(typeMap) {
+    return config[typeMap].map(item => (
+      <Option value={item.value} key={item.value}>{item.name}</Option>
+    ))
   }
-
 
   return (
     <div>
@@ -112,13 +108,7 @@ function SearchForm(props) {
             <div className={`${styles.inline} pullLeft`}>
               <Select value={instanceType} style={{ width: "100%" }} onChange={value => setInstanceType(value)}>
                 <Option value="">请选择</Option>
-                {
-
-                  mapConfig("instanceType").map(item => {
-                    return <Option value={item.k} key={item.k}>{item.v}</Option>
-                  })
-
-                }
+                {mapOptions("instanceTypeMap")}
               </Select>
             </div>
           </div>
@@ -130,11 +120,7 @@ function SearchForm(props) {
             <div className={`${styles.inline} pullLeft`}>
               <Select value={status} style={{ width: "100%" }} onChange={value => setStatus(value)}>
                 <Option value="">请选择</Option>
-                {
-                  mapConfig(props.allStatus ? "allStatus" : "status").map(item => {
-                    return (item.k !== 'get') && <Option value={item.k} key={item.k}>{props.allStatus ? config.allStatus.get(item.k) : config.status.get(item.k)}</Option>
-                  })
-                }
+                {mapOptions(props.allStatus ? "allStatusMap" : "statusMap")}
               </Select>
             </div>
           </div>

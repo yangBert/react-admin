@@ -4,17 +4,18 @@ import * as creators from '../store/creators';
 import styles from "../style.module.css";
 
 class Plot1 extends Component {
-
   componentDidMount() {
     this.props.queryPlot1({
       props: this.props,
       data: {}
     });
   }
-
   render() {
-    return <div id="plot1" className={`${styles.item} pullLeft`}></div>
-
+    return (
+      <div className={`${styles.item} pullLeft`}>
+        <div id="plot1"></div>
+      </div>
+    )
   }
 }
 

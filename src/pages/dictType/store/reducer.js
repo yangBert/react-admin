@@ -18,17 +18,17 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.QUERY_DICT_TYPE_LIST:
+    case types.DICT_TYPE_QUERY_DICT_TYPE_LIST:
       newState.list = action.list
       newState.pagination = action.pagination
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.DICT_TYPE_CHANGE_SEARCH_PARAMS:
       newState.params = action.params
       break;
-    case types.CHANGE_CONFIRM_LOADING:
+    case types.DICT_TYPE_CHANGE_CONFIRM_LOADING:
       newState.ConfirmLoading = action.ConfirmLoading
       break;
-    case types.CHANGE_ADD_MODAL_VISIBLE:
+    case types.DICT_TYPE_CHANGE_ADD_MODAL_VISIBLE:
       newState.operationType = action.operationType
       newState.addModalvisible = action.addModalvisible
       newState.record = action.record

@@ -6,39 +6,39 @@ import notification from "pages/common/layer/notification";
 import * as config from "../config";
 
 const initListAction = list => ({
-  type: types.QUERY_LIST,
+  type: types.OAPI_TYPES_QUERY_LIST,
   list
 });
 
 const saveLoadingAction = saveLoading => ({
-  type: types.SAVE_LOADING,
+  type: types.OAPI_TYPES_SAVE_LOADING,
   saveLoading
 });
 
 const changeModalVisibleAction = (modalVisible, edit, record) => ({
-  type: types.CHANGE_MODAL_VISIBLE,
+  type: types.OAPI_TYPES_CHANGE_MODAL_VISIBLE,
   modalVisible,
   edit,
   record
 });
 
 const changeTypeNameAction = typeName => ({
-  type: types.CHANGE_TYPE_NAME,
+  type: types.OAPI_TYPES_CHANGE_TYPE_NAME,
   typeName
 });
 
 const changeTypeRemarksAction = typeRemarks => ({
-  type: types.CHANGE_TYPE_REMARKS,
+  type: types.OAPI_TYPES_CHANGE_TYPE_REMARKS,
   typeRemarks
 });
 
 const changeStrategyStatusAction = strategyStatus => ({
-  type: types.CHANGE_STRATEGY_STATUS,
+  type: types.OAPI_TYPES_CHANGE_STRATEGY_STATUS,
   strategyStatus
 });
 
 const changeConfirmLoadingAction = confirmLoading => ({
-  type: types.CHANGE_CONFIRM_LOADING,
+  type: types.OAPI_TYPES_CHANGE_CONFIRM_LOADING,
   confirmLoading
 });
 

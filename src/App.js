@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import store from './store';
 import { Spin } from 'antd';
 
-
 const Login = lazy(() => import('pages/login/Login'));
 const Home = lazy(() => import('pages/index/IndexHome'));
 
@@ -23,6 +22,5 @@ function App() {
       </div>
     </Provider>
   )
-
 }
 export default App;

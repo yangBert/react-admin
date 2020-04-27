@@ -8,29 +8,28 @@ import { Modal } from 'antd'
 import BraftEditor from 'braft-editor';
 
 const initlistAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.DOC_QUERY_LIST,
   list,
   pagination
 })
 
 const initProductListAction = productAllList => ({
-  type: types.INIT_PRODUCT_ALL_LIST,
+  type: types.DOC_INIT_PRODUCT_ALL_LIST,
   productAllList,
 })
 
 //初始化文档分类
 const initDocCatalogListAction = (docCatalogList, editCatalogCode) => ({
-  type: types.QUERY_DOCCATALOG_LIST,
+  type: types.DOC_QUERY_DOCCATALOG_LIST,
   docCatalogList,
   editCatalogCode,
 })
 
 //change文档分类
 const setCatalogCodeAction = editCatalogCode => ({
-  type: types.SET_EDIT_CATALOGO_CODE,
+  type: types.DOC_SET_EDIT_CATALOGO_CODE,
   editCatalogCode,
 })
-
 
 //保存文档
 const createSaveAction = req => {
@@ -183,28 +182,27 @@ const publishNoticeAction = req => {
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.DOC_CHANGE_SEARCH_PARAMS,
   params
 })
 
 //编辑改变标题
 const changeEditTitleAction = editTitle => ({
-  type: types.CHANGE_EDIT_TITLE,
+  type: types.DOC_CHANGE_EDIT_TITLE,
   editTitle
 })
 
 //编辑改变富文本内容
 const changeEditorContentAction = editContent => ({
-  type: types.CHANGE_EDIT_CONTENT,
+  type: types.DOC_CHANGE_EDIT_CONTENT,
   editContent
 })
 
 //编辑改变富文本内容
 const changeEditorStateAction = editState => ({
-  type: types.CHANGE_EDIT_STATE,
+  type: types.DOC_CHANGE_EDIT_STATE,
   editState
 })
-
 
 export {
   querylistAction,
@@ -215,7 +213,6 @@ export {
   createSaveAction,
   changeEditTitleAction,
   changeEditorContentAction,
-
   queryNoticeDetailAction,
   publishNoticeAction,
 }

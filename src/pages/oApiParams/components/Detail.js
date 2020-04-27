@@ -15,7 +15,7 @@ function Detail(props) {
     <div>
       <div className={styles.pageContet}>
         <div className="pageContentColor">
-          <Card title="管理员日志详情" bordered={false}>
+          <Card title="详情" bordered={false}>
             <Descriptions>
               <Descriptions.Item label="所属API接口：">
                 {apiId}

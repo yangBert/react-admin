@@ -2,5 +2,11 @@
   width: 50%;
   padding-right:10px;
   box-sizing:border-box;
-  margin-bottom:15px;
+  margin-bottom:5px;
+}
+
+@media screen and (max-width: 1700px) {
+  .item {
+    width: 100%;
+  }
 }

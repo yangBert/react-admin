@@ -7,63 +7,63 @@ import createPagination from "static/js/pagination";
 import { Modal } from "antd";
 
 const initDictDataListAction = (list, pagination) => ({
-  type: types.QUERY_DICT_DATA_LIST,
+  type: types.PRODUCT_QUERY_DICT_DATA_LIST,
   list,
   pagination
 });
 
 const initAllProductType = allProductType => ({
-  type: types.INIT_ALL_PRODUCT_TYPE,
+  type: types.PRODUCT_INIT_ALL_PRODUCT_TYPE,
   allProductType
 });
 
 const setProductNameAction = productName => ({
-  type: types.SET_PRODUCT_NAME,
+  type: types.PRODUCT_SET_PRODUCT_NAME,
   productName
 });
 
 const setProductPriceAction = productPrice => ({
-  type: types.SET_PRODUCT_PRICE,
+  type: types.PRODUCT_SET_PRODUCT_PRICE,
   productPrice
 });
 
 const setProductPayingAction = productPaying => ({
-  type: types.SET_PRODUCT_PAYING,
+  type: types.PRODUCT_SET_PRODUCT_PAYING,
   productPaying
 });
 
 const setProductTypeCodeAction = productTypeCode => ({
-  type: types.SET_PRODUCT_TYPE_CODE,
+  type: types.PRODUCT_SET_PRODUCT_TYPE_CODE,
   productTypeCode
 });
 
 const setProductRemarkAction = productRemark => ({
-  type: types.SET_PRODUCT_REMARK,
+  type: types.PRODUCT_SET_PRODUCT_REMARK,
   productRemark
 });
 
 const setTagAction = tag => ({
-  type: types.SET_PRODUCT_TAG,
+  type: types.PRODUCT_SET_PRODUCT_TAG,
   tag
 });
 
 const initVerifyApiListAction = verifyApiList => ({
-  type: types.INIT_VERIFY_API_LIST,
+  type: types.PRODUCT_INIT_VERIFY_API_LIST,
   verifyApiList
 });
 
 const setAPINameAction = APIName => ({
-  type: types.SET_API_NAME,
+  type: types.PRODUCT_SET_API_NAME,
   APIName
 });
 
 const setOrderWordAction = orderWord => ({
-  type: types.SET_ORDER_WORD,
+  type: types.PRODUCT_SET_ORDER_WORD,
   orderWord
 });
 
 const changeSaveLoadingAction = saveLoading => ({
-  type: types.CHANGE_SAVE_LOADING,
+  type: types.PRODUCT_CHANGE_SAVE_LOADING,
   saveLoading
 });
 
@@ -196,7 +196,6 @@ const verifyApiListAction = req => {
         if (success) {
           dispatch(initVerifyApiListAction(data));
           if (req.props.location.state.record) {
-            console.log("apiName", req.props.location.state)
             dispatch(setAPINameAction(req.props.location.state.record.apiName));
           }
         } else {
@@ -211,7 +210,7 @@ const verifyApiListAction = req => {
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.PRODUCT_CHANGE_SEARCH_PARAMS,
   params
 });
 

@@ -18,23 +18,23 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.INIT_LIST:
+    case types.DOC_CATALOG_INIT_LIST:
       newState.list = action.list
       newState.pagination = action.pagination
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.DOC_CATALOG_CHANGE_SEARCH_PARAMS:
       newState.params = action.params
       break;
-    case types.INIT_PRODUCT_LIST:
+    case types.DOC_CATALOG_INIT_PRODUCT_LIST:
       newState.productList = action.productList
       break;
-    case types.CHANGE_EDIT_PRODUCT_CODE:
+    case types.DOC_CATALOG_CHANGE_EDIT_PRODUCT_CODE:
       newState.editProductCode = action.editProductCode
       break;
-    case types.CHANGE_EDIT_NAME:
+    case types.DOC_CATALOG_CHANGE_EDIT_NAME:
       newState.editName = action.editName
       break;
-    case types.CHANGE_EDIT_ORDERS:
+    case types.DOC_CATALOG_CHANGE_EDIT_ORDERS:
       newState.editOrders = action.editOrders
       break;
     default:

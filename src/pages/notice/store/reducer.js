@@ -19,26 +19,26 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.QUERY_NOTICE_LIST:
+    case types.NOTICE_QUERY_NOTICE_LIST:
       newState.list = action.list
       newState.pagination = action.pagination
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.NOTICE_CHANGE_SEARCH_PARAMS:
       newState.params = action.params
       break;
-    case types.CHANGE_EDIT_TITLE:
+    case types.NOTICE_CHANGE_EDIT_TITLE:
       newState.editTitle = action.editTitle
       break;
-    case types.CHANGE_EDIT_CONTENT:
+    case types.NOTICE_CHANGE_EDIT_CONTENT:
       newState.editContent = action.editContent
       break;
-    case types.INIT_NOTICE_DETAIL:
+    case types.NOTICE_INIT_NOTICE_DETAIL:
       newState.detailInfo = action.detailInfo
       break;
-    case types.CHANGE_EDIT_STATE:
+    case types.NOTICE_CHANGE_EDIT_STATE:
       newState.editState = action.editState
       break;
-    case types.CHANGE_EDIT_NOTICE_TYPE:
+    case types.NOTICE_CHANGE_EDIT_NOTICE_TYPE:
       newState.editNoticeType = action.editNoticeType
       break;
     default:

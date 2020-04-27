@@ -40,14 +40,6 @@ function Add(props) {
     props.save(req);
   }
 
-  function mapStatus() {
-    let statusArr = [];
-    Object.keys(config.status).forEach(k => {
-      statusArr.push({ k, v: config.status[k] });
-    });
-    return statusArr;
-  }
-
   return (
     <div className={styles.tableForm}>
       <Modal
@@ -93,10 +85,10 @@ function Add(props) {
                   onChange={value => props.changeStrategyStatus(value)}
                 >
                   <Option value="">请选择</Option>
-                  {mapStatus().map(item => {
+                  {config.statusMap.map(item => {
                     return (
-                      <Option value={item.k} key={item.k}>
-                        {item.v}
+                      <Option value={item.value} key={item.value}>
+                        {item.name}
                       </Option>
                     );
                   })}
@@ -104,8 +96,8 @@ function Add(props) {
               </div>
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </Form>
       </Modal>
     </div>

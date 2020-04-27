@@ -6,7 +6,7 @@ const defaultState = {
   pagination: {},
   spinning: false,
   params: {},
-  modalVisible:false, 
+  modalVisible: false,
   editStatus: "",
 };
 
@@ -16,18 +16,18 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.QUERY_LIST:
+    case types.CLIENT_USER_QUERY_LIST:
       newState.list = action.list
       newState.pagination = action.pagination
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.CLIENT_USER_CHANGE_SEARCH_PARAMS:
       newState.params = action.params
       break;
-    case types.CHANGE_MODAL_VISIBLE:
+    case types.CLIENT_USER_CHANGE_MODAL_VISIBLE:
       newState.modalVisible = action.modalVisible
       newState.editStatus = action.editStatus
       break;
-    case types.CHANGE_EDIT_STATUS:
+    case types.CLIENT_USER_CHANGE_EDIT_STATUS:
       newState.editStatus = action.editStatus
       break;
     default:

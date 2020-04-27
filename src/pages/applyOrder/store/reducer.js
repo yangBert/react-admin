@@ -31,41 +31,41 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning;
       break;
-    case types.QUERY_LIST:
+    case types.APPLY_ORDER_QUERY_LIST:
       newState.list = action.list;
       newState.pagination = action.pagination;
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.APPLY_ORDER_CHANGE_SEARCH_PARAMS:
       newState.params = action.params;
       break;
-    case types.CHANGE_SAVE_LOADING:
+    case types.APPLY_ORDER_CHANGE_SAVE_LOADING:
       newState.saveLoading = action.saveLoading;
       break;
-    case types.INIT_DETAIL:
+    case types.APPLY_ORDER_INIT_DETAIL:
       newState.detail = action.detail;
       break;
-    case types.INIT_ALL_LANDING_MODES:
+    case types.APPLY_ORDER_INIT_ALL_LANDING_MODES:
       newState.allLandingModes = action.allLandingModes;
       break;
-    case types.INIT_ALL_APP_TYPES:
+    case types.APPLY_ORDER_INIT_ALL_APP_TYPES:
       newState.allAppTypes = action.allAppTypes;
       break;
-    case types.INIT_ALL_SUPPORT_CAS:
+    case types.APPLY_ORDER_INIT_ALL_SUPPORT_CAS:
       newState.allSupportCAs = action.allSupportCAs;
       break;
-    case types.INIT_GET_FILE_LIST:
+    case types.APPLY_ORDER_INIT_GET_FILE_LIST:
       newState.applyGetFileList = action.applyGetFileList;
       break;
-    case types.CHANGE_CONFIRM_VISIBLE:
+    case types.APPLY_ORDER_CHANGE_CONFIRM_VISIBLE:
       newState.confirmVisible = action.confirmVisible;
       break;
-    case types.CHANGE_CONFIRM_LOADING:
+    case types.APPLY_ORDER_CHANGE_CONFIRM_LOADING:
       newState.confirmLoading = action.confirmLoading;
       break;
-    case types.INIT_CATALOG:
+    case types.APPLY_ORDER_INIT_CATALOG:
       newState.catalog = action.catalog;
       break;
-    case types.INIT_PRODUCT_LIST:
+    case types.APPLY_ORDER_INIT_PRODUCT_LIST:
       mapArr(newState.catalog, action.productList)
       break;
     default:

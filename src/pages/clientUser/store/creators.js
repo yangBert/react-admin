@@ -6,11 +6,10 @@ import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 
 const initListAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.CLIENT_USER_QUERY_LIST,
   list,
   pagination
 })
-
 
 //查询
 const queryListAction = req => {
@@ -35,7 +34,7 @@ const queryListAction = req => {
 
 //修改状态
 const updateAction = req => {
-  return (dispatch,getState) => {
+  return (dispatch, getState) => {
     dispatch(spinningAction(true))
     const url = requestURL.webManagerUserChangeUserStatus
     request.json(url, req.data, res => {
@@ -64,20 +63,20 @@ const updateAction = req => {
 
 //改变弹出层显示隐藏
 const changeModalVisibleAction = (modalVisible, editStatus) => ({
-  type: types.CHANGE_MODAL_VISIBLE,
+  type: types.CLIENT_USER_CHANGE_MODAL_VISIBLE,
   modalVisible,
   editStatus
 })
 
 //改变状态
 const setStatusAction = editStatus => ({
-  type: types.CHANGE_EDIT_STATUS,
+  type: types.CLIENT_USER_CHANGE_EDIT_STATUS,
   editStatus
 })
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.CLIENT_USER_CHANGE_SEARCH_PARAMS,
   params
 })
 

@@ -7,48 +7,48 @@ import createPagination from "static/js/pagination";
 import { Modal } from "antd";
 
 const initListAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.OAPI_QUERY_LIST,
   list,
   pagination
 });
 
 const setApiNameAction = apiName => ({
-  type: types.SET_API_NAME,
+  type: types.OAPI_SET_API_NAME,
   apiName
 });
 
 const initTypeListAction = typeList => ({
-  type: types.INIT_TYPE_LIST,
+  type: types.OAPI_INIT_TYPE_LIST,
   typeList
 });
 
 const setTypeIdAction = typeId => ({
-  type: types.SET_TYPE_ID,
+  type: types.OAPI_SET_TYPE_ID,
   typeId
 });
 
 const setApiReqTypeAction = apiReqType => ({
-  type: types.SET_API_REQ_TYPE,
+  type: types.OAPI_SET_API_REQ_TYPE,
   apiReqType
 });
 
 const setApiUrlAction = apiUrl => ({
-  type: types.SET_API_URL,
+  type: types.OAPI_SET_API_URL,
   apiUrl
 });
 
 const setApiParamTypeAction = apiParamType => ({
-  type: types.SET_API_PARAM_TYPE,
+  type: types.OAPI_SET_API_PARAM_TYPE,
   apiParamType
 });
 
 const setApiRemarksAction = apiRemarks => ({
-  type: types.SET_API_REMARKS,
+  type: types.OAPI_SET_API_REMARKS,
   apiRemarks
 });
 
 const setParamsDetailAction = paramsDetail => ({
-  type: types.SET_API_PARAMS_DETAIL,
+  type: types.OAPI_SET_API_PARAMS_DETAIL,
   paramsDetail
 });
 
@@ -143,7 +143,7 @@ const queryTypeListAction = req => {
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.OAPI_CHANGE_SEARCH_PARAMS,
   params
 });
 

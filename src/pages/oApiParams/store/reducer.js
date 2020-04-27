@@ -17,22 +17,22 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning;
       break;
-    case types.QUERY_LIST:
+    case types.OAPI_PARAMS_QUERY_LIST:
       newState.list = action.list;
       break;
-    case types.SAVE_LOADING:
+    case types.OAPI_PARAMS_SAVE_LOADING:
       newState.saveLoading = action.saveLoading;
       break;
-    case types.SET_PARAM_NAME:
+    case types.OAPI_PARAMS_SET_PARAM_NAME:
       newState.paramName = action.paramName;
       break;
-    case types.SET_PARAM_TYPE:
+    case types.OAPI_PARAMS_SET_PARAM_TYPE:
       newState.paramType = action.paramType;
       break;
-    case types.SET_IS_NESS:
+    case types.OAPI_PARAMS_SET_IS_NESS:
       newState.isNess = action.isNess;
       break;
-    case types.SET_PARAM_REMARKS:
+    case types.OAPI_PARAMS_SET_PARAM_REMARKS:
       newState.paramRemarks = action.paramRemarks;
       break;
     default:

@@ -12,6 +12,12 @@ const status = {
   INVILD: "无效",
   DEL: "删除"
 };
+const statusMap = [
+  { value: "NORMAL", name: "正常" },
+  { value: "FREEZE", name: "冻结" },
+  { value: "INVILD", name: "无效" },
+  { value: "DEL", name: "删除" },
+];
 
 const rechargeType = [
   { value: "PERSON", name: "个人用户" },
@@ -21,4 +27,4 @@ const rechargeType = [
   { value: "OTHER", name: "其它" }
 ];
 
-export { accountType, status, rechargeType };
+export { accountType, status, statusMap, rechargeType };

@@ -15,7 +15,7 @@ function SearchForm(props) {
   const [userRealname, setUserRealname] = useState("")
   const [status, setStatus] = useState("")
   const [phoneNo, setPhoneNo] = useState("")
-  
+
 
   const { changeSearchParams } = props;
   useEffect(() => {
@@ -62,16 +62,6 @@ function SearchForm(props) {
     const data = { pageNo: 1, pageSize: 10 }
     props.querylist({ props, data });
   }
-
-
-  function mapStatus() {
-    let statusArr = [];
-    Object.keys(config.status).forEach(k => {
-      statusArr.push({k,v:config.status[k]})
-    })
-    return statusArr;
-  }
-
   return (
     <div>
       <div className={`${styles.form}`}>
@@ -100,13 +90,13 @@ function SearchForm(props) {
         <div className="clearfix">
           <div className={`${styles.formLine} pullLeft`}>
             <label className="pullLeft">居民身份证:</label>
-              <div className={`${styles.inline} pullLeft`}>
-                <Input
-                  allowClear
-                  onChange={e => setIdCard(e.target.value)}
-                  value={idCard}
-                />
-              </div>
+            <div className={`${styles.inline} pullLeft`}>
+              <Input
+                allowClear
+                onChange={e => setIdCard(e.target.value)}
+                value={idCard}
+              />
+            </div>
           </div>
           <div className={`${styles.formLine} pullLeft`}>
             <label className="pullLeft">状态:</label>
@@ -114,8 +104,8 @@ function SearchForm(props) {
               <Select value={status} style={{ width: "100%" }} onChange={value => setStatus(value)}>
                 <Option value="">请选择</Option>
                 {
-                  mapStatus().map(item => {
-                  return <Option value={item.k} key={item.k}>{item.v}</Option>
+                  config.statusMap.map(item => {
+                    return <Option value={item.value} key={item.value}>{item.name}</Option>
                   })
                 }
               </Select>

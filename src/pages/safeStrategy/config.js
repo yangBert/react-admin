@@ -6,6 +6,13 @@ const status = {
   FREEZE: "冻结",
 }
 
+const statusMap = [
+  { value: "NORMAL", name: "正常" },
+  { value: "INVILD", name: "无效" },
+  { value: "LOCK", name: "锁定" },
+  { value: "FREEZE", name: "冻结" }
+]
+
 const record = {
   strategyName: "",
   strategyCode: "",
@@ -14,5 +21,6 @@ const record = {
 
 export {
   status,
+  statusMap,
   record
 }

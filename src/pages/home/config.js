@@ -15,7 +15,13 @@ const operateType2 = [
   { value: "100004", name: "手机盾证书登录" },
 ]
 
+const types = [
+  { value: "app", name: "应用" },
+  { value: "plate", name: "平台" },
+]
+
 export {
   operateType,
-  operateType2
+  operateType2,
+  types
 }

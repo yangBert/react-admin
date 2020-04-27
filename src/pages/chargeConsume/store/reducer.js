@@ -15,14 +15,14 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning;
       break;
-    case types.QUERY_LIST:
+    case types.CHARGE_CONSUME_QUERY_LIST:
       newState.list = action.list;
       newState.pagination = action.pagination;
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.CHARGE_CONSUME_CHANGE_SEARCH_PARAMS:
       newState.params = action.params;
       break;
-    case types.INIT_DETAIL:
+    case types.CHARGE_CONSUME_INIT_DETAIL:
       newState.detail = action.detail;
       break;
     default:

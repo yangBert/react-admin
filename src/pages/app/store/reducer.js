@@ -49,79 +49,79 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.QUERY_APP_LIST:
+    case types.APP_QUERY_APP_LIST:
       newState.list = action.list
       newState.pagination = action.pagination
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.APP_CHANGE_SEARCH_PARAMS:
       newState.params = action.params
       break;
-    case types.CHANGE_ROW_APP_ID:
+    case types.APP_CHANGE_ROW_APP_ID:
       newState.rowAppId = action.rowAppId
       break;
-    case types.INIT_ORG_TREES:
+    case types.APP_INIT_ORG_TREES:
       newState.orgList = action.orgList
       break;
-    case types.CHANGE_TREE_ORG_CODE:
+    case types.APP_CHANGE_TREE_ORG_CODE:
       newState.form.orgCode = action.orgCode
       break;
 
     //修改表单值
-    case types.CHANGE_FORM_APP_NAME:
+    case types.APP_CHANGE_FORM_APP_NAME:
       newState.form.appName = action.appName
       break;
-    case types.CHANGE_FORM_URL:
+    case types.APP_CHANGE_FORM_URL:
       newState.form.url = action.url
       break;
-    case types.CHANGE_FORM_DESCRIBES:
+    case types.APP_CHANGE_FORM_DESCRIBES:
       newState.form.describes = action.describes
       break;
-    case types.CHANGE_FORM_REDIRECTURL:
+    case types.APP_CHANGE_FORM_REDIRECTURL:
       newState.form.redirectUrl = action.redirectUrl
       break;
-    case types.CHANGE_FORM_ICON:
+    case types.APP_CHANGE_FORM_ICON:
       newState.form.icon = action.icon
       break;
-    case types.CHANGE_FORM_APPTYPE:
+    case types.APP_CHANGE_FORM_APPTYPE:
       newState.form.appType = action.appType
       break;
-    case types.CHANGE_FORM_AUDITMODE:
+    case types.APP_CHANGE_FORM_AUDITMODE:
       newState.form.auditMode = action.auditMode
       break;
-    case types.CHANGE_FORM_LANDINGMODES:
+    case types.APP_CHANGE_FORM_LANDINGMODES:
       newState.form.landingModes = action.landingModes
       break;
-    case types.CHANGE_FORM_SUPPORTCAS:
+    case types.APP_CHANGE_FORM_SUPPORTCAS:
       newState.form.supportCAs = action.supportCAs
       break;
-    case types.CHANGE_FORM_TAG:
+    case types.APP_CHANGE_FORM_TAG:
       newState.form.tag = action.tag
       break;
-    case types.INIT_ALL_AUTH_LEVEL:
+    case types.APP_INIT_ALL_AUTH_LEVEL:
       newState.form.allAuthLevel = action.allAuthLevel
       break;
-    case types.INIT_ALL_LANDING_MODES:
+    case types.APP_INIT_ALL_LANDING_MODES:
       newState.form.allLandingModes = action.allLandingModes
       break;
-    case types.INIT_ALL_APP_TYPES:
+    case types.APP_INIT_ALL_APP_TYPES:
       newState.form.allAppTypes = action.allAppTypes
       break;
-    case types.INIT_ALL_SUPPORT_CAS:
+    case types.APP_INIT_ALL_SUPPORT_CAS:
       newState.form.allSupportCAs = action.allSupportCAs
       break;
-    case types.SET_ICON_BASE64:
+    case types.APP_SET_ICON_BASE64:
       newState.iconBase64 = action.iconBase64
       break;
-    case types.CHANGE_SAVE_LOADING:
+    case types.APP_CHANGE_SAVE_LOADING:
       newState.saveLoading = action.saveLoading
       break;
-    case types.CHANGE_FORM_EDIT_APP_ID:
+    case types.APP_CHANGE_FORM_EDIT_APP_ID:
       newState.form.editAppId = action.editAppId
       break;
-    case types.CHANGE_ROW_AUDIT_STATUS:
+    case types.APP_CHANGE_ROW_AUDIT_STATUS:
       newState.rowauditStatus = action.rowauditStatus
       break;
-    case types.EMPTY_ADD_VALUE:
+    case types.APP_EMPTY_ADD_VALUE:
       newState.form.appName = ""
       newState.form.url = ""
       newState.form.describes = ""
@@ -134,34 +134,33 @@ export default (state = defaultState, action) => {
       newState.form.supportCAs = []
       newState.iconBase64 = ""
       break;
-    case types.INIT_ALL_PRODUCT_TYPE:
+    case types.APP_INIT_ALL_PRODUCT_TYPE:
       newState.allProductType = action.allProductType
       break;
-    case types.INIT_PRODUCT_LIST:
+    case types.APP_INIT_PRODUCT_LIST:
       newState.productList = action.productList
       break;
-    case types.INIT_BILLING_LIST:
+    case types.APP_INIT_BILLING_LIST:
       newState.billingList = action.billingList
       break;
-    case types.CHANGE_BILLING:
+    case types.APP_CHANGE_BILLING:
       newState.billing = action.billing
       break;
-    case types.CHANGE_BILLING_FETCHING:
+    case types.APP_CHANGE_BILLING_FETCHING:
       newState.billingFetching = action.billingFetching
       break;
-    case types.CHANGE_PREFERENTIAL_FETCHING:
+    case types.APP_CHANGE_PREFERENTIAL_FETCHING:
       newState.preferentialFetching = action.preferentialFetching
       break;
-    case types.INIT_PREFERENTIAL_LIST:
+    case types.APP_INIT_PREFERENTIAL_LIST:
       newState.preferentialList = action.preferentialList
       break;
-    case types.CHANGE_PREFERENTIAL:
+    case types.APP_CHANGE_PREFERENTIAL:
       newState.preferential = action.preferential
       break;
-    case types.CHANGE_PRODUCT:
+    case types.APP_CHANGE_PRODUCT:
       newState.product = action.product
       break;
-
     default:
       break;
   }

@@ -7,7 +7,7 @@ import createPagination from 'static/js/pagination';
 import { Modal } from 'antd';
 
 const initListAction = (list, pagination) => ({
-  type: types.INIT_LIST,
+  type: types.PLAT_SETTING_INIT_LIST,
   list,
   pagination
 })
@@ -85,24 +85,24 @@ const deleteAction = req => {
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.PLAT_SETTING_CHANGE_SEARCH_PARAMS,
   params
 })
 
 //改变配置名称
 const onChangeSettingExpAction = editSettingExp => ({
-  type: types.CHANGE_EDIT_SETTING_EXP,
+  type: types.PLAT_SETTING_CHANGE_EDIT_SETTING_EXP,
   editSettingExp
 })
 
 //改变配置名称
 const onChangeSettingKeyAction = editSettingKey => ({
-  type: types.CHANGE_EDIT_SETTING_KEY,
+  type: types.PLAT_SETTING_CHANGE_EDIT_SETTING_KEY,
   editSettingKey
 })
 
 const onChangeSettingValueAction = editSettingValue => ({
-  type: types.CHANGE_EDIT_SETTING_VALUE,
+  type: types.PLAT_SETTING_CHANGE_EDIT_SETTING_VALUE,
   editSettingValue
 })
 

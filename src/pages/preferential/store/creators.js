@@ -7,37 +7,37 @@ import createPagination from 'static/js/pagination';
 import { Modal } from 'antd'
 
 const initListAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.PREFERENTIAL_QUERY_LIST,
   list,
   pagination
 })
 
 //改变计费策略
 const onChangeEditStrategyNameAction = editStrategyName => ({
-  type: types.CHANGE_EDIT_STRATEGY_NAME,
+  type: types.PREFERENTIAL_CHANGE_EDIT_STRATEGY_NAME,
   editStrategyName
 })
 
 //改变描述
 const onChangeStrategyDescAction = editStrategyDesc => ({
-  type: types.CHANGE_EDIT_STRATEGY_DESC,
+  type: types.PREFERENTIAL_CHANGE_EDIT_STRATEGY_DESC,
   editStrategyDesc
 })
 
 const onChangeEditTypeAction = editType => ({
-  type: types.CHANGE_EDIT_TYPE,
+  type: types.PREFERENTIAL_CHANGE_EDIT_TYPE,
   editType
 })
 
 const onChangeEditStrategyRuleAction = editStrategyRule => ({
-  type: types.CHANGE_EDIT_STRATEGY_RULE,
+  type: types.PREFERENTIAL_CHANGE_EDIT_STRATEGY_RULE,
   editStrategyRule
 })
 
 
 //改变保存loading
 const onChangeSaveLoadingAction = saveLoading => ({
-  type: types.CHANGE_SAVE_LOADING,
+  type: types.PREFERENTIAL_CHANGE_SAVE_LOADING,
   saveLoading
 })
 
@@ -114,7 +114,7 @@ const updateStateAction = req => {
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.PREFERENTIAL_CHANGE_SEARCH_PARAMS,
   params
 })
 

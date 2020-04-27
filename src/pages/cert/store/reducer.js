@@ -14,10 +14,10 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.QUERY_CERT_LIST:
+    case types.CERT_QUERY_CERT_LIST:
       newState.list = action.list
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.CERT_CHANGE_SEARCH_PARAMS:
       newState.params = action.params
       break;
     default:

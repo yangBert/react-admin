@@ -20,26 +20,26 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.QUERY_ROLE_LIST:
+    case types.ROLE_QUERY_ROLE_LIST:
       newState.list = action.list
       break;
-    case types.CHANGE_ADD_MODAL_VISIBLE:
+    case types.ROLE_CHANGE_ADD_MODAL_VISIBLE:
       newState.operationType = action.operationType
       newState.addModalvisible = action.addModalvisible
       newState.record = action.record
       break;
-    case types.CHANGE_MENU_MODAL_VISIBLE:
+    case types.ROLE_CHANGE_MENU_MODAL_VISIBLE:
       newState.menuModalvisible = action.menuModalvisible
       newState.selectedRoleId = action.selectedRoleId
       newState.checkedKeys = action.checkedKeys
       break;
-    case types.INIT_MENU_LIST:
+    case types.ROLE_INIT_MENU_LIST:
       newState.menuList = action.menuList
       break;
-    case types.CHANGE_CHECKED_KEYS_ACTION:
+    case types.ROLE_CHANGE_CHECKED_KEYS_ACTION:
       newState.checkedKeys = action.checkedKeys
       break;
-    case types.CHANGE_CONFIRM_LOADING:
+    case types.ROLE_CHANGE_CONFIRM_LOADING:
       newState.ConfirmLoading = action.ConfirmLoading
       break;
     default:

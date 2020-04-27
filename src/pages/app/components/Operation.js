@@ -26,7 +26,9 @@ function Oper(props) {
         </Button>
         &nbsp;
       </Link>
-      <Switch
+
+      &nbsp;
+      {props.record.auditStatus === 1 ? <Switch
         style={fontSmall}
         checkedChildren="上线"
         unCheckedChildren="下线"
@@ -38,8 +40,7 @@ function Oper(props) {
           data.append("id", props.record.id);
           props.changeAppStatus({ props, data });
         }}
-      />
-      &nbsp;
+      /> : ""}
       <Link
         to={{
           pathname: "/chargeConfig/list",

@@ -57,14 +57,6 @@ function SearchForm(props) {
     props.querylist({ props, data });
   }
 
-  function mapStatus() {
-    let statusArr = [];
-    Object.keys(config.status).forEach(k => {
-      statusArr.push({ k, v: config.status[k] })
-    })
-    return statusArr;
-  }
-
   return (
     <div>
       <div className={`${styles.form}`}>
@@ -85,8 +77,8 @@ function SearchForm(props) {
               <Select value={status} style={{ width: "100%" }} onChange={value => setStatus(value)}>
                 <Option value="">请选择</Option>
                 {
-                  mapStatus().map(item => {
-                    return <Option value={item.k} key={item.k}>{item.v}</Option>
+                  config.statusMap.map(item => {
+                    return <Option value={item.value} key={item.value}>{item.name}</Option>
                   })
                 }
               </Select>

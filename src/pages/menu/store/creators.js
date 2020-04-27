@@ -6,19 +6,19 @@ import notification from 'pages/common/layer/notification';
 
 ////改变新增弹出层显示和隐藏
 const changeAddModalvisibleAction = addModalvisible => ({
-  type: types.CHANGE_ADD_MODAL_VISIBLE,
+  type: types.MENU_CHANGE_ADD_MODAL_VISIBLE,
   addModalvisible,
 })
 
 //改变修改弹出层显示和隐藏
 const changeEditModalvisibleAction = editModalvisible => ({
-  type: types.CHANGE_EDIT_MODAL_VISIBLE,
+  type: types.MENU_CHANGE_EDIT_MODAL_VISIBLE,
   editModalvisible,
 })
 
 //初始化要编辑的某一行数据
 const changeEditRecordAction = editRecord => ({
-  type: types.CHANGE_EDIT_RECORD,
+  type: types.MENU_CHANGE_EDIT_RECORD,
   editRecord
 })
 
@@ -32,19 +32,19 @@ const changeEditAction = record => {
 
 //初始化菜单
 const initMenuAction = (list) => ({
-  type: types.INIT_MENU_LIST,
+  type: types.MENU_INIT_MENU_LIST,
   list,
 })
 
 //新增弹出层提交按钮loading状态
 const changeaddConfirmLoadingAction = addConfirmLoading => ({
-  type: types.CHANGE_ADD_CONFIRM_LOADING,
+  type: types.MENU_CHANGE_ADD_CONFIRM_LOADING,
   addConfirmLoading,
 })
 
 //改变编辑弹出层提交按钮loading状态
 const changeEditConfirmLoadingAction = editConfirmLoading => ({
-  type: types.CHANGE_EDIT_CONFIRM_LOADING,
+  type: types.MENU_CHANGE_EDIT_CONFIRM_LOADING,
   editConfirmLoading,
 })
 

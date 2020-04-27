@@ -32,60 +32,60 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.QUERY_LIST:
+    case types.CHARGE_CONFIG_QUERY_LIST:
       newState.list = action.list
       newState.pagination = action.pagination
       break;
-    case types.QUERY_PREFERENTTIAL_LIST:
+    case types.CHARGE_CONFIG_QUERY_PREFERENTTIAL_LIST:
       newState.preferentialList = action.preferentialList
       newState.preferentialListPagination = action.preferentialListPagination
       break;
-    case types.QUERY_BILLING_LIST:
+    case types.CHARGE_CONFIG_QUERY_BILLING_LIST:
       newState.billingList = action.billingList
       newState.billingListPagination = action.billingListPagination
       break;
-    case types.QUERY_PRODUCT_LIST:
+    case types.CHARGE_CONFIG_QUERY_PRODUCT_LIST:
       newState.productList = action.productList
       newState.productPagination = action.productPagination
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.CHARGE_CONFIG_CHANGE_SEARCH_PARAMS:
       newState.params = action.params
       break;
-    case types.CHANGE_MODAL_VISIBLE:
+    case types.CHARGE_CONFIG_CHANGE_MODAL_VISIBLE:
       newState.modalVisible = action.modalVisible
       newState.editStatus = action.editStatus
       break;
-    case types.CHANGE_EDIT_STATUS:
+    case types.CHARGE_CONFIG_CHANGE_EDIT_STATUS:
       newState.editStatus = action.editStatus
       break;
-    case types.CHANGE_CONFIG_STRATEGY_NAME:
+    case types.CHARGE_CONFIG_CHANGE_CONFIG_STRATEGY_NAME:
       newState.strategyName = action.strategyName
       break;
-    case types.CHANGE_CONFIG_STRATEGY_CODE:
+    case types.CHARGE_CONFIG_CHANGE_CONFIG_STRATEGY_CODE:
       newState.strategyCode = action.strategyCode
       break;
-    case types.CHANGE_CONFIG_BILLING_NAME:
+    case types.CHARGE_CONFIG_CHANGE_CONFIG_BILLING_NAME:
       newState.billingName = action.billingName
       break;
-    case types.CHANGE_CONFIG_BILLING_CODE:
+    case types.CHARGE_CONFIG_CHANGE_CONFIG_BILLING_CODE:
       newState.billingCode = action.billingCode
       break;
-    case types.CHANGE_CONFIG_PRODUCT_NAME:
+    case types.CHARGE_CONFIG_CHANGE_CONFIG_PRODUCT_NAME:
       newState.productName = action.productName
       break;
-    case types.CHANGE_CONFIG_PRODUCT_CODE:
+    case types.CHARGE_CONFIG_CHANGE_CONFIG_PRODUCT_CODE:
       newState.productCode = action.productCode
       break;
-    case types.CHANGE_PRODUCT_SELECTED_KEYS:
+    case types.CHARGE_CONFIG_CHANGE_PRODUCT_SELECTED_KEYS:
       newState.productSelectedKeys = action.productSelectedKeys
       break;
-    case types.CHANGE_BILLING_SELECTED_KEYS:
+    case types.CHARGE_CONFIG_CHANGE_BILLING_SELECTED_KEYS:
       newState.billingSelectedKeys = action.billingSelectedKeys
       break;
-    case types.CHANGE_PREFERENTIAL_SELECTED_KEYS:
+    case types.CHARGE_CONFIG_CHANGE_PREFERENTIAL_SELECTED_KEYS:
       newState.preferentialSelectedKeys = action.preferentialSelectedKeys
       break;
-    case types.CHANGE_RECORD:
+    case types.CHARGE_CONFIG_CHANGE_RECORD:
       newState.record = action.record
       break;
     default:

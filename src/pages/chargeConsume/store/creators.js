@@ -6,13 +6,13 @@ import notification from "pages/common/layer/notification";
 import createPagination from "static/js/pagination";
 
 const initListAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.CHARGE_CONSUME_QUERY_LIST,
   list,
   pagination
 });
 
 const initDetailAction = detail => ({
-  type: types.INIT_DETAIL,
+  type: types.CHARGE_CONSUME_INIT_DETAIL,
   detail
 });
 
@@ -57,7 +57,7 @@ const qeruyDetailAction = req => {
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.CHARGE_CONSUME_CHANGE_SEARCH_PARAMS,
   params
 });
 

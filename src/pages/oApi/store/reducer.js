@@ -22,35 +22,35 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning;
       break;
-    case types.QUERY_LIST:
+    case types.OAPI_QUERY_LIST:
       newState.list = action.list;
       newState.pagination = action.pagination;
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.OAPI_CHANGE_SEARCH_PARAMS:
       newState.params = action.params;
       break;
-    case types.SET_API_NAME:
+    case types.OAPI_SET_API_NAME:
       newState.apiName = action.apiName;
       break;
-    case types.SET_TYPE_ID:
+    case types.OAPI_SET_TYPE_ID:
       newState.typeId = action.typeId;
       break;
-    case types.SET_API_REQ_TYPE:
+    case types.OAPI_SET_API_REQ_TYPE:
       newState.apiReqType = action.apiReqType;
       break;
-    case types.INIT_TYPE_LIST:
+    case types.OAPI_INIT_TYPE_LIST:
       newState.typeList = action.typeList;
       break;
-    case types.SET_API_URL:
+    case types.OAPI_SET_API_URL:
       newState.apiUrl = action.apiUrl;
       break;
-    case types.SET_API_PARAM_TYPE:
+    case types.OAPI_SET_API_PARAM_TYPE:
       newState.apiParamType = action.apiParamType;
       break;
-    case types.SET_API_REMARKS:
+    case types.OAPI_SET_API_REMARKS:
       newState.apiRemarks = action.apiRemarks;
       break;
-    case types.SET_API_PARAMS_DETAIL:
+    case types.OAPI_SET_API_PARAMS_DETAIL:
       newState.paramsDetail = action.paramsDetail;
       break;
     default:

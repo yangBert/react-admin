@@ -7,38 +7,44 @@ import createPagination from 'static/js/pagination';
 import { Modal } from 'antd'
 
 const initListAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.BILLING_QUERY_LIST,
   list,
   pagination
 })
 
 //改变计费策略
 const onChangeEditTitleAction = editTitle => ({
-  type: types.CHANGE_EDIT_TITLE,
+  type: types.BILLING_CHANGE_EDIT_TITLE,
   editTitle
 })
 
 //改变金额
 const onChangeEditAmountAction = editAmount => ({
-  type: types.CHANGE_EDIT_Amount,
+  type: types.BILLING_CHANGE_EDIT_Amount,
   editAmount
 })
 
 //改变类型
 const onChangeEditTypeAction = editType => ({
-  type: types.CHANGE_EDIT_TYPE,
+  type: types.BILLING_CHANGE_EDIT_TYPE,
   editType
 })
 
 //改变保存loading
 const onChangeSaveLoadingAction = saveLoading => ({
-  type: types.CHANGE_SAVE_LOADING,
+  type: types.BILLING_CHANGE_SAVE_LOADING,
   saveLoading
 })
 
 const onChangeEditMaxLimitAction = editMaxLimit => ({
-  type: types.CHANGE_EDIT_MAX_LIMIT,
+  type: types.BILLING_CHANGE_EDIT_MAX_LIMIT,
   editMaxLimit
+})
+
+//查询携带参数
+const createChangeParamsAction = params => ({
+  type: types.BILLING_CHANGE_SEARCH_PARAMS,
+  params
 })
 
 //保存和修改
@@ -112,12 +118,6 @@ const updateStateAction = req => {
   }
 }
 
-//查询携带参数
-const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
-  params
-})
-
 export {
   queryListAction,
   onChangeEditTitleAction,
@@ -128,5 +128,4 @@ export {
   createChangeParamsAction,
   updateStateAction,
   onChangeEditMaxLimitAction
-
 }

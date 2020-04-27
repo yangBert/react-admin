@@ -7,25 +7,25 @@ import createPagination from 'static/js/pagination';
 import { Modal } from 'antd'
 import BraftEditor from 'braft-editor';
 const initNoticeListAction = (list, pagination) => ({
-  type: types.QUERY_NOTICE_LIST,
+  type: types.NOTICE_QUERY_NOTICE_LIST,
   list,
   pagination
 })
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.NOTICE_CHANGE_SEARCH_PARAMS,
   params
 })
 
 //编辑改变标题
 const changeEditTitleAction = editTitle => ({
-  type: types.CHANGE_EDIT_TITLE,
+  type: types.NOTICE_CHANGE_EDIT_TITLE,
   editTitle
 })
 
 const changeEditNoticeTypeAction = editNoticeType => ({
-  type: types.CHANGE_EDIT_NOTICE_TYPE,
+  type: types.NOTICE_CHANGE_EDIT_NOTICE_TYPE,
   editNoticeType
 })
 
@@ -128,8 +128,6 @@ const publishNoticeAction = req => {
     })
   }
 }
-
-
 
 export {
   queryNoticelistAction,

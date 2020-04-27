@@ -6,9 +6,15 @@ import notification from "pages/common/layer/notification";
 import createPagination from "static/js/pagination";
 
 const initListAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.APP_LOGS_QUERY_LIST,
   list,
   pagination
+});
+
+//查询携带参数
+const createChangeParamsAction = params => ({
+  type: types.APP_LOGS_CHANGE_SEARCH_PARAMS,
+  params
 });
 
 const queryListAction = req => {
@@ -30,11 +36,5 @@ const queryListAction = req => {
     });
   };
 };
-
-//查询携带参数
-const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
-  params
-});
 
 export { queryListAction, createChangeParamsAction };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal,Select,Form } from 'antd';
+import { Button, Modal, Select, Form } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import { withRouter, Link } from 'react-router-dom';
@@ -7,24 +7,16 @@ import * as config from '../config';
 import styles from '../css/operation.module.css';
 import $$ from 'static/js/base';
 
-const {Option} = Select
-
-function mapStatus() {
-  let statusArr = [];
-  Object.keys(config.status).forEach(k => {
-    statusArr.push({k,v:config.status[k]})
-  })
-  return statusArr;
-}
+const { Option } = Select
 
 function Oper(props) {
   const fontSmall = { fontSize: "12px", marginLeft: "5px" };
-  
+
   function submitOk() {
     const operUserNo = $$.localStorage.get("adminId")
     props.update({
       props,
-      data:{status:props.editStatus,userNo:props.record.userNo,operUserNo}
+      data: { status: props.editStatus, userNo: props.record.userNo, operUserNo }
     })
   }
   return (
@@ -46,8 +38,8 @@ function Oper(props) {
               <Select value={props.editStatus} style={{ width: "100%" }} onChange={value => props.setStatus(value)}>
                 <Option value="">请选择</Option>
                 {
-                  mapStatus().map(item => {
-                   return <Option value={item.k} key={item.k}>{item.v}</Option>
+                  config.statusMap.map(item => {
+                    return <Option value={item.value} key={item.value}>{item.name}</Option>
                   })
                 }
               </Select>
@@ -81,7 +73,7 @@ function Oper(props) {
 
 const mapState = state => ({
   modalVisible: state.clientUser.modalVisible,
-  editStatus:state.clientUser.editStatus,
+  editStatus: state.clientUser.editStatus,
   spinning: state.clientUser.spinning,
 })
 

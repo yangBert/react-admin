@@ -6,19 +6,19 @@ import notification from "pages/common/layer/notification";
 
 //保存按钮Loading
 const changeSaveLoadingAction = saveLoading => ({
-  type: types.CHANGE_SAVE_LOADING,
+  type: types.ORG_CHANGE_SAVE_LOADING,
   saveLoading
 });
 
 //初始化机构列表
 const initOrgAction = list => ({
-  type: types.INIT_ORG_LIST,
+  type: types.ORG_INIT_ORG_LIST,
   list
 });
 
 //初始化机构树数据
 const initOrgTreeAction = treeList => ({
-  type: types.INIT_ORG_TREE_DATA,
+  type: types.ORG_INIT_ORG_TREE_DATA,
   treeList
 });
 
@@ -132,31 +132,31 @@ const initTreeAction = req => {
 
 //初始化表单
 const initValuesAction = record => ({
-  type: types.INIT_FORM_VALUES,
+  type: types.ORG_INIT_FORM_VALUES,
   record
 });
 
 //改变表单机构名称
 const setOrgNameAction = editOrgName => ({
-  type: types.SET_ORG_NAME,
+  type: types.ORG_SET_ORG_NAME,
   editOrgName
 });
 
 //改变表单机构编码
 const setOrgCodeAction = editOrgCode => ({
-  type: types.SET_ORG_CODE,
+  type: types.ORG_SET_ORG_CODE,
   editOrgCode
 });
 
 //改变表单机构描述
 const setOrgDescAction = editOrgDesc => ({
-  type: types.SET_ORG_DESC,
+  type: types.ORG_SET_ORG_DESC,
   editOrgDesc
 });
 
 //改变表单机构树
 const setTreeValueAction = tree => ({
-  type: types.SET_EDIT_TREE_VALUE,
+  type: types.ORG_SET_EDIT_TREE_VALUE,
   tree
 });
 

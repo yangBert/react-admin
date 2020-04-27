@@ -50,14 +50,6 @@ function SearchForm(props) {
     props.querylist({ props, data });
   }
 
-  function mapArr() {
-    let arr = [];
-    Object.keys(config.state).forEach(k => {
-      arr.push({ k, v: config.state[k] });
-    });
-    return arr;
-  }
-
   return (
     <div>
       <div className={`${styles.form}`}>
@@ -101,9 +93,9 @@ function SearchForm(props) {
                 onChange={value => setState(value)}
               >
                 <Option value="">请选择</Option>
-                {mapArr().map(item => (
-                  <Option value={item.k} key={item.k}>
-                    {item.v}
+                {config.stateMap.map(item => (
+                  <Option value={item.value} key={item.value}>
+                    {item.name}
                   </Option>
                 ))}
               </Select>

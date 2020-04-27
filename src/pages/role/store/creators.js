@@ -6,13 +6,13 @@ import notification from 'pages/common/layer/notification';
 
 //改变确定按钮loading
 const changeConfirmLoadingAction = ConfirmLoading => ({
-  type: types.CHANGE_CONFIRM_LOADING,
+  type: types.ROLE_CHANGE_CONFIRM_LOADING,
   ConfirmLoading,
 })
 
 //改变新增角色Modal显示或隐藏
 const changeAddModalvisibleAction = (addModalvisible, operationType, record) => ({
-  type: types.CHANGE_ADD_MODAL_VISIBLE,
+  type: types.ROLE_CHANGE_ADD_MODAL_VISIBLE,
   addModalvisible,
   operationType,
   record,
@@ -20,13 +20,13 @@ const changeAddModalvisibleAction = (addModalvisible, operationType, record) => 
 
 //初始化角色列表
 const queryRoleAction = (list) => ({
-  type: types.QUERY_ROLE_LIST,
+  type: types.ROLE_QUERY_ROLE_LIST,
   list
 })
 
 //菜单弹出层显示和隐藏
 const menuModalvisibleAction = (menuModalvisible, selectedRoleId, checkedKeys) => ({
-  type: types.CHANGE_MENU_MODAL_VISIBLE,
+  type: types.ROLE_CHANGE_MENU_MODAL_VISIBLE,
   menuModalvisible,
   selectedRoleId,
   checkedKeys
@@ -34,7 +34,7 @@ const menuModalvisibleAction = (menuModalvisible, selectedRoleId, checkedKeys) =
 
 //初始化菜单列表
 const initMenuAction = (menuList) => ({
-  type: types.INIT_MENU_LIST,
+  type: types.ROLE_INIT_MENU_LIST,
   menuList,
 })
 
@@ -196,7 +196,7 @@ const roleBindMenuAction = req => {
 
 //改变选中的角色
 const changeCheckedKeysAction = checkedKeys => ({
-  type: types.CHANGE_CHECKED_KEYS_ACTION,
+  type: types.ROLE_CHANGE_CHECKED_KEYS_ACTION,
   checkedKeys,
 })
 

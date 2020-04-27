@@ -6,8 +6,14 @@ import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 
 const queryCertListAction = list => ({
-  type: types.QUERY_CERT_LIST,
+  type: types.CERT_QUERY_CERT_LIST,
   list
+})
+
+//查询携带参数
+const createChangeParamsAction = params => ({
+  type: types.CERT_CHANGE_SEARCH_PARAMS,
+  params
 })
 
 //查询证书列表
@@ -51,12 +57,6 @@ const createInsertCertAction = req => {
     })
   }
 }
-
-//查询携带参数
-const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
-  params
-})
 
 export {
   createQueryCertlistAction,

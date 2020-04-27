@@ -282,8 +282,14 @@ export const managerOApiSelectAllParamByApiId =
 export const managerOApiUpdateParam = "/api/v1/manager/oApi/updateParam";
 
 //统计
+export const statisticsStatisPhoneLogin = "/api/v1/manager/statistics/statisPhoneLogin";
+export const statisticsStatisMSLogin = "/api/v1/manager/statistics/statisMSLogin";
+export const statisticsStatisFaceLogin = "/api/v1/manager/statistics/statisFaceLogin";
+export const statisticsStatisUkeyLogin = "/api/v1/manager/statistics/statisUkeyLogin";
+export const statisticsStatisWechatLogin = "/api/v1/manager/statistics/statisWechatLogin";
 export const logManageSelectLoginTypeCount = "/api/v1/uamBase/manager/logManage/selectLoginTypeCount";
 export const logManageSelectUserLoginTypeCount = "/api/v1/uamBase/manager/logManage/selectUserLoginTypeCount";
+
 export const statisGetApplicationStatis = "/api/v1/statis/getApplicationStatis";
 
 //用户机构

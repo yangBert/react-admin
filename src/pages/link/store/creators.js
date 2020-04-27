@@ -7,42 +7,42 @@ import createPagination from "static/js/pagination";
 import { Modal } from "antd";
 
 const initListAction = (list, pagination) => ({
-  type: types.QUERY_LIST,
+  type: types.LINK_QUERY_LIST,
   list,
   pagination
 });
 
 //改变editTitle
 const onChangeEditTitleAction = editTitle => ({
-  type: types.CHANGE_EDIT_TITLE,
+  type: types.LINK_CHANGE_EDIT_TITLE,
   editTitle
 });
 
 //改变editURL
 const onChangeEditURLAction = editURL => ({
-  type: types.CHANGE_EDIT_URL,
+  type: types.LINK_CHANGE_EDIT_URL,
   editURL
 });
 
 //改变editImageURL
 const onChangeEditImageURLAction = editImageURL => ({
-  type: types.CHANGE_EDIT_IMAGE_URL,
+  type: types.LINK_CHANGE_EDIT_IMAGE_URL,
   editImageURL
 });
 
 const onChangeEditStatusAction = editStatus => ({
-  type: types.CHANGE_EDIT_STATUS,
+  type: types.LINK_CHANGE_EDIT_STATUS,
   editStatus
 });
 
 //改变保存loading
 const onChangeSaveLoadingAction = saveLoading => ({
-  type: types.CHANGE_SAVE_LOADING,
+  type: types.LINK_CHANGE_SAVE_LOADING,
   saveLoading
 });
 
 const changeShowImageAction = showImage => ({
-  type: types.CHANGE_SHOW_IMAGE,
+  type: types.LINK_CHANGE_SHOW_IMAGE,
   showImage
 });
 
@@ -130,7 +130,7 @@ const updateStateAction = req => {
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.LINK_CHANGE_SEARCH_PARAMS,
   params
 });
 

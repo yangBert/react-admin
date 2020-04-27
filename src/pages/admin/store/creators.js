@@ -7,13 +7,13 @@ import createPagination from 'static/js/pagination';
 
 //新增或修改提交按钮loading状态
 const changeConfirmLoadingAction = ConfirmLoading => ({
-  type: types.CHANGE_CONFIRM_LOADING,
+  type: types.ADMIN_CHANGE_CONFIRM_LOADING,
   ConfirmLoading,
 })
 
 //改变新增或修改弹出层显示或隐藏
 const changeAddModalvisibleAction = (addModalvisible, operationType, record) => ({
-  type: types.CHANGE_ADD_MODAL_VISIBLE,
+  type: types.ADMIN_CHANGE_ADD_MODAL_VISIBLE,
   addModalvisible,
   operationType,
   record,
@@ -21,38 +21,38 @@ const changeAddModalvisibleAction = (addModalvisible, operationType, record) => 
 
 //查询管理员action
 const queryUserAction = (list, pagination) => ({
-  type: types.QUERY_USER_LIST,
+  type: types.ADMIN_QUERY_USER_LIST,
   list,
   pagination,
 })
 
 //初始化已选中的角色
 const initSelectedRole = selectedRoles => ({
-  type: types.INIT_SELECTED_ROLES,
+  type: types.ADMIN_INIT_SELECTED_ROLES,
   selectedRoles,
 })
 
 //改变角色配置弹出层显示隐藏
 const changeRoleModalVisibleAction = roleModalVisible => ({
-  type: types.CHANGE_ROLE_MODAL_VISIBLE,
+  type: types.ADMIN_CHANGE_ROLE_MODAL_VISIBLE,
   roleModalVisible,
 })
 
 //初始化所有角色
 const initRoleAllAction = roleAllList => ({
-  type: types.INIT_ROLE_ALL_LIST,
+  type: types.ADMIN_INIT_ROLE_ALL_LIST,
   roleAllList,
 })
 
 //初始化角色绑定需要的adminId
 const initRoleAdminId = roleAdminId => ({
-  type: types.INIT_ROLE_ADMINID,
+  type: types.ADMIN_INIT_ROLE_ADMINID,
   roleAdminId,
 })
 
 //管理员绑定角色按钮Loading
 const changeConfirmLoadingRole = ConfirmLoadingRole => ({
-  type: types.CHANGE_CONFIRMLOADING_ROLE,
+  type: types.ADMIN_CHANGE_CONFIRMLOADING_ROLE,
   ConfirmLoadingRole,
 })
 
@@ -242,7 +242,7 @@ const bindRoleAction = req => {
 
 //查询携带参数
 const createChangeParamsAction = params => ({
-  type: types.CHANGE_SEARCH_PARAMS,
+  type: types.ADMIN_CHANGE_SEARCH_PARAMS,
   params
 })
 
