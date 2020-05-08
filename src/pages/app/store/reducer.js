@@ -124,6 +124,7 @@ export default (state = defaultState, action) => {
     case types.APP_EMPTY_ADD_VALUE:
       newState.form.appName = ""
       newState.form.url = ""
+      newState.form.icon = ""
       newState.form.describes = ""
       newState.form.redirectUrl = ""
       newState.form.appType = ""

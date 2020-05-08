@@ -291,6 +291,7 @@ export const logManageSelectLoginTypeCount = "/api/v1/uamBase/manager/logManage/
 export const logManageSelectUserLoginTypeCount = "/api/v1/uamBase/manager/logManage/selectUserLoginTypeCount";
 
 export const statisGetApplicationStatis = "/api/v1/statis/getApplicationStatis";
+export const statisGetUserStatis = "/api/v1/statis/getUserStatis";
 
 //用户机构
 export const managerSelectOrgManagerList = "/api/v1/manager/selectOrgManagerList";

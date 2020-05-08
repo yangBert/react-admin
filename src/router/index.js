@@ -119,9 +119,7 @@ const AppStatisticalList = lazy(() =>
 const AccountStatisticalList = lazy(() =>
   import("pages/accountStatistical")
 );
-const FlatStatisticalList = lazy(() =>
-  import("pages/flatStatistical")
-);
+
 const AccountBind = lazy(() =>
   import("pages/account/components/Bind")
 );
@@ -180,10 +178,6 @@ const routes = [
   {
     path: "/userOrg/list",
     component: UserOrgList
-  },
-  {
-    path: "/flatStatistical/list",
-    component: FlatStatisticalList
   },
   {
     path: "/accountStatistical/list",

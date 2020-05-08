@@ -40,8 +40,10 @@ import appLogsReducer from "pages/appLogs/store/reducer";
 import userOrgReducer from "pages/userOrg/store/reducer";
 import rechargeRuleListReducer from "pages/rechargeRuleList/store/reducer";
 import appStatisticalReducer from "pages/appStatistical/store/reducer";
+import accountStatisticalReducer from "pages/accountStatistical/store/reducer";
 
 export default {
+  accountStatistical: accountStatisticalReducer,
   appLogs: appLogsReducer,
   userLogs: userLogsReducer,
   login: loginReducer,

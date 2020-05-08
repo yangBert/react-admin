@@ -59,10 +59,14 @@ function SearchForm(props) {
       instanceCode,
       instanceType,
       accountCode,
-      status,
       startTime,
       endTime
     }
+
+    if (status) {
+      data.status = status
+    }
+
     props.querylist({ props, data });
   }
 
@@ -152,8 +156,8 @@ function SearchForm(props) {
 }
 
 const mapState = state => ({
-  params: state.billing.params,
-  spinning: state.billing.spinning,
+  params: state.applyOrder.params,
+  spinning: state.applyOrder.spinning,
 })
 
 const mapDispatch = dispatch => ({

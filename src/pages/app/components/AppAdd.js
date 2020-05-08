@@ -58,7 +58,7 @@ class AppAdd extends Component {
     //查询机构
     this.props.queryOrgList({
       props: this.props,
-      data: { pageNo: 1, pageSize: 10 }
+      data: { pageNo: 1, pageSize: 1000 }
     });
     //查询应用所有信息
     if (this.props.location.state && this.props.location.state.editAppId) {
@@ -303,7 +303,7 @@ class AppAdd extends Component {
                 </div>
                 <div className={`${styles.formLine} pullLeft`}>
                   <label className={`${styles.label} pullLeft`}>
-                    请选择机构：
+                    单位：
                   </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <TreeSelect
@@ -470,7 +470,7 @@ class AppAdd extends Component {
                   loading={this.props.saveLoading}
                 >
                   保存
-              </Button>
+                </Button>
               )}
             <Button
               size="large"

@@ -23,12 +23,20 @@ const defaultState = {
   record: null,
   productSelectedKeys: [],
   billingSelectedKeys: [],
-  preferentialSelectedKeys: []
+  preferentialSelectedKeys: [],
+  appCode: "",
+  productListArr: []
 };
 
 export default (state = defaultState, action) => {
   let newState = JSON.parse(JSON.stringify(state))
   switch (action.type) {
+    case types.CHARGE_CONFIG_FETCH_PRODUCT_LIST:
+      newState.productListArr = action.productListArr
+      break;
+    case types.CHARGE_CONFIG_SET_APP_CODE:
+      newState.appCode = action.appCode
+      break;
     case spinningTypes:
       newState.spinning = action.spinning
       break;

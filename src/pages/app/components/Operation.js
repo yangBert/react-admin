@@ -28,7 +28,7 @@ function Oper(props) {
       </Link>
 
       &nbsp;
-      {props.record.auditStatus === 1 ? <Switch
+      {props.record.auditStatus === 1 && <Switch
         style={fontSmall}
         checkedChildren="上线"
         unCheckedChildren="下线"
@@ -40,34 +40,39 @@ function Oper(props) {
           data.append("id", props.record.id);
           props.changeAppStatus({ props, data });
         }}
-      /> : ""}
-      <Link
-        to={{
-          pathname: "/chargeConfig/list",
-          state: {
-            appCode: props.record.appCode
-          }
-        }}
-      >
-        <Button style={fontSmall} type="primary" size="small" ghost>
-          配置
+      />}
+      {
+        props.record.auditStatus === 1 &&
+        <Link
+          to={{
+            pathname: "/chargeConfig/list",
+            state: {
+              appCode: props.record.appCode
+            }
+          }}
+        >
+          <Button style={fontSmall} type="primary" size="small" ghost>
+            配置
         </Button>
         &nbsp;
       </Link>
-      <Link
-        to={{
-          pathname: "/account/bind",
-          state: {
-            appCode: props.record.appCode
-          }
-        }}
-      >
-        <Button style={fontSmall} type="primary" size="small" ghost>
-          绑定
-        </Button>
-      </Link>
-      &nbsp;
-      {props.record.auditStatus === 1 ? (
+      }
+
+      {props.record.appStatus === 1 &&
+        <Link
+          to={{
+            pathname: "/account/bind",
+            state: {
+              appCode: props.record.appCode
+            }
+          }}
+        >
+          <Button style={fontSmall} type="primary" size="small" ghost>
+            绑定
+            </Button>&nbsp;
+        </Link>
+      }
+      {props.record.auditStatus === 1 && (
         <Button
           onClick={() =>
             props.showSecret({ props, data: "appID=" + props.record.id })
@@ -79,9 +84,7 @@ function Oper(props) {
         >
           生成密钥
         </Button>
-      ) : (
-          ""
-        )}
+      )}
     </div>
   );
 }

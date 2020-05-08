@@ -9,6 +9,9 @@ const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 function SearchForm(props) {
+  const [applicationName, setApplicationName] = useState('')
+  const [accountCode, setAccountCode] = useState('')
+
 
   return (
     <div>
@@ -19,6 +22,7 @@ function SearchForm(props) {
             <div className={`${styles.inline} pullLeft`}>
               <Input
                 allowClear
+                onChange={e => setApplicationName(e.target.value)}
               />
             </div>
           </div>
@@ -27,6 +31,7 @@ function SearchForm(props) {
             <div className={`${styles.inline} pullLeft`}>
               <Input
                 allowClear
+                onChange={e => setAccountCode(e.target.value)}
               />
             </div>
           </div>
@@ -39,6 +44,7 @@ function SearchForm(props) {
                 style={{ width: "100%" }}
               >
                 <Option value="">请选择</Option>
+
               </Select>
             </div>
           </div>

@@ -2,7 +2,7 @@ import * as requestURL from 'static/js/requestURL';
 import * as request from 'static/js/request';
 import spinningAction from 'pages/common/layer/spinning';
 import notification from 'pages/common/layer/notification';
-import { Column, Line } from "@antv/g2plot";
+import { Column, Area } from "@antv/g2plot"; //Line
 import * as config from '../config';
 
 function stringToNumber(list) {
@@ -23,44 +23,85 @@ function initPlotData(arr, types, operateType) {
   return arr;
 }
 
-function initPlotRender(data, plot) {
+// function initPlotRender(data, plot) {
+//   var list = stringToNumber(data.list);
+//   list = initPlotData(list, config.types, "login")
+//   const linePlot = new Line(plot, {
+//     title: {
+//       visible: true,
+//       text: data.title,
+//     },
+//     description: {
+//       visible: false,
+//       text: '',
+//     },
+//     theme: 'dark',
+//     padding: 'auto',
+//     forceFit: true,
+//     data: list,
+//     xField: 'timeX',
+//     yField: 'num',
+//     seriesField: 'name',
+//     type: 'name',
+//     xAxis: {
+//       type: 'dateTime',
+//       label: {
+//         visible: true,
+//         autoHide: true,
+//         formatter: (t, i) => {
+//           if (i === 0 || i === 11) {
+//             return t
+//           } else {
+//             return t.split('-')[1]
+//           }
+//         }
+//       },
+//     },
+//     yAxis: {
+//       formatter: (v) => `${v} ${data.numUnit}`,
+//     },
+//     legend: {
+//       visible: true,
+//       position: 'right-top',
+//     },
+//     smooth: true,
+//   });
+//   linePlot.render();
+//   linePlot.on('click', ev => {
+//   });
+// }
+
+function areaPlot(data, plot) {
   var list = stringToNumber(data.list);
   list = initPlotData(list, config.types, "login")
-  const linePlot = new Line(plot, {
+  const area = new Area(plot, {
     title: {
       visible: true,
       text: data.title,
     },
-    description: {
-      visible: false,
-      text: '',
-    },
-    theme: 'dark',
-    padding: 'auto',
-    forceFit: true,
     data: list,
     xField: 'timeX',
     yField: 'num',
-    seriesField: 'name',
-    xAxis: {
-      type: 'dateTime',
+    stackField: 'name',
+    theme: 'dark',
+    yAxis: {
+      visible: true,
       label: {
         visible: true,
-        autoHide: true,
+        formatter: (v) => {
+          return v + '次';
+        },
       },
-    },
-    yAxis: {
-      formatter: (v) => `${v} ${data.numUnit}`,
     },
     legend: {
       visible: true,
-      position: 'right-top',
+      position: 'bottom-center',
     },
-    smooth: true,
+    responsive: true,
   });
-  linePlot.render();
-  // linePlot.on('click', ev => {
-  // });
+  area.render();
+  //   linePlot.on('click', ev => {
+  //   });
 }
 
 const queryPlot1Action = req => {
@@ -71,7 +112,7 @@ const queryPlot1Action = req => {
       if (res.data) {
         const { success, message, data } = res.data;
         if (success) {
-          initPlotRender(data, document.getElementById("plot1"))
+          areaPlot(data, document.getElementById("plot1"))
         } else {
           notification("error", message);
         }
@@ -92,7 +133,7 @@ const queryPlot2Action = req => {
       if (res.data) {
         const { success, message, data } = res.data;
         if (success) {
-          initPlotRender(data, document.getElementById("plot2"))
+          areaPlot(data, document.getElementById("plot2"))
         } else {
           notification("error", message);
         }
@@ -111,7 +152,7 @@ const queryPlot3Action = req => {
       if (res.data) {
         const { success, message, data } = res.data;
         if (success) {
-          initPlotRender(data, document.getElementById("plot3"))
+          areaPlot(data, document.getElementById("plot3"))
         } else {
           notification("error", message);
         }
@@ -130,7 +171,7 @@ const queryPlot4Action = req => {
       if (res.data) {
         const { success, message, data } = res.data;
         if (success) {
-          initPlotRender(data, document.getElementById("plot4"))
+          areaPlot(data, document.getElementById("plot4"))
         } else {
           notification("error", message);
         }
@@ -149,7 +190,7 @@ const queryPlot5Action = req => {
       if (res.data) {
         const { success, message, data } = res.data;
         if (success) {
-          initPlotRender(data, document.getElementById("plot5"))
+          areaPlot(data, document.getElementById("plot5"))
         } else {
           notification("error", message);
         }
@@ -172,7 +213,10 @@ function initCollum(data, text, plot) {
     padding: 'auto',
     xField: 'name',
     yField: 'num',
+    colorField: 'name',
+    color: ['#19A15F', '#ED4A4B', '#3982FF', '#F21A1B'],
     meta: {
+      visible: false,
       num: {
         alias: '登录数量（次）',
       },
@@ -180,6 +224,15 @@ function initCollum(data, text, plot) {
         alias: '类型',
       }
     },
+    legend: {
+      visible: true,
+      position: 'bottom-center',
+    },
+    point: {
+      visible: false,
+      shape: 'circle',
+      size: 3,
+    }
   });
 
   columnPlot.render();

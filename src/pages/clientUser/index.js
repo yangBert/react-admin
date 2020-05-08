@@ -6,13 +6,14 @@ import SearchForm from './components/SearchForm';
 import styles from './css/UserList.module.css';
 import * as config from './config';
 import Oper from './components/Operation';
+import ModalModify from './components/ModalModify';
 
 const columns = [
   { title: '账号', dataIndex: 'userName', key: 'userName', align: 'center' },
   { title: '真实姓名', dataIndex: 'userRealname', key: 'userRealname', align: 'center' },
   { title: '性别', dataIndex: 'sex', key: 'sex', align: 'center' },
   { title: '电话号码', dataIndex: 'phoneNo', key: 'phoneNo', align: 'center' },
-  {title: '居民身份证', dataIndex: 'idCard', key: 'idCard', align: 'center'},
+  { title: '居民身份证', dataIndex: 'idCard', key: 'idCard', align: 'center' },
 
   {
     title: '状态', dataIndex: 'status', key: 'status', align: 'center',
@@ -57,6 +58,7 @@ class List extends Component {
       <div className={`${styles.pageContet} pageContentColor`}>
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <SearchForm />
+          <ModalModify />
           <Table
             bordered
             columns={columns}

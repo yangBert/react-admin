@@ -1,40 +1,81 @@
 import React, { Component } from 'react';
-import { Spin, Input, Button, message, Card, Form } from 'antd';
+import { Spin, Input, Button, message, Card, Form, DatePicker } from 'antd';
 import { connect } from 'react-redux';
 import * as creators from '../store/creators';
 import styles from '../css/add.module.css';
 import { Link } from 'react-router-dom';
 
+import moment from "moment";
+import "moment/locale/zh-cn";
+moment.locale("zh-cn");
+
+const { RangePicker } = DatePicker;
 const { Search } = Input;
 
 class Add extends Component {
-
+  state = {
+    validateStartTime: "",
+    validateEndTime: ""
+  }
   componentDidMount() {
+    console.log(this.props.location.state.record)
     if (this.props.location.state.record) {
-      const { productName, perfertialName, ruleName, productCode, ruleCode, preferentialCode } = this.props.location.state.record
-      this.props.changeConfigStrategyCode(preferentialCode)
-      this.props.changeConfigBillingCode(ruleCode)
-      this.props.changeConfigProductCode(productCode)
-      this.props.changeConfigStrategyName(perfertialName)
-      this.props.changeConfigProductName(productName)
-      this.props.changeConfigBillingName(ruleName)
+      const {
+        productName,
+        perfertialName,
+        ruleName,
+        productCode,
+        ruleCode,
+        preferentialCode,
+        validateEndTime,
+        validateStartTime
+      } = this.props.location.state.record
+      if (validateEndTime && validateStartTime) {
+        console.log(validateEndTime)
+        this.setState({ validateEndTime, validateStartTime })
+      }
+      this.resetFormValue(preferentialCode, ruleCode, productCode, perfertialName, productName, ruleName)
       this.props.changeConfigRecord(this.props.location.state.record)
     }
+
     if (this.props.location.state.preferential) {
       const { strategyCode, strategyName } = this.props.location.state.preferential
-      this.props.changeConfigStrategyName(strategyName)
-      this.props.changeConfigStrategyCode(strategyCode)
+      this.setConfigStrategy(strategyName, strategyCode)
     }
+
     if (this.props.location.state.billing) {
       const { billingCode, billingName } = this.props.location.state.billing
-      this.props.changeConfigBillingName(billingName)
-      this.props.changeConfigBillingCode(billingCode)
+      this.setConfigBilling(billingName, billingCode)
     }
+
     if (this.props.location.state.product) {
       const { productCode, productName } = this.props.location.state.product
-      this.props.changeConfigProductName(productName)
-      this.props.changeConfigProductCode(productCode)
+      this.setConfigProduct(productName, productCode)
     }
+  }
+
+  setConfigStrategy(strategyName, strategyCode) {
+    this.props.changeConfigStrategyName(strategyName)
+    this.props.changeConfigStrategyCode(strategyCode)
+  }
+
+  setConfigBilling(billingName, billingCode) {
+    this.props.changeConfigBillingName(billingName)
+    this.props.changeConfigBillingCode(billingCode)
+  }
+
+  setConfigProduct(productName, productCode) {
+    this.props.changeConfigProductName(productName)
+    this.props.changeConfigProductCode(productCode)
+  }
+
+  resetFormValue(preferentialCode, ruleCode, productCode, perfertialName, productName, ruleName) {
+    this.props.changeConfigStrategyCode(preferentialCode)
+    this.props.changeConfigBillingCode(ruleCode)
+    this.props.changeConfigProductCode(productCode)
+    this.props.changeConfigStrategyName(perfertialName)
+    this.props.changeConfigProductName(productName)
+    this.props.changeConfigBillingName(ruleName)
   }
 
   save() {
@@ -59,8 +100,14 @@ class Add extends Component {
         preferentialCode: strategyCode,
       }
     }
+
     if (this.props.record) {
       req.data.id = this.props.record.id
+    }
+
+    if (this.state.validateStartTime) {
+      req.data.validateStartTime = this.state.validateStartTime
+      req.data.validateEndTime = this.state.validateEndTime
     }
     this.props.save(req)
   }
@@ -74,6 +121,13 @@ class Add extends Component {
       }
     }
     this.props.history.push(o)
+  }
+
+  onChangeDatePicker(dateStrings) {
+    this.setState({
+      validateStartTime: dateStrings[0],
+      validateEndTime: dateStrings[1]
+    })
   }
 
   render() {
@@ -113,6 +167,24 @@ class Add extends Component {
                       onChange={e => null}
                       enterButton="选择"
                       value={this.props.strategyName}
+                    />
+                  </div>
+                </div>
+                <div className={`${styles.formLine} pullLeft`}><label className="pullLeft">有效日期：</label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <RangePicker
+                      style={{ width: "100%" }}
+                      value={[this.state.validateStartTime ? moment(this.state.validateStartTime) : null, this.state.validateEndTime ? moment(this.state.validateEndTime) : null]}
+                      ranges={{
+                        Today: [moment(), moment()],
+                        "This Month": [
+                          moment().startOf("month"),
+                          moment().endOf("month")
+                        ]
+                      }}
+                      showTime
+                      format="YYYY-MM-DD HH:mm:ss"
+                      onChange={(dates, dateStrings) => this.onChangeDatePicker(dateStrings)}
                     />
                   </div>
                 </div>

@@ -8,21 +8,24 @@ const { Option } = Select;
 
 function SearchForm(props) {
   const [appName, setAppName] = useState("");
+  const [appCode, setAppCode] = useState("");
   const [appStatus, setAppStatus] = useState("");
   const { changeSearchParams } = props;
   useEffect(() => {
     changeSearchParams({
       appName,
-      appStatus
+      appStatus,
+      appCode
     });
-  }, [appName, appStatus, changeSearchParams]);
+  }, [appName, appCode, appStatus, changeSearchParams]);
 
   function search() {
-    const { appName, appStatus } = props.params;
+    const { appName, appCode, appStatus } = props.params;
     const data = {
       pageSize: 10,
       pageNo: 1,
       appName,
+      appCode,
       appStatus
     };
     props.queryAppList({ props, data });
@@ -31,6 +34,7 @@ function SearchForm(props) {
   function reset() {
     setAppName("");
     setAppStatus("");
+    setAppCode("");
     const data = { pageNo: 1, pageSize: 10 };
     props.queryAppList({ props, data });
   }
@@ -48,6 +52,19 @@ function SearchForm(props) {
             />
           </div>
         </div>
+        <div className={`${styles.formLine} pullLeft`}>
+          <label className="pullLeft">应用编码:</label>
+          <div className={`${styles.inline} pullLeft`}>
+            <Input
+              allowClear
+              onChange={e => setAppCode(e.target.value)}
+              value={appCode}
+            />
+          </div>
+        </div>
+
+      </div>
+      <div className={`${styles.form} clearfix`}>
         <div className={`${styles.formLine} pullLeft`}>
           <label className="pullLeft">应用状态:</label>
           <div className={`${styles.inline} pullLeft`}>
@@ -94,8 +111,8 @@ function SearchForm(props) {
               </Button>
             </Link>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </div>
       </div>
     </div>

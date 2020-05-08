@@ -1,155 +1,160 @@
 import React, { Component } from 'react';
-import { Table } from 'antd';
+import { Table, Icon, Popconfirm } from 'antd';
 import styles from './css/UserList.module.css';
-import SearchForm from './components/SearchForm'
+import SearchForm from './components/SearchForm';
+import { connect } from "react-redux";
+import * as creators from "./store/creators";
 
 const { Column, ColumnGroup } = Table;
 
-const data = [
-  {
-    key: '0',
-    type1: '123',
-    type2: '563',
-    type3: '567',
-    type4: '33',
-    type5: '21',
-    v0: '张三',
-    v1: '503',
-    v2: '100',
-    v3: '1202',
-    v4: '10000',
-    v5: '1000000',
-    tags: ['loser'],
-  },
-  {
-    key: '0',
-    type1: '123',
-    type2: '563',
-    type3: '567',
-    type4: '33',
-    type5: '21',
-    v0: '李四',
-    v1: '123',
-    v2: '345',
-    v3: '345345',
-    v4: '10000',
-    v5: '123123',
-    tags: ['loser'],
-  },
-  {
-    key: '0',
-    type1: '123',
-    type2: '563',
-    type3: '567',
-    type4: '33',
-    type5: '21',
-    v0: '王二',
-    v1: '123',
-    v2: '345',
-    v3: '345345',
-    v4: '10000',
-    v5: '123123',
-    tags: ['loser'],
-  },
-  {
-    key: '0',
-    type1: '123',
-    type2: '563',
-    type3: '567',
-    type4: '33',
-    type5: '21',
-    v0: '麻子',
-    v1: '123',
-    v2: '345',
-    v3: '345345',
-    v4: '10000',
-    v5: '123123',
-    tags: ['loser'],
-  },
-  {
-    key: '0',
-    type1: '123',
-    type2: '563',
-    type3: '567',
-    type4: '33',
-    type5: '21',
-    v0: '朱六',
-    v1: '123',
-    v2: '345',
-    v3: '345345',
-    v4: '10000',
-    v5: '123123',
-    tags: ['loser'],
-  },
-  {
-    key: '0',
-    type1: '123',
-    type2: '563',
-    type3: '567',
-    type4: '33',
-    type5: '21',
-    v0: '凌老大',
-    v1: '10',
-    v2: '345',
-    v3: '2312',
-    v4: '111',
-    v5: '10000',
-    tags: ['loser'],
-  },
-  {
-    key: '0',
-    type1: '121233',
-    type2: '100',
-    type3: '400',
-    type4: '33',
-    type5: '100',
-    v0: '卓七',
-    v1: '6000',
-    v2: '100000',
-    v3: '20120',
-    v4: '602',
-    v5: '3000002',
-    tags: ['loser'],
-  },
-];
+const blueStyle = {
+  color: "#3E8FFD",
+  fontWeight: "bold"
+}
+
+const redStyle = {
+  color: "red",
+  fontWeight: "bold"
+}
 
 class List extends Component {
+  componentDidMount() {
+    this.sendFn(1, 10)
+  }
+  paginationChange = (pageNo, pageSize) => {
+    this.sendFn(pageNo, pageSize);
+  };
 
+  paginationShowSizeChange = (pageNo, pageSize) => {
+    this.sendFn(pageNo, pageSize);
+  };
+
+  sendFn(pageNo, pageSize) {
+    const params = this.props.params;
+    const data = { ...params, pageNo, pageSize };
+    this.props.querylist({ props: this.props, data });
+  }
   render() {
-
+    const tableList = this.props.tableList;
+    const pagination = {
+      ...this.props.pagination,
+      onChange: this.paginationChange,
+      onShowSizeChange: this.paginationShowSizeChange
+    };
     return (
       <div className={`${styles.pageContet} pageContentColor`}>
         <SearchForm />
         <Table
-          dataSource={data}
+          dataSource={tableList}
           bordered
-          pagination={false}
+          pagination={pagination}
           rowKey={(record, index) => index}
+          size="middle"
+          scroll={{ x: 1200, y: 0 }}
         >
-          <Column title="用户名" dataIndex="v0" key="v0" align='center' />
-          <ColumnGroup title="使用产品">
-            <Column title="人脸识别" dataIndex="type1" key="type1" />
-            <Column title="手机号" dataIndex="type2" key="type2" />
-            <Column title="加密" dataIndex="type3" key="type3" />
-            <Column title="解密" dataIndex="type4" key="type4" />
-            <Column title="签名验签" dataIndex="type5" key="type5" />
-          </ColumnGroup>
-          <Column title="合计次数" dataIndex="v1" key="v1" />
-          <Column title="应激金额" dataIndex="v2" key="v2" />
-          <Column title="优惠金额" dataIndex="v3" key="v3" />
-          <Column title="实际应激" dataIndex="v4" key="v4" />
-          <Column title="账户余额" dataIndex="v5" key="v5" />
           <Column
+            title="账户名称"
+            dataIndex="accountName"
+            key="accountName"
+            fixed='left'
+            width={100}
+            className={styles.column}
+          />
+          <ColumnGroup title="类型">
+            {
+              this.props.typesList.map(item => <Column
+                className={styles.column}
+                title={item.operTypeName}
+                align='center'
+                dataIndex={item.operType}
+                key={item.operType}
+
+                render={text => (
+                  <span style={blueStyle}>
+                    {text}
+                  </span>
+                )}
+                style={{ border: "2px solid red" }}
+              />)
+            }
+          </ColumnGroup>
+          <Column
+            title="合计次数"
+            dataIndex="sumTotal"
+            className={styles.column}
+            key="sumTotal"
+            align='center'
+            render={text => (
+              <span style={blueStyle}>{text}</span>
+            )}
+          />
+          <Column
+            title="应激金额"
+            dataIndex="total"
+            className={styles.column}
+            align='center'
+            key="total"
+            render={text => (
+              <span style={redStyle}>{text}</span>
+            )}
+          />
+          <Column
+            title="优惠金额"
+            dataIndex="preferentialMoney"
+            className={styles.column}
+            align='center'
+            key="preferentialMoney"
+            render={text => (
+              <span style={redStyle}>{text}</span>
+            )}
+          />
+          <Column
+            title="实际应激"
+            dataIndex="actPayMoney"
+            className={styles.column}
+            align='center'
+            key="actPayMoney"
+            render={text => (
+              <span style={redStyle}>{text}</span>
+            )}
+          />
+          <Column
+            fixed='right'
+            width={80}
+            title="账户余额"
+            className={styles.column}
+            dataIndex="balanceMoney"
+            align='center'
+            key="balanceMoney"
+            render={text => (
+              <span style={redStyle}>{text ? text : 0}</span>
+            )}
+          />
+          {/* <Column
+            fixed='right'
             title="操作"
             dataIndex="tags"
             key="tags"
-            render={tags => (
-              <div>
-                <span>详情</span>&nbsp;
-                <span>缴费</span>
-              </div>
+            align='center'
+            render={(text, record) => (
+              record.actPayMoney > 0 && record.balanceMoney - record.actPayMoney > 0 ?
+                <Popconfirm
+                  placement="left"
+                  title="确定缴费吗?"
+                  onConfirm={() => {
+                    const { actPayMoney, accountCode } = record
+                    this.props.consume({
+                      props: this.props,
+                      data: { consumeMoney: actPayMoney, accountCode }
+                    })
+                  }}
+                  okText="确定"
+                  icon={<Icon type="question-circle" />}
+                  cancelText="取消"
+                ><a>缴费</a> </Popconfirm>
+                : ""
             )}
-          />
+          /> */}
 
         </Table>
       </div >
@@ -157,5 +162,21 @@ class List extends Component {
   }
 }
 
+const mapState = state => ({
+  typesList: state.accountStatistical.typesList,
+  tableList: state.accountStatistical.tableList,
+  pagination: state.accountStatistical.pagination,
+});
 
-export default List;
+const mapDispatch = dispatch => ({
+  querylist: req => {
+    const action = creators.queryListAction(req);
+    dispatch(action);
+  },
+  consume: req => {
+    const action = creators.consumeAction(req);
+    dispatch(action);
+  },
+});
+
+export default connect(mapState, mapDispatch)(List);

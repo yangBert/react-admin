@@ -1,12 +1,12 @@
 .item {
   width: 50%;
-  padding-right:10px;
+  padding-right:5px;
   box-sizing:border-box;
-  margin-bottom:5px;
+  margin-bottom:0;
 }
 
-@media screen and (max-width: 1700px) {
+/* @media screen and (max-width: 1700px) {
   .item {
     width: 100%;
   }
-}
+} */

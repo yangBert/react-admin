@@ -1,3 +1,4 @@
+import React from 'react';
 import * as types from "./actionTypes";
 import * as requestURL from "static/js/requestURL";
 import * as request from "static/js/request";
@@ -5,6 +6,7 @@ import spinningAction from "pages/common/layer/spinning";
 import notification from "pages/common/layer/notification";
 import createPagination from "static/js/pagination";
 import { Modal } from "antd";
+import $$ from "static/js/base";
 
 const { confirm } = Modal;
 
@@ -140,6 +142,7 @@ const createQueryAppListAction = req => {
       if (res.data) {
         const { success, message, data } = res.data && res.data;
         if (success) {
+          console.log("data", res)
           const action = queryAppListAction(
             data.results,
             createPagination(data)
@@ -206,9 +209,17 @@ const createSecretAction = req => {
   return () => {
     request.json(requestURL.plateSettingGenerateKeyPair, req.data, res => {
       if (res.data) {
-        const { success, message } = res.data;
+        const { success, message, data } = res.data;
         if (success) {
           notification("success", message);
+          confirm({
+            content: <div>
+              <p>私钥：{data.appPriSecret}</p>
+              <p>公钥：{data.appPubSecret}</p>
+              <p>生成时间：{$$.getHours(data.createTime)}</p>
+            </div>,
+            onOk() { }
+          });
         } else {
           notification("error", message);
         }

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Button, Input, Icon } from "antd";
+import React, { useState } from "react";
+import { Button, Select, Icon, Spin } from "antd";
 import { connect } from "react-redux";
 import * as creators from "../store/creators";
 import styles from "../css/SearchForm.module.css";
@@ -8,44 +8,44 @@ import { Link, withRouter } from "react-router-dom";
 import "moment/locale/zh-cn";
 moment.locale("zh-cn");
 
-function SearchForm(props) {
-  const [idCard, setIdCard] = useState("");
-  const [userRealname, setUserRealname] = useState("");
-  const [status, setStatus] = useState("");
-  const [phoneNo, setPhoneNo] = useState("");
+const { Option } = Select
 
-  const { changeSearchParams } = props;
-  useEffect(() => {
-    changeSearchParams({
-      idCard,
-      userRealname,
-      status,
-      phoneNo
-    });
-  }, [idCard, userRealname, status, phoneNo, changeSearchParams]);
+function SearchForm(props) {
+  const [productName, setProductName] = useState("");
+  const [fetching, setFetching] = useState(false);
+  const [productCode, setProductCode] = useState("");
 
   function search() {
-    const { idCard, userRealname, status, phoneNo } = props.params;
-
     const data = {
       pageSize: 10,
       pageNo: 1,
-      idCard,
-      userRealname,
-      status,
-      phoneNo
+      appCode: props.appCode,
+      productCode
     };
-
     props.querylist({ props, data });
   }
 
   function reset() {
-    setIdCard("");
-    setUserRealname("");
-    setStatus("");
-    setPhoneNo("");
-    const data = { pageNo: 1, pageSize: 10 };
-    props.querylist({ props, data });
+    setProductName("")
+    setProductCode("")
+    const data = { pageNo: 1, pageSize: 10, appCode: props.appCode }
+    props.querylist({ props, data })
+  }
+
+
+  function fetchProductList(productName) {
+    setFetching(true);
+    props.fetchProductList({
+      props,
+      data: { productName }
+    })
+  };
+
+  function changeProductName(productName, option) {
+    setProductName(productName)
+    setFetching(false)
+    props.initfetchProductList([])
+    setProductCode(option.key)
   }
 
   return (
@@ -53,13 +53,21 @@ function SearchForm(props) {
       <div className={`${styles.form}`}>
         <div className="clearfix">
           <div className={`${styles.formLine} pullLeft`}>
-            <label className="pullLeft">产品:</label>
+            <label className="pullLeft">产品名称:</label>
             <div className={`${styles.inline} pullLeft`}>
-              <Input
-                allowClear
-                onChange={e => setPhoneNo(e.target.value)}
-                value={phoneNo}
-              />
+              <Select
+                showSearch
+                value={productName}
+                notFoundContent={fetching ? <Spin size="small" /> : null}
+                filterOption={false}
+                onSearch={fetchProductList}
+                onChange={(value, options) => changeProductName(value, options)}
+                style={{ width: '100%' }}
+              >
+                {props.productListArr.map(d => (
+                  <Option key={d.productCode}>{d.productName}</Option>
+                ))}
+              </Select>
             </div>
           </div>
           <label className="pullLeft">&nbsp;&nbsp;&nbsp;</label>
@@ -102,8 +110,7 @@ function SearchForm(props) {
 }
 
 const mapState = state => ({
-  params: state.clientUser.params,
-  spinning: state.clientUser.spinning
+  productListArr: state.chargeConfig.productListArr
 });
 
 const mapDispatch = dispatch => ({
@@ -111,10 +118,14 @@ const mapDispatch = dispatch => ({
     const action = creators.queryListAction(req);
     dispatch(action);
   },
-  changeSearchParams: params => {
-    const action = creators.createChangeParamsAction(params);
+  fetchProductList: req => {
+    const action = creators.fetchProductListAction(req);
     dispatch(action);
-  }
+  },
+  initfetchProductList: req => {
+    const action = creators.initfetchProductListAction(req);
+    dispatch(action);
+  },
 });
 
 export default withRouter(connect(mapState, mapDispatch)(SearchForm));

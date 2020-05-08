@@ -104,7 +104,7 @@ class List extends Component {
             key="tags"
             align='center'
             render={(text, record) => (
-              record.balanceMoney ?
+              record.actPayMoney > 0 && record.balanceMoney - record.actPayMoney > 0 ?
                 <Popconfirm
                   placement="left"
                   title="确定缴费吗?"

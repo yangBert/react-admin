@@ -68,7 +68,9 @@ function Detail(props) {
               <Descriptions.Item label="机构统一社会信用代码">{orgCode}</Descriptions.Item>
               <Descriptions.Item label="申请人">{userName}</Descriptions.Item>
               <Descriptions.Item label="状态">{state === '0' ? '待审核' : state === '1' ? '审核通过' : '审核未通过'}</Descriptions.Item>
-              <Descriptions.Item label="审核通过时间">{applyTime && $$.getHours(applyTime)}</Descriptions.Item>
+              {
+                state !== '0' && <Descriptions.Item label="审核通过时间">{applyTime && $$.getHours(applyTime)}</Descriptions.Item>
+              }
             </Descriptions>
             <p>机构授权书：</p>
 

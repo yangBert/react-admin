@@ -98,10 +98,8 @@ const queryListAction = req => {
 const queryProductAction = req => {
   return dispatch => {
     dispatch(spinningAction(true));
-    console.log("请求=>", req);
     request.json(requestURL.webSiteProductList, req.data, res => {
       dispatch(spinningAction(false));
-      console.log("响应=>", res);
       if (res.data) {
         const { success, message, data } = res.data;
         if (success) {
@@ -110,7 +108,7 @@ const queryProductAction = req => {
           notification("error", message);
         }
       } else {
-        //req.props.history.push("/500");
+        req.props.history.push("/500");
       }
     });
   };

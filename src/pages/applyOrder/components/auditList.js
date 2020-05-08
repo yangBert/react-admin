@@ -75,8 +75,7 @@ class List extends Component {
   };
 
   sendFn(pageNo, pageSize) {
-    //const params = this.props.params
-    const data = { pageNo, pageSize };
+    const data = { pageNo, pageSize, listType: "audit" };
     this.props.querylist({ props: this.props, data });
   }
 

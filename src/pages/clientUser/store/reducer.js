@@ -8,6 +8,7 @@ const defaultState = {
   params: {},
   modalVisible: false,
   editStatus: "",
+  record: null
 };
 
 export default (state = defaultState, action) => {
@@ -25,7 +26,8 @@ export default (state = defaultState, action) => {
       break;
     case types.CLIENT_USER_CHANGE_MODAL_VISIBLE:
       newState.modalVisible = action.modalVisible
-      newState.editStatus = action.editStatus
+      newState.record = action.record
+      newState.editStatus = action.record.status
       break;
     case types.CLIENT_USER_CHANGE_EDIT_STATUS:
       newState.editStatus = action.editStatus

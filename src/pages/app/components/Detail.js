@@ -1,11 +1,26 @@
 import React, { Component, Fragment } from 'react';
-import { Modal, Card, Form, Input, Upload, Icon, message, Select, Checkbox, Button, Spin } from 'antd';
+import {
+  Modal,
+  Card,
+  Form,
+  Input,
+  Upload,
+  Icon,
+  message,
+  Select,
+  Checkbox,
+  Button,
+  Spin,
+  Radio,
+  TreeSelect,
+  InputNumber
+} from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import styles from "../css/add.module.css";
 import * as creators from '../store/creators';
 import $$ from 'static/js/base';
-//import * as requestURL from 'static/js/requestURL';
+import * as productPayingConfig from 'pages/product/config';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -40,10 +55,17 @@ class AppDetail extends Component {
     refappType: null,
     refauditMode: null,
     visibleModal: false,
-    task: ""
+    task: "",
+    feeCode: ""
   };
 
   componentDidMount() {
+    //查询机构
+    this.props.orgList.length === 0 &&
+      this.props.queryOrgList({
+        props: this.props,
+        data: { pageNo: 1, pageSize: 1000 }
+      });
     //查询应用所有信息
     this.props.queryEditAppInfor({ com: this, data: { id: this.props.location.state.editAppId } })
   }
@@ -197,7 +219,23 @@ class AppDetail extends Component {
                     />
                   </div>
                 </div>
-                <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>上传应用LOGO：</label>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    单位：
+                  </label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <TreeSelect
+                      disabled
+                      className={styles.text}
+                      style={{ width: "100%" }}
+                      value={this.props.orgCode}
+                      dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+                      treeData={this.props.orgList}
+                      treeDefaultExpandAll
+                    />
+                  </div>
+                </div>
+                <div className={`${styles.formBlock} pullLeft`}><label className={`${styles.label} pullLeft`}>上传应用LOGO：</label>
                   <Upload
                     disabled
                     name="avatar"
@@ -223,8 +261,8 @@ class AppDetail extends Component {
                 <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>应用类型：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Select
+                      disabled
                       value={this.props.appType ? this.props.appType : ""}
-                      onChange={null}
                     >
                       <Option value="">请选择</Option>
                       {
@@ -236,13 +274,25 @@ class AppDetail extends Component {
                 <div className={`${styles.formLine} pullLeft`}><label className={`${styles.label} pullLeft`}>审核模式：</label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Select
+                      disabled
                       value={this.props.auditMode === "" ? "" : this.props.auditMode}
-                      onChange={null}
                     >
                       <Option value="">请选择</Option>
                       <Option value={0}>接入应用自主审核</Option>
                       <Option value={1}>自动审核通过</Option>
                     </Select>
+                  </div>
+                </div>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    应用标签：
+                  </label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Input
+                      className={styles.text}
+                      onChange={e => null}
+                      value={this.props.tag}
+                    />
                   </div>
                 </div>
                 <div className={`${styles.formBlock} clearfix`}><label className={`${styles.label} pullLeft`}>登陆认证方式：</label>
@@ -263,6 +313,36 @@ class AppDetail extends Component {
                     />
                   </div>
                 </div>
+                <div className={`${styles.formLine} pullLeft`}>
+                  <label className={`${styles.label} pullLeft`}>
+                    收费类型：
+                  </label>
+                  <div className={`${styles.inline} pullLeft`}>
+                    <Radio.Group
+                      value={this.state.feeCode}>
+                      {
+                        productPayingConfig.productPaying.map(item => (
+                          <Radio value={item.value} key={item.value}>{item.name}</Radio>
+                        ))
+                      }
+                    </Radio.Group>
+                  </div>
+                </div>
+                {
+                  this.state.feeCode === '1' ?
+                    <div className={`${styles.formLine} pullLeft`}>
+                      <label className={`${styles.label} pullLeft`}>一次性收费金额（元）：</label>
+                      <div className={`${styles.inline} pullLeft`}>
+                        <InputNumber
+                          style={{ width: "100%" }}
+                          min={0}
+                          precision={2}
+                          step={10}
+                          value={this.state.feeMoney}
+                        />
+                      </div>
+                    </div> : ""
+                }
               </Form>
             </Card>
           </div >
@@ -284,23 +364,6 @@ class AppDetail extends Component {
               </Fragment>
               : ""
             }
-            {rowauditStatus === 0 ?
-              <Button
-                type="primary"
-                size="large"
-                className={styles.formbtn}
-                onClick={() => this.auditPass()}
-              >审核通过</Button> : ""
-            }
-            {rowauditStatus === 1 ?
-              <Button
-                size="large"
-                type="primary"
-                className={styles.formbtn}
-                onClick={() => this.setState({ visibleModal: true })}
-              >审核不通过</Button>
-              : ""
-            }
             <Button
               size="large"
               type="primary"
@@ -319,9 +382,11 @@ const mapState = state => ({
   url: state.app.form.url,
   describes: state.app.form.describes,
   redirectUrl: state.app.form.redirectUrl,
+  orgCode: state.app.form.orgCode,
   icon: state.app.form.icon,
   appType: state.app.form.appType,
   auditMode: state.app.form.auditMode,
+  tag: state.app.form.tag,
   landingModes: state.app.form.landingModes,
   supportCAs: state.app.form.supportCAs,
   allLandingModes: state.app.form.allLandingModes,
@@ -332,6 +397,9 @@ const mapState = state => ({
   saveLoading: state.app.saveLoading,
   editAppId: state.app.editAppId,
   spinning: state.app.spinning,
+  orgList: state.app.orgList,
+  feeCode: state.app.feeCode,
+  feeMoney: state.app.feeMoney,
 })
 
 const mapDispatch = dispatch => ({
@@ -397,6 +465,10 @@ const mapDispatch = dispatch => ({
   },
   appAudit: value => {
     const action = creators.appAuditAction(value);
+    dispatch(action);
+  },
+  queryOrgList: req => {
+    const action = creators.queryOrgListAction(req);
     dispatch(action);
   },
 })

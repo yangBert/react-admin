@@ -6,21 +6,21 @@ import * as creators from "./store/creators";
 import SearchForm from "./components/SearchForm";
 import styles from "./css/UserList.module.css";
 import Oper from "./components/Operation";
+import $$ from "static/js/base";
 
 const columns = [
-  { title: "应用编码", dataIndex: "appCode", key: "appCode", align: "center" },
-  { title: "应用名称", dataIndex: "appName", key: "appName", align: "center" },
-  // {
-  //   title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center',
-  //   render: createTime => (
-  //     <span>{$$.getHours(createTime)}</span>
-  //   )
-  // },
+  { title: "应用编码", dataIndex: "appCode", key: "appCode" },
+  { title: "应用名称", dataIndex: "appName", key: "appName" },
+  {
+    title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center',
+    render: createTime => (
+      <span>{$$.getHours(createTime)}</span>
+    )
+  },
   {
     title: "应用状态",
     dataIndex: "appStatus",
     key: "appStatus",
-    align: "center",
     render: appStatus => (
       <span>
         {appStatus === 1 ? (

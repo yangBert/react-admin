@@ -8,7 +8,6 @@ import Oper from './components/Operation';
 import $$ from 'static/js/base';
 
 const columns = [
-  { title: '应用编码', dataIndex: 'appCode', key: 'appCode', align: 'center' },
   { title: '产品名称', dataIndex: 'productName', key: 'productName', align: 'center' },
   { title: '计费策略', dataIndex: 'ruleName', key: 'ruleName', align: 'center' },
   { title: '优惠策略', dataIndex: 'perfertialName', key: 'perfertialName', align: 'center' },
@@ -29,6 +28,7 @@ const columns = [
 class List extends Component {
   componentDidMount() {
     this.sendFn(1, 10)
+    this.props.setAppCode(this.props.location.state.appCode)
   }
 
   paginationChange = (pageNo, pageSize) => {
@@ -40,7 +40,6 @@ class List extends Component {
   }
 
   sendFn(pageNo, pageSize) {
-    //const params = this.props.params
     let data = { pageNo, pageSize }
     data.appCode = this.props.location.state.appCode
     this.props.querylist({ props: this.props, data });
@@ -59,7 +58,7 @@ class List extends Component {
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <h2 style={{ fontSize: "17px" }}>收费配置</h2>
           <br />
-          <SearchForm />
+          <SearchForm appCode={this.props.location.state.appCode} />
           <Table
             bordered
             columns={columns}
@@ -85,6 +84,10 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   querylist: req => {
     const action = creators.queryListAction(req);
+    dispatch(action);
+  },
+  setAppCode: req => {
+    const action = creators.setAppCodeAction(req);
     dispatch(action);
   },
 })

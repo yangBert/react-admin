@@ -5,6 +5,17 @@ import spinningAction from 'pages/common/layer/spinning';
 import notification from 'pages/common/layer/notification';
 import createPagination from 'static/js/pagination';
 
+
+const initfetchProductListAction = (productListArr) => ({
+  type: types.CHARGE_CONFIG_FETCH_PRODUCT_LIST,
+  productListArr
+})
+
+const setAppCodeAction = (appCode) => ({
+  type: types.CHARGE_CONFIG_SET_APP_CODE,
+  appCode
+})
+
 const initListAction = (list, pagination) => ({
   type: types.CHARGE_CONFIG_QUERY_LIST,
   list,
@@ -219,7 +230,53 @@ const saveAction = req => {
         const { success, message } = res.data
         if (success) {
           notification('success', message)
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
 
+const delChargeConfigAction = req => {
+  return (dispatch, getState) => {
+    dispatch(spinningAction(true))
+    const url = requestURL.chargeAppDelete
+    request.json(url, { id: req.data.id }, res => {
+      dispatch(spinningAction(false))
+      if (res.data) {
+        const { success, message } = res.data
+        if (success) {
+          notification('success', message)
+          const pagination = getState().chargeConfig.pagination
+          const params = {
+            ...getState().chargeConfig.params,
+            appCode: getState().chargeConfig.appCode,
+            pageNo: pagination.current,
+            pageSize: pagination.pageSize
+          }
+          dispatch(queryListAction({ props: req.props, data: params }));
+        } else {
+          notification('error', message)
+        }
+      } else {
+        req.props.history.push("/500")
+      }
+    })
+  }
+}
+
+
+const fetchProductListAction = req => {
+  return dispatch => {
+    request.json(requestURL.productSelectByPage, req.data, res => {
+      if (res.data) {
+        const { success, message, data } = res.data
+        if (success) {
+          const action = initfetchProductListAction(data.results)
+          dispatch(action)
         } else {
           notification('error', message)
         }
@@ -250,4 +307,8 @@ export {
   changePreferentialSelectedKeysAction,
   changeConfigRecordAction,
   saveAction,
+  delChargeConfigAction,
+  setAppCodeAction,
+  initfetchProductListAction,
+  fetchProductListAction
 }

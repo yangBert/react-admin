@@ -9,18 +9,16 @@ import Oper from "./components/Operation";
 import * as config from "./config";
 
 const columns = [
-  { title: "应用编码", dataIndex: "appId", key: "appId", align: "center" },
+  { title: "应用编码", dataIndex: "appCode", key: "appCode" },
   {
     title: "操作编码",
     dataIndex: "operateType",
     key: "operateType",
-    align: "center"
   },
   {
     title: "操作描述",
     dataIndex: "method",
     key: "method",
-    align: "center",
     render: method => (
       <span>{config.method[method] ? config.method[method] : "--"}</span>
     )
@@ -29,7 +27,6 @@ const columns = [
     title: "操作时间",
     dataIndex: "logTime",
     key: "logTime",
-    align: "center",
     render: logTime => <span>{logTime && $$.getHours(logTime)}</span>
   },
   {

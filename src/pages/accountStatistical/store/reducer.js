@@ -2,7 +2,8 @@ import * as types from './actionTypes';
 import spinningTypes from 'pages/common/layer/spinning/spinningTypes';
 
 const defaultState = {
-  list: [],
+  typesList: [],
+  tableList: [],
   pagination: {},
   spinning: false,
   params: {},
@@ -14,11 +15,14 @@ export default (state = defaultState, action) => {
     case spinningTypes:
       newState.spinning = action.spinning
       break;
-    case types.QUERY_LIST:
-      newState.list = action.list
+    case types.ACCOUNT_STATISTICAL_TYPES_LIST:
+      newState.typesList = action.typesList
+      break;
+    case types.ACCOUNT_STATISTICAL_TABLE_LIST:
+      newState.tableList = action.tableList
       newState.pagination = action.pagination
       break;
-    case types.CHANGE_SEARCH_PARAMS:
+    case types.ACCOUNT_STATISTICAL_CHANGE_SEARCH_PARAMS:
       newState.params = action.params
       break;
     default:

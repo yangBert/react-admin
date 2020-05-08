@@ -28,6 +28,7 @@ const allStatus = {
   CANCLE: "CANCLE",
   DEL: "DEL",
   get: s => {
+    console.log("s==", s)
     return s === "SUBMIT" ? "暂存" :
       s === "PRE_PAY" ? "待支付" :
         s === "PRE_PARENT_AUDIT" ? "待上级审核" :

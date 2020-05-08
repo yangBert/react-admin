@@ -62,10 +62,10 @@ const updateAction = req => {
 }
 
 //改变弹出层显示隐藏
-const changeModalVisibleAction = (modalVisible, editStatus) => ({
+const changeModalVisibleAction = (modalVisible, record) => ({
   type: types.CLIENT_USER_CHANGE_MODAL_VISIBLE,
   modalVisible,
-  editStatus
+  record
 })
 
 //改变状态
