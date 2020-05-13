@@ -1,8 +1,10 @@
 import React from "react";
-import { Switch, Button } from "antd";
+import { Switch, Button, Modal } from "antd";
 import { connect } from "react-redux";
 import * as creators from "../store/creators";
 import { withRouter, Link } from "react-router-dom";
+
+const { confirm } = Modal;
 
 function Oper(props) {
   const status = props.record.appStatus === 1 ? true : false;
@@ -33,12 +35,24 @@ function Oper(props) {
         checkedChildren="上线"
         unCheckedChildren="下线"
         defaultChecked={status}
+        onClick={() => {
+          alert(1)
+        }}
         onChange={checked => {
-          const appStatus = checked ? 1 : 2;
-          const data = new FormData();
-          data.append("appStatus", appStatus);
-          data.append("id", props.record.id);
-          props.changeAppStatus({ props, data });
+          alert(2)
+          const s = checked ? '上线？' : '下线吗？';
+          confirm({
+            title: '你确定要将' + props.record.appName + s,
+            onOk() {
+              const appStatus = checked ? 1 : 2;
+              const data = new FormData();
+              data.append("appStatus", appStatus);
+              data.append("id", props.record.id);
+              props.changeAppStatus({ props, data });
+            },
+            onCancel() { },
+          });
+
         }}
       />}
       {

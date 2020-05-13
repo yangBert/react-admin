@@ -2793,6 +2793,10 @@ core-js@^2.6.5:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.10.tgz#8a5b8391f8cc7013da703411ce5b585706300d7f"
 
+core-js@^3.6.5:
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
+
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -8519,6 +8523,13 @@ react-slick@~0.25.2:
     json2mq "^0.2.0"
     lodash.debounce "^4.0.8"
     resize-observer-polyfill "^1.5.0"
+
+react-validate-form@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-validate-form/-/react-validate-form-1.0.7.tgz#2939db5eea8cd41b2495bcc064e13fb463e2ac40"
+  dependencies:
+    lodash "^4.17.11"
+    rimraf "^2.6.3"
 
 react@^16.9.0:
   version "16.9.0"

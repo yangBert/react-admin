@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router';
 import styles from './login.module.css';
 import { GZCA } from 'static/plugins/gzca/js/gzca';
@@ -6,8 +6,8 @@ import * as creators from './store/creators';
 import { connect } from 'react-redux';
 import { Button } from 'antd';
 import notification from 'pages/common/layer/notification';
-function LoginButton(props) {
 
+function LoginButton(props) {
   //初始化连接
   function initSocket() {
     GZCA.init((res) => {

@@ -220,7 +220,6 @@ class AppAdd extends Component {
     });
   };
 
-
   render() {
     const uploadButton = (
       <div>
@@ -239,13 +238,16 @@ class AppAdd extends Component {
         <Spin tip="Loading..." spinning={this.props.spinning}>
           <div className="pageContentColor">
             <Card title="基本信息" bordered={false}>
-              <Form className={`${styles.form} clearfix`}>
+              <Form
+                className={`${styles.form} clearfix`}
+              >
                 <div className={`${styles.formLine} pullLeft`}>
                   <label className={`${styles.label} pullLeft`}>
                     应用名称：
                   </label>
                   <div className={`${styles.inline} pullLeft`}>
                     <Input
+                      name="appName"
                       className={styles.text}
                       placeholder="请输入应用名称"
                       //ref={refappName => this.setState({refappName})}
@@ -575,4 +577,4 @@ const mapDispatch = dispatch => ({
   }
 });
 
-export default withRouter(connect(mapState, mapDispatch)(AppAdd));
+export default Form.create({ name: "test" })(withRouter(connect(mapState, mapDispatch)(AppAdd)));
